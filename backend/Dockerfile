@@ -1,11 +1,13 @@
 # base 이미지 설정
 FROM node:18.19.0-alpine3.18
 
+WORKDIR /app
+
 # 소스 코드 복사
-COPY package.json ./
+COPY package.json package-lock.json ./
 
 # 앱 종속성 설치
-RUN npm install
+RUN npm ci
 
 # 파일 복사
 COPY . .
@@ -14,4 +16,4 @@ COPY . .
 EXPOSE 3000
 
 # 앱 빌드
-CMD ["node", "index.js"]
+ENTRYPOINT ["node", "index.js"]
