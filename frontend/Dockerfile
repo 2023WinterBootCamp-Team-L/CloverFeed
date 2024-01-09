@@ -5,7 +5,7 @@ WORKDIR /app
 
 # 소스 코드 복사
 COPY package.json package-lock.json ./
-    
+
 # 앱 종속성 설치
 RUN npm ci
 
@@ -13,7 +13,7 @@ RUN npm ci
 COPY . .
 
 # 포트 노출
-EXPOSE 3000
+EXPOSE 5173/tcp
 
 # 앱 빌드
 ENTRYPOINT ["yarn", "dev"]
