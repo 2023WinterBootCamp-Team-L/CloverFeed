@@ -5,7 +5,7 @@ WORKDIR /app
 
 # 소스 코드 복사
 COPY package.json package-lock.json ./
-    
+
 # 앱 종속성 설치
 RUN npm ci
 
