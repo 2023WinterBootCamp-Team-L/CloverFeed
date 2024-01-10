@@ -1,4 +1,5 @@
 import clover from "../assets/clover.svg";
+
 import ChangePage from "../components/ChangePage";
 
 function QueryMain() {
