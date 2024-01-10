@@ -13,7 +13,7 @@ RUN npm ci
 COPY . .
 
 # 포트 노출
-EXPOSE 5173/tcp
+EXPOSE 5173
 
 # 앱 빌드
 ENTRYPOINT ["yarn", "dev"]
