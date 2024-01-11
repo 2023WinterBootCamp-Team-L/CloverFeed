@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-import clover from "../assets/clover.svg";
->>>>>>> 6e4e46255bef14b67d1ff7d994fec704fda2f96d
 import ChangePage from "../components/ChangePage";
 
 function QueryMain() {
@@ -13,7 +9,6 @@ function QueryMain() {
     overflow-hidden max-w-[24.56rem] mx-auto h-screen gap-[6.13rem]"
     >
       <ChangePage nextpage={nextpage} />
-<<<<<<< HEAD
       <p className="text-2xl leading-1.25 text-center">
         질문리스트는 <span className="text-green font-bold">기본질문과</span>
         <br />
@@ -44,15 +39,6 @@ function QueryMain() {
         />
       </svg>
       <button className="mt-4"></button>
-=======
-      <div className="flex flex-col gap-[6.13rem] justify-start items-center">
-        <p className="block text-center text-2xl">
-          질문리스트는 기본질문과 당신이 직접 만드는 추가질문으로
-          구성되어있어요.
-        </p>
-        <img src={clover} alt="클로버" />
-      </div>
->>>>>>> 6e4e46255bef14b67d1ff7d994fec704fda2f96d
     </div>
   );
 }
