@@ -59,3 +59,6 @@ frontend/build/  # 프론트엔드 빌드 결과물을 무시합니다.
 
 # backend 프로젝트의 가상 환경 디렉토리 무시
 backend/venv/   # 백엔드 프로젝트의 가상 환경 디렉토리를 무시합니다.
+
+# .gitattributes 파일 
+.gitattributes
