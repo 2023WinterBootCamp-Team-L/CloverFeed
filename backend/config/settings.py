@@ -78,9 +78,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'cloverfeed',  
         'USER': 'root',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '3307',
+        'PASSWORD': '1234',
+        'HOST': 'mysql',
+        'PORT': '3306',
     }
 }
 
