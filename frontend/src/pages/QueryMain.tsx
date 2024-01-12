@@ -6,15 +6,16 @@ function QueryMain() {
   return (
     <div
       className="bg-emerald-50 flex flex-col items-center justify-center
-    overflow-hidden max-w-[24.56rem] mx-auto h-screen gap-[6.13rem]"
+    overflow-hidden w-[24.56rem] mx-auto h-[53.25rem] gap-[6.13rem]"
     >
       <ChangePage nextpage={nextpage} />
       <p className="text-2xl leading-1.25 text-center">
-        질문리스트는 <span className="text-green font-bold">기본질문과</span>
+        질문리스트는{" "}
+        <span className="text-green-400 font-bold">기본질문과</span>
         <br />
         당신이 직접 만드는
         <br />
-        <span className="text-green font-bold">추가질문</span>으로
+        <span className="text-green-400 font-bold">추가질문</span>으로
         구성되어있어요.
       </p>
       <svg
