@@ -509,10 +509,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.47":
+"@types/react@*":
   version "18.2.46"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.2.46.tgz"
   integrity sha512-nNCvVBcZlvX4NU1nRRNV/mFl1nNRuTuslAJglQsq+8ldXe5Xv0Wd2f7WTE3jOxhLH2BFfiZGC6GCp+kHQbgG+w==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.2.47":
+  version "18.2.47"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.47.tgz#85074b27ab563df01fbc3f68dc64bf7050b0af40"
+  integrity sha512-xquNkkOirwyCgoClNk85BjP+aqnIS+ckAJ8i37gAbDs14jfW/J23f2GItAf33oiUPQnqNMALiFeoM9Y5mbjpVQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2385,6 +2394,7 @@ source-map-js@^1.0.2:
   integrity sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==
 
 "string-width-cjs@npm:string-width@^4.2.0", string-width@^4.1.0:
+  name string-width-cjs
   version "4.2.3"
   resolved "https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz"
   integrity sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==
