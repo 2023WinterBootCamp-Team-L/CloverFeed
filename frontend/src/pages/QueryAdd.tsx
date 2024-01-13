@@ -16,7 +16,7 @@ export const Question: React.FC<QuestionProps> = ({ value, onTextChange }) => {
       <textarea
         value={value}
         onChange={onTextChange}
-        className="h-40 w-full border-emerald-200 border-2 rounded-lg focus:outline-none leading-1.25 p-2 text-sm resize-none"
+        className="h-40 w-full border-c-green border-opacity-50 border-2 rounded-lg focus:outline-none leading-1.25 p-2 text-sm resize-none"
       />
     </div>
   );
@@ -54,7 +54,7 @@ function QueryAdd() {
   };
 
   return (
-    <div className="bg-emerald-50 flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
+    <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
       <div className="flex justify-between">
         <BackButton back page="/querylist" />
         <BackButton
