@@ -27,7 +27,7 @@ const Toggle: React.FC<ToggleProps> = ({ onChange }) => {
           <span
             onClick={() => handleToggleClick(true)}
             className={`flex h-7 w-15 items-center justify-center rounded text-sm px-2 ${
-              !choice ? "bg-green text-black" : "text-gray-500"
+              !choice ? "bg-c-green text-black" : "text-gray-500"
             }`}
           >
             객관식
@@ -35,7 +35,7 @@ const Toggle: React.FC<ToggleProps> = ({ onChange }) => {
           <span
             onClick={() => handleToggleClick(false)}
             className={`flex h-7 w-15 items-center justify-center rounded text-sm px-2 ${
-              choice ? "bg-green text-black" : "text-gray-500"
+              choice ? "bg-c-green text-black" : "text-gray-500"
             }`}
           >
             주관식
