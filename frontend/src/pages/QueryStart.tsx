@@ -1,13 +1,15 @@
 import querystart from "../assets/querystart.svg";
 import GreenButton from "../components/GreenButton";
+import XButton from "../components/XButton";
 
 function QueryStart() {
   const nextpage = "/querylist";
+  const closepage = "/";
 
   return (
     <div className="bg-emerald-50 flex flex-col items-center overflow-hidden w-[24.56rem] mx-auto h-[53.25rem]">
       <div className="flex flex-col justify-center h-full items-end">
-        <button className="mb-2">X</button>
+        <XButton nextpage={closepage} />
         <div className="flex flex-col gap-[6.13rem]">
           <div>
             <p className="text-2xl leading-1.25 text-center">

@@ -1,27 +1,23 @@
-import Question from "./Question";
-import { useAtom } from "jotai";
-import { questionListAtom } from "../atom/questionListAtom";
+import React from "react";
 
-const QuestionList = () => {
-  const [questionList, setQuestionList] = useAtom(questionListAtom);
+interface QuestionListProps {
+  questions: {
+    value: string;
+    onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+  }[];
+}
 
-  const onInputChange = (index: number) => (value: string) => {
-    const newQuestionList = [...questionList];
-    newQuestionList[index] = value;
-    setQuestionList(newQuestionList);
-  };
-
+export const QuestionList: React.FC<QuestionListProps> = ({ questions }) => {
   return (
-    <div className="space-y-1.5">
-      {questionList.map((question, index) => (
-        <Question
+    <div>
+      {questions.map((question, index) => (
+        <div
           key={index}
-          value={question}
-          onTextChange={(e) => onInputChange(index)(e.target.value)}
-        />
+          className="bg-blue-200 text-black rounded-lg h-12 flex items-center px-4 text-sm leading-1.25 mb-1.5"
+        >
+          {question.value}
+        </div>
       ))}
     </div>
   );
 };
-
-export default QuestionList;
