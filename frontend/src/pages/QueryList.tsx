@@ -1,11 +1,16 @@
-import BackButton from "../components/BackButton";
 import AddButton from "../components/AddButton";
+import BackButton from "../components/BackButton";
 import QuestBox from "../components/BaseQuest";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import QuestionList from "../components/QuestionList";
 
 function QueryList() {
+  const [inputs, setInputs] = useState<string[]>([]);
+
   const navigate = useNavigate();
   const handleAddButtonClick = () => {
+    setInputs([...inputs, ""]);
     navigate("/queryadd");
   };
 
@@ -26,6 +31,7 @@ function QueryList() {
       </div>
       <div className="flex flex-col gap-2">
         <p className="text-xl">추가 질문</p>
+        <QuestionList />
         <AddButton
           text="새로운 질문을 추가해보세요"
           onClick={handleAddButtonClick}
