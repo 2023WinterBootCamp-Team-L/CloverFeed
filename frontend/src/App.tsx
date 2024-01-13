@@ -1,9 +1,12 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import { QuestionProvider } from "./components/QuestionUpdate";
 import LinkMain from "./pages/LinkMain";
 import QueryMain from "./pages/QueryMain";
 import QueryStart from "./pages/QueryStart";
 import QueryList from "./pages/QueryList";
+import QueryAdd from "./pages/QueryAdd";
+import QueryShare from "./pages/QueryShare";
 import LinkStart from "./pages/LinkStart";
 import LinkPosition from "./pages/LinkPosition";
 import LinkTag1 from "./pages/LinkTag1";
@@ -17,12 +20,19 @@ function App() {
         <Route path="" element={<LinkMain />} />
         <Route path="/querymain" element={<QueryMain />} />
         <Route path="/querystart" element={<QueryStart />} />
-        <Route path="/querylist" element={<QueryList />} />
+        <Route path="/queryshare" element={<QueryShare />} />
         <Route path="/LinkMain" element={<LinkMain />} />
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
       </Routes>
+
+      <QuestionProvider>
+        <Routes>
+          <Route path="/queryadd" element={<QueryAdd />} />
+          <Route path="/querylist" element={<QueryList />} />
+        </Routes>
+      </QuestionProvider>
     </div>
   );
 }

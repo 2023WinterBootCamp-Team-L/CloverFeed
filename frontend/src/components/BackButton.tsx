@@ -5,12 +5,17 @@ import backarrow from "../assets/backarrow.svg";
 interface BackButtonProps {
   back?: boolean;
   page: string;
+  onClick?: () => void;
 }
 
-const BackButton = ({ page, back = true }: BackButtonProps) => {
+const BackButton = ({ page, back = true, onClick }: BackButtonProps) => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
+    if (onClick) {
+      onClick();
+    }
+
     navigate(page);
   };
 
