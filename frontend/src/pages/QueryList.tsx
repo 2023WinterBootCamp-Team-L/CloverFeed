@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useQuestionContext } from "../components/QuestionUpdate";
 import { QuestionList } from "../components/QuestionList";
 
-import ModalQeustionComplete from "../components/ModalQuestionComplete";
+import Modal from "../components/Modal";
 
 function QueryList() {
   const navigate = useNavigate();
@@ -46,7 +46,7 @@ function QueryList() {
           onClick={handleAddButtonClick}
         />
       </div>
-      <ModalQeustionComplete isOpen={isOpen} toggle={toggle}>
+      <Modal isOpen={isOpen} toggle={toggle}>
         <div className="justify-center items-center">
           <p className="text-xl">이대로 질문 폼을 완성하시겠어요?</p>
           <p className="text-c-green text-bold text-md">
@@ -54,7 +54,7 @@ function QueryList() {
           </p>
         </div>
         <button onClick={toggle}>확인</button>
-      </ModalQeustionComplete>
+      </Modal>
     </div>
   );
 }
