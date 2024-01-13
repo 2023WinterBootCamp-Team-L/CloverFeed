@@ -6,7 +6,7 @@ interface BaseQuestProps {
 const BaseQuest: React.FC<BaseQuestProps> = ({ text, color = true }) => (
   <div
     className={`${
-      color ? "bg-purple-200" : "bg-blue-200"
+      color ? "bg-c-purple bg-opacity-50" : "bg-c-blue"
     } text-black rounded-lg h-12 flex items-center px-4 text-sm leading-1.25`}
   >
     {text}
