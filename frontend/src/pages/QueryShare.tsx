@@ -8,7 +8,9 @@ function QueryShare() {
   return (
     <div className="bg-gradient-to-t from-c-emerald flex flex-col items-center overflow-hidden w-[24.56rem] mx-auto h-[53.25rem]">
       <div className="flex flex-col justify-center h-full items-end">
-        <XButton nextpage={nextpage} />
+        <div>
+          <XButton nextpage={nextpage} />
+        </div>
         <div className="flex flex-col gap-[6.13rem]">
           <div>
             <p className="text-2xl leading-1.25 text-center">나의 질문 폼을</p>

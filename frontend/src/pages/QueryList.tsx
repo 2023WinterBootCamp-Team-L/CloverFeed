@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AddButton from "../components/AddButton";
 import BackButton from "../components/BackButton";
 import BaseQuest from "../components/BaseQuest";
@@ -9,15 +9,18 @@ import { QuestionList } from "../components/QuestionList";
 import Modal from "../components/Modal";
 
 function QueryList() {
+  // 페이지 이동
   const navigate = useNavigate();
   const handleAddButtonClick = () => {
     navigate("/queryadd");
   };
+  const handleQuestionComplete = () => {
+    navigate("/queryshare");
+  };
 
+  // 모달
   const { questions } = useQuestionContext();
-
   const [isOpen, setisOpen] = useState(false);
-
   const toggle = () => {
     setisOpen(!isOpen);
   };
@@ -47,13 +50,22 @@ function QueryList() {
         />
       </div>
       <Modal isOpen={isOpen} toggle={toggle}>
-        <div className="justify-center items-center">
-          <p className="text-xl">이대로 질문 폼을 완성하시겠어요?</p>
-          <p className="text-c-green text-bold text-md">
-            완성된 폼은 수정할 수 없어요
-          </p>
+        <div className="flex flex-col items-center gap-4">
+          <div className="space-y-1">
+            <p className="text-xl font-bold">이대로 질문폼을 완성하시겠어요?</p>
+            <p className="text-md text-center">
+              완성된 폼은
+              <span className="text-c-green font-bold"> 수정할 수 없어요</span>
+            </p>
+          </div>
+
+          <button
+            onClick={handleQuestionComplete}
+            className="bg-c-indigo text-white w-full px-2 py-2 rounded-xl mt-4 text-lg"
+          >
+            질문폼 완성
+          </button>
         </div>
-        <button onClick={toggle}>확인</button>
       </Modal>
     </div>
   );
