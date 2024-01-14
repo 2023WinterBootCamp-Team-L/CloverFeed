@@ -9,7 +9,7 @@ function Search() {
           <input
             type="text"
             className="justify-center items-center gap-[231px] inline-flex"
-            placeholder="검색어를 입력해주세요"
+            placeholder="검색어df를 입력해주세요"
           ></input>
         </div>
 
