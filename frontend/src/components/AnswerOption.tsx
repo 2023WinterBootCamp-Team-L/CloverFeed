@@ -30,7 +30,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
         onChange={onChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
-        className="bg-blue-200 text-black w-full h-10 rounded-lg focus:outline-none leading-1.25 p-2 text-sm"
+        className="bg-c-blue text-black w-full h-10 rounded-lg focus:outline-none leading-1.25 p-2 text-sm"
       />
       {isTrashcanVisible && (
         <button onClick={onDelete}>

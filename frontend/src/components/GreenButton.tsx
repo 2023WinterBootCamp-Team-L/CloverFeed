@@ -14,7 +14,7 @@ const GreenButton = ({ text, nextpage }: GreenButtonProps) => {
 
   return (
     <button
-      className="bg-green-400 text-white px-2 py-2 rounded-xl mt-4 text-lg"
+      className="bg-c-green text-white px-2 py-2 rounded-xl mt-4 text-lg"
       onClick={handleButtonClick}
     >
       {text}

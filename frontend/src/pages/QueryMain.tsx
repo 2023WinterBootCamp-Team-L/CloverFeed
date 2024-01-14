@@ -5,18 +5,18 @@ function QueryMain() {
 
   return (
     <div
-      className="bg-emerald-50 flex flex-col items-center justify-center
+      className="bg-gradient-to-t from-c-emerald flex flex-col items-center justify-center
     overflow-hidden w-[24.56rem] mx-auto h-[53.25rem] gap-[6.13rem]"
     >
       <ChangePage nextpage={nextpage} />
       <div>
         <p className="text-2xl text-center">
           질문리스트는{" "}
-          <span className="text-green-400 font-bold">기본질문과</span>
+          <span className="text-c-green font-bold">기본질문과</span>
         </p>
         <p className="text-2xl text-center">당신이 직접 만드는</p>
         <p className="text-2xl text-center">
-          <span className="text-green-400 font-bold">추가질문</span>으로
+          <span className="text-c-green font-bold">추가질문</span>으로
           구성되어있어요.
         </p>
       </div>
