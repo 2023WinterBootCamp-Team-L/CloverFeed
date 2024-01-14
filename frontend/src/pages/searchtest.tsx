@@ -1,28 +1,10 @@
 import BackButton from "../components/BackButton";
-import searchbutton from "../components/Searchbutton";
 
-import React from 'react';
-
-declare module 'react' {
-  interface JSXIntrinsicElements {
-    // 새로운 JSX 요소 추가
-    searchbutton: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-  }
-}
-function Search() {
+function () {
     return (
         
-        
-        <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
-        <div className="flex justify-between">
-        <BackButton back page="/Linkmain" />
-         </div>
-         
-         <div>
-          <searchbutton value={q} onTextChange={handleQuestionChange}/>
-         </div>
-
-    
+      <div className="w-[398px] h-[909.89px] px-4 py-[27px] bg-white rounded-[21.88px] flex-col justify-center items-start gap-[15px] inline-flex">
+     <BackButton back page="/" />
         <div className="h-[800.89px] flex-col justify-start items-center gap-[15px] flex">
           <div className="px-[22px] py-[11px] bg-zinc-100 rounded-[40px] border border-black flex-col justify-center items-center flex">
             <input
@@ -157,4 +139,3 @@ function Search() {
       </div>
     );
   }
-  export default Search;
