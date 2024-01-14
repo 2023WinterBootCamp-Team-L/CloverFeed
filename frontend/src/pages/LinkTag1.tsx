@@ -24,7 +24,7 @@ function LinkTag1() {
             키워드를 최대 5개까지 선택해주세요.
           </p>
         </div>
-        <div></div>
+        <div className="flex-full"></div>
       </div>
     </div>
   );

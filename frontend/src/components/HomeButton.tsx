@@ -1,13 +1,11 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
-import Home from "../assets/Home.svg";
 
 interface HomeButtonProps {
-  icon: React.ReactNode; // 아이콘을 받을 수 있도록 수정
+  text: string;
   nextpage: string;
 }
 
-const HomeButton: React.FC<HomeButtonProps> = ({ icon, nextpage }) => {
+const HomeButton = ({ text, nextpage }: HomeButtonProps) => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
@@ -16,10 +14,10 @@ const HomeButton: React.FC<HomeButtonProps> = ({ icon, nextpage }) => {
 
   return (
     <button
-      className="bg-green-400 text-white px-[35px] py-[30px] rounded-[5px] text-lg flex items-center"
+      className="bg-[#1E2C49] text-white px-[70px] py-2 justify-center items-center rounded-xl text-lg"
       onClick={handleButtonClick}
     >
-      {icon}
+      {text}
     </button>
   );
 };

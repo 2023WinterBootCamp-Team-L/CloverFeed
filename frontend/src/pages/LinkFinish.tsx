@@ -1,9 +1,9 @@
 import clover from "../assets/clover.svg";
-import GreenButton from "../components/GreenButton";
+import HomeButton from "../components/HomeButton";
 // import LinkButton from "../components/LinkButton";
 
-function LinkStart() {
-  const nextpage = "/LinkPosition";
+function LinkFinish() {
+  const nextpage = "/SignUp";
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -23,12 +23,15 @@ function LinkStart() {
             alt="클로버 이미지"
           />
         </div>
-        <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
-          <GreenButton text="피드백 시작하기" nextpage={nextpage} />
+        <div className="w-full h-full flex flex-1 flex-col pb-12 justify-end items-center">
+          <HomeButton
+            text="내 피드백 폼 만들러가기"
+            nextpage={nextpage}
+          ></HomeButton>
         </div>
       </div>
     </div>
   );
 }
 
-export default LinkStart;
+export default LinkFinish;

@@ -9,7 +9,7 @@ function LinkAnswer2() {
       >
         <div className="flex justify-between w-full">
           <BackButton back page="/LinkAnswer1" />
-          <BackButton back={false} page="/LinkFinish" />
+          <BackButton back={false} page="/LinkOpti" />
         </div>
         <div className="flex-col items-start">
           <p className="text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
