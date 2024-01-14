@@ -41,10 +41,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # 추가한 앱
-    "feedbackresult",
-    # 추가한 라이브러리
-    "rest_framework",
 
 ]
 
