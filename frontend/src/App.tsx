@@ -10,6 +10,7 @@ import QueryShare from "./pages/QueryShare";
 import LinkStart from "./pages/LinkStart";
 import LinkPosition from "./pages/LinkPosition";
 import LinkTag1 from "./pages/LinkTag1";
+import Chart from "./pages/Chart";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -25,6 +26,7 @@ function App() {
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
+        <Route path="/Chart" element={<Chart />} />
       </Routes>
 
       <QuestionProvider>
