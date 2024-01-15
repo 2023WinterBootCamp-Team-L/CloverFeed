@@ -14,6 +14,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
 }) => {
   const [isTrashcanVisible, setTrashcanVisible] = useState(true);
 
+  
   const handleFocus = () => {
     setTrashcanVisible(false);
   };
