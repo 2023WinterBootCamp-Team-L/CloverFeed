@@ -13,12 +13,14 @@ const GreenButton = ({ text, nextpage }: GreenButtonProps) => {
   };
 
   return (
-    <button
-      className="bg-c-green text-white px-2 py-2 rounded-xl mt-4 text-lg"
-      onClick={handleButtonClick}
-    >
-      {text}
-    </button>
+    <label className="realtive inline-flex">
+      <button
+        className="bg-c-green text-white px-2 py-2 rounded-xl mt-4 text-lg w-[332px]"
+        onClick={handleButtonClick}
+      >
+        {text}
+      </button>
+    </label>
   );
 };
 
