@@ -22,6 +22,11 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
         fields = '__all__' # 모델의 모든 필드를 포함
 
 class FeedbackResultSerializer(serializers.ModelSerializer):
+    respondent_name_category = serializers.SerializerMethodField()
+
     class Meta:
         model = FeedbackResult
-        fields = ['id', 'tag', 'respondent_name', 'category', 'summary', 'created_at', 'modified_at', 'field']
+        fields = ['id', 'tag', 'respondent_name_category', 'summary', 'created_at', 'modified_at', 'field']
+
+    def get_respondent_name_category(self, obj):
+        return f'{obj.respondent_name} {obj.category}'
