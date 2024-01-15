@@ -4,7 +4,7 @@ from .models import AuthUser,Form, Question
 class UserSerializer(serializers.ModelSerializer) :
     class Meta:
         model = AuthUser
-        fields = ['id', 'username', 'email', 'password', 'created_at']
+        fields = ['id', 'username', 'email', 'password', 'created_at',]
         extra_kwargs = {
             'password' : {'write_only' : True}
         }

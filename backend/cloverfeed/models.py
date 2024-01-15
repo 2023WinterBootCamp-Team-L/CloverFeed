@@ -1,7 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+import random
 
+def generate_user_id():
+    return f"#{random.randint(1000, 9999)}"
 class AuthUser(AbstractUser):
+    user_id = models.CharField(max_length=15, unique=True, default=generate_user_id)
     keywords = models.CharField(max_length=254, null=True)
     summary = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)

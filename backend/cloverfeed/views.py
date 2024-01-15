@@ -14,7 +14,7 @@ from rest_framework import serializers
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework.exceptions import ValidationError
-import uuid
+import uuid,random
 
 
 # Create your views here.
@@ -30,16 +30,18 @@ def signup(request):
         # 입력된 데이터 유효성 검사
         if not (username and email and password):
             return JsonResponse({'error': '입력한 정보 형식이 올바르지 않습니다.'}, status=status.HTTP_400_BAD_REQUEST)
-
+        user_id = f"#{random.randint(1000, 9999)}"
         # 사용자 생성
         try:
-            user = AuthUser.objects.create_user(username=username, email=email, password=password)
+            user = AuthUser.objects.create_user(username=username, email=email, password=password,user_id=user_id)
         except ValidationError as e:
             return JsonResponse({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        
 
         # 회원 가입 성공 응답
         response_data = {
             'message': '회원가입을 환영합니다.',
+            'user_id': user_id  # 추가된 부분: 생성된 user_id 반환
         }
         return JsonResponse(response_data, status=status.HTTP_201_CREATED)
 
