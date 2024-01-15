@@ -1,22 +1,16 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class AuthUser(models.Model):
-    password = models.CharField(max_length=128)
-    last_login = models.DateTimeField(blank=True, null=True)
-    is_superuser = models.IntegerField()
-    username = models.CharField(unique=True, max_length=150)
-    first_name = models.CharField(max_length=150)
-    last_name = models.CharField(max_length=150)
-    email = models.CharField(max_length=254)
-    is_staff = models.IntegerField()
-    is_active = models.IntegerField()
-    date_joined = models.DateTimeField()
-    keywords = models.CharField(max_length=254, blank=True, null=True)
-    summary = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField()
-    modified_at = models.DateTimeField(blank=True, null=True)
-    deleted_at = models.DateTimeField(blank=True, null=True)
+
+
+class AuthUser(AbstractUser):
+    keywords = models.CharField(max_length=254, null=True)
+    summary = models.TextField(null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    modified_at = models.DateTimeField(blank=True, null=True)  # nullable로 변경
+    deleted_at = models.DateTimeField(null=True)
+
 
 class FeedbackResult(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -27,7 +21,9 @@ class FeedbackResult(models.Model):
     summary = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField()
     modified_at = models.DateTimeField(blank=True, null=True)
-    field = models.DateTimeField(db_column='Field', blank=True, null=True)  # Field name made lowercase.
+    field = models.DateTimeField(
+        db_column="Field", blank=True, null=True
+    )  # Field name made lowercase.
 
 
 class Form(models.Model):
@@ -40,7 +36,9 @@ class Form(models.Model):
 
 
 class MultipleChoice(models.Model):
-    id = models.CharField(primary_key=True, max_length=255)  # 'id' 필드에 primary_key=True 속성 추가
+    id = models.CharField(
+        primary_key=True, max_length=255
+    )  # 'id' 필드에 primary_key=True 속성 추가
     question_id = models.IntegerField()
     choice_context = models.CharField(max_length=255)
     select_limit = models.IntegerField(blank=True, null=True)
