@@ -5,3 +5,4 @@ typing_extensions==4.9.0
 mysqlclient
 pymysql
 cryptography
+djangorestframework
