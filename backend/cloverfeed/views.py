@@ -1,11 +1,10 @@
 # backend/cloverfeed/views.py
 # 요청을 처리하고 응답을 반환하는데 필요한 로직을 작성하는 파일
 from django.shortcuts import render
-from django.http import HttpResponse, Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status, generics
-from .models import Form, Question, FeedbackResult
+from .models import Form, Question, FeedbackResult, AuthUser
 from .serializers import QuestionSerializer, FeedbackResultSerializer
 
 class FeedbackResultDetail(APIView):
@@ -34,6 +33,25 @@ class FeedbackResultDetail(APIView):
         # 변환된 데이터를 Response 객체에 담아 반환
         # status 필드를 추가
         return Response({"status": "success", **serializer.data})
+
+# 카테고리(직군)별 피드백 목록 조회
+class FeedbackListByCategory(APIView):
+    def get(self, request, format=None):
+        userid = request.query_params.get('userid', None)
+        category = request.query_params.get('category', None)
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response({"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."}, status=401)
+
+        # 카테고리에 따른 피드백 결과 조회
+        feedbacks = FeedbackResult.objects.filter(form__user=user, category=category)
+
+        # 직렬화 및 응답
+        serializer = FeedbackResultSerializer(feedbacks, many=True)
+        return Response({"status": "success", "feedbacks": serializer.data})
    
 class QuestionListView(APIView):
     def get(self, request, *args, **kwargs):
@@ -56,3 +74,5 @@ class QuestionListView(APIView):
 
         # 직렬화된 데이터를 응답으로 반환
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
