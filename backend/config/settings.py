@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "rest_framework",
     "cloverfeed",
     "django.contrib.admin",
     "django.contrib.auth",
