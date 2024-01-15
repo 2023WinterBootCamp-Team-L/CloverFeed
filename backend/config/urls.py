@@ -16,9 +16,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path('api/', include('cloverfeed.urls')),
-    # 다른 앱의 URL 설정도 여기에 포함...
+    path("admin/", admin.site.urls),
+    path("api/", include("cloverfeed.urls")),
 ]
