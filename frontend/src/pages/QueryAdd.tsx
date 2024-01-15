@@ -4,6 +4,8 @@ import Toggle from "../components/Toggle";
 import AddButton from "../components/AddButton";
 import AnswerOptionList from "../components/AnswerOptionList";
 import { useQuestionContext } from "../components/QuestionUpdate";
+import { useNavigate } from "react-router-dom";
+import PopupQuestion from "../components/PopupQuestion";
 
 export interface QuestionProps {
   value: string;
@@ -42,6 +44,9 @@ function QueryAdd() {
   const [answerInputs, setAnswerInputs] = useState<string[]>([]);
   const [questionInputs, setQuestionInputs] =
     useState<string>("질문하고 싶은 내용을 입력하세요");
+  const [answerComplete, setAnswerComplete] = useState(false);
+  const [popupVisible, setPopupVisible] = useState(false);
+  const navigate = useNavigate();
 
   const onFocus = () => {
     if (questionInputs === "질문하고 싶은 내용을 입력하세요") {
@@ -59,6 +64,7 @@ function QueryAdd() {
 
   const handleToggleChange = (choice: boolean) => {
     setShowAnswersAdd(choice);
+    setAnswerComplete(choice);
   };
 
   const handleAnswerAddButtonClick = () => {
@@ -66,7 +72,11 @@ function QueryAdd() {
   };
 
   const handleAddButtonClick = () => {
-    if (questionInputs !== "질문하고 싶은 내용을 입력하세요") {
+    if (
+      questionInputs !== "질문하고 싶은 내용을 입력하세요" &&
+      answerComplete &&
+      (showAnswersAdd || (!showAnswersAdd && answerInputs.length >= 2))
+    ) {
       // 기존 질문 리스트에 새로운 질문 추가
       const newQuestionList = [
         ...questions,
@@ -76,6 +86,9 @@ function QueryAdd() {
 
       // 입력된 질문 초기화
       setQuestionInputs("");
+      navigate("/querylist");
+    } else {
+      setPopupVisible(true);
     }
   };
 
@@ -83,15 +96,19 @@ function QueryAdd() {
     setQuestionInputs(e.target.value);
   };
 
+  const handleAnswerCompleteChange = (complete: boolean) => {
+    setAnswerComplete(complete);
+  };
+
+  const handlePopupClose = () => {
+    setPopupVisible(false);
+  };
+
   return (
     <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
       <div className="flex justify-between">
         <BackButton back page="/querylist" />
-        <BackButton
-          back={false}
-          page="/querylist"
-          onClick={handleAddButtonClick}
-        />
+        <BackButton back={false} onClick={handleAddButtonClick} />
       </div>
       <p className="text-2xl">질문 추가 작성</p>
       <Toggle onChange={handleToggleChange} />
@@ -106,14 +123,22 @@ function QueryAdd() {
       </div>
       {!showAnswersAdd && (
         <div className="flex flex-col gap-2">
-          <p className="text-xl">답변 옵션</p>
-          <AnswerOptionList inputs={answerInputs} setInputs={setAnswerInputs} />
+          <div className="flex flex-row items-end gap-1">
+            <p className="text-xl">답변 옵션</p>
+            <p className="text-xs text-gray-600 p-1">(2개 이상 필수)</p>
+          </div>
+          <AnswerOptionList
+            inputs={answerInputs}
+            setInputs={setAnswerInputs}
+            onCompleteChange={handleAnswerCompleteChange}
+          />
           <AddButton
             text="답변 옵션을 추가하세요"
             onClick={handleAnswerAddButtonClick}
           />
         </div>
       )}
+      {popupVisible && <PopupQuestion onClose={handlePopupClose} />}
     </div>
   );
 }
