@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from .models import User
+from .models import AuthUser,Form, Question
 
 class UserSerializer(serializers.ModelSerializer) :
     class Meta:
-        model = User
+        model = AuthUser
         fields = ['id', 'username', 'email', 'password', 'created_at']
         extra_kwargs = {
             'password' : {'write_only' : True}
@@ -16,3 +16,15 @@ class UserSerializer(serializers.ModelSerializer) :
             instance.set_password(password)
         instance.save()
         return instance
+
+
+class FormSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Form
+        fields = "__all__"
+
+
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = "__all__"
