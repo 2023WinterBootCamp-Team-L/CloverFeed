@@ -11,10 +11,10 @@ const Tag: React.FC<TagProps> = ({ text, color, image }) => {
   const tagClasses = classNames(
     color,
     "text-black",
-    "py-2 px-4",
+    "py-1 px-3",
     "rounded-2xl",
     "mt-4",
-    "text-sm",
+    "text-xs",
     "flex",
     "items-center",
     "justify-center"
