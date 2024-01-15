@@ -3,8 +3,6 @@ import Line from "../components/Line";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import Tag from "../components/Tag";
-import 개발자 from "../assets/PMPO.svg";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -68,7 +66,6 @@ const SkillChart = () => {
 function Chart() {
   return (
     <div className="bg-c-emerald bg-opacity-30 flex flex-col overflow-hidden w-[24.56rem] mx-auto h-full px-5 py-8 gap-4 overflow-y-auto overflow:hidden">
-      <Tag text="개발자" image={개발자} color="bg-c-green" />
       <div className="flex justify-between">
         <BackButton back page="/" />
       </div>
