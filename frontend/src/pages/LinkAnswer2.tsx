@@ -7,16 +7,16 @@ function LinkAnswer2() {
         className="flex flex-col justify-center items-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50 "
         style={{ width: "393px", height: "852px" }}
       >
-        <div className="flex justify-between w-full">
+        <div className="flex justify-between w-full px-4 pt-4">
           <BackButton back page="/LinkAnswer1" />
           <BackButton back={false} page="/LinkOpti" />
         </div>
-        <div className="flex-col items-start">
+        <div className="flex-col flex-full justify-between pt-12 pb-12">
           <p className="text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
-            XXX 님에게 전하고 싶은
+            XXX님이 보완해 줬으면
           </p>
           <p className="text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
-            칭찬이 있나요??
+            하는 부분이 있나요?
           </p>
         </div>
         <div className="flex flex-1 flex-col justify-center items-center">

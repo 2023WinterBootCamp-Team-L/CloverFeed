@@ -1,19 +1,117 @@
-// import React, { useState } from "react";
+import { useState } from "react";
 import BackButton from "../components/BackButton";
 // import ExceedPopup from "../components/ExceedPopup";
+import Tag from "../components/Tag";
+
+interface TagProps {
+  text: string;
+  color: string;
+  image: string;
+}
 
 function LinkTag1() {
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  const handleTagClick = (tag: string) => {
+    const isSelected = selectedTags.includes(tag);
+
+    setSelectedTags((prevSelectedTags) =>
+      isSelected
+        ? prevSelectedTags.filter((selectedTag) => selectedTag !== tag)
+        : [...prevSelectedTags, tag]
+    );
+  };
+
+  // 태그에 사용될 데이터 배열
+  const tagsData: TagProps[] = [
+    {
+      text: "효율적인",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/효율적인.svg",
+    },
+    {
+      text: "박학다식",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/박학다식.svg",
+    },
+    {
+      text: "문제분석",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/문제분석.svg",
+    },
+    {
+      text: "계획적인",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/계획적인.svg",
+    },
+    {
+      text: "기획력",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/기획력.svg",
+    },
+    {
+      text: "눈치빠른",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/눈치빠른.svg",
+    },
+    {
+      text: "규칙준수",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/규칙준수.svg",
+    },
+    {
+      text: "위기대처 능력",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/위기대처능력.svg",
+    },
+    {
+      text: "리더쉽",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/리더쉽.svg",
+    },
+    {
+      text: "정보수집",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/정보수집.svg",
+    },
+    {
+      text: "의견 다양성",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/의견다양성.svg",
+    },
+    {
+      text: "추진력",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/추진력.svg",
+    },
+    {
+      text: "전략적인",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/전략적인.svg",
+    },
+    {
+      text: "결단력",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/결단력.svg",
+    },
+    {
+      text: "협력적인",
+      color: "bg-[#EEEFF0]",
+      image: "../assets/TagIcon/협력적인.svg",
+    },
+  ];
+
   return (
     <div className="flex justify-center items-center h-screen ">
       <div
-        className="flex flex-col justify-center items-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50 "
+        className="flex flex-col justify-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50"
         style={{ width: "393px", height: "852px" }}
       >
-        <div className="flex justify-between">
+        <div className="flex justify-between w-full px-4 pt-4">
           <BackButton back page="/LinkPosition" />
           <BackButton back={false} page="/LinkTag2" />
         </div>
-        <div className="">
+        <div className="flex-full justify-start pt-12 pb-12 pl-4">
           <p className=" text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
             당신이 생각하는 XXX 님의
           </p>
@@ -24,89 +122,21 @@ function LinkTag1() {
             키워드를 최대 5개까지 선택해주세요.
           </p>
         </div>
-        <div className="flex-full"></div>
+        <div className="flex-1 px-4">
+          {/* 15개의 태그 렌더링 */}
+          {tagsData.map((tag, index) => (
+            <Tag
+              key={index}
+              text={tag.text}
+              color={tag.color}
+              image={tag.image}
+              onClick={() => handleTagClick(tag.text)}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
 }
 
 export default LinkTag1;
-
-// LinkTag1.tsx
-
-// interface TagProps {
-//   icon?: React.ReactNode;
-//   text: string;
-//   isSelected: boolean;
-//   onClick: () => void;
-// }
-
-// function Tag({ icon, text, isSelected, onClick }: TagProps) {
-//   const baseClasses =
-//     "w-[82px] h-[29px] rounded-[20px] flex items-center justify-center cursor-pointer";
-
-//   const selectedClasses = isSelected
-//     ? "bg-blue-500 text-white"
-//     : "bg-gray-200 text-gray-700";
-
-//   return (
-//     <div className={`${baseClasses} ${selectedClasses}`} onClick={onClick}>
-//       {icon && <span className="mr-2">{icon}</span>}
-//       <span>{text}</span>
-//     </div>
-//   );
-// }
-
-// function LinkTag1() {
-//   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-//   const [showExceedPopup, setShowExceedPopup] = useState(false);
-
-//   const handleTagClick = (tag: string) => {
-//     if (selectedTags.includes(tag)) {
-//       // 이미 선택된 경우, 선택 해제
-//       setSelectedTags(
-//         selectedTags.filter((selectedTag) => selectedTag !== tag)
-//       );
-//     } else {
-//       // 선택되지 않은 경우, 최대 5개까지만 선택
-//       if (selectedTags.length < 5) {
-//         setSelectedTags([...selectedTags, tag]);
-//       } else {
-//         // 5개 초과 선택시 팝업 표시
-//         setShowExceedPopup(true);
-//       }
-//     }
-//   };
-
-//   const handleCloseExceedPopup = () => {
-//     setShowExceedPopup(false);
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen ">
-//       <div
-//         className="flex flex-col justify-center items-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50 "
-//         style={{ width: "393px", height: "852px" }}
-//       >
-//         <div className="flex justify-between">
-//           <BackButton back page="/LinkStart" />
-//           <BackButton back={false} page="/LinkTag2" />
-//         </div>
-//         <div className="">
-//           <p className=" text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
-//             당신이 생각하는 XXX 님의
-//           </p>
-//           <p className=" text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
-//             업무 능력 강점은 무엇인가요?
-//           </p>
-//           <p className=" text-left font-Preahvihear text-[#767677] text-[14px] font-normal font-weight-400 ">
-//             키워드를 최대 5개까지 선택해주세요.
-//           </p>
-//         </div>
-//         <div></div>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default LinkTag1;
