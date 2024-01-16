@@ -5,15 +5,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('cloverfeed', '0004_alter_feedbackresult_form_alter_form_user_and_more'),
+        ("cloverfeed", "0004_alter_feedbackresult_form_alter_form_user_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='authuser',
-            name='user_id',
-            field=models.CharField(default=cloverfeed.models.generate_user_id, max_length=15, unique=True),
+            model_name="authuser",
+            name="user_id",
+            field=models.CharField(max_length=15, unique=True),
         ),
     ]

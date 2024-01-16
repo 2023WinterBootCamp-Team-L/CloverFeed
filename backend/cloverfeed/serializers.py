@@ -5,18 +5,23 @@
 from rest_framework import serializers
 from .models import AuthUser, Form, Question, FeedbackResult
 
-class UserSerializer(serializers.ModelSerializer) :
+
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = AuthUser
-        fields = ['id', 'username', 'email', 'password', 'created_at',]
-        extra_kwargs = {
-            'password' : {'write_only' : True}
-        }
+        fields = [
+            "id",
+            "username",
+            "email",
+            "password",
+            "created_at",
+        ]
+        extra_kwargs = {"password": {"write_only": True}}
 
     def create(self, validated_data):
-        password = validated_data.pop('password', None)
+        password = validated_data.pop("password", None)
         instance = self.Meta.model(**validated_data)
-        if password is not None :
+        if password is not None:
             instance.set_password(password)
         instance.save()
         return instance
@@ -31,10 +36,10 @@ class FormSerializer(serializers.ModelSerializer):
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = "__all__"
-        
+        fields = "__all__"  # 모델의 모든 필드를 포함
+
+
 class FeedbackResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = FeedbackResult
-        fields = '__all__' # 모델의 모든 필드를 포함
-
+        fields = "__all__"  # 모델의 모든 필드를 포함
