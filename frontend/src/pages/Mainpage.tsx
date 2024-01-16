@@ -9,7 +9,7 @@ import ChartButton from "../components/ChartButton.tsx";
 import ShareButton from "../components/ShareButton.tsx";
 import PurplefeedButton from "../components/PurplefeedButton.tsx";
 import BluefeedButton from "../components/BluefeedButton.tsx";
-// import SimpleWordcloud from '../components/wordcloud.tsx';
+import SimpleWordcloud from '../components/wordcloud.tsx';
 
 function Mainpage() {
   const nextpage = "/QueryMain";
@@ -39,7 +39,7 @@ function Mainpage() {
       </div>
       <div className="mt-4">
         <center>
-          {/* <SimpleWordcloud /> */}
+          <SimpleWordcloud />
           <p className="text-xs">
             사용자 관점을 잘 배려하는 프론트엔드 <br />
             엔지니어로 평가받고 있습니다.
