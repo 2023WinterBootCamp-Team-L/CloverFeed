@@ -4,11 +4,13 @@ import AnswerOption from "./AnswerOption";
 interface AnswerOptionListProps {
   inputs: string[];
   setInputs: React.Dispatch<React.SetStateAction<string[]>>;
+  onCompleteChange: (complete: boolean) => void;
 }
 
 const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
   inputs,
   setInputs,
+  onCompleteChange,
 }) => {
   const onInputChange =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,6 +24,11 @@ const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
     newInputs.splice(index, 1);
     setInputs(newInputs);
   };
+
+  React.useEffect(() => {
+    const isComplete = inputs.every((input) => input !== "");
+    onCompleteChange(isComplete);
+  }, [inputs, onCompleteChange]);
 
   return (
     <div className="space-y-1.5">
