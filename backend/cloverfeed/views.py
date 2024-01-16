@@ -60,6 +60,7 @@ class CheckFormExistenceView(APIView):
         user = get_object_or_404(AuthUser, id=user_id)
         
         # 폼 존재 여부 확인
+        #form_id가 1이면 폼이 존재, form_id가 0이면 폼이 존재하지않음
         form_exists = Form.objects.filter(user=user, id=1).exists()
         
         # 응답 생성
