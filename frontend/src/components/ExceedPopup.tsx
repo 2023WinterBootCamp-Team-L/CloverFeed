@@ -19,7 +19,7 @@ const ExceedPopup: React.FC<ExceedPopupProps> = ({ onClose }) => {
   }, [onClose]);
 
   return (
-    <div className="bg-[#1E2C49] text-white w-[287px] h-[50px]  flex rounded-[50px] text-[15px]  justify-center items-center fixed bottom-0 left-0 right-0 mx-auto mb-4">
+    <div className="bg-[#1E2C49] text-white w-[287px] h-[50px]  flex rounded-[50px] text-[15px] justify-center items-center fixed bottom-0 left-0 right-0 mx-auto mb-4">
       <img
         src={checkcircle}
         alt="Check Circle Icon"

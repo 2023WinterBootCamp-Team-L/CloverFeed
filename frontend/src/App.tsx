@@ -10,12 +10,14 @@ import QueryShare from "./pages/QueryShare";
 import LinkStart from "./pages/LinkStart";
 import LinkPosition from "./pages/LinkPosition";
 import LinkTag1 from "./pages/LinkTag1";
+import Chart from "./pages/Chart";
+import Search from "./pages/Search";
+import FeedBackList from "./pages/FeedBackList";
 import LinkTag2 from "./pages/LinkTag2";
 import LinkAnswer1 from "./pages/LinkAnswer1";
 import LinkAnswer2 from "./pages/LinkAnswer2";
 import LinkOpti from "./pages/LinkOpti";
 import LinkFinish from "./pages/LinkFinish";
-import Chart from "./pages/Chart";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -32,10 +34,10 @@ function App() {
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
-        <Route path="/LinkAnswer1" element={<LinkAnswer1 />} />
-        <Route path="/LinkAnswer2" element={<LinkAnswer2 />} />
-        <Route path="/LinkOpti" element={<LinkOpti />} />
-        <Route path="/LinkFinish" element={<LinkFinish />} />
+        <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
+        <Route path="LinkAnswer2" element={<LinkAnswer2 />} />
+        <Route path="LinkOpti" element={<LinkOpti />} />
+        <Route path="LinkFinish" element={<LinkFinish />} />
         <Route path="/Chart" element={<Chart />} />
       </Routes>
 
