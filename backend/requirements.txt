@@ -12,3 +12,5 @@ pytz==2023.3.post1
 serializers==0.2.4
 sqlparse==0.4.4
 typing_extensions==4.9.0
+jwt
+PyJWT
