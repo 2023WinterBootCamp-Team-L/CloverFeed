@@ -184,16 +184,16 @@ class QuestionListView(APIView):
                 {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
             )
 
-        # queryset = Question.objects.all()
         # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
-        # 여기에서는 예시로 더미 데이터를 사용
-        questions_data = Question.objects.all()
+        # questions_data = list(Question.objects.all().values())
+        questions_data = Question.objects.filter(form__user_id=user_id)
+        print(questions_data)
 
         # 시리얼라이저를 사용하여 데이터 직렬화
         serializer = QuestionSerializer(questions_data, many=True)
 
         # 직렬화된 데이터를 응답으로 반환
-        return JsonResponse(
+        return Response(
             {
                 "status": "success",
                 "questions": serializer.data,
