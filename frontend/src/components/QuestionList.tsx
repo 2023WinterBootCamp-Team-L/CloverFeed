@@ -13,7 +13,9 @@ export const QuestionList: React.FC<QuestionListProps> = ({ questions }) => {
       {questions.map((question, index) => (
         <div
           key={index}
-          className="bg-c-blue text-black rounded-lg h-12 flex items-center px-4 text-sm leading-1.25 mb-1.5"
+          className={`rounded-lg h-12 flex items-center px-4 text-sm leading-1.25 mb-1.5 ${
+            index % 2 === 0 ? "bg-c-blue" : "bg-c-purple bg-opacity-50"
+          }`}
         >
           {question.value}
         </div>
