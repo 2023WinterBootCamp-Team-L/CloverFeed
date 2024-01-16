@@ -119,12 +119,7 @@ REST_FRAMEWORK = {
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
         # 다른 파서들도 필요하다면 추가
-    ],
-    "DEFAULT_AUTHENTICATION_CLASSES": [
-        # 'rest_framework.authentication.SessionAuthentication',
-        "rest_framework.authentication.BasicAuthentication",
     ]
-    # ...
 }
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/

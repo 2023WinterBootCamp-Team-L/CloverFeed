@@ -1,7 +1,7 @@
 # backend/cloverfeed/urls.py
 # URL 경로와 뷰를 매핑해주는 파일
 from django.urls import path, re_path
-from cloverfeed import views
+from .views import QuestionListView, FeedbackResultDetail,CheckFormExistenceView
 
 app_name = "cloverfeed"
 
@@ -13,4 +13,5 @@ urlpatterns = [
     # <int:pk> 부분은 요청 URL에서 피드백 ID를 읽어오는 역할
     path("feedbacks/<int:pk>", views.FeedbackResultDetail.as_view()),
     path("forms/questions/", views.QuestionListView.as_view(), name="questionlist"),
+    path('check_form_existence/', views.CheckFormExistenceView.as_view(), name='check_form_existence'),
 ]
