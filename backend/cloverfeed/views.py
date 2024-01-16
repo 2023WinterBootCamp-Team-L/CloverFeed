@@ -146,6 +146,34 @@ class FeedbackResultDetail(APIView):
         return Response({"status": "success", **serializer.data})
 
 
+# 카테고리(직군)별 피드백 목록 조회
+class FeedbackListByCategory(APIView):
+    def get(self, request, format=None):
+        userid = request.query_params.get("userid", None)
+        category = request.query_params.get("category", None)
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        # 카테고리에 따른 피드백 결과 조회
+        # 카테고리 값이 있을 경우에는 해당 카테고리의 피드백 결과만 조회하고, 없을 경우에는 사용자의 모든 피드백 결과를 조회
+        if category:
+            feedbacks = FeedbackResult.objects.filter(
+                form__user=user, category=category
+            )
+        else:
+            feedbacks = FeedbackResult.objects.filter(form__user=user)
+        # 응답
+        serializer = FeedbackResultSerializer(feedbacks, many=True)
+        return Response({"status": "success", "feedbacks": serializer.data})
+
+
 class QuestionListView(APIView):
     def get(self, request, *args, **kwargs):
         # query_params에서 userid 가져오기
