@@ -2,6 +2,7 @@ import React from "react";
 import AnswerOption from "./AnswerOption";
 
 interface AnswerOptionListProps {
+  
   inputs: string[];
   setInputs: React.Dispatch<React.SetStateAction<string[]>>;
   onCompleteChange: (complete: boolean) => void;

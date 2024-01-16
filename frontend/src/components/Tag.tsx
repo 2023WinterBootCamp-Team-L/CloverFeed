@@ -1,7 +1,7 @@
 import React from "react";
 import classNames from "classnames";
 
-interface TagProps {
+export interface TagProps {
   text: string;
   color: string;
   image: string; // Image source as a string
