@@ -18,10 +18,6 @@ import LinkAnswer1 from "./pages/LinkAnswer1";
 import LinkAnswer2 from "./pages/LinkAnswer2";
 import LinkOpti from "./pages/LinkOpti";
 import LinkFinish from "./pages/LinkFinish";
-import Gosignup from './pages/Gosignup';
-import Mainpage from './pages/Mainpage';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -37,18 +33,12 @@ function App() {
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
-        <Route path="/Chart" element={<Chart />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/FeedBackList" element={<FeedBackList />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
         <Route path="LinkAnswer2" element={<LinkAnswer2 />} />
         <Route path="LinkOpti" element={<LinkOpti />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/mainpage" element={<Mainpage />} />
-        <Route path="/gosignup" element={<Gosignup />} />
+        <Route path="/Chart" element={<Chart />} />
       </Routes>
 
       <QuestionProvider>
