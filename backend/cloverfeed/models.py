@@ -9,8 +9,6 @@ import random
 
 # 사용자
 class AuthUser(AbstractUser):
-    # user_id = models.CharField(max_length=15, unique=True, default=generate_user_id)
-    user_id = models.CharField(max_length=15, unique=True)
     keywords = models.CharField(max_length=254, null=True)
     summary = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)

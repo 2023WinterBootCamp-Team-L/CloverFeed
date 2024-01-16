@@ -16,35 +16,21 @@
     "chart.js": "^4.4.1",
     "chartjs-plugin-datalabels": "^2.2.0",
     "classnames": "^2.5.1",
-<<<<<<< HEAD
-    "d3": "^7.8.5",
-    "d3-cloud": "^1.2.7",
-    "framer-motion": "^10.18.0",
-=======
     "framer-motion": "^10.18.0",
     "d3": "^7.8.5",
-    "d3-cloud": "^1.2.7",
->>>>>>> 3ef13c655fb9b528ba71af0e0000c98c51805b0a
+    "d3-cloud": "^1.2.7",     
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
-<<<<<<< HEAD
+
     "react-router-dom": "^6.21.2",
     "react-wordcloud": "^1.2.7"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
     "@types/react-dom": "^18.2.18",
-    "@types/react-router-dom": "^5.3.3",
-=======
-    "react-router-dom": "^6.21.1",
-    "react-wordcloud": "^1.2.7"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.17",
->>>>>>> 3ef13c655fb9b528ba71af0e0000c98c51805b0a
+    "@types/react-router-dom": "^5.3.3", 
     "@types/wordcloud": "^1.2.2",
     "@typescript-eslint/eslint-plugin": "^6.18.0",
     "@typescript-eslint/parser": "^6.18.0",

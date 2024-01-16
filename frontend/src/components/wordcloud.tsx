@@ -17,6 +17,10 @@ const words = [
     text: 'bad',
     value: 17,
   },
+  {
+    text: '성실함',
+    value: 30,
+  },
 ];
 
 function SimpleWordcloud() {

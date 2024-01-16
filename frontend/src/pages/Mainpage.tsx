@@ -1,27 +1,27 @@
-import logouticon from '../assets/logouticon.svg';
-import researchicon from '../assets/researchicon.svg';
-import charticon from '../assets/charticon.svg';
-import shareicon from '../assets/shareicon.svg';
-import GreenButton from '../components/GreenButton';
-import LogoutButton from '../components/LogoutButton.tsx';
-import ResearchButton from '../components/ResearchButton.tsx';
-import ChartButton from '../components/ChartButton.tsx';
-import ShareButton from '../components/ShareButton.tsx';
-import PurplefeedButton from '../components/PurplefeedButton.tsx';
-import BluefeedButton from '../components/BluefeedButton.tsx';
+import logouticon from "../assets/logouticon.svg";
+import researchicon from "../assets/researchicon.svg";
+import charticon from "../assets/charticon.svg";
+import shareicon from "../assets/shareicon.svg";
+import GreenButton from "../components/GreenButton";
+import LogoutButton from "../components/LogoutButton.tsx";
+import ResearchButton from "../components/ResearchButton.tsx";
+import ChartButton from "../components/ChartButton.tsx";
+import ShareButton from "../components/ShareButton.tsx";
+import PurplefeedButton from "../components/PurplefeedButton.tsx";
+import BluefeedButton from "../components/BluefeedButton.tsx";
 import SimpleWordcloud from '../components/wordcloud.tsx';
 
 function Mainpage() {
-  const nextpage = '/QueryMain';
-  const logoutpage = '/Signup';
-  const researchpage = '/';
-  const chartpage = '/Chart';
-  const sharepage = '/QueryShare';
-  const developerfeedpage = '/';
-  const designerfeedpage = '/';
-  const plannerfeedpage = '/';
-  const pmpofeedpage = '/';
-  const othersfeedpage = '/';
+  const nextpage = "/QueryMain";
+  const logoutpage = "/Signup";
+  const researchpage = "/";
+  const chartpage = "/Chart";
+  const sharepage = "/QueryShare";
+  const developerfeedpage = "/";
+  const designerfeedpage = "/";
+  const plannerfeedpage = "/";
+  const pmpofeedpage = "/";
+  const othersfeedpage = "/";
 
   return (
     <div
