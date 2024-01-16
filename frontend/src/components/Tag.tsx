@@ -4,7 +4,7 @@ import { useState } from "react";
 import classNames from "classnames";
 
 // TagProps를 정의합니다.
-interface TagProps {
+export interface TagProps {
   text: string;
   color: string;
   image: string;

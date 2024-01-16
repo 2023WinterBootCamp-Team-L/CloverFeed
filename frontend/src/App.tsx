@@ -16,15 +16,14 @@ import LinkAnswer1 from "./pages/LinkAnswer1";
 import LinkAnswer2 from "./pages/LinkAnswer2";
 import LinkOpti from "./pages/LinkOpti";
 import LinkFinish from "./pages/LinkFinish";
-import Gosignup from './pages/Gosignup';
-import Mainpage from './pages/Mainpage';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
-import WordCloud from './components/wordcloud';
+import Gosignup from "./pages/Gosignup";
+import Mainpage from "./pages/Mainpage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import WordCloud from "./components/wordcloud";
 import FeedBackList from "./pages/FeedBackList";
 import Search from "./pages/Search";
 import FeedBackResult from "./pages/FeedBackResult";
-
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -32,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="" element={<LinkMain />} />
+        <Route path="/" element={<LinkMain />} />
         <Route path="/querymain" element={<QueryMain />} />
         <Route path="/querystart" element={<QueryStart />} />
         <Route path="/queryshare" element={<QueryShare />} />
@@ -44,7 +43,7 @@ function App() {
         <Route path="/Search" element={<Search />} />
         <Route path="/FeedBackList" element={<FeedBackList />} />
         <Route path="/FeedBackResult" element={<FeedBackResult />} />
-        
+        <Route path="/feedbacks/:category" element={<FeedBackList />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
         <Route path="LinkAnswer2" element={<LinkAnswer2 />} />

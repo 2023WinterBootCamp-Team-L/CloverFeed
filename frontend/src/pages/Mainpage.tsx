@@ -7,9 +7,8 @@ import LogoutButton from "../components/LogoutButton.tsx";
 import ResearchButton from "../components/ResearchButton.tsx";
 import ChartButton from "../components/ChartButton.tsx";
 import ShareButton from "../components/ShareButton.tsx";
-import PurplefeedButton from "../components/PurplefeedButton.tsx";
-import BluefeedButton from "../components/BluefeedButton.tsx";
-import SimpleWordcloud from '../components/wordcloud.tsx';
+import FeedButton from "../components/FeedButton.tsx";
+import SimpleWordcloud from "../components/wordcloud.tsx";
 
 function Mainpage() {
   const nextpage = "/QueryMain";
@@ -17,11 +16,8 @@ function Mainpage() {
   const researchpage = "/";
   const chartpage = "/Chart";
   const sharepage = "/QueryShare";
-  const developerfeedpage = "/";
-  const designerfeedpage = "/";
-  const plannerfeedpage = "/";
-  const pmpofeedpage = "/";
-  const othersfeedpage = "/";
+
+  const categories = ["developer", "designer", "planner", "pmpo", "others"];
 
   return (
     <div
@@ -67,23 +63,13 @@ function Mainpage() {
       </div>
       <div>
         <p className="text-xl mt-0">feedback</p>
-        <PurplefeedButton
-          text="개발자의 피드백"
-          purplefeedpage={developerfeedpage}
-        />
-        <BluefeedButton
-          text="디자이너의 피드백"
-          bluefeedpage={designerfeedpage}
-        />
-        <PurplefeedButton
-          text="기획자의 피드백"
-          purplefeedpage={plannerfeedpage}
-        />
-        <BluefeedButton text="PM/PO의 피드백" bluefeedpage={pmpofeedpage} />
-        <PurplefeedButton
-          text="기타 직무의 피드백"
-          purplefeedpage={othersfeedpage}
-        />
+        {categories.map((category, index) => (
+          <FeedButton
+            key={category}
+            category={category}
+            color={index % 2 === 0}
+          />
+        ))}
       </div>
     </div>
   );
