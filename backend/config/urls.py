@@ -1,3 +1,6 @@
+# backend/config/urls.py
+# URL 경로와 뷰를 매핑해주는 파일
+
 """config URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
