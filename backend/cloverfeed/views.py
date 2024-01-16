@@ -7,6 +7,11 @@ from rest_framework.response import Response
 from rest_framework import status, generics
 from .models import Form, Question, FeedbackResult
 from .serializers import QuestionSerializer, FeedbackResultSerializer
+from cloverfeed.models import AuthUser, Form
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
+
 
 class FeedbackResultDetail(APIView):
     def get_object(self, pk, user_id):
@@ -34,7 +39,7 @@ class FeedbackResultDetail(APIView):
         # 변환된 데이터를 Response 객체에 담아 반환
         # status 필드를 추가
         return Response({"status": "success", **serializer.data})
-   
+
 class QuestionListView(APIView):
     def get(self, request, *args, **kwargs):
         # query_params에서 userid 가져오기
@@ -45,14 +50,22 @@ class QuestionListView(APIView):
             return Response(
                 {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
             )
+        
 
-        # queryset = Question.objects.all()
-        # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
-        # 여기에서는 예시로 더미 데이터를 사용
-        questions_data = Question.objects.all()
-
-        # 시리얼라이저를 사용하여 데이터 직렬화
-        serializer = QuestionSerializer(questions_data, many=True)
-
-        # 직렬화된 데이터를 응답으로 반환
-        return Response(serializer.data, status=status.HTTP_200_OK)
+class CheckFormExistenceView(APIView):
+    def post(self, request):
+        user_id = request.data.get("user_id")
+        
+        # 사용자 객체 가져오기
+        user = get_object_or_404(AuthUser, id=user_id)
+        
+        # 폼 존재 여부 확인
+        form_exists = Form.objects.filter(user=user, id=1).exists()
+        
+        # 응답 생성
+        response_data = {
+            "user_id": request.data.get("user_id"),
+            "message": "폼이 존재합니다." if form_exists else "폼이 존재하지 않습니다.",
+        }
+        
+        return Response(response_data)

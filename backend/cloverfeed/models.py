@@ -3,11 +3,13 @@ from django.contrib.auth.models import AbstractUser
 
 # 사용자
 class AuthUser(AbstractUser):
+    id = models.AutoField(primary_key=True)
     keywords = models.CharField(max_length=254, null=True)
     summary = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(blank=True, null=True)  # nullable로 변경
     deleted_at = models.DateTimeField(null=True)
+    
 
 # 하나의 피드백폼(Form)의 링크를 통해 들어온 피드백답변(feedbackresult)
 class FeedbackResult(models.Model):
