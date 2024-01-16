@@ -14,7 +14,6 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .models import Form, Question, AuthUser, FeedbackResult
 from .serializers import QuestionSerializer, FeedbackResultSerializer
-import random
 
 # 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
 # user_id = f"#{random.randint(1000, 9999)}"
