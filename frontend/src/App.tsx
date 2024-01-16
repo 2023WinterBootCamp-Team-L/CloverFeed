@@ -11,13 +11,20 @@ import LinkStart from "./pages/LinkStart";
 import LinkPosition from "./pages/LinkPosition";
 import LinkTag1 from "./pages/LinkTag1";
 import Chart from "./pages/Chart";
-import Search from "./pages/Search";
-import FeedBackList from "./pages/FeedBackList";
 import LinkTag2 from "./pages/LinkTag2";
 import LinkAnswer1 from "./pages/LinkAnswer1";
 import LinkAnswer2 from "./pages/LinkAnswer2";
 import LinkOpti from "./pages/LinkOpti";
 import LinkFinish from "./pages/LinkFinish";
+import Gosignup from './pages/Gosignup';
+import Mainpage from './pages/Mainpage';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import WordCloud from './components/wordcloud';
+import FeedBackList from "./pages/FeedBackList";
+import Search from "./pages/Search";
+import FeedBackResult from "./pages/FeedBackResult";
+
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -33,12 +40,21 @@ function App() {
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
+        <Route path="/Chart" element={<Chart />} />
+        <Route path="/Search" element={<Search />} />
+        <Route path="/FeedBackList" element={<FeedBackList />} />
+        <Route path="/FeedBackResult" element={<FeedBackResult />} />
+        
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
         <Route path="LinkAnswer2" element={<LinkAnswer2 />} />
         <Route path="LinkOpti" element={<LinkOpti />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
-        <Route path="/Chart" element={<Chart />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/mainpage" element={<Mainpage />} />
+        <Route path="/gosignup" element={<Gosignup />} />
+        <Route path="/wordcloud" element={<WordCloud />} />
       </Routes>
 
       <QuestionProvider>
