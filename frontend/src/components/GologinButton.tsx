@@ -7,7 +7,7 @@ function GologinButton() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const SuccessLogin = () => {
-    navigate('/mainpage');
+    navigate('/login');
   };
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -24,21 +24,21 @@ function GologinButton() {
 
   return (
     <div>
-      <button className="text-xs text-black" onClick={toggleModal}>
+      <button className="text-xs text-black underline" onClick={toggleModal}>
         로그인하러가기
       </button>
       <LoginModal isOpen={isOpen} toggle={toggleModal}>
         <div>
-          <p className="pt-8 pl-8 mb-0 text-xs text-left">Email 입력</p>
+          <p className="pt-8 pl-1 mb-1 text-sm text-left">Email 입력</p>
           <SignupAnswer
             value={emailanswerInputs}
             onChange={onInputChangeemail}
           />
-          <p className="pt-8 pl-8 mb-0 text-xs text-left">비밀번호 입력</p>
+          <p className="pt-8 pl-1 mb-1 text-sm text-left">비밀번호 입력</p>
           <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
           <button
             onClick={SuccessLogin}
-            className="bg-c-green text-white w-full px-2 py-2 rounded-xl mt-4 text-lg"
+            className="bg-c-green text-white w-full px-2 py-2 rounded-xl mt-12 text-lg"
           >
             로그인
           </button>

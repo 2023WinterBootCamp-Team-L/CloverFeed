@@ -11,11 +11,11 @@ export default function LoginModal(props: ModalType) {
     <>
       {props.isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-emerald-50"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-300 bg-opacity-50"
           onClick={props.toggle}
         >
           <div
-            className="bg-emerald-50 bg-opacity-70w-flex h-flex p-4 rounded-lg"
+            className="bg-emerald-50 bg-opacity-70w-flex h-flex p-4 rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {props.children}

@@ -9,13 +9,14 @@ import ChartButton from '../components/ChartButton.tsx';
 import ShareButton from '../components/ShareButton.tsx';
 import PurplefeedButton from '../components/PurplefeedButton.tsx';
 import BluefeedButton from '../components/BluefeedButton.tsx';
+import SimpleWordcloud from '../components/wordcloud.tsx';
 
 function Mainpage() {
   const nextpage = '/QueryMain';
   const logoutpage = '/Signup';
   const researchpage = '/';
-  const chartpage = '/';
-  const sharepage = '/';
+  const chartpage = '/Chart';
+  const sharepage = '/QueryShare';
   const developerfeedpage = '/';
   const designerfeedpage = '/';
   const plannerfeedpage = '/';
@@ -25,7 +26,7 @@ function Mainpage() {
   return (
     <div
       className="bg-white flex flex-col 
-    overflow-y-scroll max-w-[24.56rem] mx-auto h-screen gap-[42px] px-22px py-36px"
+     max-w-[24.56rem] mx-auto h-screen gap-[42px] px-22px py-36px"
     >
       <div>
         <p className="text-4xl mt-4">
@@ -38,7 +39,7 @@ function Mainpage() {
       </div>
       <div className="mt-4">
         <center>
-          <h1>WORDCLOUD</h1>
+          <SimpleWordcloud />
           <p className="text-xs">
             사용자 관점을 잘 배려하는 프론트엔드 <br />
             엔지니어로 평가받고 있습니다.

@@ -12,7 +12,7 @@ const SignupAnswer: React.FC<SignupAnswerProps> = ({ value, onChange }) => {
         type="text"
         value={value}
         onChange={onChange}
-        className="bg-white text-black w-80 h-10 rounded-lg outline-emerald-500  leading-1.25 p-2 text-sm justify-center"
+        className="bg-white text-black w-56 h-10 rounded-lg border-2 border-emerald-500 leading-1.25 p-2 text-sm"
       />
     </div>
   );
