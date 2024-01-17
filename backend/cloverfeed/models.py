@@ -20,7 +20,8 @@ class AuthUser(AbstractUser):
 class FeedbackResult(models.Model):
     id = models.IntegerField(primary_key=True)
     form = models.ForeignKey("Form", on_delete=models.CASCADE)
-    tag = models.CharField(max_length=255)
+    tag_work = models.CharField(max_length=255)
+    tag_attitude = models.CharField(max_length=255)
     respondent_name = models.CharField(max_length=255)
     category = models.CharField(max_length=255, blank=True, null=True)
     summary = models.TextField(blank=True, null=True)

@@ -17,7 +17,7 @@ const FeedbackList: React.FC = () => {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
   // 카테고리에 따른 텍스트 반환 함수
-  const getCategoryText = (category: string): string => {
+  const getCategoryText = (category?: string): string => {
     switch (category) {
       case "developer":
         return "개발자";
@@ -35,37 +35,35 @@ const FeedbackList: React.FC = () => {
   };
 
   useEffect(() => {
-    const apiUrl = `http://localhost:포트번호/feedbacks/response/list`;
-    const userId = "사용자ID";
+    // category가 undefined일 경우 처리
+    if (category !== undefined) {
+      // 사용자 ID를 하드코딩
+      const userId = "사용자ID";
 
-    const requestData = {
-      userid: userId,
-      category: category,
-    };
+      // REST API 엔드포인트 및 쿼리 파라미터 설정
+      const apiUrl = `http://localhost:포트번호/feedbacks/response/list`;
+      const queryParams = `userid=${userId}&category=${category}`;
 
-    axios
-      .get(apiUrl, { params: requestData })
-      .then((response: AxiosResponse) => {
-        if (response.data.status === "success") {
-          setFeedbacks(response.data.feedbacks);
-          console.log(response.data.feedbacks);
-        } else {
-          console.error("서버 에러:", response.data);
-        }
-      })
-      .catch((error: AxiosError) => {
-        if (error.response) {
-          console.error("요청 실패:", error.response.data);
-        } else {
-          console.error("네트워크 오류:", error.message);
-        }
-      });
+      // GET 요청 보내기
+      axios
+        .get(`${apiUrl}?${queryParams}`)
+        .then((response: AxiosResponse) => {
+          if (response.data.status === "success") {
+            setFeedbacks(response.data.feedbacks);
+            console.log(response.data.feedbacks);
+          } else {
+            console.error("서버 에러:", response.data);
+          }
+        })
+        .catch((error: AxiosError) => {
+          if (error.response) {
+            console.error("요청 실패:", error.response.data);
+          } else {
+            console.error("네트워크 오류:", error.message);
+          }
+        });
+    }
   }, [category]);
-
-  if (!category) {
-    // 카테고리가 없을 경우에 대한 처리
-    return <div>카테고리가 정의되지 않았습니다.</div>;
-  }
 
   return (
     <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
