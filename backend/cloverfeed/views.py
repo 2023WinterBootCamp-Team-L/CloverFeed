@@ -2,18 +2,24 @@
 # 요청을 처리하고 응답을 반환하는데 필요한 로직을 작성하는 파일
 
 from django.http import JsonResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
-from .models import Form, Question, AuthUser, FeedbackResult
+from .models import (
+    Form,
+    Question,
+    AuthUser,
+    FeedbackResult,
+    QuestionAnswer,
+    MultipleChoice,
+)
 from .serializers import QuestionSerializer, FeedbackResultSerializer
+import json
+
 
 # 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
 # user_id = f"#{random.randint(1000, 9999)}"
@@ -203,20 +209,24 @@ class QuestionListView(APIView):
 
 
 class CheckFormExistenceView(APIView):
-    def post(self, request):
-        user_id = request.data.get("user_id")
+    def get(self, request, format=None):
+        # user_id인식 안됨
+        user_id = request.query_params.get("user_id", None)
 
-        # 사용자 객체 가져오기
-        user = get_object_or_404(AuthUser, id=user_id)
-
-        # 폼 존재 여부 확인
-        # form_id가 1이면 폼이 존재, form_id가 0이면 폼이 존재하지않음
-        form_exists = Form.objects.filter(user=user, id=1).exists()
-
-        # 응답 생성
-        response_data = {
-            "user_id": request.data.get("user_id"),
-            "message": "폼이 존재합니다." if form_exists else "폼이 존재하지 않습니다.",
-        }
-
-        return Response(response_data)
+        # user_id가 존재하는지 확인
+        try:
+            user = AuthUser.objects.get(id=user_id)
+            # 폼 존재 여부 확인
+            form_exists = Form.objects.filter(user=user).exists()
+            # 응답 생성
+            response_data = {
+                "status": "success",
+                "feedbackform": "true" if form_exists else "false",
+            }
+            return Response(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
