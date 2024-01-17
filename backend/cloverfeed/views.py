@@ -202,6 +202,45 @@ class QuestionListView(APIView):
         )
 
 
+class SubmitFormsView(APIView):
+    def post(self, request):
+        user_id = request.data.get("user_id")
+        questions = request.data.get("questions")
+
+        print(user_id)
+        print(questions)
+
+        # username = request.data.get("username")
+        # email = request.data.get("email")
+        # password = request.data.get("password")
+
+        # # 입력된 데이터 유효성 검사
+        # if not (username and email and password):
+        #     return JsonResponse(
+        #         {
+        #             "status": "error",
+        #             "error_code": 400,
+        #             "message": "입력한 정보 형식이 올바르지 않습니다.",
+        #         },
+        #         status=status.HTTP_400_BAD_REQUEST,
+        #     )
+
+        # # 사용자 생성
+        # try:
+        #     AuthUser.objects.create_user(
+        #         username=username, email=email, password=password
+        #     )
+        # except ValidationError as e:
+        #     return JsonResponse({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        # # 회원 가입 성공 응답
+        # response_data = {
+        #     "status": "success",
+        #     "message": "회원가입을 환영합니다.",
+        # }
+        # return JsonResponse(response_data, status=status.HTTP_201_CREATED)
+
+
 class CheckFormExistenceView(APIView):
     def post(self, request):
         user_id = request.data.get("user_id")
