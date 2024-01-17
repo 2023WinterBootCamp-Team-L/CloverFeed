@@ -23,6 +23,9 @@ urlpatterns = [
     # 받은 피드백답변(주관식) 내용 검색
     path('feedbacks/response', views.FeedbackSearchView.as_view(), name='feedback-search'),
 
+    # 피드백 결과의 태그들을 원형차트로 시각화
+    path('feedbacks/tags/chart/', views.FeedbackChartView.as_view(), name='feedback_chart'),
+
     # 피드백폼 유무 조회
     path(
         "check_form_existence/",
