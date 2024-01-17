@@ -67,3 +67,6 @@ backend/config/*.key
 
 # .gitattributes 파일 
 .gitattributes
+
+# 파이참 임시파일 제외
+/.idea/

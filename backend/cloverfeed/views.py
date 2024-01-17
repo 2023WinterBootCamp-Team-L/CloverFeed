@@ -14,10 +14,6 @@ from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .models import Form, Question, AuthUser, FeedbackResult
 from .serializers import QuestionSerializer, FeedbackResultSerializer
-from cloverfeed.models import AuthUser, Form
-from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
 
 # 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
 # user_id = f"#{random.randint(1000, 9999)}"
@@ -187,7 +183,6 @@ class QuestionListView(APIView):
             return Response(
                 {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
             )
-        
 
         # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
         # questions_data = list(Question.objects.all().values())
@@ -206,21 +201,22 @@ class QuestionListView(APIView):
             status=status.HTTP_200_OK,
         )
 
+
 class CheckFormExistenceView(APIView):
     def post(self, request):
         user_id = request.data.get("user_id")
-        
+
         # 사용자 객체 가져오기
         user = get_object_or_404(AuthUser, id=user_id)
-        
+
         # 폼 존재 여부 확인
-        #form_id가 1이면 폼이 존재, form_id가 0이면 폼이 존재하지않음
+        # form_id가 1이면 폼이 존재, form_id가 0이면 폼이 존재하지않음
         form_exists = Form.objects.filter(user=user, id=1).exists()
-        
+
         # 응답 생성
         response_data = {
             "user_id": request.data.get("user_id"),
             "message": "폼이 존재합니다." if form_exists else "폼이 존재하지 않습니다.",
         }
-        
+
         return Response(response_data)
