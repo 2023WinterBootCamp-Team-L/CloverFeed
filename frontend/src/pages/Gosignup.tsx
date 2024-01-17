@@ -1,8 +1,9 @@
 import SignupAnswer from '../components/SignupAnswer';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import SuccessButton from '../components/SuccessButton';
 import GologinButton from '../components/GologinButton';
 import OverlapButton from '../components/OverlapButton';
+import axios from 'axios';
 
 function Gosignup() {
   const [emailanswerInputs, setemailAnswerInputs] = useState('');
@@ -22,6 +23,26 @@ function Gosignup() {
   const onInputChangepwcheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setpwcheckAnswerInputs(e.target.value);
   };
+
+  useEffect(() => {
+    const UserSignup = async (e) => {
+      e.PreventDefault();
+      const SignupData = new SignupData();
+      SignupData.append('EmailData', emailanswerInputs);
+      SignupData.append('UserNameData', nameanswerInputs);
+      SignupData.append('PasswordData', pwanswerInputs);
+
+      const response = await axios.post(
+        'http://localhost:5173/user/auth/signup',
+        SignupData,
+        {
+          headers: {
+            'Content-Type': 'multipart/Signup-Data',
+          },
+        }
+      );
+    };
+  });
 
   return (
     <div
