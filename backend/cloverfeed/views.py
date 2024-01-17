@@ -2,21 +2,22 @@
 # 요청을 처리하고 응답을 반환하는데 필요한 로직을 작성하는 파일
 
 from django.http import JsonResponse
-from django.utils.decorators import method_decorator
-from django.views import View
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
-from rest_framework import status, get_object_or_404
+from django.contrib.auth import login
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
-from .models import Form, Question, AuthUser, FeedbackResult,QuestionAnswer,MultipleChoice
+from .models import (
+    Form,
+    Question,
+    AuthUser,
+    FeedbackResult,
+    QuestionAnswer,
+    MultipleChoice,
+)
 from .serializers import QuestionSerializer, FeedbackResultSerializer
-from django.shortcuts import 
-from datetime import datetime
 import json
 
 
@@ -225,5 +226,7 @@ class CheckFormExistenceView(APIView):
             return Response(response_data)
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
-            return Response({"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."}, status=404)
-
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
