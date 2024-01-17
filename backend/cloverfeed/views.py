@@ -7,7 +7,6 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
-from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
 from .models import (
     Form,
@@ -102,13 +101,11 @@ class LoginView(APIView):
 
         if user:
             login(request, user)
-            token, created = Token.objects.get_or_create(user=user)
             return JsonResponse(
                 {
                     "status": "success",
                     "user_id": user.id,
                     "user_name": user.username,
-                    "user_token": token.key,
                     "message": "로그인을 환영합니다.",
                 },
                 status=status.HTTP_200_OK,
