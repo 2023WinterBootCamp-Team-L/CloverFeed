@@ -15,6 +15,7 @@ urlpatterns = [
         views.FeedbackListByCategory.as_view(),
         name="feedback-list-by-category",
     ),
+    path('feedbacks/response/list', views.FeedbackListByCategory.as_view(), name='feedback-list-by-category'),
     # FeedbackResultDetail view를 /feedbacks/<int:pk> 경로에 연결
     # <int:pk> 부분은 요청 URL에서 피드백 ID를 읽어오는 역할
     path("feedbacks/<int:pk>", views.FeedbackResultDetail.as_view()),
@@ -24,4 +25,6 @@ urlpatterns = [
         views.CheckFormExistenceView.as_view(),
         name="check_form_existence",
     ),
+    path('feedbackforms/', views.CheckFormExistenceView.as_view(), name='feedbackforms'),
+    #path('answer/', answersView.as_view(), name='answer'),
 ]
