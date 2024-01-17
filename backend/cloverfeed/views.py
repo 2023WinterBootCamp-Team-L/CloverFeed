@@ -214,10 +214,10 @@ class FeedbackChartView(APIView):
                 total_work_tags = sum(tag_work_freq.values())
                 total_attitude_tags = sum(tag_attitude_freq.values())
                 tag_work_percent = sorted(
-                    [{'tag': tag, 'percentage': (freq / total_work_tags) * 100} for tag, freq in
+                    [{'tag': tag, 'percentage': round((freq / total_work_tags) * 100, 1)} for tag, freq in
                      tag_work_freq.items()], key=lambda x: x['percentage'], reverse=True)
                 tag_attitude_percent = sorted(
-                    [{'tag': tag, 'percentage': (freq / total_attitude_tags) * 100} for tag, freq in
+                    [{'tag': tag, 'percentage': round((freq / total_attitude_tags) * 100, 1)} for tag, freq in
                      tag_attitude_freq.items()], key=lambda x: x['percentage'], reverse=True)
 
                 # tag_work와 tag_attitude의 원형 차트 데이터를 각각 반환
