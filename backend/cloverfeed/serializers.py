@@ -78,7 +78,8 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
         model = FeedbackResult
         fields = [
             "id",
-            "tag",
+            "tag_work",
+            "tag_attitude",
             "respondent_name_category",
             "summary",
             "created_at",
