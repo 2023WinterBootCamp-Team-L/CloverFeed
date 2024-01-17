@@ -17,8 +17,13 @@ from .models import (
     QuestionAnswer,
     MultipleChoice,
 )
-from .serializers import QuestionSerializer, FeedbackResultSerializer, FeedbackResultSearchSerializer
-import json,random
+from .serializers import (
+    QuestionSerializer,
+    FeedbackResultSerializer,
+    FeedbackResultSearchSerializer,
+    FormSerializer,
+)
+import json, random
 from django.shortcuts import get_object_or_404
 from datetime import datetime
 
@@ -122,6 +127,7 @@ class LoginView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+
 # 받은 피드백 상세내용 조회
 class FeedbackResultDetail(APIView):
     def get_object(self, pk, user_id):
@@ -177,18 +183,27 @@ class FeedbackListByCategory(APIView):
         serializer = FeedbackResultSerializer(feedbacks, many=True)
         return Response({"status": "success", "feedbacks": serializer.data})
 
+
 # 받은 피드백답변(주관식) 내용 검색
 class FeedbackSearchView(APIView):
     def get(self, request):
-        userid = request.query_params.get('userid', None)
-        keyword = request.query_params.get('keyword', None)
+        userid = request.query_params.get("userid", None)
+        keyword = request.query_params.get("keyword", None)
         if not userid:
-            return Response({"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."})
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."}
+            )
         user = AuthUser.objects.get(pk=userid)
         if keyword:
-            feedbacks = QuestionAnswer.objects.filter(Q(feedback__form__user=user), Q(context__icontains=keyword), Q(type="주관식"))
+            feedbacks = QuestionAnswer.objects.filter(
+                Q(feedback__form__user=user),
+                Q(context__icontains=keyword),
+                Q(type="주관식"),
+            )
         else:
-            feedbacks = QuestionAnswer.objects.filter(Q(feedback__form__user=user), Q(type="주관식"))
+            feedbacks = QuestionAnswer.objects.filter(
+                Q(feedback__form__user=user), Q(type="주관식")
+            )
         serializer = FeedbackResultSearchSerializer(feedbacks, many=True)
         return Response({"status": "success", "feedbacks": serializer.data})
 
@@ -222,45 +237,6 @@ class QuestionListView(APIView):
         )
 
 
-class SubmitFormsView(APIView):
-    def post(self, request):
-        user_id = request.data.get("user_id")
-        questions = request.data.get("questions")
-
-        print(user_id)
-        print(questions)
-
-        # username = request.data.get("username")
-        # email = request.data.get("email")
-        # password = request.data.get("password")
-
-        # # 입력된 데이터 유효성 검사
-        # if not (username and email and password):
-        #     return JsonResponse(
-        #         {
-        #             "status": "error",
-        #             "error_code": 400,
-        #             "message": "입력한 정보 형식이 올바르지 않습니다.",
-        #         },
-        #         status=status.HTTP_400_BAD_REQUEST,
-        #     )
-
-        # # 사용자 생성
-        # try:
-        #     AuthUser.objects.create_user(
-        #         username=username, email=email, password=password
-        #     )
-        # except ValidationError as e:
-        #     return JsonResponse({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-
-        # # 회원 가입 성공 응답
-        # response_data = {
-        #     "status": "success",
-        #     "message": "회원가입을 환영합니다.",
-        # }
-        # return JsonResponse(response_data, status=status.HTTP_201_CREATED)
-
-
 class CheckFormExistenceView(APIView):
     def get(self, request, format=None):
         # user_id인식 안됨
@@ -283,39 +259,97 @@ class CheckFormExistenceView(APIView):
                 {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
                 status=404,
             )
-        
-class answersView(APIView):
+
+
+class SubmitFormsView(APIView):
     def post(self, request):
+        user_id = request.data.get("user_id")
+        questions_data = request.data.get("questions")
+
+        # user_id가 제공되었는지 확인
+        if not user_id:
+            return Response(
+                {"status": "error", "message": "user_id가 필요합니다."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # questions_data가 제공되었고 비어있지 않은지 확인
+        if not questions_data or not isinstance(questions_data, list):
+            return Response(
+                {"status": "error", "message": "questions가 필요하며 비어 있지 않아야 합니다."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # user_id를 기반으로 사용자 가져오거나 생성
+        user, created = AuthUser.objects.get_or_create(id=user_id)
+
+        # 사용자를 위한 새로운 폼 생성
+        form_data = {"user": user.id}
+        form_serializer = FormSerializer(data=form_data)
+        if form_serializer.is_valid():
+            form = form_serializer.save()
+        else:
+            return Response(
+                {"status": "error", "message": form_serializer.errors},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # 질문을 생성하고 데이터베이스에 저장
+        for question_data in questions_data:
+            question_serializer = QuestionSerializer(data=question_data)
+            if question_serializer.is_valid():
+                question = question_serializer.save(form=form)
+
+                # 질문이 "객관식"인 경우 MultipleChoice 객체를 생성
+                if question_data.get("type") == "객관식":
+                    choices = question_data.get("choice", [])
+                    for choice_text in choices:
+                        MultipleChoice.objects.create(
+                            question=question, choice_context=choice_text
+                        )
+            else:
+                # 폼 생성을 롤백하고 오류 응답을 반환
+                form.delete()
+                return Response(
+                    {"status": "error", "message": question_serializer.errors},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        return Response(
+            {"status": "success", "message": "폼이 성공적으로 제출되었습니다."},
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class AnswersView(APIView):
+    def post(self, request):
+        form_id = request.data.get("form_id")
+        tags_work = request.data.get("tags_work")
+        tags_attitude = request.data.get("tags_attitude")
+        answers_data = request.data.get("answers")
+
+        # 폼 존재 여부 확인
+        form = get_object_or_404(Form, id=form_id)
+
         try:
-            # POST 요청에서 데이터 추출
-            data = json.loads(request.body.decode('utf-8'))
-            form_id = data.get('form_id')
-            tags_work = data.get('tags_work')
-            tags_attitude = data.get('tags_attitude')
-            answers = data.get('answers')
- 
-            # 폼 존재 여부 확인
-            form = get_object_or_404(Form, id=form_id)
-
-            # FeedbackResult 생성 및 id 설정
-
             # FeedbackResult 생성
             feedback_result = FeedbackResult.objects.create(
-
                 form=form,
                 tag_work=tags_work,
                 tag_attitude=tags_attitude,
                 respondent_name=f"#{random.randint(1000, 9999)}",
-                created_at=datetime.now()
+                created_at=datetime.now(),
             )
 
             # 각 답변에 대한 처리
-            for answer_data in answers:
-                question_context = answer_data.get('question')
-                question_type = answer_data.get('type')
-                answer_content = answer_data.get('answer')
+            for answer_data in answers_data:
+                question_context = answer_data.get("context")
+                question_type = answer_data.get("type")
+                answer_content = answer_data.get("answer")
 
-                question = get_object_or_404(Question, form=form, context=question_context)
+                question = get_object_or_404(
+                    Question, form=form, context=question_context
+                )
 
                 # QuestionAnswer 생성
                 new_answer = QuestionAnswer(
@@ -324,12 +358,13 @@ class answersView(APIView):
                     context=answer_content,
                     type=question_type,
                     created_at=datetime.now(),
-                    modified_at=datetime.now()
+                    modified_at=datetime.now(),
                 )
-                new_answer.save() 
+                new_answer.save()
 
-            return JsonResponse({"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200)
-
+            return JsonResponse(
+                {"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200
+            )
         except Form.DoesNotExist:
             return JsonResponse({"error": "해당 폼이 존재하지 않습니다."}, status=404)
         except Question.DoesNotExist:
