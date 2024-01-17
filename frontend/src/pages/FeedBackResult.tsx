@@ -82,7 +82,7 @@ const FeedBackResult: React.FC = () => {
         {feedbackDetail?.answers?.map((answer, index) => (
           <li
             key={index}
-            className="h-auto w-full flex flex-col bg-white justify-start border-c-blue  border-opacity-50 border-2 rounded-xl p-2 text-sm"
+            className="h-auto w-full flex flex-col bg-white justify-start border-c-p border-opacity-50 border-2 rounded-xl p-2 text-sm"
           >
             <p className="text-md font-bold">{answer.question}</p>
             <p>{answer.type}</p>
