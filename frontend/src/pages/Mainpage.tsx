@@ -33,14 +33,16 @@ function Mainpage() {
         </p>
         <p className="text-xl">keyword cloud</p>
       </div>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-6">
         <div>
           <SimpleWordcloud />
         </div>
-        <p className="text-xs">
-          사용자 관점을 잘 배려하는 프론트엔드 <br />
-          엔지니어로 평가받고 있습니다.
-        </p>
+        <div>
+          <p className="text-sm text-center">
+            사용자 관점을 잘 배려하는 프론트엔드
+          </p>
+          <p className="text-sm text-center">엔지니어로 평가받고 있습니다.</p>
+        </div>
       </div>
       <div className="flex justify-center">
         <GreenButton text="질문 새로 생성하기" nextpage={nextpage} />
