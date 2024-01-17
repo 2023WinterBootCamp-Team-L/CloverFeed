@@ -291,7 +291,7 @@ class SubmitFormsView(APIView):
                 )
 
         return Response(
-            {"status": "success", "message": "폼이 성공적으로 제출되었습니다."},
+            {"status": "success", "message": "성공적으로 등록되었습니다."},
             status=status.HTTP_201_CREATED,
         )
 
