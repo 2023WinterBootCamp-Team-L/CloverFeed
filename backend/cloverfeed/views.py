@@ -255,8 +255,19 @@ class SubmitFormsView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # user_id를 기반으로 사용자 가져오거나 생성
-        user, created = AuthUser.objects.get_or_create(id=user_id)
+        try:
+            # user_id를 기반으로 사용자 가져오기
+            user = AuthUser.objects.get(id=user_id)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "인증 실패. 유저 ID가 올바르지 않습니다.",
+                },
+                status=404,
+            )
 
         # 사용자를 위한 새로운 폼 생성
         form_data = {"user": user.id}
