@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
+from django.db.models import Q
 from .models import (
     Form,
     Question,
@@ -16,7 +17,7 @@ from .models import (
     QuestionAnswer,
     MultipleChoice,
 )
-from .serializers import QuestionSerializer, FeedbackResultSerializer
+from .serializers import QuestionSerializer, FeedbackResultSerializer, FeedbackResultSearchSerializer
 import json
 
 
@@ -120,7 +121,7 @@ class LoginView(APIView):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
-
+# 받은 피드백 상세내용 조회
 class FeedbackResultDetail(APIView):
     def get_object(self, pk, user_id):
         try:
@@ -173,6 +174,21 @@ class FeedbackListByCategory(APIView):
             feedbacks = FeedbackResult.objects.filter(form__user=user)
         # 응답
         serializer = FeedbackResultSerializer(feedbacks, many=True)
+        return Response({"status": "success", "feedbacks": serializer.data})
+
+# 받은 피드백답변(주관식) 내용 검색
+class FeedbackSearchView(APIView):
+    def get(self, request):
+        userid = request.query_params.get('userid', None)
+        keyword = request.query_params.get('keyword', None)
+        if not userid:
+            return Response({"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."})
+        user = AuthUser.objects.get(pk=userid)
+        if keyword:
+            feedbacks = QuestionAnswer.objects.filter(Q(feedback__form__user=user), Q(context__icontains=keyword), Q(type="주관식"))
+        else:
+            feedbacks = QuestionAnswer.objects.filter(Q(feedback__form__user=user), Q(type="주관식"))
+        serializer = FeedbackResultSearchSerializer(feedbacks, many=True)
         return Response({"status": "success", "feedbacks": serializer.data})
 
 
