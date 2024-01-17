@@ -30,5 +30,6 @@ urlpatterns = [
         name="check_form_existence",
     ),
     path('feedbackforms/', views.CheckFormExistenceView.as_view(), name='feedbackforms'),
-    #path('answer/', answersView.as_view(), name='answer'),
+    path('answer/', views.answersView.as_view(), name='answer'),
+
 ]

@@ -70,7 +70,7 @@ class QuestionAnswer(models.Model):
     feedback = models.ForeignKey("FeedbackResult", on_delete=models.CASCADE)
     question = models.ForeignKey("Question", on_delete=models.CASCADE)
     context = models.TextField(blank=True, null=True)
-    type = models.CharField(max_length=1, blank=True, null=True)
+    type = models.CharField(max_length=3, blank=True, null=True)
     created_at = models.DateTimeField()
     modified_at = models.DateTimeField(blank=True, null=True)
     deleted_at = models.DateTimeField(blank=True, null=True)

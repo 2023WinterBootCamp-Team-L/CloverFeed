@@ -18,8 +18,9 @@ from .models import (
     MultipleChoice,
 )
 from .serializers import QuestionSerializer, FeedbackResultSerializer, FeedbackResultSearchSerializer
-import json
-
+import json,random
+from django.shortcuts import get_object_or_404
+from datetime import datetime
 
 # 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
 # user_id = f"#{random.randint(1000, 9999)}"
@@ -282,3 +283,56 @@ class CheckFormExistenceView(APIView):
                 {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
                 status=404,
             )
+        
+class answersView(APIView):
+    def post(self, request):
+        try:
+            # POST 요청에서 데이터 추출
+            data = json.loads(request.body.decode('utf-8'))
+            form_id = data.get('form_id')
+            tags_work = data.get('tags_work')
+            tags_attitude = data.get('tags_attitude')
+            answers = data.get('answers')
+ 
+            # 폼 존재 여부 확인
+            form = get_object_or_404(Form, id=form_id)
+
+            # FeedbackResult 생성 및 id 설정
+
+            # FeedbackResult 생성
+            feedback_result = FeedbackResult.objects.create(
+
+                form=form,
+                tag_work=tags_work,
+                tag_attitude=tags_attitude,
+                respondent_name=f"#{random.randint(1000, 9999)}",
+                created_at=datetime.now()
+            )
+
+            # 각 답변에 대한 처리
+            for answer_data in answers:
+                question_context = answer_data.get('question')
+                question_type = answer_data.get('type')
+                answer_content = answer_data.get('answer')
+
+                question = get_object_or_404(Question, form=form, context=question_context)
+
+                # QuestionAnswer 생성
+                new_answer = QuestionAnswer(
+                    feedback=feedback_result,
+                    question=question,
+                    context=answer_content,
+                    type=question_type,
+                    created_at=datetime.now(),
+                    modified_at=datetime.now()
+                )
+                new_answer.save() 
+
+            return JsonResponse({"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200)
+
+        except Form.DoesNotExist:
+            return JsonResponse({"error": "해당 폼이 존재하지 않습니다."}, status=404)
+        except Question.DoesNotExist:
+            return JsonResponse({"error": "해당 질문이 존재하지 않습니다."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
