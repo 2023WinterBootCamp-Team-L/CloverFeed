@@ -58,7 +58,7 @@ class QuestionSerializer(serializers.ModelSerializer):
                     choices = MultipleChoice.objects.filter(
                         question=item.id
                     ).values_list("choice_context", flat=True)
-                    item["choices"] = literal_eval(choices[0])
+                    item["choices"] = choices[0]
 
             return instance
         else:
@@ -67,7 +67,7 @@ class QuestionSerializer(serializers.ModelSerializer):
                 choices = MultipleChoice.objects.filter(
                     question=instance.id
                 ).values_list("choice_context", flat=True)
-                representation["choices"] = literal_eval(choices[0])
+                representation["choices"] = choices[0]
 
             return representation
 

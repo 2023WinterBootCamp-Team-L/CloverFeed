@@ -216,6 +216,19 @@ class QuestionListView(APIView):
                 {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
             )
 
+        try:
+            form = Form.objects.get(user=user_id)
+        except Form.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "폼이 없습니다.",
+                },
+                status=404,
+            )
+
         # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
         # questions_data = list(Question.objects.all().values())
         questions_data = Question.objects.filter(form__user_id=user_id)
