@@ -3,7 +3,7 @@ import ShortButton from "../components/ShortButton";
 import XButton from "../components/XButton";
 
 function QueryShare() {
-  const nextpage = "/";
+  const nextpage = "/mainpage";
 
   return (
     <div className="bg-gradient-to-t from-c-emerald flex flex-col items-center overflow-hidden w-[24.56rem] mx-auto h-[53.25rem]">

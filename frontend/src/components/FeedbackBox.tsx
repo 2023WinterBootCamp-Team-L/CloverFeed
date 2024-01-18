@@ -20,7 +20,7 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
   return (
     <div
       className={`h-${
-        hasText ? "40" : "32"
+        hasText ? "50" : "32"
       } w-full flex flex-col bg-white justify-start ${
         isOddIndex ? "border-blue-200" : "border-c-purple border-opacity-50"
       } border-opacity-50 border-[3px] rounded-xl leading-1.25 text-sm`}
