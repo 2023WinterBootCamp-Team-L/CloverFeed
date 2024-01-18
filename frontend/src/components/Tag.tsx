@@ -56,7 +56,7 @@ const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
   );
 
   return (
-    <label className="inline-flex relative">
+    <label className="inline-flex relative mr-2">
       <button className={tagClasses} onClick={handleButtonClick}>
         <img src={image} alt="Tag Icon" className={iconClasses} />
         {text}
