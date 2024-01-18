@@ -81,6 +81,10 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
 
 # 카테고리(직군)별 피드백 목록 조회
 class FeedbackResultSerializer(serializers.ModelSerializer):
+<<<<<<< HEAD
+
+=======
+>>>>>>> fa5b6d624fe4471868dd5a850909e78208321514
     class Meta:
         model = FeedbackResult
         fields = [
@@ -95,6 +99,10 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
             "field",
         ]
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> fa5b6d624fe4471868dd5a850909e78208321514
 # 받은 피드백답변 중 검색을 위한 Serializer
 class FeedbackResultSearchSerializer(serializers.ModelSerializer):
     feedback_id = serializers.IntegerField(source="feedback.id")
