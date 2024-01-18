@@ -3,12 +3,16 @@
 
 from django.http import JsonResponse
 from django.contrib.auth import login
+from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
-from django.db.models import Q
+import json, random
+
+from datetime import datetime
 from .models import (
     Form,
     Question,
@@ -23,9 +27,6 @@ from .serializers import (
     FeedbackResultSearchSerializer,
     FormSerializer,
 )
-import json, random
-from django.shortcuts import get_object_or_404
-from datetime import datetime
 
 # 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
 # user_id = f"#{random.randint(1000, 9999)}"
@@ -237,30 +238,6 @@ class QuestionListView(APIView):
         )
 
 
-class CheckFormExistenceView(APIView):
-    def get(self, request, format=None):
-        # user_id인식 안됨
-        user_id = request.query_params.get("user_id", None)
-
-        # user_id가 존재하는지 확인
-        try:
-            user = AuthUser.objects.get(id=user_id)
-            # 폼 존재 여부 확인
-            form_exists = Form.objects.filter(user=user).exists()
-            # 응답 생성
-            response_data = {
-                "status": "success",
-                "feedbackform": "true" if form_exists else "false",
-            }
-            return Response(response_data)
-        except AuthUser.DoesNotExist:
-            # user_id가 존재하지 않는 경우에 대한 응답
-            return Response(
-                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
-                status=404,
-            )
-
-
 class SubmitFormsView(APIView):
     def post(self, request):
         user_id = request.data.get("user_id")
@@ -280,8 +257,19 @@ class SubmitFormsView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        # user_id를 기반으로 사용자 가져오거나 생성
-        user, created = AuthUser.objects.get_or_create(id=user_id)
+        try:
+            # user_id를 기반으로 사용자 가져오기
+            user = AuthUser.objects.get(id=user_id)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "인증 실패. 유저 ID가 올바르지 않습니다.",
+                },
+                status=404,
+            )
 
         # 사용자를 위한 새로운 폼 생성
         form_data = {"user": user.id}
@@ -316,9 +304,33 @@ class SubmitFormsView(APIView):
                 )
 
         return Response(
-            {"status": "success", "message": "폼이 성공적으로 제출되었습니다."},
+            {"status": "success", "message": "성공적으로 등록되었습니다."},
             status=status.HTTP_201_CREATED,
         )
+
+
+class CheckFormExistenceView(APIView):
+    def get(self, request, format=None):
+        # user_id인식 안됨
+        user_id = request.query_params.get("user_id", None)
+
+        # user_id가 존재하는지 확인
+        try:
+            user = AuthUser.objects.get(id=user_id)
+            # 폼 존재 여부 확인
+            form_exists = Form.objects.filter(user=user).exists()
+            # 응답 생성
+            response_data = {
+                "status": "success",
+                "feedbackform": "true" if form_exists else "false",
+            }
+            return Response(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
 
 
 class AnswersView(APIView):
