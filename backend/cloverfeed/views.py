@@ -2,24 +2,33 @@
 # 요청을 처리하고 응답을 반환하는데 필요한 로직을 작성하는 파일
 
 from django.http import JsonResponse
-from django.utils.decorators import method_decorator
-from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login
+from django.shortcuts import get_object_or_404
+from django.db.models import Q, Count
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
-from rest_framework.authtoken.models import Token
 from rest_framework.permissions import AllowAny
-from .models import Form, Question, AuthUser, FeedbackResult
-from .serializers import QuestionSerializer, FeedbackResultSerializer
+import json, random
+from datetime import datetime
+from .models import (
+    Form,
+    Question,
+    AuthUser,
+    FeedbackResult,
+    QuestionAnswer,
+    MultipleChoice,
+)
+from .serializers import (
+    QuestionSerializer,
+    FeedbackResultSerializer,
+    FeedbackResultSearchSerializer,
+    FormSerializer,
+    FeedbackTagSerializer,
+)
 
-# 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
-# user_id = f"#{random.randint(1000, 9999)}"
 
-
-# Create your views here.
 class SignupView(APIView):
     permission_classes = [AllowAny]
 
@@ -96,13 +105,11 @@ class LoginView(APIView):
 
         if user:
             login(request, user)
-            token, created = Token.objects.get_or_create(user=user)
             return JsonResponse(
                 {
                     "status": "success",
                     "user_id": user.id,
                     "user_name": user.username,
-                    "user_token": token.key,
                     "message": "로그인을 환영합니다.",
                 },
                 status=status.HTTP_200_OK,
@@ -118,6 +125,7 @@ class LoginView(APIView):
             )
 
 
+# 받은 피드백 상세내용 조회
 class FeedbackResultDetail(APIView):
     def get_object(self, pk, user_id):
         try:
@@ -173,6 +181,30 @@ class FeedbackListByCategory(APIView):
         return Response({"status": "success", "feedbacks": serializer.data})
 
 
+# 받은 피드백답변(주관식) 내용 검색
+class FeedbackSearchView(APIView):
+    def get(self, request):
+        userid = request.query_params.get("userid", None)
+        keyword = request.query_params.get("keyword", None)
+        if not userid:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."}
+            )
+        user = AuthUser.objects.get(pk=userid)
+        if keyword:
+            feedbacks = QuestionAnswer.objects.filter(
+                Q(feedback__form__user=user),
+                Q(context__icontains=keyword),
+                Q(type="주관식"),
+            )
+        else:
+            feedbacks = QuestionAnswer.objects.filter(
+                Q(feedback__form__user=user), Q(type="주관식")
+            )
+        serializer = FeedbackResultSearchSerializer(feedbacks, many=True)
+        return Response({"status": "success", "feedbacks": serializer.data})
+
+
 class QuestionListView(APIView):
     def get(self, request, *args, **kwargs):
         # query_params에서 userid 가져오기
@@ -202,21 +234,230 @@ class QuestionListView(APIView):
         )
 
 
-class CheckFormExistenceView(APIView):
+class SubmitFormsView(APIView):
     def post(self, request):
         user_id = request.data.get("user_id")
+        questions_data = request.data.get("questions")
 
-        # 사용자 객체 가져오기
-        user = get_object_or_404(AuthUser, id=user_id)
+        # user_id가 제공되었는지 확인
+        if not user_id:
+            return Response(
+                {"status": "error", "message": "user_id가 필요합니다."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # questions_data가 제공되었고 비어있지 않은지 확인
+        if not questions_data or not isinstance(questions_data, list):
+            return Response(
+                {"status": "error", "message": "questions가 필요하며 비어 있지 않아야 합니다."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        try:
+            # user_id를 기반으로 사용자 가져오기
+            user = AuthUser.objects.get(id=user_id)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "인증 실패. 유저 ID가 올바르지 않습니다.",
+                },
+                status=404,
+            )
+
+        # 사용자를 위한 새로운 폼 생성
+        form_data = {"user": user.id}
+        form_serializer = FormSerializer(data=form_data)
+        if form_serializer.is_valid():
+            form = form_serializer.save()
+        else:
+            return Response(
+                {"status": "error", "message": form_serializer.errors},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # 질문을 생성하고 데이터베이스에 저장
+        for question_data in questions_data:
+            question_serializer = QuestionSerializer(data=question_data)
+            if question_serializer.is_valid():
+                question = question_serializer.save(form=form)
+
+                # 질문이 "객관식"인 경우 MultipleChoice 객체를 생성
+                if question_data.get("type") == "객관식":
+                    choices = question_data.get("choice", [])
+                    for choice_text in choices:
+                        MultipleChoice.objects.create(
+                            question=question, choice_context=choice_text
+                        )
+            else:
+                # 폼 생성을 롤백하고 오류 응답을 반환
+                form.delete()
+                return Response(
+                    {"status": "error", "message": question_serializer.errors},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+
+        return Response(
+            {"status": "success", "message": "성공적으로 등록되었습니다."},
+            status=status.HTTP_201_CREATED,
+        )
+
+
+class CheckFormExistenceView(APIView):
+    def get(self, request, format=None):
+        # user_id인식 안됨
+        user_id = request.query_params.get("user_id", None)
+
+        # user_id가 존재하는지 확인
+        try:
+            user = AuthUser.objects.get(id=user_id)
+            # 폼 존재 여부 확인
+            form_exists = Form.objects.filter(user=user).exists()
+            # 응답 생성
+            response_data = {
+                "status": "success",
+                "feedbackform": "true" if form_exists else "false",
+            }
+            return Response(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
+
+
+class AnswersView(APIView):
+    def post(self, request):
+        form_id = request.data.get("form_id")
+        category = request.data.get("category")
+        tags_work = request.data.get("tags_work")
+        tags_attitude = request.data.get("tags_attitude")
+        answers_data = request.data.get("answers")
 
         # 폼 존재 여부 확인
-        # form_id가 1이면 폼이 존재, form_id가 0이면 폼이 존재하지않음
-        form_exists = Form.objects.filter(user=user, id=1).exists()
+        form = get_object_or_404(Form, id=form_id)
 
-        # 응답 생성
-        response_data = {
-            "user_id": request.data.get("user_id"),
-            "message": "폼이 존재합니다." if form_exists else "폼이 존재하지 않습니다.",
-        }
+        try:
+            # FeedbackResult 생성
+            feedback_result = FeedbackResult.objects.create(
+                form=form,
+                category=category,
+                tag_work=tags_work,
+                tag_attitude=tags_attitude,
+                respondent_name=f"#{random.randint(1000, 9999)}",
+                created_at=datetime.now(),
+            )
 
-        return Response(response_data)
+            # 각 답변에 대한 처리
+            for answer_data in answers_data:
+                question_context = answer_data.get("context")
+                question_type = answer_data.get("type")
+                answer_content = answer_data.get("answer")
+
+                question = get_object_or_404(
+                    Question, form=form, context=question_context
+                )
+
+                # QuestionAnswer 생성
+                new_answer = QuestionAnswer(
+                    feedback=feedback_result,
+                    question=question,
+                    context=answer_content,
+                    type=question_type,
+                    created_at=datetime.now(),
+                    modified_at=datetime.now(),
+                )
+                new_answer.save()
+
+            return JsonResponse(
+                {"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200
+            )
+        except Form.DoesNotExist:
+            return JsonResponse({"error": "해당 폼이 존재하지 않습니다."}, status=404)
+        except Question.DoesNotExist:
+            return JsonResponse({"error": "해당 질문이 존재하지 않습니다."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+
+# 피드백 결과의 태그들을 원형차트로 시각화
+class FeedbackChartView(APIView):
+    def get(self, request, *args, **kwargs):
+        userid = self.request.query_params.get("userid", None)
+        if userid is not None:
+            try:
+                user = AuthUser.objects.get(id=userid)
+                feedbacks = FeedbackResult.objects.filter(form__user=user)
+                serializer = FeedbackTagSerializer(feedbacks, many=True)
+                data = serializer.data
+
+                # tag_work와 tag_attitude의 빈도 계산
+                tag_work_freq = dict()
+                tag_attitude_freq = dict()
+                for feedback in data:
+                    # 쉼표로 분리된 태그들을 개별적으로 처리
+                    tag_works = feedback["tag_work"]
+                    tag_works = (
+                        tag_works.replace("[", "").replace("]", "").replace("'", "")
+                    ).split(", ")
+                    tag_attitudes = feedback["tag_attitude"]
+                    tag_attitudes = (
+                        tag_attitudes.replace("[", "").replace("]", "").replace("'", "")
+                    ).split(", ")
+
+                    for tag in tag_works:
+                        tag_work_freq[tag] = tag_work_freq.get(tag, 0) + 1
+                    for tag in tag_attitudes:
+                        tag_attitude_freq[tag] = tag_attitude_freq.get(tag, 0) + 1
+
+                # 각 태그의 퍼센테이지 계산 후 내림차순으로 정렬
+                total_work_tags = sum(tag_work_freq.values())
+                total_attitude_tags = sum(tag_attitude_freq.values())
+                tag_work_percent = sorted(
+                    [
+                        {
+                            "tag": tag,
+                            "percentage": round((freq / total_work_tags) * 100, 1),
+                        }
+                        for tag, freq in tag_work_freq.items()
+                    ],
+                    key=lambda x: x["percentage"],
+                    reverse=True,
+                )
+                tag_attitude_percent = sorted(
+                    [
+                        {
+                            "tag": tag,
+                            "percentage": round((freq / total_attitude_tags) * 100, 1),
+                        }
+                        for tag, freq in tag_attitude_freq.items()
+                    ],
+                    key=lambda x: x["percentage"],
+                    reverse=True,
+                )
+
+                # tag_work와 tag_attitude의 원형 차트 데이터를 각각 반환
+                return Response(
+                    {
+                        "status": "success",
+                        "work": tag_work_percent,
+                        "attitude": tag_attitude_percent,
+                    }
+                )
+            except AuthUser.DoesNotExist:
+                return Response(
+                    {
+                        "status": "error",
+                        "error_code": 401,
+                        "message": "사용자를 찾을 수 없습니다.",
+                    },
+                    status=401,
+                )
+        else:
+            return Response(
+                {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
+                status=400,
+            )
