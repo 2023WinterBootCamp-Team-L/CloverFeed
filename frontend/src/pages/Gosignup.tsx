@@ -63,7 +63,7 @@ function Gosignup() {
 
       // API request
       const response = await axios.post(
-        'https://localhost:8000/user/auth/signup/',
+        'http://localhost:8000/api/user/auth/signup/',
         {
           username: nameanswerInputs,
           email: emailanswerInputs,
