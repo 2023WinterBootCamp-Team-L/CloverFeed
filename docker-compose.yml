@@ -6,10 +6,10 @@ services:
     env_file:
       - .env
     environment:
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: cloverfeed
-      MYSQL_USER: user
-      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # .env 파일에서 가져옴
+      MYSQL_DATABASE: ${MYSQL_DATABASE}  # .env 파일에서 가져옴
+      MYSQL_USER: ${MYSQL_USER}  # .env 파일에서 가져옴
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}  # .env 파일에서 가져옴
     ports:
       - "3307:3306"
     volumes:
@@ -29,10 +29,10 @@ services:
       dockerfile: Dockerfile
     environment:
       DJANGO_DEBUG: "True"
-      MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: cloverfeed
-      MYSQL_USER: user
-      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # .env 파일에서 가져옴
+      MYSQL_DATABASE: ${MYSQL_DATABASE}  # .env 파일에서 가져옴
+      MYSQL_USER: ${MYSQL_USER}  # .env 파일에서 가져옴
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}  # .env 파일에서 가져옴
     ports:
       - "8000:8000"
     depends_on:
