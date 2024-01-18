@@ -103,6 +103,8 @@ class Migration(migrations.Migration):
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("modified_at", models.DateTimeField(blank=True, null=True)),
                 ("deleted_at", models.DateTimeField(null=True)),
+                ("summary_work", models.CharField(max_length=254, null=True)),
+                ("summary_attitude", models.CharField(max_length=254, null=True)),
                 (
                     "groups",
                     models.ManyToManyField(
@@ -154,10 +156,7 @@ class Migration(migrations.Migration):
                 ("summary", models.TextField(blank=True, null=True)),
                 ("created_at", models.DateTimeField(auto_now_add=True)),
                 ("modified_at", models.DateTimeField(blank=True, null=True)),
-                (
-                    "field",
-                    models.DateTimeField(blank=True, db_column="Field", null=True),
-                ),
+                ("deleted_at", models.DateTimeField(null=True)),
             ],
         ),
         migrations.CreateModel(
