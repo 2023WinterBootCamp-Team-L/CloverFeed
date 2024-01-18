@@ -73,7 +73,7 @@ const SkillChart = ({
 
   const generateSentence = () => {
     const [first, second, third] = chartData.labels.slice(0, 3);
-    const sentence = `당신은 ${first}, ${second}, ${third}한 사람이네요`;
+    const sentence = `당신은 ${first}, ${second}, ${third}있는 사람이네요`;
     return sentence;
   };
 
@@ -179,9 +179,9 @@ function Chart() {
   }, []);
 
   return (
-    <div className="bg-c-emerald bg-opacity-30 flex flex-col overflow-hidden w-[24.56rem] mx-auto h-full px-5 py-8 gap-4 overflow-y-auto overflow:hidden">
+    <div className="bg-c-blue bg-opacity-30 flex flex-col overflow-hidden w-[24.56rem] mx-auto h-full px-5 py-8 gap-4 overflow-y-auto overflow:hidden">
       <div className="flex justify-between">
-        <BackButton back page="/" />
+        <BackButton back page="/mainpage" />
       </div>
       <p className="text-2xl">피드백 차트</p>
       <div className="space-y-8">
@@ -195,6 +195,7 @@ function Chart() {
           {/* 차트 및 요약 */}
           <SkillChart data={workData} />
         </div>
+
         <div className="space-y-2">
           <div className="flex flex-row justify-start">
             <div className="flex flex-col justify-center items-center">
@@ -202,10 +203,28 @@ function Chart() {
               <Line />
             </div>
           </div>
-          {/* 차트 및 요약 */}
           <SkillChart data={attitudeData} />
         </div>
-        {/* 다른 섹션들도 동일한 방식으로 데이터 전달 */}
+
+        <div className="space-y-2">
+          <div className="flex flex-row justify-start">
+            <div className="flex flex-col justify-center items-center">
+              <p className="">칭찬할 점</p>
+              <Line />
+            </div>
+          </div>
+          {/* 워드클라우드*/}
+        </div>
+
+        <div className="space-y-2">
+          <div className="flex flex-row justify-start">
+            <div className="flex flex-col justify-center items-center">
+              <p className="">보완할 점</p>
+              <Line />
+            </div>
+          </div>
+          {/* 워드클라우드 */}
+        </div>
       </div>
     </div>
   );
