@@ -27,7 +27,6 @@ from .serializers import (
     FormSerializer,
     FeedbackTagSerializer,
 )
-import json
 
 
 class SignupView(APIView):
