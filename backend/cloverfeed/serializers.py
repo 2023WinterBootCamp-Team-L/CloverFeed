@@ -81,29 +81,25 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
 
 # 카테고리(직군)별 피드백 목록 조회
 class FeedbackResultSerializer(serializers.ModelSerializer):
-    respondent_name_category = serializers.SerializerMethodField()
-
     class Meta:
         model = FeedbackResult
         fields = [
             "id",
             "tag_work",
             "tag_attitude",
-            "respondent_name_category",
+            "respondent_name",
+            "category",
             "summary",
             "created_at",
             "modified_at",
             "field",
         ]
 
-    def get_respondent_name_category(self, obj):
-        return f"{obj.respondent_name} {obj.category}"
-
-
 # 받은 피드백답변 중 검색을 위한 Serializer
 class FeedbackResultSearchSerializer(serializers.ModelSerializer):
     feedback_id = serializers.IntegerField(source="feedback.id")
     respondent_name = serializers.CharField(source="feedback.respondent_name")
+    category = serializers.CharField(source="feedback.category")
     tag_work = serializers.CharField(source="feedback.tag_work")
     tag_attitude = serializers.CharField(source="feedback.tag_attitude")
     result = serializers.CharField(source="context")
@@ -113,6 +109,7 @@ class FeedbackResultSearchSerializer(serializers.ModelSerializer):
         fields = [
             "feedback_id",
             "respondent_name",
+            "category",
             "tag_work",
             "tag_attitude",
             "result",
