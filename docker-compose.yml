@@ -1,18 +1,5 @@
 version: "3.8"
 services:
-  backend:
-    container_name: backend
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    environment:
-      DJANGO_DEBUG: "True"
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    volumes:
-      - ./backend:/backend
   db:
     container_name: mysql
     image: mysql:8.0
@@ -27,6 +14,35 @@ services:
       - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - django-network
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD']
+      interval: 5s
+      timeout: 2s
+      retries: 100
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DJANGO_DEBUG: "True"
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: cloverfeed
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/backend
+    networks:
+      - django-network
+
   frontend:
     container_name: frontend
     build:
@@ -37,5 +53,9 @@ services:
     volumes:
       - ./frontend:/frontend
       - /frontend/node_modules
+
 volumes:
   mysql_data:
+
+networks:
+  django-network:
