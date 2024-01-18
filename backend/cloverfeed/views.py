@@ -4,14 +4,13 @@
 from django.http import JsonResponse
 from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Count
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 import json, random
-
 from datetime import datetime
 from .models import (
     Form,
@@ -26,13 +25,10 @@ from .serializers import (
     FeedbackResultSerializer,
     FeedbackResultSearchSerializer,
     FormSerializer,
+    FeedbackTagSerializer,
 )
 
-# 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
-# user_id = f"#{random.randint(1000, 9999)}"
 
-
-# Create your views here.
 class SignupView(APIView):
     permission_classes = [AllowAny]
 
@@ -383,3 +379,76 @@ class AnswersView(APIView):
             return JsonResponse({"error": "해당 질문이 존재하지 않습니다."}, status=404)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+
+
+# 피드백 결과의 태그들을 원형차트로 시각화
+class FeedbackChartView(APIView):
+    def get(self, request, *args, **kwargs):
+        userid = self.request.query_params.get("userid", None)
+        if userid is not None:
+            try:
+                user = AuthUser.objects.get(id=userid)
+                feedbacks = FeedbackResult.objects.filter(form__user=user)
+                serializer = FeedbackTagSerializer(feedbacks, many=True)
+                data = serializer.data
+
+                # tag_work와 tag_attitude의 빈도 계산
+                tag_work_freq = dict()
+                tag_attitude_freq = dict()
+                for feedback in data:
+                    # 쉼표로 분리된 태그들을 개별적으로 처리
+                    tag_works = feedback["tag_work"].split(", ")
+                    tag_attitudes = feedback["tag_attitude"].split(", ")
+                    for tag in tag_works:
+                        tag_work_freq[tag] = tag_work_freq.get(tag, 0) + 1
+                    for tag in tag_attitudes:
+                        tag_attitude_freq[tag] = tag_attitude_freq.get(tag, 0) + 1
+
+                # 각 태그의 퍼센테이지 계산 후 내림차순으로 정렬
+                total_work_tags = sum(tag_work_freq.values())
+                total_attitude_tags = sum(tag_attitude_freq.values())
+                tag_work_percent = sorted(
+                    [
+                        {
+                            "tag": tag,
+                            "percentage": round((freq / total_work_tags) * 100, 1),
+                        }
+                        for tag, freq in tag_work_freq.items()
+                    ],
+                    key=lambda x: x["percentage"],
+                    reverse=True,
+                )
+                tag_attitude_percent = sorted(
+                    [
+                        {
+                            "tag": tag,
+                            "percentage": round((freq / total_attitude_tags) * 100, 1),
+                        }
+                        for tag, freq in tag_attitude_freq.items()
+                    ],
+                    key=lambda x: x["percentage"],
+                    reverse=True,
+                )
+
+                # tag_work와 tag_attitude의 원형 차트 데이터를 각각 반환
+                return Response(
+                    {
+                        "status": "success",
+                        "work": tag_work_percent,
+                        "attitude": tag_attitude_percent,
+                    }
+                )
+            except AuthUser.DoesNotExist:
+                return Response(
+                    {
+                        "status": "error",
+                        "error_code": 401,
+                        "message": "사용자를 찾을 수 없습니다.",
+                    },
+                    status=401,
+                )
+        else:
+            return Response(
+                {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
+                status=400,
+            )

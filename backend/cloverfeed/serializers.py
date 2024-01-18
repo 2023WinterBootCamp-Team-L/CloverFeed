@@ -117,3 +117,10 @@ class FeedbackResultSearchSerializer(serializers.ModelSerializer):
             "tag_attitude",
             "result",
         ]
+
+
+# 피드백 결과의 'tag_work'와 'tag_attitude'를 JSON으로 변환 -> 원형차트 시각화
+class FeedbackTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackResult
+        fields = ("tag_work", "tag_attitude")
