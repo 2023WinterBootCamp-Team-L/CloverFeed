@@ -4,7 +4,7 @@ import XButton from "../components/XButton";
 
 function QueryStart() {
   const nextpage = "/querylist";
-  const closepage = "/";
+  const closepage = "/mainpage";
 
   return (
     <div className="bg-gradient-to-t from-c-emerald flex flex-col items-center overflow-hidden w-[24.56rem] mx-auto h-[53.25rem]">
