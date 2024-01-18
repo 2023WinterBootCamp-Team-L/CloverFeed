@@ -20,15 +20,16 @@ from .models import (
     QuestionAnswer,
     MultipleChoice,
 )
-from .serializers import QuestionSerializer, FeedbackResultSerializer, FeedbackResultSearchSerializer
+from .serializers import (
+    QuestionSerializer,
+    FeedbackResultSerializer,
+    FeedbackResultSearchSerializer,
+    FormSerializer,
+    FeedbackTagSerializer,
+)
 import json
 
 
-# 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
-# user_id = f"#{random.randint(1000, 9999)}"
-
-
-# Create your views here.
 class SignupView(APIView):
     permission_classes = [AllowAny]
 
@@ -334,6 +335,182 @@ class CheckFormExistenceView(APIView):
                 "feedbackform": "true" if form_exists else "false",
             }
             return Response(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
+
+
+class AnswersView(APIView):
+    def post(self, request):
+        form_id = request.data.get("form_id")
+        category = request.data.get("category")
+        tags_work = request.data.get("tags_work")
+        tags_attitude = request.data.get("tags_attitude")
+        answers_data = request.data.get("answers")
+
+        # 폼 존재 여부 확인
+        form = get_object_or_404(Form, id=form_id)
+
+        try:
+            # FeedbackResult 생성
+            feedback_result = FeedbackResult.objects.create(
+                form=form,
+                category=category,
+                tag_work=tags_work,
+                tag_attitude=tags_attitude,
+                respondent_name=f"#{random.randint(1000, 9999)}",
+                created_at=datetime.now(),
+            )
+
+            # 각 답변에 대한 처리
+            for answer_data in answers_data:
+                question_context = answer_data.get("context")
+                question_type = answer_data.get("type")
+                answer_content = answer_data.get("answer")
+
+                question = get_object_or_404(
+                    Question, form=form, context=question_context
+                )
+
+                # QuestionAnswer 생성
+                new_answer = QuestionAnswer(
+                    feedback=feedback_result,
+                    question=question,
+                    context=answer_content,
+                    type=question_type,
+                    created_at=datetime.now(),
+                    modified_at=datetime.now(),
+                )
+                new_answer.save()
+
+            return JsonResponse(
+                {"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200
+            )
+        except Form.DoesNotExist:
+            return JsonResponse({"error": "해당 폼이 존재하지 않습니다."}, status=404)
+        except Question.DoesNotExist:
+            return JsonResponse({"error": "해당 질문이 존재하지 않습니다."}, status=404)
+        except Exception as e:
+            return JsonResponse({"error": str(e)}, status=500)
+
+
+# 피드백 결과의 태그들을 원형차트로 시각화
+class FeedbackChartView(APIView):
+    def get(self, request, *args, **kwargs):
+        userid = self.request.query_params.get("userid", None)
+        if userid is not None:
+            try:
+                user = AuthUser.objects.get(id=userid)
+                feedbacks = FeedbackResult.objects.filter(form__user=user)
+                serializer = FeedbackTagSerializer(feedbacks, many=True)
+                data = serializer.data
+
+                # tag_work와 tag_attitude의 빈도 계산
+                tag_work_freq = dict()
+                tag_attitude_freq = dict()
+                for feedback in data:
+                    # 쉼표로 분리된 태그들을 개별적으로 처리
+                    tag_works = feedback["tag_work"]
+                    tag_works = (
+                        tag_works.replace("[", "").replace("]", "").replace("'", "")
+                    ).split(", ")
+                    tag_attitudes = feedback["tag_attitude"]
+                    tag_attitudes = (
+                        tag_attitudes.replace("[", "").replace("]", "").replace("'", "")
+                    ).split(", ")
+
+                    for tag in tag_works:
+                        tag_work_freq[tag] = tag_work_freq.get(tag, 0) + 1
+                    for tag in tag_attitudes:
+                        tag_attitude_freq[tag] = tag_attitude_freq.get(tag, 0) + 1
+
+                # 각 태그의 퍼센테이지 계산 후 내림차순으로 정렬
+                total_work_tags = sum(tag_work_freq.values())
+                total_attitude_tags = sum(tag_attitude_freq.values())
+                tag_work_percent = sorted(
+                    [
+                        {
+                            "tag": tag,
+                            "percentage": round((freq / total_work_tags) * 100, 1),
+                        }
+                        for tag, freq in tag_work_freq.items()
+                    ],
+                    key=lambda x: x["percentage"],
+                    reverse=True,
+                )
+                tag_attitude_percent = sorted(
+                    [
+                        {
+                            "tag": tag,
+                            "percentage": round((freq / total_attitude_tags) * 100, 1),
+                        }
+                        for tag, freq in tag_attitude_freq.items()
+                    ],
+                    key=lambda x: x["percentage"],
+                    reverse=True,
+                )
+
+                # tag_work와 tag_attitude의 원형 차트 데이터를 각각 반환
+                return Response(
+                    {
+                        "status": "success",
+                        "work": tag_work_percent,
+                        "attitude": tag_attitude_percent,
+                    }
+                )
+            except AuthUser.DoesNotExist:
+                return Response(
+                    {
+                        "status": "error",
+                        "error_code": 401,
+                        "message": "사용자를 찾을 수 없습니다.",
+                    },
+                    status=401,
+                )
+        else:
+            return Response(
+                {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
+                status=400,
+            )
+
+
+class CategoryCountView(APIView):
+    def get(self, request):
+        user_id = request.query_params.get("user_id")
+
+        # 전체 카테고리 목록
+        all_categories = ["개발자", "디자이너", "기획자", "PM/PO", "기타직무"]
+
+        try:
+            # 해당 user_id에 대한 유저 정보 가져오기
+            user = AuthUser.objects.get(id=user_id)
+
+            # 유저의 폼들 가져오기
+            user_forms = Form.objects.filter(user=user)
+
+            # 각 카테고리에 대한 갯수 초기화
+            category_counts = {category: 0 for category in all_categories}
+
+            for form in user_forms:
+                feedback_results = FeedbackResult.objects.filter(form=form)
+                for feedback_result in feedback_results:
+                    category = feedback_result.category
+                    if category in all_categories:
+                        category_counts[category] += 1
+
+            # JSON 형태의 응답 데이터 생성
+            response_data = {
+                "status": "success",
+                "counts": [
+                    {category: count} for category, count in category_counts.items()
+                ],
+            }
+
+            # JsonResponse로 응답
+            return JsonResponse(response_data)
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(

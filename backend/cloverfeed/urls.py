@@ -37,9 +37,19 @@ urlpatterns = [
         views.CheckFormExistenceView.as_view(),
         name="check_form_existence",
     ),
-    path('feedbackforms/', views.CheckFormExistenceView.as_view(), name='feedbackforms'),
-
-    path('feedbacks/response/count/', views.CategoryCountView.as_view(), name='CategoryCount'),
-
+    path(
+        "feedbackforms/", views.CheckFormExistenceView.as_view(), name="feedbackforms"
+    ),
+    path(
+        "feedbacks/response/count/",
+        views.CategoryCountView.as_view(),
+        name="CategoryCount",
+    ),
     path("answers/", views.AnswersView.as_view(), name="answer"),
+    # 카테고리 갯수 출력
+    path(
+        "feedbacks/response/count/",
+        views.CategoryCountView.as_view(),
+        name="CategoryCount",
+    ),
 ]
