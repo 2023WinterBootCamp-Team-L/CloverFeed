@@ -1,11 +1,21 @@
-import BackButton from "../components/BackButton";
+// LinkAnswer1.tsx
+
+import  { useState } from 'react';
+import AnswerForm from '../components/AnswerForm';
+import BackButton from '../components/BackButton';
 
 function LinkAnswer1() {
+  const [answer1, setAnswer1] = useState('');
+
+  const handleAnswerChange = (answer: string) => {
+    setAnswer1(answer);
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen ">
+    <div className="flex justify-center items-center h-screen">
       <div
-        className="flex flex-col justify-center items-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50 "
-        style={{ width: "393px", height: "852px" }}
+        className="flex flex-col justify-center items-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50"
+        style={{ width: '393px', height: '852px' }}
       >
         <div className="flex justify-between w-full px-4 pt-4">
           <BackButton back page="/LinkTag2" />
@@ -21,9 +31,12 @@ function LinkAnswer1() {
         </div>
         <div className="flex flex-1 flex-col justify-center items-center">
           <div className="w-[360px] h-[580px] flex flex-col items-start overflow-hidden relative border-2 rounded-lg border-[#C1C6CF] bg-white">
-            <p className="text-left font-Preahvihear text-[14px] font-normal mt-4 ml-4">
-              내용을 적어주세요
-            </p>
+            {/* AnswerForm을 사용하고 상태 및 이벤트 핸들러 전달 */}
+            <AnswerForm
+              formId="form1" // 예시로 고유한 formId 전달
+              answer={answer1}
+              onAnswerChange={handleAnswerChange}
+            />
           </div>
         </div>
       </div>
@@ -32,3 +45,4 @@ function LinkAnswer1() {
 }
 
 export default LinkAnswer1;
+

@@ -6,14 +6,12 @@ import 디자이너 from '../assets/디자이너.svg';
 import 기획자 from '../assets/기획자.svg';
 import PMPO from '../assets/PMPO.svg';
 import 기타직무 from '../assets/기타직무.svg';
+import AnswerForm from '../components/AnswerForm'; 
 // import { useState } from 'react';
 // import ProgressBar from '../components/ProgressBar';
 
 function LinkPosition() {
   const nextpage = '/LinkTag1';
-
-  // const [totalSteps, setTotalSteps] = useState<number>(5); // totalSteps는 배열의 첫 번째 요소
-  // const [currentStep, setCurrentStep] = useState<number>(1); // currentStep은 배열의 첫 번째 요소
 
   const buttons = [
     {
@@ -72,6 +70,8 @@ function LinkPosition() {
               ))}
             </div>
           </div>
+          {/* Import 및 사용 */}
+          <AnswerForm formId="your-form-id" onAnswerChange={(answer) => console.log(answer)} />
         </div>
       </div>
     </div>

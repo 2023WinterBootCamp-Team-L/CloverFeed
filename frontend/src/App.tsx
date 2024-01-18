@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<LinkMain />} />
+        <Route path="/" element={<Signup />} />
         <Route path="/querymain" element={<QueryMain />} />
         <Route path="/querystart" element={<QueryStart />} />
         <Route path="/queryshare" element={<QueryShare />} />
