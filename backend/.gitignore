@@ -3,6 +3,7 @@
 *.DS_Store        # macOS에서 생성되는 시스템 파일입니다.
 *.env             # 환경 변수 파일을 무시합니다.
 
+
 # Python
 # 파이썬과 관련된 파일 및 디렉토리를 무시합니다.
 __pycache__/     # 파이썬의 컴파일된 파일이 저장되는 디렉토리입니다.
@@ -64,6 +65,7 @@ backend/venv/   # 백엔드 프로젝트의 가상 환경 디렉토리를 무시
 backend/config/*.secret
 backend/config/*.conf
 backend/config/*.key
+backend/config/*.env
 
 # .gitattributes 파일 
 .gitattributes

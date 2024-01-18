@@ -65,6 +65,7 @@ backend/venv/   # 백엔드 프로젝트의 가상 환경 디렉토리를 무시
 backend/config/*.secret
 backend/config/*.conf
 backend/config/*.key
+backend/config/.env
 
 # .gitattributes 파일 
 .gitattributes
