@@ -332,6 +332,7 @@ class CheckFormExistenceView(APIView):
 class AnswersView(APIView):
     def post(self, request):
         form_id = request.data.get("form_id")
+        category = request.data.get("category")
         tags_work = request.data.get("tags_work")
         tags_attitude = request.data.get("tags_attitude")
         answers_data = request.data.get("answers")
@@ -343,6 +344,7 @@ class AnswersView(APIView):
             # FeedbackResult 생성
             feedback_result = FeedbackResult.objects.create(
                 form=form,
+                category=category,
                 tag_work=tags_work,
                 tag_attitude=tags_attitude,
                 respondent_name=f"#{random.randint(1000, 9999)}",
