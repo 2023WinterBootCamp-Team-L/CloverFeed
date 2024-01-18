@@ -1,11 +1,19 @@
 import { useState } from 'react';
 
-function SuccessButton() {
+interface SuccessButtonProps {
+  onClick: () => void; // 수정된 부분
+  disabled: boolean;
+}
+
+function SuccessButton({ onClick }: SuccessButtonProps) {
   const [isClicked, setIsClicked] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
 
   const handleButtonClick = () => {
     // 버튼 클릭 시 상태 변경
     setIsClicked(true);
+    setIsDisabled(true);
+    onClick();
   };
 
   return (
@@ -16,7 +24,7 @@ function SuccessButton() {
           isClicked ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
         }mx-auto`}
         onClick={handleButtonClick}
-        disabled={isClicked}
+        disabled={isDisabled || isClicked}
       >
         {isClicked ? '회원가입 완료' : '회원가입'}
       </button>
