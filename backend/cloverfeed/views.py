@@ -19,6 +19,7 @@ from .models import (
 )
 from .serializers import QuestionSerializer, FeedbackResultSerializer, FeedbackResultSearchSerializer
 import json
+from django.http import Http404
 
 
 # 나중에 피드백 다시 받을 때 써 민정아 ㅎㅎ
@@ -276,6 +277,46 @@ class CheckFormExistenceView(APIView):
                 "feedbackform": "true" if form_exists else "false",
             }
             return Response(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
+class CategoryCountView(APIView):
+    def get(self, request):
+        user_id = request.query_params.get("user_id")
+
+        # 전체 카테고리 목록
+        all_categories = ["개발자", "디자이너", "기획자", "PM/PO", "기타직무"]
+
+        try:
+            # 해당 user_id에 대한 유저 정보 가져오기
+            user = AuthUser.objects.get(id=user_id)
+
+            # 유저의 폼들 가져오기
+            user_forms = Form.objects.filter(user=user)
+
+            # 각 카테고리에 대한 갯수 초기화
+            category_counts = {category: 0 for category in all_categories}
+
+            for form in user_forms:
+                feedback_results = FeedbackResult.objects.filter(form=form)
+                for feedback_result in feedback_results:
+                    category = feedback_result.category
+                    if category in all_categories:
+                        category_counts[category] += 1
+
+            # JSON 형태의 응답 데이터 생성
+            response_data = {
+                'status': 'success',
+                'counts': [
+                    {category: count} for category, count in category_counts.items()
+                ]
+            }
+
+            # JsonResponse로 응답
+            return JsonResponse(response_data)
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
