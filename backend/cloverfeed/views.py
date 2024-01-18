@@ -397,8 +397,15 @@ class FeedbackChartView(APIView):
                 tag_attitude_freq = dict()
                 for feedback in data:
                     # 쉼표로 분리된 태그들을 개별적으로 처리
-                    tag_works = feedback["tag_work"].split(", ")
-                    tag_attitudes = feedback["tag_attitude"].split(", ")
+                    tag_works = feedback["tag_work"]
+                    tag_works = (
+                        tag_works.replace("[", "").replace("]", "").replace("'", "")
+                    ).split(", ")
+                    tag_attitudes = feedback["tag_attitude"]
+                    tag_attitudes = (
+                        tag_attitudes.replace("[", "").replace("]", "").replace("'", "")
+                    ).split(", ")
+
                     for tag in tag_works:
                         tag_work_freq[tag] = tag_work_freq.get(tag, 0) + 1
                     for tag in tag_attitudes:
