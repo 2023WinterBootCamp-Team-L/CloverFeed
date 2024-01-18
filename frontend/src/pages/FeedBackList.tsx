@@ -118,45 +118,51 @@ const FeedbackList: React.FC = () => {
         <BackButton back page="/mainpage" />
       </div>
       <div className="text-xl mt-4">{getCategoryText(category)}의 피드백</div>
-      <ul>
-        {feedbacks.map((feedback, index) => (
-          <li
-            key={feedback.feedback_id}
-            className={`h-50 w-full flex flex-col justify-start p-2 bg-white rounded-xl border-[3px] ${
-              index % 2 === 0
-                ? "border-c-purple border-opacity-50"
-                : "border-c-blue"
-            } mb-2`}
-          >
-            <div>
-              <p className="text-lg text-black">
-                {feedback.respondent_info.respondent_name}{" "}
-                {getCategoryText(category)}님의 피드백
-              </p>
-              <div className="flex gap-1">
-                {feedback.tags_work.slice(0, 2).map((tag) => (
-                  <Tag
-                    key={tag}
-                    text={tag}
-                    color="bg-c-emerald"
-                    image={디자이너}
-                  />
-                ))}
+      {feedbacks.length === 0 ? (
+        <div className="text-lg text-gray-500 mt-4">
+          받은 피드백 목록이 없습니다.
+        </div>
+      ) : (
+        <ul>
+          {feedbacks.map((feedback, index) => (
+            <li
+              key={feedback.feedback_id}
+              className={`h-50 w-full flex flex-col justify-start p-2 bg-white rounded-xl border-[3px] ${
+                index % 2 === 0
+                  ? "border-c-purple border-opacity-50"
+                  : "border-c-blue"
+              } mb-2`}
+            >
+              <div>
+                <p className="text-lg text-black">
+                  {feedback.respondent_info.respondent_name}{" "}
+                  {getCategoryText(category)}님의 피드백
+                </p>
+                <div className="flex gap-1">
+                  {feedback.tags_work.slice(0, 2).map((tag) => (
+                    <Tag
+                      key={tag}
+                      text={tag}
+                      color="bg-c-emerald"
+                      image={디자이너}
+                    />
+                  ))}
+                </div>
+                <div className="flex gap-1">
+                  {feedback.tags_attitude.slice(0, 2).map((tag) => (
+                    <Tag
+                      key={tag}
+                      text={tag}
+                      color="bg-c-emerald"
+                      image={디자이너}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="flex gap-1">
-                {feedback.tags_attitude.slice(0, 2).map((tag) => (
-                  <Tag
-                    key={tag}
-                    text={tag}
-                    color="bg-c-emerald"
-                    image={디자이너}
-                  />
-                ))}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
