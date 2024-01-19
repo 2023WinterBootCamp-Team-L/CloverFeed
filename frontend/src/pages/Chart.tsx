@@ -87,8 +87,8 @@ const SkillChart = ({
 };
 
 function Chart() {
-  const userId = "사용자ID";
-  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart/?userid=${userId}`;
+  const userId = 1;
+  const apiUrl = `/api/feedbacks/tags/chart/?userid=${userId}`;
 
   const [workData, setWorkData] = React.useState<
     { tag: string; percentage: number }[]

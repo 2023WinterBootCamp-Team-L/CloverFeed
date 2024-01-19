@@ -41,10 +41,7 @@ function App() {
         <Route path="/LinkTag1" element={<LinkTag1 />} />
         <Route path="/Chart" element={<Chart />} />
         <Route path="/Search" element={<Search />} />
-        <Route
-          path="/feedbackresult/:feedbackID"
-          element={<FeedBackResult />}
-        />{" "}
+        <Route path="/feedbackresult" element={<FeedBackResult />} />{" "}
         <Route path="/feedbacks/:category" element={<FeedBackList />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="LinkAnswer1" element={<LinkAnswer1 />} />

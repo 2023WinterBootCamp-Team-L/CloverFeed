@@ -29,7 +29,7 @@ interface ErrorResponse {
 }
 
 const FeedbackList: React.FC = () => {
-  const userId = "사용자ID";
+  const userId = 1;
   const { category } = useParams<{ category?: string }>();
 
   const getCategoryText = (category?: string): string => {
@@ -49,42 +49,8 @@ const FeedbackList: React.FC = () => {
     }
   };
 
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/list`;
+  const apiUrl = `/api/feedbacks/response/list`;
   const queryParams = `userid=${userId}&category=${category}`;
-
-  // // 더미 데이터
-  // const dummyData: SuccessResponse = {
-  //   status: "success",
-  //   feedbacks: [
-  //     {
-  //       feedback_id: "2",
-  //       respondent_info: {
-  //         respondent_name: "#3566",
-  //         category: "디자이너",
-  //       },
-  //       tags_work: ["개성이 뚜렷한", "경청하는", "위기대처 능력"],
-  //       tags_attitude: ["개성이 뚜렷한", "경청하는", "위기대처 능력"],
-  //     },
-  //     {
-  //       feedback_id: "5",
-  //       respondent_info: {
-  //         respondent_name: "#1238",
-  //         category: "디자이너",
-  //       },
-  //       tags_work: ["개성이 뚜렷한", "경청하는", "위기대처 능력"],
-  //       tags_attitude: ["개성이 뚜렷한", "경청하는", "위기대처 능력"],
-  //     },
-  //     {
-  //       feedback_id: "11",
-  //       respondent_info: {
-  //         respondent_name: "#6583",
-  //         category: "디자이너",
-  //       },
-  //       tags_work: ["개성이 뚜렷한", "경청하는", "위기대처 능력"],
-  //       tags_attitude: ["개성이 뚜렷한", "경청하는", "위기대처 능력"],
-  //     },
-  //   ],
-  // };
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
@@ -97,19 +63,12 @@ const FeedbackList: React.FC = () => {
         if (data.status === "success") {
           setFeedbacks((data as SuccessResponse).feedbacks);
         } else {
-          console.error("에러 응답:", (data as ErrorResponse).message);
+          console.error("api 요청 실패", (data as ErrorResponse).message);
         }
       })
       .catch((error: ErrorResponse) => {
         console.error("에러 응답:", error.message);
       });
-    // const data: SuccessResponse | ErrorResponse = dummyData;
-
-    // if (data.status === "success") {
-    //   setFeedbacks((data as SuccessResponse).feedbacks);
-    // } else {
-    //   console.error("에러 응답:", (data as ErrorResponse).message);
-    // }
   }, [apiUrl, queryParams]);
 
   return (
