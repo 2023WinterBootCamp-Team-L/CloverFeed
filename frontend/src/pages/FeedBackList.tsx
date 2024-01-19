@@ -50,7 +50,7 @@ const FeedbackList: React.FC = () => {
     }
   };
 
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/list`;
+  const apiUrl = `/api/feedbacks/response/list`;
   const queryParams = `userid=${userId}&category=${category}`;
 
   // 더미 데이터
@@ -104,15 +104,16 @@ const FeedbackList: React.FC = () => {
       .catch((error: ErrorResponse) => {
         console.error("기타 에러 응답:", error.message);
       });
-
-    //   const data: SuccessResponse | ErrorResponse = dummyData;
-
-    //   if (data.status === "success") {
-    //     setFeedbacks((data as SuccessResponse).feedbacks);
-    //   } else {
-    //     console.error("에러 응답:", (data as ErrorResponse).message);
-    //   }
   }, [apiUrl, queryParams]);
+
+  //   const data: SuccessResponse | ErrorResponse = dummyData;
+
+  //   if (data.status === "success") {
+  //     setFeedbacks((data as SuccessResponse).feedbacks);
+  //   } else {
+  //     console.error("에러 응답:", (data as ErrorResponse).message);
+  //   }
+  // }, [apiUrl, queryParams]);
 
   const filteredFeedbacks = feedbacks.filter(
     (feedback) =>

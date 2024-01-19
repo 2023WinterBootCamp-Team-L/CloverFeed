@@ -94,7 +94,6 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
             "modified_at",
         ]
 
-
 # 받은 피드백답변 중 검색을 위한 Serializer
 class FeedbackResultSearchSerializer(serializers.ModelSerializer):
     feedback_id = serializers.IntegerField(source="feedback.id")
