@@ -3,7 +3,6 @@ import { useState } from "react";
 import SuccessButton from "../components/SuccessButton";
 import GologinButton from "../components/GologinButton";
 import axios from "axios";
-
 function Gosignup() {
   const [emailanswerInputs, setemailAnswerInputs] = useState("");
   const [nameanswerInputs, setnameAnswerInputs] = useState("");
@@ -11,7 +10,6 @@ function Gosignup() {
   const [pwcheckanswerInputs, setpwcheckAnswerInputs] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false); // Added state for password validation
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setemailAnswerInputs(e.target.value);
     // You might want to add email validation logic here
@@ -31,10 +29,8 @@ function Gosignup() {
     setpwcheckAnswerInputs(e.target.value);
     setIsPasswordValid(false);
   };
-
   const emailValidationRegex =
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
   const handleSignup = async () => {
     try {
       //필수 입력값 확인
@@ -54,13 +50,11 @@ function Gosignup() {
         setErrorMessage("올바른 이메일 형식이 아닙니다.");
         return;
       }
-
       // 비밀번호 일치여부 확인
       if (pwanswerInputs !== pwcheckanswerInputs) {
         setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         return;
       }
-
       // API request
       const response = await axios.post(
         "http://localhost:8000/api/user/auth/signup/",
@@ -70,7 +64,6 @@ function Gosignup() {
           password: pwanswerInputs,
         }
       );
-
       //성공적인 응답처리
       if (response.data.status === "success") {
         // Optionally, you can do something on successful signup
@@ -88,7 +81,6 @@ function Gosignup() {
       console.error("Signup error:", error);
     }
   };
-
   // const handleSignup = async () => {
   //   try {
   //     // 필수 입력값 확인
@@ -108,19 +100,16 @@ function Gosignup() {
   //       setErrorMessage('올바른 이메일 형식이 아닙니다.');
   //       return;
   //     }
-
   //     // 비밀번호 일치 여부 확인
   //     if (pwanswerInputs !== pwcheckanswerInputs) {
   //       setErrorMessage('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
   //       return;
   //     }
-
   //     // 성공적인 API 응답을 시뮬레이션
   //     const simulatedResponse = {
   //       status: 'success',
   //       message: '회원가입이 성공적으로 완료되었습니다.',
   //     };
-
   //     // 성공적인 응답 처리
   //     if (simulatedResponse.status === 'success') {
   //       // 선택적으로 성공적인 회원가입에 대한 처리 수행
@@ -137,7 +126,6 @@ function Gosignup() {
   //     console.error('회원가입 오류:', error);
   //   }
   // };
-
   return (
     <div
       className="bg-emerald-50 flex flex-col overflow-hidden max-w-[24.56rem]
@@ -147,7 +135,6 @@ function Gosignup() {
         <div className="pt-8 pl-[85px] mb-1 text-sm text-left flex-row gap-3 flex items-center">
           Email입력
         </div>
-
         <div>
           {/* 컴포넌트를 나란히 정렬하기 위해 flex 컨테이너 추가 */}
           <center>
