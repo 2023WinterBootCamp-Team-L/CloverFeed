@@ -1,17 +1,17 @@
 # backend/cloverfeed/urls.py
 # URL 경로와 뷰를 매핑해주는 파일
-from django.urls import path, re_path
+from django.urls import path
 from . import views
+
 
 # from .views import QuestionListView, FeedbackResultDetail,CheckFormExistenceView
 
-app_name = "cloverfeed"
 
 urlpatterns = [
-    path("user/auth/signup/", views.SignupView.as_view(), name="signup"),
-    path("user/auth/login/", views.LoginView.as_view(), name="login"),
-    path("forms/questions/", views.QuestionListView.as_view(), name="questionlist"),
-    path("forms/", views.SubmitFormsView.as_view(), name="submitforms"),
+    path("user/auth/signup", views.SignupView.as_view(), name="signup"),
+    path("user/auth/login", views.LoginView.as_view(), name="login"),
+    path("forms/questions", views.QuestionListView.as_view(), name="questionlist"),
+    path("forms", views.SubmitFormsView.as_view(), name="submitforms"),
     # 카테고리(직군)별 피드백 목록 조회
     path(
         "feedbacks/response/list",
@@ -27,28 +27,25 @@ urlpatterns = [
     ),
     # 피드백 결과의 태그들을 원형차트로 시각화
     path(
-        "feedbacks/tags/chart/",
+        "feedbacks/tags/chart",
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
     ),
     # 피드백폼 유무 조회
     path(
-        "check_form_existence/",
+        "forms",
         views.CheckFormExistenceView.as_view(),
         name="check_form_existence",
     ),
     path(
-        "feedbackforms/", views.CheckFormExistenceView.as_view(), name="feedbackforms"
-    ),
-    path(
-        "feedbacks/response/count/",
+        "feedbacks/response/count",
         views.CategoryCountView.as_view(),
         name="CategoryCount",
     ),
-    path("answers/", views.AnswersView.as_view(), name="answer"),
+    path("answers", views.AnswersView.as_view(), name="answer"),
     # 카테고리 갯수 출력
     path(
-        "feedbacks/response/count/",
+        "feedbacks/response/count",
         views.CategoryCountView.as_view(),
         name="CategoryCount",
     ),

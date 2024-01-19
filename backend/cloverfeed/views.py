@@ -27,10 +27,24 @@ from .serializers import (
     FormSerializer,
     FeedbackTagSerializer,
 )
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg             import openapi
 
 
 class SignupView(APIView):
-    permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        tags=['user'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING),
+                'email': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL),
+                'password': openapi.Schema(type=openapi.TYPE_STRING),
+            },
+            required=['username', 'email', 'password']
+        ),
+        responses={201: 'Created', 400: 'Bad Request'}
+    )
 
     def post(self, request):
         username = request.data.get("username")
@@ -66,6 +80,51 @@ class SignupView(APIView):
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING),
+                'password': openapi.Schema(type=openapi.TYPE_STRING),
+            },
+            required=['email', 'password']
+        ),
+        responses={
+            200: openapi.Response('Success', schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'status': openapi.Schema(type=openapi.TYPE_STRING),
+                    'user_id': openapi.Schema(type=openapi.TYPE_INTEGER),
+                    'user_name': openapi.Schema(type=openapi.TYPE_STRING),
+                    'message': openapi.Schema(type=openapi.TYPE_STRING),
+                }
+            )),
+            400: openapi.Response('Bad Request', schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'status': openapi.Schema(type=openapi.TYPE_STRING),
+                    'error_code': openapi.Schema(type=openapi.TYPE_INTEGER),
+                    'message': openapi.Schema(type=openapi.TYPE_STRING),
+                }
+            )),
+            401: openapi.Response('Unauthorized', schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'status': openapi.Schema(type=openapi.TYPE_STRING),
+                    'error_code': openapi.Schema(type=openapi.TYPE_INTEGER),
+                    'message': openapi.Schema(type=openapi.TYPE_STRING),
+                }
+            )),
+            404: openapi.Response('Not Found', schema=openapi.Schema(
+                type=openapi.TYPE_OBJECT,
+                properties={
+                    'status': openapi.Schema(type=openapi.TYPE_STRING),
+                    'error_code': openapi.Schema(type=openapi.TYPE_INTEGER),
+                    'message': openapi.Schema(type=openapi.TYPE_STRING),
+                }
+            )),
+        }
+    )
 
     def post(self, request):
         email = request.data.get("email")
@@ -127,6 +186,23 @@ class LoginView(APIView):
 
 # 받은 피드백 상세내용 조회
 class FeedbackResultDetail(APIView):
+    @swagger_auto_schema(
+        tags=['User'],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL),
+                'password': openapi.Schema(type=openapi.TYPE_STRING),
+            },
+            required=['email', 'password']
+        ),
+        responses={
+            200: 'OK - Successful login',
+            400: 'Bad Request - Invalid input format',
+            401: 'Unauthorized - Incorrect email or password',
+            404: 'Not Found - User not found',
+        }
+    )
     def get_object(self, pk, user_id):
         try:
             # 요청받은 pk와 user_id로 FeedbackResult를 조회
@@ -155,6 +231,14 @@ class FeedbackResultDetail(APIView):
 
 # 카테고리(직군)별 피드백 목록 조회
 class FeedbackListByCategory(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+            openapi.Parameter(
+                'category', openapi.IN_QUERY, description='카테고리', required=False, type=openapi.TYPE_STRING),
+        ]
+    )
     def get(self, request, format=None):
         userid = request.query_params.get("userid", None)
         category = request.query_params.get("category", None)
@@ -176,6 +260,7 @@ class FeedbackListByCategory(APIView):
             )
         else:
             feedbacks = FeedbackResult.objects.filter(form__user=user)
+
         # 응답
         serializer = FeedbackResultSerializer(feedbacks, many=True)
         return Response({"status": "success", "feedbacks": serializer.data})
@@ -183,6 +268,14 @@ class FeedbackListByCategory(APIView):
 
 # 받은 피드백답변(주관식) 내용 검색
 class FeedbackSearchView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+            openapi.Parameter(
+                'keyword', openapi.IN_QUERY, description='검색 키워드', required=False, type=openapi.TYPE_STRING),
+        ]
+    )
     def get(self, request):
         userid = request.query_params.get("userid", None)
         keyword = request.query_params.get("keyword", None)
@@ -204,8 +297,13 @@ class FeedbackSearchView(APIView):
         serializer = FeedbackResultSearchSerializer(feedbacks, many=True)
         return Response({"status": "success", "feedbacks": serializer.data})
 
-
 class QuestionListView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+        ]
+    )
     def get(self, request, *args, **kwargs):
         # query_params에서 userid 가져오기
         user_id = request.query_params.get("userid", None)
@@ -217,7 +315,7 @@ class QuestionListView(APIView):
             )
 
         try:
-            form = Form.objects.get(user=user_id)
+            forms = Form.objects.filter(user=user_id)
         except Form.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
@@ -229,8 +327,17 @@ class QuestionListView(APIView):
                 status=404,
             )
 
+        if forms.count() == 0:
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "폼이 없습니다.",
+                },
+                status=404,
+            )
+
         # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
-        # questions_data = list(Question.objects.all().values())
         questions_data = Question.objects.filter(form__user_id=user_id)
         print(questions_data)
 
@@ -248,6 +355,16 @@ class QuestionListView(APIView):
 
 
 class SubmitFormsView(APIView):
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'user_id': openapi.Schema(type=openapi.TYPE_NUMBER),
+                'questions': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Schema(type=openapi.TYPE_OBJECT)),
+            },
+            required=['user_id', 'questions']
+        ),
+    )
     def post(self, request):
         user_id = request.data.get("user_id")
         questions_data = request.data.get("questions")
@@ -272,11 +389,7 @@ class SubmitFormsView(APIView):
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
-                {
-                    "status": "error",
-                    "error_code": 401,
-                    "message": "인증 실패. 유저 ID가 올바르지 않습니다.",
-                },
+                {"status": "error", "message": "인증 실패. 유저 ID가 올바르지 않습니다."},
                 status=404,
             )
 
@@ -319,6 +432,12 @@ class SubmitFormsView(APIView):
 
 
 class CheckFormExistenceView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'user_id', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+        ]
+    )
     def get(self, request, format=None):
         # user_id인식 안됨
         user_id = request.query_params.get("user_id", None)
@@ -343,6 +462,19 @@ class CheckFormExistenceView(APIView):
 
 
 class AnswersView(APIView):
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'form_id': openapi.Schema(type=openapi.TYPE_NUMBER),
+                'category': openapi.Schema(type=openapi.TYPE_STRING),
+                'tags_work': openapi.Schema(type=openapi.TYPE_STRING),
+                'tags_attitude': openapi.Schema(type=openapi.TYPE_STRING),
+                'answers': openapi.Schema(type=openapi.TYPE_ARRAY, items=openapi.Schema(type=openapi.TYPE_OBJECT)),
+            },
+            required=['form_id', 'category', 'tags_work', 'tags_attitude', 'answers']
+        ),
+    )
     def post(self, request):
         form_id = request.data.get("form_id")
         category = request.data.get("category")
@@ -398,6 +530,12 @@ class AnswersView(APIView):
 
 # 피드백 결과의 태그들을 원형차트로 시각화
 class FeedbackChartView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+        ]
+    )
     def get(self, request, *args, **kwargs):
         userid = self.request.query_params.get("userid", None)
         if userid is not None:
@@ -477,7 +615,14 @@ class FeedbackChartView(APIView):
 
 
 class CategoryCountView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'user_id', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+        ]
+    )
     def get(self, request):
+        
         user_id = request.query_params.get("user_id")
 
         # 전체 카테고리 목록

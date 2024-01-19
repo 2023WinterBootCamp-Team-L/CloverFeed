@@ -92,7 +92,6 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
             "summary",
             "created_at",
             "modified_at",
-            "field",
         ]
 
 
