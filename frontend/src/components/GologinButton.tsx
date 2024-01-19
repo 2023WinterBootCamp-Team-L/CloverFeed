@@ -37,10 +37,13 @@ function GologinButton() {
         setErrorMessage("올바른 이메일 형식이 아닙니다.");
         return;
       }
-      const response = await axios.post("/api/user/auth/login/", {
-        email: emailanswerInputs,
-        password: pwanswerInputs,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/user/auth/login/",
+        {
+          email: emailanswerInputs,
+          password: pwanswerInputs,
+        }
+      );
       if (response.data.status === "success") {
         //로그인 성공
         console.log("로그인 성공", response.data);

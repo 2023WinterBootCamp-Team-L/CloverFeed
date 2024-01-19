@@ -4,6 +4,7 @@ import BackButton from "../components/BackButton";
 import getCategoryText from "../components/getCategotyText";
 import TagAnswer from "../components/TagAnswer";
 import 디자이너 from "../assets/디자이너.svg";
+import { useParams } from "react-router-dom";
 
 interface RespondentInfo {
   respondent_name: string;
@@ -34,21 +35,22 @@ const FeedBackResult: React.FC = () => {
     null
   );
   const [error, setError] = useState<string | null>(null);
+  const { feedbackId } = useParams<{ feedbackId: string }>();
 
   useEffect(() => {
-    const feedbackId = 1;
     const userId = 1;
 
     axios
-      .get(`/api/feedbacks/${feedbackId}?userid=${userId}`)
+      .get(`http://localhost:8000/api/feedbacks/${feedbackId}?userid=${userId}`)
       .then((response: AxiosResponse<FeedbackResponse>) => {
         const data: FeedbackResponse = response.data;
         setFeedbackData(data);
       })
       .catch((error: ErrorResponse) => {
+        console.error("피드백을 찾을 수 없습니다.");
         setError(error.message);
       });
-  }, []);
+  }, [feedbackId]);
 
   //   const dummyData: FeedbackResponse = {
   //     status: "success",
@@ -87,7 +89,7 @@ const FeedBackResult: React.FC = () => {
   // }, []);
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div>에러 응답: {error}</div>;
   }
 
   if (!feedbackData) {

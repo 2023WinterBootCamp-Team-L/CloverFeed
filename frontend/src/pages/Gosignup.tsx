@@ -53,11 +53,14 @@ function Gosignup() {
         return;
       }
       // API request
-      const response = await axios.post("/api/user/auth/signup/", {
-        username: nameanswerInputs,
-        email: emailanswerInputs,
-        password: pwanswerInputs,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/user/auth/signup/",
+        {
+          username: nameanswerInputs,
+          email: emailanswerInputs,
+          password: pwanswerInputs,
+        }
+      );
       //성공적인 응답처리
       if (response.data.status === "success") {
         // Optionally, you can do something on successful signup

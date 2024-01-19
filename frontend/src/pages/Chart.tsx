@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import BackButton from "../components/BackButton";
 import Line from "../components/Line";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -88,7 +88,7 @@ const SkillChart = ({
 
 function Chart() {
   const userId = 1;
-  const apiUrl = `/api/feedbacks/tags/chart?userid=${userId}`;
+  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart?userid=${userId}`;
 
   const [workData, setWorkData] = React.useState<
     { tag: string; percentage: number }[]
@@ -97,25 +97,43 @@ function Chart() {
     { tag: string; percentage: number }[]
   >([]);
 
-  React.useEffect(() => {
-    axios
-      .get(apiUrl)
-      .then((response: AxiosResponse) => {
+  useEffect(() => {
+    const getChart = async () => {
+      try {
+        const response = await axios.get(apiUrl);
         if (response.data.status === "success") {
-          const workTags = response.data.work;
-          const attitudeTags = response.data.attitude;
-          setWorkData(workTags);
-          setAttitudeData(attitudeTags);
-          console.log("Work Tags:", workTags);
-          console.log("Attitude Tags:", attitudeTags);
+          setWorkData(response.data.work);
+          setAttitudeData(response.data.attitude);
         } else {
-          console.error("Error:", response.data.message);
+          console.error("에러 응답:", response.data.message);
         }
-      })
-      .catch((error) => {
-        console.error("Network Error:", error.message);
-      });
+      } catch (error) {
+        console.error("네트워크 오류:", error);
+      }
+    };
+
+    getChart();
   }, [apiUrl]);
+
+  // React.useEffect(() => {
+  //   axios
+  //     .get(apiUrl)
+  //     .then((response: AxiosResponse) => {
+  //       if (response.data.status === "success") {
+  //         const workTags = response.data.work;
+  //         const attitudeTags = response.data.attitude;
+  //         setWorkData(workTags);
+  //         setAttitudeData(attitudeTags);
+  //         console.log("Work Tags:", workTags);
+  //         console.log("Attitude Tags:", attitudeTags);
+  //       } else {
+  //         console.error("사용자를 찾을 수 없습니다.", response.data.message);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("에러 응답:", error.message);
+  //     });
+  // }, [apiUrl]);
 
   //   const dummyApiResponse = {
   //     status: "success",
