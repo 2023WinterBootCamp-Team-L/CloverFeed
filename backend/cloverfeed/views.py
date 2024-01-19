@@ -293,9 +293,9 @@ class CheckFormExistenceView(APIView):
             ),
         ]
     )
-    def get(self, request, format=None):
+    def get(self, request):
         # user_id인식 안됨
-        user_id = request.query_params.get("user_id", None)
+        user_id = request.query_params.get("user_id")
 
         # user_id가 존재하는지 확인
         try:
@@ -329,7 +329,7 @@ class QuestionListView(APIView):
             ),
         ]
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         # query_params에서 userid 가져오기
         user_id = request.query_params.get("userid", None)
 
@@ -497,6 +497,14 @@ class CategoryCountView(APIView):
 
 # 카테고리(직군)별 피드백 목록 확인
 class FeedbackListByCategory(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+            openapi.Parameter(
+                'category', openapi.IN_QUERY, description='카테고리', required=False, type=openapi.TYPE_STRING),
+        ]
+    )
     def get(self, request, format=None):
         userid = request.query_params.get("userid", None)
         category = request.query_params.get("category", None)
@@ -525,6 +533,14 @@ class FeedbackListByCategory(APIView):
 
 # 받은 피드백답변(주관식) 내용 검색
 class FeedbackSearchView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+            openapi.Parameter(
+                'keyword', openapi.IN_QUERY, description='검색 키워드', required=False, type=openapi.TYPE_STRING),
+        ]
+    )
     def get(self, request):
         userid = request.query_params.get("userid", None)
         keyword = request.query_params.get("keyword", None)
@@ -549,6 +565,12 @@ class FeedbackSearchView(APIView):
 
 # 특정 피드백 상세 내용 확인
 class FeedbackResultDetail(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+        ]
+    )
     def get_object(self, pk, user_id):
         try:
             # 요청받은 pk와 user_id로 FeedbackResult를 조회
@@ -588,7 +610,7 @@ class FeedbackChartView(APIView):
             ),
         ]
     )
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         userid = self.request.query_params.get("userid", None)
         if userid is not None:
             try:
