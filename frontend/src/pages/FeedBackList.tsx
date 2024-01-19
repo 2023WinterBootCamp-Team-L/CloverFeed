@@ -1,10 +1,10 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import BackButton from "../components/BackButton";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TagAnswer from "../components/TagAnswer";
 import 디자이너 from "../assets/디자이너.svg";
-import { useNavigate } from "react-router-dom";
+import FeedBackResult from "./FeedBackResult";
 
 interface RespondentInfo {
   respondent_name: string;
@@ -16,17 +16,6 @@ interface Feedback {
   respondent_info: RespondentInfo;
   tags_work: string[];
   tags_attitude: string[];
-}
-
-interface SuccessResponse {
-  status: string;
-  feedbacks: Feedback[];
-}
-
-interface ErrorResponse {
-  status: string;
-  error_code: number;
-  message: string;
 }
 
 const FeedbackList: React.FC = () => {
@@ -50,7 +39,7 @@ const FeedbackList: React.FC = () => {
     }
   };
 
-  const apiUrl = `/api/feedbacks/response/list?userid=${userId}&category=${category}`;
+  const apiUrl = `http://localhost:8000/api/feedbacks/response/list?userid=${userId}&category=${category}`;
 
   // 더미 데이터
   // const dummyData: SuccessResponse = {
@@ -89,20 +78,23 @@ const FeedbackList: React.FC = () => {
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
   useEffect(() => {
-    axios
-      .get(`${apiUrl}`)
-      .then((response: AxiosResponse<SuccessResponse | ErrorResponse>) => {
-        const data: SuccessResponse | ErrorResponse = response.data;
+    const getFeedbacks = async () => {
+      try {
+        const response = await axios.get(apiUrl);
 
-        if (data.status === "success") {
-          setFeedbacks((data as SuccessResponse).feedbacks);
+        if (response.data.status === "success") {
+          setFeedbacks(response.data.feedbacks);
         } else {
-          console.error("에러 응답:", (data as ErrorResponse).message);
+          console.error("에러 응답:", response.data.message);
+          // 사용자에게 에러 메시지를 보여줄 수 있는 처리 추가
         }
-      })
-      .catch((error: ErrorResponse) => {
-        console.error("기타 에러 응답:", error.message);
-      });
+      } catch (error) {
+        console.error("네트워크 오류:", error);
+        // 사용자에게 네트워크 오류 메시지를 보여줄 수 있는 처리 추가
+      }
+    };
+
+    getFeedbacks();
   }, [apiUrl]);
 
   //   const data: SuccessResponse | ErrorResponse = dummyData;
@@ -118,8 +110,6 @@ const FeedbackList: React.FC = () => {
     (feedback) =>
       feedback.respondent_info.category === getCategoryText(category)
   );
-
-  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
@@ -145,9 +135,7 @@ const FeedbackList: React.FC = () => {
               <div>
                 <button
                   className="text-lg text-black"
-                  onClick={() =>
-                    navigate(`/feedbackresult/${feedback.feedback_id}`)
-                  }
+                  onClick={() => <FeedBackResult />}
                 >
                   {feedback.respondent_info.respondent_name}{" "}
                   {getCategoryText(category)}님의 피드백

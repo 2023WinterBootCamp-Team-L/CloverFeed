@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router-dom";
 import React from "react";
 import FeedCount from "../components/FeedCount.tsx";
+import FeedbackList from "../pages/FeedBackList.tsx";
 
 interface FeedButtonProps {
   category: string;
@@ -26,10 +26,8 @@ const getCategoryText = (category: string): string => {
 };
 
 const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
-  const navigate = useNavigate();
-
   const handleButtonClick = () => {
-    navigate(`/feedbacks/${category}`);
+    <FeedbackList />;
   };
 
   const buttonClassName = `bg-white-400 text-black ${
