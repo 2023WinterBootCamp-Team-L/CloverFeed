@@ -1,6 +1,6 @@
 # backend/cloverfeed/urls.py
 # URL 경로와 뷰를 매핑해주는 파일
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
 app_name = "cloverfeed"
@@ -10,8 +10,10 @@ urlpatterns = [
     path("user/auth/signup/", views.SignupView.as_view(), name="signup"),
     # 로그인
     path("user/auth/login/", views.LoginView.as_view(), name="login"),
-    # 피드백 질문 목록 작성, 피드백 폼 유무 조회
-    path("forms/", views.FormView.as_view(), name="form"),
+    # 피드백 질문 목록 작성
+    path("forms/", views.SubmitFormView.as_view(), name="form"),
+    # 피드백 폼 유무 조회 -> 안된듯...ㅠ
+    path("forms/", views.CheckFormExistenceView.as_view(), name="form"),
     # 작성한 질문 목록 확인
     path("forms/questions/", views.QuestionListView.as_view(), name="questionlist"),
     # 피드백 질문에 답변 제출
@@ -39,7 +41,7 @@ urlpatterns = [
     path("feedbacks/<int:pk>", views.FeedbackResultDetail.as_view()),
     # 피드백 결과의 태그들을 원형차트로 시각화
     path(
-        "feedbacks/tags/chart/",
+        "feedbacks/tags/chart",
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
     ),

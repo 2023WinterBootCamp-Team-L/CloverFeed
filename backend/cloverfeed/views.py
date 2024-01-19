@@ -27,12 +27,27 @@ from .serializers import (
     FormSerializer,
     FeedbackTagSerializer,
 )
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
 # 회원가입
 class SignupView(APIView):
-    permission_classes = [AllowAny]
-
+    @swagger_auto_schema(
+        tags=["user"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "username": openapi.Schema(type=openapi.TYPE_STRING),
+                "email": openapi.Schema(
+                    type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL
+                ),
+                "password": openapi.Schema(type=openapi.TYPE_STRING),
+            },
+            required=["username", "email", "password"],
+        ),
+        responses={201: "Created", 400: "Bad Request"},
+    )
     def post(self, request):
         username = request.data.get("username")
         email = request.data.get("email")
@@ -69,6 +84,63 @@ class SignupView(APIView):
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(type=openapi.TYPE_STRING),
+                "password": openapi.Schema(type=openapi.TYPE_STRING),
+            },
+            required=["email", "password"],
+        ),
+        responses={
+            200: openapi.Response(
+                "Success",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "user_id": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "user_name": openapi.Schema(type=openapi.TYPE_STRING),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+            400: openapi.Response(
+                "Bad Request",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "error_code": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+            401: openapi.Response(
+                "Unauthorized",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "error_code": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+            404: openapi.Response(
+                "Not Found",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "error_code": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+        },
+    )
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -127,30 +199,21 @@ class LoginView(APIView):
             )
 
 
-# 피드백 질문 목록 작성, 피드백 폼 유무 조회
-class FormView(APIView):
-    def get(self, request, format=None):
-        # user_id인식 안됨
-        user_id = request.query_params.get("user_id", None)
-
-        # user_id가 존재하는지 확인
-        try:
-            user = AuthUser.objects.get(id=user_id)
-            # 폼 존재 여부 확인
-            form_exists = Form.objects.filter(user=user).exists()
-            # 응답 생성
-            response_data = {
-                "status": "success",
-                "feedbackform": "true" if form_exists else "false",
-            }
-            return Response(response_data)
-        except AuthUser.DoesNotExist:
-            # user_id가 존재하지 않는 경우에 대한 응답
-            return Response(
-                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
-                status=404,
-            )
-
+# 피드백 질문 목록 작성
+class SubmitFormView(APIView):
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "user_id": openapi.Schema(type=openapi.TYPE_NUMBER),
+                "questions": openapi.Schema(
+                    type=openapi.TYPE_ARRAY,
+                    items=openapi.Schema(type=openapi.TYPE_OBJECT),
+                ),
+            },
+            required=["user_id", "questions"],
+        )
+    )
     def post(self, request):
         user_id = request.data.get("user_id")
         questions_data = request.data.get("questions")
@@ -175,12 +238,8 @@ class FormView(APIView):
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
-                {
-                    "status": "error",
-                    "error_code": 401,
-                    "message": "인증 실패. 유저 ID가 올바르지 않습니다.",
-                },
-                status=404,
+                {"status": "error", "message": "인증 실패. 유저 ID가 올바르지 않습니다."},
+                status=status.HTTP_404_NOT_FOUND,
             )
 
         # 사용자를 위한 새로운 폼 생성
@@ -221,8 +280,55 @@ class FormView(APIView):
         )
 
 
+# 피드백 폼 유무 조회
+class CheckFormExistenceView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "user_id",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request, format=None):
+        # user_id인식 안됨
+        user_id = request.query_params.get("user_id", None)
+
+        # user_id가 존재하는지 확인
+        try:
+            user = AuthUser.objects.get(id=user_id)
+            # 폼 존재 여부 확인
+            form_exists = Form.objects.filter(user=user).exists()
+            # 응답 생성
+            response_data = {
+                "status": "success",
+                "feedbackform": "true" if form_exists else "false",
+            }
+            return Response(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
+
+
 # 작성한 질문 목록 확인
 class QuestionListView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
     def get(self, request, *args, **kwargs):
         # query_params에서 userid 가져오기
         user_id = request.query_params.get("userid", None)
@@ -234,7 +340,7 @@ class QuestionListView(APIView):
             )
 
         try:
-            form = Form.objects.get(user=user_id)
+            form = Form.objects.filter(user=user_id)
         except Form.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
@@ -266,6 +372,22 @@ class QuestionListView(APIView):
 
 # 피드백 질문에 답변 제출
 class AnswersView(APIView):
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "form_id": openapi.Schema(type=openapi.TYPE_NUMBER),
+                "category": openapi.Schema(type=openapi.TYPE_STRING),
+                "tags_work": openapi.Schema(type=openapi.TYPE_STRING),
+                "tags_attitude": openapi.Schema(type=openapi.TYPE_STRING),
+                "answers": openapi.Schema(
+                    type=openapi.TYPE_ARRAY,
+                    items=openapi.Schema(type=openapi.TYPE_OBJECT),
+                ),
+            },
+            required=["form_id", "category", "tags_work", "tags_attitude", "answers"],
+        ),
+    )
     def post(self, request):
         form_id = request.data.get("form_id")
         category = request.data.get("category")
@@ -321,6 +443,17 @@ class AnswersView(APIView):
 
 # 카테고리(직군)별 피드백 개수 확인
 class CategoryCountView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "user_id",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
     def get(self, request):
         user_id = request.query_params.get("user_id")
 
@@ -444,6 +577,17 @@ class FeedbackResultDetail(APIView):
 
 # 피드백 결과의 태그들을 원형차트로 시각화
 class FeedbackChartView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
     def get(self, request, *args, **kwargs):
         userid = self.request.query_params.get("userid", None)
         if userid is not None:
