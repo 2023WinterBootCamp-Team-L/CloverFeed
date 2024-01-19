@@ -43,7 +43,7 @@ export const Question: React.FC<QuestionProps> = ({
   );
 };
 
-function QueryAdd({ questionId }: { questionId: number }) {
+function QueryAdd() {
   const [showAnswersAdd, setShowAnswersAdd] = useState(false);
   const [questionInputs, setQuestionInputs] = useRecoilState(
     questionInputState(questionId)
