@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<LinkMain />} />
+        <Route path="/" element={<Signup />} />
         <Route path="/querymain" element={<QueryMain />} />
         <Route path="/querystart" element={<QueryStart />} />
         <Route path="/queryshare" element={<QueryShare />} />
@@ -50,7 +50,6 @@ function App() {
         <Route path="LinkOpti" element={<LinkOpti />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/mainpage" element={<Mainpage />} />
         <Route path="/gosignup" element={<Gosignup />} />
         <Route path="/wordcloud" element={<WordCloud />} />

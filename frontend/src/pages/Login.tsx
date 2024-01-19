@@ -1,8 +1,8 @@
-import loginclover from '../assets/loginclover.svg';
-import GreenButton from '../components/GreenButton';
+import loginclover from "../assets/loginclover.svg";
+import GreenButton from "../components/GreenButton";
 
 function Login() {
-  const nextpage = '/Mainpage';
+  const nextpage = "/Mainpage";
   return (
     <div
       className="bg-white flex flex-col items-center justify-center
