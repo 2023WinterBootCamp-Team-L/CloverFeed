@@ -216,6 +216,19 @@ class QuestionListView(APIView):
                 {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
             )
 
+        try:
+            form = Form.objects.get(user=user_id)
+        except Form.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "폼이 없습니다.",
+                },
+                status=404,
+            )
+
         # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
         # questions_data = list(Question.objects.all().values())
         questions_data = Question.objects.filter(form__user_id=user_id)
@@ -460,4 +473,46 @@ class FeedbackChartView(APIView):
             return Response(
                 {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
                 status=400,
+            )
+
+
+class CategoryCountView(APIView):
+    def get(self, request):
+        user_id = request.query_params.get("user_id")
+
+        # 전체 카테고리 목록
+        all_categories = ["개발자", "디자이너", "기획자", "PM/PO", "기타직무"]
+
+        try:
+            # 해당 user_id에 대한 유저 정보 가져오기
+            user = AuthUser.objects.get(id=user_id)
+
+            # 유저의 폼들 가져오기
+            user_forms = Form.objects.filter(user=user)
+
+            # 각 카테고리에 대한 갯수 초기화
+            category_counts = {category: 0 for category in all_categories}
+
+            for form in user_forms:
+                feedback_results = FeedbackResult.objects.filter(form=form)
+                for feedback_result in feedback_results:
+                    category = feedback_result.category
+                    if category in all_categories:
+                        category_counts[category] += 1
+
+            # JSON 형태의 응답 데이터 생성
+            response_data = {
+                "status": "success",
+                "counts": [
+                    {category: count} for category, count in category_counts.items()
+                ],
+            }
+
+            # JsonResponse로 응답
+            return JsonResponse(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
             )

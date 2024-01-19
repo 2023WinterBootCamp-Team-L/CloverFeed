@@ -13,7 +13,7 @@ import SimpleWordcloud from "../components/wordcloud.tsx";
 function Mainpage() {
   const nextpage = "/QueryMain";
   const logoutpage = "/Signup";
-  const researchpage = "/";
+  const researchpage = "/Search";
   const chartpage = "/Chart";
   const sharepage = "/QueryShare";
 
