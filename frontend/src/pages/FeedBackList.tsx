@@ -30,7 +30,7 @@ interface ErrorResponse {
 }
 
 const FeedbackList: React.FC = () => {
-  const userId = "사용자ID";
+  const userId = 1;
   const { category } = useParams<{ category?: string }>();
 
   const getCategoryText = (category?: string): string => {
@@ -102,8 +102,16 @@ const FeedbackList: React.FC = () => {
         }
       })
       .catch((error: ErrorResponse) => {
-        console.error("에러 응답:", error.message);
+        console.error("기타 에러 응답:", error.message);
       });
+
+    //   const data: SuccessResponse | ErrorResponse = dummyData;
+
+    //   if (data.status === "success") {
+    //     setFeedbacks((data as SuccessResponse).feedbacks);
+    //   } else {
+    //     console.error("에러 응답:", (data as ErrorResponse).message);
+    //   }
   }, [apiUrl, queryParams]);
 
   //   const data: SuccessResponse | ErrorResponse = dummyData;

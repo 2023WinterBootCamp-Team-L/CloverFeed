@@ -10,8 +10,12 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import environ
 from pathlib import Path
 import pymysql
+
+env = environ.Env()
+environ.Env.read_env()
 
 pymysql.install_as_MySQLdb()
 
@@ -23,18 +27,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-&*4=qke1v@xdasc2&f0d-azjd8$7p)y=*&y#*0+6zq@km0t)d0"
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 CSRF_TRUSTED_ORIGINS = ["http://localhost"]
-
 
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "cloverfeed",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -44,9 +48,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_yasg",
+    
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -84,11 +91,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "cloverfeed",
-        "USER": "root",
-        "PASSWORD": "1234",
-        "HOST": "mysql",
-        "PORT": "3306",
+        "NAME": env("DB_NAME"),
+        "USER": env("DB_USER"),
+        "PASSWORD": env("DB_PASSWORD"),
+        "HOST": env("DB_HOST"),
+        "PORT": env("DB_PORT"),
     }
 }
 
@@ -140,3 +147,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST")
+CORS_ALLOW_CREDENTIALS = True  # 쿠키가 cross-site HTTP 요청에 포함될 수 있음
+CORS_ALLOW_HEADERS = [
+    "*",
+]  # 요청시 사용될 수 있는 non-standard HTTP 헤더 목록

@@ -27,11 +27,27 @@ from .serializers import (
     FormSerializer,
     FeedbackTagSerializer,
 )
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
 
+# 회원가입
 class SignupView(APIView):
-    permission_classes = [AllowAny]
-
+    @swagger_auto_schema(
+        tags=["user"],
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "username": openapi.Schema(type=openapi.TYPE_STRING),
+                "email": openapi.Schema(
+                    type=openapi.TYPE_STRING, format=openapi.FORMAT_EMAIL
+                ),
+                "password": openapi.Schema(type=openapi.TYPE_STRING),
+            },
+            required=["username", "email", "password"],
+        ),
+        responses={201: "Created", 400: "Bad Request"},
+    )
     def post(self, request):
         username = request.data.get("username")
         email = request.data.get("email")
@@ -64,9 +80,67 @@ class SignupView(APIView):
         return JsonResponse(response_data, status=status.HTTP_201_CREATED)
 
 
+# 로그인
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "email": openapi.Schema(type=openapi.TYPE_STRING),
+                "password": openapi.Schema(type=openapi.TYPE_STRING),
+            },
+            required=["email", "password"],
+        ),
+        responses={
+            200: openapi.Response(
+                "Success",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "user_id": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "user_name": openapi.Schema(type=openapi.TYPE_STRING),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+            400: openapi.Response(
+                "Bad Request",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "error_code": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+            401: openapi.Response(
+                "Unauthorized",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "error_code": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+            404: openapi.Response(
+                "Not Found",
+                schema=openapi.Schema(
+                    type=openapi.TYPE_OBJECT,
+                    properties={
+                        "status": openapi.Schema(type=openapi.TYPE_STRING),
+                        "error_code": openapi.Schema(type=openapi.TYPE_INTEGER),
+                        "message": openapi.Schema(type=openapi.TYPE_STRING),
+                    },
+                ),
+            ),
+        },
+    )
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -125,129 +199,21 @@ class LoginView(APIView):
             )
 
 
-# 받은 피드백 상세내용 조회
-class FeedbackResultDetail(APIView):
-    def get_object(self, pk, user_id):
-        try:
-            # 요청받은 pk와 user_id로 FeedbackResult를 조회
-            return FeedbackResult.objects.get(pk=pk, id=user_id)
-        except FeedbackResult.DoesNotExist:
-            # 해당하는 FeedbackResult가 없으면 404 에러를 발생
-            return Response(
-                {"status": "error", "error_code": 404, "message": "피드백을 찾을 수 없습니다."},
-                status=status.HTTP_404_NOT_FOUND,
-            )
-
-    def get(self, request, pk, format=None):
-        # userid라는 쿼리 파라미터를 가져옴
-        user_id = request.query_params.get("userid", None)
-        # get_object 메서드를 이용해 해당 FeedbackResult를 가져옴
-        feedback_result = self.get_object(pk, user_id)
-        # 예외가 발생하면 Response 객체가 반환되므로, 이를 확인
-        if isinstance(feedback_result, Response):
-            return feedback_result
-        # 가져온 FeedbackResult를 Serializer를 이용해 JSON 형태로 변환
-        serializer = FeedbackResultSerializer(feedback_result)
-        # 변환된 데이터를 Response 객체에 담아 반환
-        # status 필드를 추가
-        return Response({"status": "success", **serializer.data})
-
-
-# 카테고리(직군)별 피드백 목록 조회
-class FeedbackListByCategory(APIView):
-    def get(self, request, format=None):
-        userid = request.query_params.get("userid", None)
-        category = request.query_params.get("category", None)
-
-        # 유저 검증
-        try:
-            user = AuthUser.objects.get(pk=userid)
-        except AuthUser.DoesNotExist:
-            return Response(
-                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
-                status=401,
-            )
-
-        # 카테고리에 따른 피드백 결과 조회
-        # 카테고리 값이 있을 경우에는 해당 카테고리의 피드백 결과만 조회하고, 없을 경우에는 사용자의 모든 피드백 결과를 조회
-        if category:
-            feedbacks = FeedbackResult.objects.filter(
-                form__user=user, category=category
-            )
-        else:
-            feedbacks = FeedbackResult.objects.filter(form__user=user)
-        # 응답
-        serializer = FeedbackResultSerializer(feedbacks, many=True)
-        return Response({"status": "success", "feedbacks": serializer.data})
-
-
-# 받은 피드백답변(주관식) 내용 검색
-class FeedbackSearchView(APIView):
-    def get(self, request):
-        userid = request.query_params.get("userid", None)
-        keyword = request.query_params.get("keyword", None)
-        if not userid:
-            return Response(
-                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."}
-            )
-        user = AuthUser.objects.get(pk=userid)
-        if keyword:
-            feedbacks = QuestionAnswer.objects.filter(
-                Q(feedback__form__user=user),
-                Q(context__icontains=keyword),
-                Q(type="주관식"),
-            )
-        else:
-            feedbacks = QuestionAnswer.objects.filter(
-                Q(feedback__form__user=user), Q(type="주관식")
-            )
-        serializer = FeedbackResultSearchSerializer(feedbacks, many=True)
-        return Response({"status": "success", "feedbacks": serializer.data})
-
-
-class QuestionListView(APIView):
-    def get(self, request, *args, **kwargs):
-        # query_params에서 userid 가져오기
-        user_id = request.query_params.get("userid", None)
-
-        # 필요한 유효성 검사를 수행하고, 예를 들어, 사용자가 필수 매개변수를 제공했는지 확인
-        if user_id is None:
-            return Response(
-                {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
-            )
-
-        try:
-            form = Form.objects.get(user=user_id)
-        except Form.DoesNotExist:
-            # user_id가 존재하지 않는 경우에 대한 응답
-            return Response(
-                {
-                    "status": "error",
-                    "error_code": 404,
-                    "message": "폼이 없습니다.",
-                },
-                status=404,
-            )
-
-        # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
-        # questions_data = list(Question.objects.all().values())
-        questions_data = Question.objects.filter(form__user_id=user_id)
-        print(questions_data)
-
-        # 시리얼라이저를 사용하여 데이터 직렬화
-        serializer = QuestionSerializer(questions_data, many=True)
-
-        # 직렬화된 데이터를 응답으로 반환
-        return Response(
-            {
-                "status": "success",
-                "questions": serializer.data,
+# 피드백 질문 목록 작성
+class SubmitFormView(APIView):
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "user_id": openapi.Schema(type=openapi.TYPE_NUMBER),
+                "questions": openapi.Schema(
+                    type=openapi.TYPE_ARRAY,
+                    items=openapi.Schema(type=openapi.TYPE_OBJECT),
+                ),
             },
-            status=status.HTTP_200_OK,
+            required=["user_id", "questions"],
         )
-
-
-class SubmitFormsView(APIView):
+    )
     def post(self, request):
         user_id = request.data.get("user_id")
         questions_data = request.data.get("questions")
@@ -272,12 +238,8 @@ class SubmitFormsView(APIView):
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
-                {
-                    "status": "error",
-                    "error_code": 401,
-                    "message": "인증 실패. 유저 ID가 올바르지 않습니다.",
-                },
-                status=404,
+                {"status": "error", "message": "인증 실패. 유저 ID가 올바르지 않습니다."},
+                status=status.HTTP_404_NOT_FOUND,
             )
 
         # 사용자를 위한 새로운 폼 생성
@@ -318,10 +280,22 @@ class SubmitFormsView(APIView):
         )
 
 
+# 피드백 폼 유무 조회
 class CheckFormExistenceView(APIView):
-    def get(self, request, format=None):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "user_id",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request):
         # user_id인식 안됨
-        user_id = request.query_params.get("user_id", None)
+        user_id = request.query_params.get("user_id")
 
         # user_id가 존재하는지 확인
         try:
@@ -342,7 +316,78 @@ class CheckFormExistenceView(APIView):
             )
 
 
+# 작성한 질문 목록 확인
+class QuestionListView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request):
+        # query_params에서 userid 가져오기
+        user_id = request.query_params.get("userid", None)
+
+        # 필요한 유효성 검사를 수행하고, 예를 들어, 사용자가 필수 매개변수를 제공했는지 확인
+        if user_id is None:
+            return Response(
+                {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
+            )
+
+        try:
+            form = Form.objects.filter(user=user_id)
+        except Form.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "폼이 없습니다.",
+                },
+                status=404,
+            )
+
+        # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
+        # questions_data = list(Question.objects.all().values())
+        questions_data = Question.objects.filter(form__user_id=user_id)
+        print(questions_data)
+
+        # 시리얼라이저를 사용하여 데이터 직렬화
+        serializer = QuestionSerializer(questions_data, many=True)
+
+        # 직렬화된 데이터를 응답으로 반환
+        return Response(
+            {
+                "status": "success",
+                "questions": serializer.data,
+            },
+            status=status.HTTP_200_OK,
+        )
+
+
+# 피드백 질문에 답변 제출
 class AnswersView(APIView):
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "form_id": openapi.Schema(type=openapi.TYPE_NUMBER),
+                "category": openapi.Schema(type=openapi.TYPE_STRING),
+                "tags_work": openapi.Schema(type=openapi.TYPE_STRING),
+                "tags_attitude": openapi.Schema(type=openapi.TYPE_STRING),
+                "answers": openapi.Schema(
+                    type=openapi.TYPE_ARRAY,
+                    items=openapi.Schema(type=openapi.TYPE_OBJECT),
+                ),
+            },
+            required=["form_id", "category", "tags_work", "tags_attitude", "answers"],
+        ),
+    )
     def post(self, request):
         form_id = request.data.get("form_id")
         category = request.data.get("category")
@@ -396,9 +441,176 @@ class AnswersView(APIView):
             return JsonResponse({"error": str(e)}, status=500)
 
 
+# 카테고리(직군)별 피드백 개수 확인
+class CategoryCountView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "user_id",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request):
+        user_id = request.query_params.get("user_id")
+
+        # 전체 카테고리 목록
+        all_categories = ["개발자", "디자이너", "기획자", "PM/PO", "기타직무"]
+
+        try:
+            # 해당 user_id에 대한 유저 정보 가져오기
+            user = AuthUser.objects.get(id=user_id)
+
+            # 유저의 폼들 가져오기
+            user_forms = Form.objects.filter(user=user)
+
+            # 각 카테고리에 대한 갯수 초기화
+            category_counts = {category: 0 for category in all_categories}
+
+            for form in user_forms:
+                feedback_results = FeedbackResult.objects.filter(form=form)
+                for feedback_result in feedback_results:
+                    category = feedback_result.category
+                    if category in all_categories:
+                        category_counts[category] += 1
+
+            # JSON 형태의 응답 데이터 생성
+            response_data = {
+                "status": "success",
+                "counts": [
+                    {category: count} for category, count in category_counts.items()
+                ],
+            }
+
+            # JsonResponse로 응답
+            return JsonResponse(response_data)
+        except AuthUser.DoesNotExist:
+            # user_id가 존재하지 않는 경우에 대한 응답
+            return Response(
+                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                status=404,
+            )
+
+
+# 카테고리(직군)별 피드백 목록 확인
+class FeedbackListByCategory(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+            openapi.Parameter(
+                'category', openapi.IN_QUERY, description='카테고리', required=False, type=openapi.TYPE_STRING),
+        ]
+    )
+    def get(self, request, format=None):
+        userid = request.query_params.get("userid", None)
+        category = request.query_params.get("category", None)
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        # 카테고리에 따른 피드백 결과 조회
+        # 카테고리 값이 있을 경우에는 해당 카테고리의 피드백 결과만 조회하고, 없을 경우에는 사용자의 모든 피드백 결과를 조회
+        if category:
+            feedbacks = FeedbackResult.objects.filter(
+                form__user=user, category=category
+            )
+        else:
+            feedbacks = FeedbackResult.objects.filter(form__user=user)
+        # 응답
+        serializer = FeedbackResultSerializer(feedbacks, many=True)
+        return Response({"status": "success", "feedbacks": serializer.data})
+
+
+# 받은 피드백답변(주관식) 내용 검색
+class FeedbackSearchView(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+            openapi.Parameter(
+                'keyword', openapi.IN_QUERY, description='검색 키워드', required=False, type=openapi.TYPE_STRING),
+        ]
+    )
+    def get(self, request):
+        userid = request.query_params.get("userid", None)
+        keyword = request.query_params.get("keyword", None)
+        if not userid:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."}
+            )
+        user = AuthUser.objects.get(pk=userid)
+        if keyword:
+            feedbacks = QuestionAnswer.objects.filter(
+                Q(feedback__form__user=user),
+                Q(context__icontains=keyword),
+                Q(type="주관식"),
+            )
+        else:
+            feedbacks = QuestionAnswer.objects.filter(
+                Q(feedback__form__user=user), Q(type="주관식")
+            )
+        serializer = FeedbackResultSearchSerializer(feedbacks, many=True)
+        return Response({"status": "success", "feedbacks": serializer.data})
+
+
+# 특정 피드백 상세 내용 확인
+class FeedbackResultDetail(APIView):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+        ]
+    )
+    def get_object(self, pk, user_id):
+        try:
+            # 요청받은 pk와 user_id로 FeedbackResult를 조회
+            return FeedbackResult.objects.get(pk=pk, id=user_id)
+        except FeedbackResult.DoesNotExist:
+            # 해당하는 FeedbackResult가 없으면 404 에러를 발생
+            return Response(
+                {"status": "error", "error_code": 404, "message": "피드백을 찾을 수 없습니다."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+    def get(self, request, pk, format=None):
+        # userid라는 쿼리 파라미터를 가져옴
+        user_id = request.query_params.get("userid", None)
+        # get_object 메서드를 이용해 해당 FeedbackResult를 가져옴
+        feedback_result = self.get_object(pk, user_id)
+        # 예외가 발생하면 Response 객체가 반환되므로, 이를 확인
+        if isinstance(feedback_result, Response):
+            return feedback_result
+        # 가져온 FeedbackResult를 Serializer를 이용해 JSON 형태로 변환
+        serializer = FeedbackResultSerializer(feedback_result)
+        # 변환된 데이터를 Response 객체에 담아 반환
+        # status 필드를 추가
+        return Response({"status": "success", **serializer.data})
+
+
 # 피드백 결과의 태그들을 원형차트로 시각화
 class FeedbackChartView(APIView):
-    def get(self, request, *args, **kwargs):
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request):
         userid = self.request.query_params.get("userid", None)
         if userid is not None:
             try:
@@ -473,46 +685,4 @@ class FeedbackChartView(APIView):
             return Response(
                 {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
                 status=400,
-            )
-
-
-class CategoryCountView(APIView):
-    def get(self, request):
-        user_id = request.query_params.get("user_id")
-
-        # 전체 카테고리 목록
-        all_categories = ["개발자", "디자이너", "기획자", "PM/PO", "기타직무"]
-
-        try:
-            # 해당 user_id에 대한 유저 정보 가져오기
-            user = AuthUser.objects.get(id=user_id)
-
-            # 유저의 폼들 가져오기
-            user_forms = Form.objects.filter(user=user)
-
-            # 각 카테고리에 대한 갯수 초기화
-            category_counts = {category: 0 for category in all_categories}
-
-            for form in user_forms:
-                feedback_results = FeedbackResult.objects.filter(form=form)
-                for feedback_result in feedback_results:
-                    category = feedback_result.category
-                    if category in all_categories:
-                        category_counts[category] += 1
-
-            # JSON 형태의 응답 데이터 생성
-            response_data = {
-                "status": "success",
-                "counts": [
-                    {category: count} for category, count in category_counts.items()
-                ],
-            }
-
-            # JsonResponse로 응답
-            return JsonResponse(response_data)
-        except AuthUser.DoesNotExist:
-            # user_id가 존재하지 않는 경우에 대한 응답
-            return Response(
-                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
-                status=404,
             )
