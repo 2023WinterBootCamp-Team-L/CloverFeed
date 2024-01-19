@@ -102,7 +102,7 @@ const FeedbackList: React.FC = () => {
         }
       })
       .catch((error: ErrorResponse) => {
-        console.error("에러 응답:", error.message);
+        console.error("기타 에러 응답:", error.message);
       });
 
     //   const data: SuccessResponse | ErrorResponse = dummyData;
