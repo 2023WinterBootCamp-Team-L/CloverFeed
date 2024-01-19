@@ -1,10 +1,10 @@
-import axios, { AxiosResponse } from "axios";
-import BackButton from "../components/BackButton";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import TagAnswer from "../components/TagAnswer";
-import 디자이너 from "../assets/디자이너.svg";
-import { useNavigate } from "react-router-dom";
+import axios, { AxiosResponse } from 'axios';
+import BackButton from '../components/BackButton';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import TagAnswer from '../components/TagAnswer';
+import 디자이너 from '../assets/디자이너.svg';
+import { useNavigate } from 'react-router-dom';
 
 interface RespondentInfo {
   respondent_name: string;
@@ -30,23 +30,23 @@ interface ErrorResponse {
 }
 
 const FeedbackList: React.FC = () => {
-  const userId = "사용자ID";
+  const userId = '사용자ID';
   const { category } = useParams<{ category?: string }>();
 
   const getCategoryText = (category?: string): string => {
     switch (category) {
-      case "developer":
-        return "개발자";
-      case "designer":
-        return "디자이너";
-      case "planner":
-        return "기획자";
-      case "pmpo":
-        return "PM/PO";
-      case "others":
-        return "기타직무";
+      case 'developer':
+        return '개발자';
+      case 'designer':
+        return '디자이너';
+      case 'planner':
+        return '기획자';
+      case 'pmpo':
+        return 'PM/PO';
+      case 'others':
+        return '기타직무';
       default:
-        return "";
+        return '';
     }
   };
 
@@ -55,34 +55,34 @@ const FeedbackList: React.FC = () => {
 
   // 더미 데이터
   const dummyData: SuccessResponse = {
-    status: "success",
+    status: 'success',
     feedbacks: [
       {
-        feedback_id: "2",
+        feedback_id: '2',
         respondent_info: {
-          respondent_name: "#2356",
-          category: "디자이너",
+          respondent_name: '#2356',
+          category: '디자이너',
         },
-        tags_work: ["효율적인", "박학다식", "리더십"],
-        tags_attitude: ["책임감", "경청하는", "공감 능력"],
+        tags_work: ['효율적인', '박학다식', '리더십'],
+        tags_attitude: ['책임감', '경청하는', '공감 능력'],
       },
       {
-        feedback_id: "5",
+        feedback_id: '5',
         respondent_info: {
-          respondent_name: "#1238",
-          category: "디자이너",
+          respondent_name: '#1238',
+          category: '디자이너',
         },
-        tags_work: ["전략적인", "기획력", "문제 분석"],
-        tags_attitude: ["성실함", "배려심", "적극적인"],
+        tags_work: ['전략적인', '기획력', '문제 분석'],
+        tags_attitude: ['성실함', '배려심', '적극적인'],
       },
       {
-        feedback_id: "11",
+        feedback_id: '11',
         respondent_info: {
-          respondent_name: "#6583",
-          category: "디자이너",
+          respondent_name: '#6583',
+          category: '디자이너',
         },
-        tags_work: ["계획적인", "정보 수집", "결단력"],
-        tags_attitude: ["꼼꼼함", "끈기", "분위기메이커"],
+        tags_work: ['계획적인', '정보 수집', '결단력'],
+        tags_attitude: ['꼼꼼함', '끈기', '분위기메이커'],
       },
     ],
   };
@@ -107,10 +107,10 @@ const FeedbackList: React.FC = () => {
 
     const data: SuccessResponse | ErrorResponse = dummyData;
 
-    if (data.status === "success") {
+    if (data.status === 'success') {
       setFeedbacks((data as SuccessResponse).feedbacks);
     } else {
-      console.error("에러 응답:", (data as ErrorResponse).message);
+      console.error('에러 응답:', (data as ErrorResponse).message);
     }
   }, [apiUrl, queryParams]);
 
@@ -138,8 +138,8 @@ const FeedbackList: React.FC = () => {
               key={feedback.feedback_id}
               className={`h-50 w-full flex flex-col justify-start p-2 bg-white rounded-xl border-[3px] ${
                 index % 2 === 0
-                  ? "border-c-purple border-opacity-50"
-                  : "border-c-blue"
+                  ? 'border-c-purple border-opacity-50'
+                  : 'border-c-blue'
               } mb-2`}
             >
               <div>
@@ -149,7 +149,7 @@ const FeedbackList: React.FC = () => {
                     navigate(`/feedbackresult/${feedback.feedback_id}`)
                   }
                 >
-                  {feedback.respondent_info.respondent_name}{" "}
+                  {feedback.respondent_info.respondent_name}{' '}
                   {getCategoryText(category)}님의 피드백
                 </button>
                 <div className="flex gap-1">

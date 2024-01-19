@@ -4,6 +4,7 @@ import Searchbutton from "../components/Searchbutton";
 import FeedbackBox from "../components/FeedbackBox";
 import pmpo from "../assets/PMPO.svg";
 import TagAnswer from "../components/TagAnswer";
+import axios from 'axios';
 
 const Search: React.FC = () => {
   const sampleTags = [
@@ -11,6 +12,12 @@ const Search: React.FC = () => {
     <TagAnswer key={2} text="기획력" image={pmpo} />,
     <TagAnswer key={3} text="관대한" image={pmpo} />,
   ];
+
+  const fetchFeedbacks = async() => {
+    try{
+      const response = await axios.get('/feedbacks/response?userid=사용자ID&keyword=검색어')
+    }
+  }
 
   const [searchValue, setSearchValue] = useState("");
 
