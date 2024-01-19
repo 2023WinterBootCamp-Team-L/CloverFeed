@@ -15,16 +15,13 @@ function Gosignup() {
     // You might want to add email validation logic here
     setErrorMessage(null);
   };
-
   const onInputChangename = (e: React.ChangeEvent<HTMLInputElement>) => {
     setnameAnswerInputs(e.target.value);
   };
-
   const onInputChangepw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setpwAnswerInputs(e.target.value);
     setIsPasswordValid(false);
   };
-
   const onInputChangepwcheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     setpwcheckAnswerInputs(e.target.value);
     setIsPasswordValid(false);
@@ -56,14 +53,11 @@ function Gosignup() {
         return;
       }
       // API request
-      const response = await axios.post(
-        "http://localhost:8000/api/user/auth/signup/",
-        {
-          username: nameanswerInputs,
-          email: emailanswerInputs,
-          password: pwanswerInputs,
-        }
-      );
+      const response = await axios.post("/api/user/auth/signup/", {
+        username: nameanswerInputs,
+        email: emailanswerInputs,
+        password: pwanswerInputs,
+      });
       //성공적인 응답처리
       if (response.data.status === "success") {
         // Optionally, you can do something on successful signup

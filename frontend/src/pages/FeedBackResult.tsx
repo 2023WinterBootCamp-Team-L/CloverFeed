@@ -40,7 +40,7 @@ const FeedBackResult: React.FC = () => {
     const userId = 1;
 
     axios
-      .get(`http://localhost:8000/api/feedbacks/${feedbackId}?userid=${userId}`)
+      .get(`/api/feedbacks/${feedbackId}?userid=${userId}`)
       .then((response: AxiosResponse<FeedbackResponse>) => {
         const data: FeedbackResponse = response.data;
         setFeedbackData(data);
