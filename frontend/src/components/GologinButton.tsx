@@ -3,12 +3,10 @@ import LoginModal from "../components/LoginModal";
 import { useNavigate } from "react-router-dom";
 import SignupAnswer from "./SignupAnswer";
 import axios from "axios";
-
 function GologinButton() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-
   const SuccessLogin = () => {
     navigate("/login");
   };
@@ -17,7 +15,6 @@ function GologinButton() {
   };
   const [emailanswerInputs, setemailAnswerInputs] = useState("");
   const [pwanswerInputs, setpwAnswerInputs] = useState("");
-
   const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setemailAnswerInputs(e.target.value);
   };
@@ -26,11 +23,9 @@ function GologinButton() {
   };
   const emailValidationRegex =
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
   const handleLogin = async () => {
     try {
       setErrorMessage("");
-
       if (!emailanswerInputs || !pwanswerInputs) {
         setErrorMessage(
           "입력되지 않은 항목이 있습니다. 모든 항목을 입력하세요."
@@ -42,15 +37,10 @@ function GologinButton() {
         setErrorMessage("올바른 이메일 형식이 아닙니다.");
         return;
       }
-
-      const response = await axios.post(
-        "http://localhost:8000/api/user/auth/login/",
-        {
-          email: emailanswerInputs,
-          password: pwanswerInputs,
-        }
-      );
-
+      const response = await axios.post("/api/user/auth/login/", {
+        email: emailanswerInputs,
+        password: pwanswerInputs,
+      });
       if (response.data.status === "success") {
         //로그인 성공
         console.log("로그인 성공", response.data);
@@ -69,7 +59,6 @@ function GologinButton() {
       );
     }
   };
-
   return (
     <div>
       <button className="text-xs text-black underline" onClick={toggleModal}>
@@ -96,5 +85,4 @@ function GologinButton() {
     </div>
   );
 }
-
 export default GologinButton;

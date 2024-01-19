@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 interface SuccessButtonProps {
   onClick: () => void; // 수정된 부분
   disabled: boolean;
