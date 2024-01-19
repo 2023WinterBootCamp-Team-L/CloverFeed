@@ -49,7 +49,7 @@ const FeedbackList: React.FC = () => {
     }
   };
 
-  const apiUrl = `/api/feedbacks/response/list`;
+  const apiUrl = `http://localhost:8000/api/feedbacks/response/list`;
   const queryParams = `userid=${userId}&category=${category}`;
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);

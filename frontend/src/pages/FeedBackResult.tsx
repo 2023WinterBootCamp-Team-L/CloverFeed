@@ -55,7 +55,7 @@ const FeedBackResult: React.FC = () => {
     const feedbackId = 1;
     const userId = 1;
 
-    const apiUrl = `/api/feedbacks/${feedbackId}?userid=${userId}`;
+    const apiUrl = `http://localhost:8000/api/feedbacks/${feedbackId}?userid=${userId}`;
 
     axios
       .get(apiUrl)
