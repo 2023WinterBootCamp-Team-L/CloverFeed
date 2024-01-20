@@ -32,13 +32,16 @@ const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
   };
 
   const buttonClassName = `bg-white-400 text-black ${
-    color ? "border-purple-200" : "border-blue-200"
-  } border-2 w-full px-3 py-6 rounded-xl mb-2 text-xs font-medium text-left`;
+    color ? "bg-c-lightpurple" : "bg-c-blue"
+  }  w-[332px] pl-8 pr-10 py-5 rounded-lg mb-2 font-pre text-[14px] font-bold text-left`;
 
   return (
     <div>
       <button className={buttonClassName} onClick={handleButtonClick}>
-        {getCategoryText(category)}의 피드백
+        <div className="flex flex-row justify-between">
+          <p>{getCategoryText(category)}의 피드백</p>
+          <p></p>
+        </div>
       </button>
     </div>
   );

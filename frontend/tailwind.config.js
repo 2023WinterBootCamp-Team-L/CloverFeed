@@ -11,7 +11,11 @@ export default {
         "c-emerald": "#D5FBE5",
         "c-blue": "#E2E9FF",
         "c-purple": "#EDD0F5",
+        "c-lightpurple": "#F5E7F9",
         "c-gray": "#EEEFF0",
+      },
+      fontFamily: {
+        pre: ["Pretendard"],
       },
     },
   },
