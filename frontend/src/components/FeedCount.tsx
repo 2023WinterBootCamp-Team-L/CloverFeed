@@ -12,7 +12,7 @@ interface FeedCountProps {
 
 const FeedCount: React.FC<FeedCountProps> = ({ category }) => {
   const userId = 1;
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/count?userid=${userId}`;
+  const apiUrl = `http://localhost:8000/api/feedbacks/response/count/?userid=${userId}/`;
 
   const [feedbackCounts, setFeedbackCounts] = useState<FeedbackCounts[]>([]);
 
@@ -21,8 +21,10 @@ const FeedCount: React.FC<FeedCountProps> = ({ category }) => {
       try {
         const response = await axios.get(apiUrl);
         if (response.data.status === "success") {
-          setFeedbackCounts(response.data.count);
+          setFeedbackCounts(response.data.counts);
+          console.log("피드백 개수");
         } else {
+          setFeedbackCounts([]);
           console.error("에러 응답:", response.data.message);
         }
       } catch (err) {
@@ -32,14 +34,6 @@ const FeedCount: React.FC<FeedCountProps> = ({ category }) => {
 
     fetchData();
   }, [apiUrl]);
-  // // API에서 받아온 데이터를 기반으로한 더미 값 설정
-  // setFeedbackCounts([
-  //   { category: "개발자", number: 4    },
-  //   { category: "디자이너", number: 3 },
-  //   { category: "기획자", number: 1 },
-  //   { category: "PM/PO", number: 2 },
-  //   { category: "기타직무", number: 2 },
-  // ]);
 
   const selectedCategoryCount = feedbackCounts.find(
     (count) => count.category === category

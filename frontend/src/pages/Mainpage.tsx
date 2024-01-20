@@ -17,7 +17,7 @@ function Mainpage() {
   const chartpage = "/Chart";
   const sharepage = "/QueryShare";
 
-  const categories = ["developer", "designer", "planner", "pmpo", "others"];
+  const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
 
   return (
     <div
