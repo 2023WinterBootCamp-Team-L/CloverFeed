@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface SignupAnswerProps {
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
@@ -12,7 +10,8 @@ const SignupAnswer: React.FC<SignupAnswerProps> = ({ value, onChange }) => {
         type="text"
         value={value}
         onChange={onChange}
-        className="bg-white text-black w-56 h-10 rounded-lg border-2 border-emerald-500 leading-1.25 p-2 text-sm"
+        disabled={false}
+        className="bg-white h-10 w-56 rounded-lg border-2 border-emerald-200 pl-5 outline-none focus:border-emerald-400 text-lg"
       />
     </div>
   );

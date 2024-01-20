@@ -92,9 +92,7 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
             "summary",
             "created_at",
             "modified_at",
-            "field",
         ]
-
 
 # 받은 피드백답변 중 검색을 위한 Serializer
 class FeedbackResultSearchSerializer(serializers.ModelSerializer):

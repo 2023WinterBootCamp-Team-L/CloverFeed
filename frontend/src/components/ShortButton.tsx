@@ -13,7 +13,7 @@ const ShortButton = ({ type = true, text, onClick }: ShortButtonProps) => {
     <button
       className={`${
         type ? "bg-c-green" : "bg-c-indigo"
-      } text-white px-2 py-2 rounded-md mt-4 text-lg w-[131px]`}
+      } text-white p-3 rounded-lg w-[125px] font-pre text-[14px]`}
       onClick={handleButtonClick}
     >
       {text}

@@ -38,6 +38,7 @@ CSRF_TRUSTED_ORIGINS = ["http://localhost"]
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "cloverfeed",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -47,9 +48,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_yasg",
+    
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -145,7 +149,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ORIGIN_WHITELIST = env.list("CORS_ORIGIN_WHITELIST")
-CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_CREDENTIALS = True  # 쿠키가 cross-site HTTP 요청에 포함될 수 있음
 CORS_ALLOW_HEADERS = [
     "*",
-]
+]  # 요청시 사용될 수 있는 non-standard HTTP 헤더 목록
