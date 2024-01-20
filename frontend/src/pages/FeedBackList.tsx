@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TagAnswer from "../components/TagAnswer";
 import 디자이너 from "../assets/디자이너.svg";
-import FeedBackResult from "./FeedBackResult";
+import { useNavigate } from "react-router-dom";
 
 interface RespondentInfo {
   respondent_name: string;
@@ -22,24 +22,7 @@ const FeedbackList: React.FC = () => {
   const userId = 1;
   const { category } = useParams<{ category?: string }>();
 
-  const getCategoryText = (category?: string): string => {
-    switch (category) {
-      case "developer":
-        return "개발자";
-      case "designer":
-        return "디자이너";
-      case "planner":
-        return "기획자";
-      case "pmpo":
-        return "PM/PO";
-      case "others":
-        return "기타직무";
-      default:
-        return "";
-    }
-  };
-
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/list?userid=${userId}&category=${category}`;
+  const apiUrl = `http://localhost:8000/api/feedbacks/response/list/?userid=${userId}&category=${category}`;
 
   // 더미 데이터
   // const dummyData: SuccessResponse = {
@@ -84,6 +67,7 @@ const FeedbackList: React.FC = () => {
 
         if (response.data.status === "success") {
           setFeedbacks(response.data.feedbacks);
+          console.log("피드백 리스트");
         } else {
           console.error("에러 응답:", response.data.message);
           // 사용자에게 에러 메시지를 보여줄 수 있는 처리 추가
@@ -107,16 +91,17 @@ const FeedbackList: React.FC = () => {
   // }, [apiUrl, queryParams]);
 
   const filteredFeedbacks = feedbacks.filter(
-    (feedback) =>
-      feedback.respondent_info.category === getCategoryText(category)
+    (feedback) => feedback.respondent_info.category === category
   );
+
+  const navigate = useNavigate();
 
   return (
     <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
       <div className="flex justify-between">
         <BackButton back page="/mainpage" />
       </div>
-      <div className="text-xl mt-4">{getCategoryText(category)}의 피드백</div>
+      <div className="text-xl mt-4">{category}의 피드백</div>
       {filteredFeedbacks.length === 0 ? (
         <div className="text-lg text-gray-500 mt-4">
           받은 피드백 목록이 없습니다.
@@ -135,10 +120,14 @@ const FeedbackList: React.FC = () => {
               <div>
                 <button
                   className="text-lg text-black"
-                  onClick={() => <FeedBackResult />}
+                  onClick={() =>
+                    navigate(
+                      `/feedbackresult/${feedback.respondent_info.respondent_name}`
+                    )
+                  }
                 >
-                  {feedback.respondent_info.respondent_name}{" "}
-                  {getCategoryText(category)}님의 피드백
+                  {feedback.respondent_info.respondent_name} {category}님의
+                  피드백
                 </button>
                 <div className="flex gap-1">
                   {feedback.tags_work.slice(0, 3).map((tag) => (

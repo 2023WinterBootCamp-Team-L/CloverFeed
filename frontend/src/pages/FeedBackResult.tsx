@@ -41,10 +41,13 @@ const FeedBackResult: React.FC = () => {
     const userId = 1;
 
     axios
-      .get(`http://localhost:8000/api/feedbacks/${feedbackId}?userid=${userId}`)
+      .get(
+        `http://localhost:8000/api/feedbacks/${feedbackId}/?userid=${userId}`
+      )
       .then((response: AxiosResponse<FeedbackResponse>) => {
         const data: FeedbackResponse = response.data;
         setFeedbackData(data);
+        console.log("피드백 상세");
       })
       .catch((error: ErrorResponse) => {
         console.error("피드백을 찾을 수 없습니다.");

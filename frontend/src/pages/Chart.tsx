@@ -88,7 +88,7 @@ const SkillChart = ({
 
 function Chart() {
   const userId = 1;
-  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart?userid=${userId}`;
+  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart/?userid=${userId}`;
 
   const [workData, setWorkData] = React.useState<
     { tag: string; percentage: number }[]
@@ -104,6 +104,7 @@ function Chart() {
         if (response.data.status === "success") {
           setWorkData(response.data.work);
           setAttitudeData(response.data.attitude);
+          console.log("차트");
         } else {
           console.error("에러 응답:", response.data.message);
         }
