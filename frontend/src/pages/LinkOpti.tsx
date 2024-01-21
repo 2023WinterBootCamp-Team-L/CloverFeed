@@ -4,14 +4,14 @@ function LinkOpti() {
   return (
     <div className="flex justify-center items-center h-screen">
       <div
-        className="flex flex-col justify-center overflow-hidden relative border-2 bg-c-emerald bg-opacity-40 px-5 py-8 gap-10"
+        className="flex flex-col overflow-hidden relative border-2 bg-c-emerald bg-opacity-40 px-5 py-8 gap-20"
         style={{ width: "393px", height: "852px" }}
       >
         <div className="flex justify-between w-full">
           <BackButton back page="/LinkAnswer2" />
           <BackButton back={false} page="/LinkFinish" />
         </div>
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-20">
           <div>
             <p className="font-pre text-[22px] font-bold text-center">
               나의 성과에 대해

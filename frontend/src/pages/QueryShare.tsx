@@ -7,7 +7,7 @@ function QueryShare() {
 
   return (
     <div
-      className="bg-gradient-to-t from-c-emerald flex flex-col mx-auto h-screen gap-10 px-5 py-20"
+      className="bg-gradient-to-t from-c-emerald flex flex-col mx-auto h-screen gap-10 px-5 py-10"
       style={{ width: "393px" }}
     >
       <div className="flex flex-row justify-end">
@@ -23,7 +23,9 @@ function QueryShare() {
             해보세요!
           </p>
         </div>
-        <img src={queryshare} alt="쿼리공유" />
+        <div className="flex flex-col items-center">
+          <img src={queryshare} alt="쿼리공유" />
+        </div>
         <div className="flex flex-row justify-center space-x-10">
           <ShortButton type={false} text="QR코드" />
           <ShortButton text="링크" />

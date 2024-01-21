@@ -49,7 +49,7 @@ function LinkPosition() {
         className="flex flex-col justify-center items-center overflow-hidden relative border-2 bg-c-emerald bg-opacity-40"
         style={{ width: "393px", height: "852px" }}
       >
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-20">
           {/* <ProgressBar totalSteps={totalSteps} currentStep={currentStep} /> */}
           <div>
             <p className="font-pre text-[22px] font-bold text-center">
@@ -59,16 +59,17 @@ function LinkPosition() {
               선택해주세요!
             </p>
           </div>
-
-          {buttons.map((button, index) => (
-            <LinkButton
-              key={index}
-              icon={button.icon}
-              backgroundColor={button.backgroundColor}
-              buttonText={button.buttonText}
-              nextpage={nextpage}
-            />
-          ))}
+          <div className="flex flex-col items-center gap-6">
+            {buttons.map((button, index) => (
+              <LinkButton
+                key={index}
+                icon={button.icon}
+                backgroundColor={button.backgroundColor}
+                buttonText={button.buttonText}
+                nextpage={nextpage}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

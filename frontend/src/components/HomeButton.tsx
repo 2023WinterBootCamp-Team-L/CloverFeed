@@ -14,7 +14,7 @@ const HomeButton = ({ text, nextpage }: HomeButtonProps) => {
 
   return (
     <button
-      className="bg-c-indigo text-white p-3 rounded-lg w-[332px] text-[14px] font-pre"
+      className="bg-c-indigo text-white p-3 rounded-lg w-[332px] text-[16px] font-pre"
       onClick={handleButtonClick}
     >
       {text}

@@ -109,7 +109,7 @@ const FeedbackList: React.FC = () => {
           {category}의 피드백
         </div>
         {filteredFeedbacks.length === 0 ? (
-          <p className="font-pre text-[14px] font-bold text-gray-400">
+          <p className="font-pre text-[14px] text-gray-400">
             받은 피드백 목록이 없습니다.
           </p>
         ) : (

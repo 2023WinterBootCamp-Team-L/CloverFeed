@@ -22,7 +22,7 @@ function LinkStart() {
         <div className=" w-full h-full flex flex-1 flex-col justify-center items-center">
           <img
             src={clover}
-            // className="w-[202px] h-[202px]"
+            className="w-[250px] h-[250px]"
             alt="클로버 이미지"
           />
         </div>

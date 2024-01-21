@@ -23,7 +23,7 @@ const FeedbackAnswerInput: React.FC<FeedbackAnswerInputProps> = ({
         onFocus={onFocus}
         onBlur={onBlur}
         style={textAreaStyle}
-        className="bg-white w-[340px] h-[580px] p-3 border-2 border-gray-400 rounded-lg focus:outline-none resize-none font-pre text-[14px]"
+        className="bg-white w-[340px] h-[380px] p-3 border-2 border-c-green rounded-3xl focus:outline-none resize-none font-pre text-[14px]"
       />
     </div>
   );

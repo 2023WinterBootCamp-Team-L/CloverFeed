@@ -26,77 +26,77 @@ function LinkTag2() {
   const tagsData: TagProps[] = [
     {
       text: "책임감",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/책임감.svg",
     },
     {
       text: "공감능력",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/공감능력.svg",
     },
     {
       text: "배려심",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/배려심.svg",
     },
     {
       text: "성실함",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/성실함.svg",
     },
     {
       text: "적극적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/적극적인.svg",
     },
     {
       text: "꼼꼼함",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/꼼꼼함.svg",
     },
     {
       text: "분위기 메이커",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/분위기메이커.svg",
     },
     {
       text: "주도적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/주도적인.svg",
     },
     {
       text: "센스있는",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/센스있는.svg",
     },
     {
       text: "긍정적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/긍정적인.svg",
     },
     {
       text: "사교성이 좋은",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/사교성이좋은.svg",
     },
     {
       text: "관대한",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/관대한.svg",
     },
     {
       text: "경청하는",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/경청하는.svg",
     },
     {
       text: "도전적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/도전적인.svg",
     },
     {
       text: "끈기",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/끈기.svg",
     },
   ];

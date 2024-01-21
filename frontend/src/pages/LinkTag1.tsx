@@ -26,77 +26,77 @@ function LinkTag1() {
   const tagsData: TagProps[] = [
     {
       text: "효율적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/효율적인.svg",
     },
     {
       text: "박학다식",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/박학다식.svg",
     },
     {
       text: "문제분석",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/문제분석.svg",
     },
     {
       text: "계획적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/계획적인.svg",
     },
     {
       text: "기획력",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/기획력.svg",
     },
     {
       text: "눈치빠른",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/눈치빠른.svg",
     },
     {
       text: "규칙준수",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/규칙준수.svg",
     },
     {
       text: "위기대처 능력",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/위기대처능력.svg",
     },
     {
       text: "리더쉽",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/리더쉽.svg",
     },
     {
       text: "정보수집",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/정보수집.svg",
     },
     {
       text: "의견 다양성",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/의견다양성.svg",
     },
     {
       text: "추진력",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/추진력.svg",
     },
     {
       text: "전략적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/전략적인.svg",
     },
     {
       text: "결단력",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/결단력.svg",
     },
     {
       text: "협력적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/협력적인.svg",
     },
   ];

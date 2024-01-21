@@ -24,28 +24,30 @@ function LinkAnswer2() {
   return (
     <div className="flex justify-center items-center h-screen">
       <div
-        className="flex flex-col justify-center overflow-hidden relative border-2 bg-c-emerald bg-opacity-40 px-5 py-8 gap-10"
+        className="flex flex-col overflow-hidden relative border-2 bg-c-emerald bg-opacity-40 px-5 py-8 gap-20"
         style={{ width: "393px", height: "852px" }}
       >
         <div className="flex justify-between w-full">
           <BackButton back page="/LinkAnswer1" />
           <BackButton back={false} page="/LinkOpti" />
         </div>
-        <div className="flex-full">
-          <p className="font-pre text-[22px] font-bold text-center">
-            XXX님이 보완해줬으면
-          </p>
-          <p className="font-pre text-[22px] font-bold text-center">
-            하는 부분이 있나요?
-          </p>
-        </div>
-        <div className="flex flex-1 flex-col justify-center items-center">
-          <FeedbackAnswerInput
-            value={answerInputs}
-            onTextChange={onInputChange}
-            onFocus={onFocus}
-            onBlur={onBlur}
-          />
+        <div className="flex flex-col items-center gap-20">
+          <div className="flex-full">
+            <p className="font-pre text-[22px] font-bold text-center">
+              XXX님이 보완해줬으면
+            </p>
+            <p className="font-pre text-[22px] font-bold text-center">
+              하는 부분이 있나요?
+            </p>
+          </div>
+          <div className="flex flex-1 flex-col justify-center items-center">
+            <FeedbackAnswerInput
+              value={answerInputs}
+              onTextChange={onInputChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
+          </div>
         </div>
       </div>
     </div>

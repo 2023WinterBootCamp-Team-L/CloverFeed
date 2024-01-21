@@ -109,15 +109,15 @@ const FeedBackResult: React.FC = () => {
           page={`/feedbacks/${feedbackData.respondent_info.category}`}
         />
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-8">
         <p className="font-pre text-[22px] font-bold">
           {feedbackData.respondent_info.respondent_name}{" "}
           {feedbackData.respondent_info.category} 피드백
         </p>
         {feedbackData.status === "success" && (
-          <div className="flex flex-col gap-4">
-            <div className="bg-c-blue h-auto w-full flex flex-col justify-center rounded-lg p-8">
-              <p className="font-pre text-[14px] font-bold leading-6">
+          <div className="flex flex-col gap-6">
+            <div className="h-auto w-full flex flex-col justify-center rounded-lg mb-2">
+              <p className="font-pre text-[18px] font-bold leading-8">
                 {feedbackData.summary}
               </p>
             </div>
@@ -142,11 +142,11 @@ const FeedBackResult: React.FC = () => {
               {feedbackData.answers?.map((answer, index) => (
                 <li
                   key={index}
-                  className={`h-auto w-full flex flex-col bg-white justify-start ${
-                    index % 2 === 0 ? "border-c-sl-purple" : "border-c-blue"
-                  } border-2 rounded-lg p-4 mb-4`}
+                  className={`h-auto w-full flex flex-col justify-start ${
+                    index % 2 === 0 ? "bg-c-l-purple" : "bg-c-l-blue"
+                  } rounded-lg p-4 mb-4`}
                 >
-                  <p className="font-pre text-[14px] font-bold">
+                  <p className="font-pre text-[14px] font-bold mb-6">
                     {answer.question}
                   </p>
                   {answer.type === "주관식" ? (
@@ -154,7 +154,7 @@ const FeedBackResult: React.FC = () => {
                       {answer.answer}
                     </p>
                   ) : (
-                    <span className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-1.5 font-pre text-[12px] text-white">
+                    <span className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-2 font-pre text-[12px] text-white">
                       {answer.answer}
                     </span>
                   )}

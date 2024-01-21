@@ -82,7 +82,7 @@ const SkillChart = ({
 
   return (
     <div className="flex flex-col justify-center w-full gap-4">
-      <p className="font-pre text-[14px] font-bold">{generateSentence()}</p>
+      <p className="font-pre text-[16px] font-bold">{generateSentence()}</p>
       <Doughnut data={chartData} options={options}></Doughnut>{" "}
       {/*오류가 나는데 실행은 또 잘됨...*/}
     </div>
