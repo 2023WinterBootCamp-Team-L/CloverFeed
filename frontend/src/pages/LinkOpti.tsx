@@ -1,7 +1,7 @@
 import BackButton from "../components/BackButton";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { Answer, selectedAnswerState } from "../components/AnswerStore";
+import { Answer, selectedAnswerState } from "../components/Answer/AnswerStore";
 
 function LinkOpti() {
   const [selectedAnswer, setSelectedAnswer] =

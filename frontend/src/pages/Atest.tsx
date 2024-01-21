@@ -1,84 +1,55 @@
-import logouticon from "../assets/logouticon.svg";
-import researchicon from "../assets/researchicon.svg";
-import charticon from "../assets/charticon.svg";
-import shareicon from "../assets/shareicon.svg";
-import GreenButton from "../components/GreenButton";
-import LogoutButton from "../components/LogoutButton.tsx";
-import ResearchButton from "../components/ResearchButton.tsx";
-import ChartButton from "../components/ChartButton.tsx";
-import ShareButton from "../components/ShareButton.tsx";
-import FeedButton from "../components/FeedButton.tsx";
-import SimpleWordcloud from "../components/wordcloud.tsx";
-import { selectedAnswerState } from "../components/AnswerStore.tsx";
-import { useRecoilValue } from "recoil";
+import BackButton from "../components/BackButton";
+import React from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  selectedAnswerState,
+  answerListState,
+  Answer,
+} from "../components/Answer/AnswerStore";
 
-function Atest() {
-  const nextpage = "/QueryMain";
-  const logoutpage = "/Signup";
-  const researchpage = "/Search";
-  const chartpage = "/Chart";
-  const sharepage = "/QueryShare";
+function LinkAnswer1() {
+  const [selectedAnswer, setSelectedAnswer] =
+    useRecoilState(selectedAnswerState);
+  const answerList = useRecoilValue(answerListState);
 
-  const categories = ["developer", "designer", "planner", "pmpo", "others"];
+  const handleSaveAnswer = () => {
+    if (selectedAnswer) {
+      // 선택한 답변을 목록에 추가
+      const newAnswerList = {
+        answers: [...answerList.answers, selectedAnswer],
+      };
+      setAnswerList(newAnswerList);
 
-  const selectedAnswer = useRecoilValue(selectedAnswerState);
-
+      // 선택한 답변 초기화
+      setSelectedAnswer(null);
+    }
+  };
   return (
-    <div
-      className="bg-white flex flex-col 
-     max-w-[24.56rem] mx-auto h-screen gap-[20px] px-22px py-36px"
-    >
-      <div>
-        <p className="text-4xl mt-4">
-          Home
-          <span className="float-right">
-            <LogoutButton iconSrc={logouticon} logoutpage={logoutpage} />
-          </span>
-        </p>
-        <p className="text-xl">keyword cloud</p>
-      </div>
-      <div className="flex flex-col items-center gap-6">
-        <div>
-          <SimpleWordcloud />
+    <div className="flex justify-center items-center h-screen ">
+      <div
+        className="flex flex-col justify-center items-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50 "
+        style={{ width: "393px", height: "852px" }}
+      >
+        <div className="flex justify-between w-full px-4 pt-4">
+          <BackButton back page="/LinkTag2" />
+          <BackButton back={false} page="/LinkAnswer2" />
         </div>
-        <div>
-          <p className="text-sm text-center">
-            사용자 관점을 잘 배려하는 프론트엔드
+        <div className="flex-col flex-full justify-between pt-12 pb-12">
+          <p className="text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
+            XXX님에게 전하고 싶은
           </p>
-          <p className="text-sm text-center">엔지니어로 평가받고 있습니다.</p>
+          <p className="text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
+            칭찬이 있나요?
+          </p>
         </div>
-      </div>
-      <div className="flex justify-center">
-        <GreenButton text="질문 새로 생성하기" nextpage={nextpage} />
-      </div>
-      <div className="flex justify-center space-x-8xl mt-4">
-        <p>
-          <span className="mr-12">
-            <ResearchButton
-              iconSrc={researchicon}
-              researchpage={researchpage}
-            />
-          </span>
-          <span className="mr-12">
-            <ChartButton iconSrc={charticon} chartpage={chartpage} />
-          </span>
-          <span>
-            <ShareButton iconSrc={shareicon} sharepage={sharepage} />
-          </span>
-        </p>
-      </div>
-      {selectedAnswer && <div>{selectedAnswer.content}</div>}
-      <div>
-        <p className="text-xl mt-0">feedback</p>
-        {categories.map((category, index) => (
-          <FeedButton
-            key={category}
-            category={category}
-            color={index % 2 === 0}
-          />
-        ))}
+        <div className="flex flex-1 flex-col justify-center items-center">
+          <div className="w-[360px] h-[580px] flex flex-col items-start overflow-hidden relative border-2 rounded-lg border-[#C1C6CF] bg-white">
+            <AnswerInput />
+          </div>
+        </div>
       </div>
     </div>
   );
 }
-export default Atest;
+
+export default LinkAnswer1;
