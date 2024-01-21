@@ -1,16 +1,13 @@
-// AnswerStore.ts
-
 import { atom, selector } from "recoil";
 
 export type Category = string;
 export type TagsWork = string;
 export type TagsAttitude = string;
-export type AnswerType = "option" | "short";
+export type AnswerType = "choice" | "short";
 
 export type Answer = {
   context: string;
-  type: AnswerType;
-  inputs: string;
+  answer: string;
 };
 
 export type AnswerList = {

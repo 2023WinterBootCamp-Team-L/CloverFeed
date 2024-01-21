@@ -6,11 +6,6 @@ import AnswerOptionList from "../components/AnswerOptionList";
 import { useNavigate } from "react-router-dom";
 import PopupQuestion from "../components/PopupQuestion";
 import { useRecoilState } from "recoil";
-import {
-  questionInputState,
-  answerInputState,
-} from "../components/QuestionAnswer";
-
 export interface QuestionProps {
   value: string;
   onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
