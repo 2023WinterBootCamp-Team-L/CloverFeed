@@ -1,52 +1,84 @@
-// QuestionList.tsx
-import React from "react";
-import { useRecoilState } from "recoil";
-import {
-  questionsState,
-  Question,
-  AnswerType,
-} from "../components/AnswerStore";
+import logouticon from "../assets/logouticon.svg";
+import researchicon from "../assets/researchicon.svg";
+import charticon from "../assets/charticon.svg";
+import shareicon from "../assets/shareicon.svg";
+import GreenButton from "../components/GreenButton";
+import LogoutButton from "../components/LogoutButton.tsx";
+import ResearchButton from "../components/ResearchButton.tsx";
+import ChartButton from "../components/ChartButton.tsx";
+import ShareButton from "../components/ShareButton.tsx";
+import FeedButton from "../components/FeedButton.tsx";
+import SimpleWordcloud from "../components/wordcloud.tsx";
+import { selectedAnswerState } from "../components/AnswerStore.tsx";
+import { useRecoilValue } from "recoil";
 
-const Atest: React.FC = () => {
-  const [questions, setQuestions] = useRecoilState(questionsState);
+function Atest() {
+  const nextpage = "/QueryMain";
+  const logoutpage = "/Signup";
+  const researchpage = "/Search";
+  const chartpage = "/Chart";
+  const sharepage = "/QueryShare";
 
-  const addAnswer = (questionId: number, type: AnswerType, content: string) => {
-    setQuestions((prevQuestions) => {
-      const newQuestions = [...prevQuestions];
-      const questionIndex = newQuestions.findIndex((q) => q.id === questionId);
+  const categories = ["developer", "designer", "planner", "pmpo", "others"];
 
-      if (questionIndex !== -1) {
-        newQuestions[questionIndex].answers.push({ type, content });
-      }
-
-      return newQuestions;
-    });
-  };
+  const selectedAnswer = useRecoilValue(selectedAnswerState);
 
   return (
-    <div className="flex flex-col bg-c-green">
-      {questions.map((question) => (
-        <div key={question.id}>
-          <p>{question.text}</p>
-          <button onClick={() => addAnswer(question.id, "tag", "tag1")}>
-            Add Tag Answer
-          </button>
-          <button
-            onClick={() => addAnswer(question.id, "multipleChoice", "Option A")}
-          >
-            Add Multiple Choice Answer
-          </button>
-          <button
-            onClick={() =>
-              addAnswer(question.id, "openEnded", "Open-ended Answer")
-            }
-          >
-            Add Open-ended Answer
-          </button>
+    <div
+      className="bg-white flex flex-col 
+     max-w-[24.56rem] mx-auto h-screen gap-[20px] px-22px py-36px"
+    >
+      <div>
+        <p className="text-4xl mt-4">
+          Home
+          <span className="float-right">
+            <LogoutButton iconSrc={logouticon} logoutpage={logoutpage} />
+          </span>
+        </p>
+        <p className="text-xl">keyword cloud</p>
+      </div>
+      <div className="flex flex-col items-center gap-6">
+        <div>
+          <SimpleWordcloud />
         </div>
-      ))}
+        <div>
+          <p className="text-sm text-center">
+            사용자 관점을 잘 배려하는 프론트엔드
+          </p>
+          <p className="text-sm text-center">엔지니어로 평가받고 있습니다.</p>
+        </div>
+      </div>
+      <div className="flex justify-center">
+        <GreenButton text="질문 새로 생성하기" nextpage={nextpage} />
+      </div>
+      <div className="flex justify-center space-x-8xl mt-4">
+        <p>
+          <span className="mr-12">
+            <ResearchButton
+              iconSrc={researchicon}
+              researchpage={researchpage}
+            />
+          </span>
+          <span className="mr-12">
+            <ChartButton iconSrc={charticon} chartpage={chartpage} />
+          </span>
+          <span>
+            <ShareButton iconSrc={shareicon} sharepage={sharepage} />
+          </span>
+        </p>
+      </div>
+      {selectedAnswer && <div>{selectedAnswer.content}</div>}
+      <div>
+        <p className="text-xl mt-0">feedback</p>
+        {categories.map((category, index) => (
+          <FeedButton
+            key={category}
+            category={category}
+            color={index % 2 === 0}
+          />
+        ))}
+      </div>
     </div>
   );
-};
-
+}
 export default Atest;

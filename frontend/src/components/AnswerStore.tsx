@@ -1,6 +1,6 @@
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
-export type AnswerType = 'tag' | 'multipleChoice' | 'openEnded';
+export type AnswerType = "tag" | "option" | "short";
 
 export type Answer = {
   type: AnswerType;
@@ -13,7 +13,7 @@ export type Question = {
   answers: Answer[];
 };
 
-export const questionsState = atom<Question[]>({
-  key: 'questionsState',
-  default: [],
+export const selectedAnswerState = atom<Answer | null>({
+  key: "selectedAnswerState",
+  default: null,
 });
