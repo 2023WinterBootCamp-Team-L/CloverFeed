@@ -5,23 +5,13 @@ function Signup() {
   const nextpage = "/GoSignup";
   return (
     <div
-      className="bg-white flex flex-col items-center justify-center
-    overflow-hidden max-w-[24.56rem] mx-auto h-screen"
+      className="bg-white flex flex-col mx-auto h-screen gap-20 px-5 py-[137px]"
+      style={{ width: "393px" }}
     >
-      <div className="mb-16 text-center">
-        <center>
-          <p className="text-4xl">Welcome</p>
-        </center>
-      </div>
-      <div className="mb-24 text-center">
-        <center>
-          <img src={loginclover} alt="로그인클로버" />
-        </center>
-      </div>
-      <div>
-        <center>
-          <GreenButton text="회원가입 및 로그인" nextpage={nextpage} />
-        </center>
+      <p className="font-pre text-[24px] font-bold text-center">Welcome</p>
+      <img src={loginclover} alt="로그인클로버" />
+      <div className="flex justify-center items-center">
+        <GreenButton text="회원가입 및 로그인" nextpage={nextpage} />
       </div>
     </div>
   );

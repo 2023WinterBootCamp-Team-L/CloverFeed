@@ -16,7 +16,7 @@ function SuccessButton({ onClick }: SuccessButtonProps) {
     <div>
       <button
         id="signupButton"
-        className={`bg-c-green text-white w-80 h-12 rounded-xl mt-0 text-lg${
+        className={`bg-c-green text-white w-[332px] p-3 rounded-lg font-pre text-[14px]${
           isClicked ? "cursor-not-allowed opacity-50" : "cursor-pointer"
         }mx-auto`}
         onClick={handleButtonClick}

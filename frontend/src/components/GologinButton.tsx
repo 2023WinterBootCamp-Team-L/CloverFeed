@@ -64,25 +64,34 @@ function GologinButton() {
   };
   return (
     <div>
-      <button className="text-xs text-black underline" onClick={toggleModal}>
+      <button className="font-pre text-[14px] underline" onClick={toggleModal}>
         로그인하러가기
       </button>
       <LoginModal isOpen={isOpen} toggle={toggleModal}>
-        <div>
-          <p className="pt-8 pl-1 mb-1 text-sm text-left">Email 입력</p>
-          <SignupAnswer
-            value={emailanswerInputs}
-            onChange={onInputChangeemail}
-          />
-          <p className="pt-8 pl-1 mb-1 text-sm text-left">비밀번호 입력</p>
-          <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        <div className="flex flex-col items-center gap-10 px-5 py-8">
+          <div className="flex flex-col items-start gap-2">
+            <p className="font-pre text-[14px] font-bold">Email 입력</p>
+            <SignupAnswer
+              value={emailanswerInputs}
+              onChange={onInputChangeemail}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-2">
+            <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
+            <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
+          </div>
+
           <button
             onClick={handleLogin}
-            className="bg-c-green text-white w-full px-2 py-2 rounded-xl mt-12 text-lg"
+            className="bg-c-green text-white w-full h-10 rounded-lg font-pre text-[14px]"
           >
             로그인
           </button>
+          {errorMessage && (
+            <p className="font-pre text-[14px] font-bold text-red-400">
+              {errorMessage}
+            </p>
+          )}
         </div>
       </LoginModal>
     </div>

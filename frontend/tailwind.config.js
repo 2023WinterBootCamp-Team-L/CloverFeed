@@ -7,6 +7,7 @@ export default {
         "c-green": "#50DA8C",
         "c-indigo": "#1E2C49",
         "c-pink": "#F9C7C7",
+        "c-l-pink": "#FBE2E2", // opacity: 50
         "c-yellow": "#F6EED4",
         "c-emerald": "#D5FBE5",
         "c-blue": "#E2E9FF",

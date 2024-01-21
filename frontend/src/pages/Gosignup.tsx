@@ -81,58 +81,43 @@ function Gosignup() {
 
   return (
     <div
-      className="bg-emerald-50 flex flex-col overflow-hidden max-w-[24.56rem]
-    mx-auto h-screen gap-[20px] px-22px py-[48px] rounded-3xl"
+      className="bg-gradient-to-t from-c-emerald flex flex-col items-center mx-auto h-screen gap-10 px-5 py-[137px]"
+      style={{ width: "393px" }}
     >
-      <div className="mb-2">
-        <div className="pt-8 pl-[85px] mb-1 text-sm text-left flex-row gap-3 flex items-center">
-          Email입력
-        </div>
-        <div>
-          {/* 컴포넌트를 나란히 정렬하기 위해 flex 컨테이너 추가 */}
-          <center>
-            <SignupAnswer
-              value={emailanswerInputs}
-              onChange={onInputChangeemail}
-            />
-          </center>
-        </div>
+      <div className="flex flex-col items-start gap-2">
+        <p className="font-pre text-[14px] font-bold">Email입력</p>
+        <SignupAnswer value={emailanswerInputs} onChange={onInputChangeemail} />
       </div>
-      <div className="mb-2">
-        <center>
-          <p className="pt-8 pl-[85px] mb-1 text-sm text-left">
-            이름(또는 닉네임)
-          </p>
-          <SignupAnswer value={nameanswerInputs} onChange={onInputChangename} />
-        </center>
+
+      <div className="flex flex-col items-start gap-2">
+        <p className="font-pre text-[14px] font-bold">이름(또는 닉네임)</p>
+        <SignupAnswer value={nameanswerInputs} onChange={onInputChangename} />
       </div>
-      <div className="mb-2">
-        <p className="pt-8 pl-[85px] mb-1 text-sm text-left">비밀번호 입력</p>
-        <center>
-          <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
-        </center>
+
+      <div className="flex flex-col items-start gap-2">
+        <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
+        <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
       </div>
-      <div className="mb-8">
-        <p className="pt-8 pl-[85px] mb-1 text-sm text-left">비밀번호 확인</p>
-        <center>
-          <SignupAnswer
-            value={pwcheckanswerInputs}
-            onChange={onInputChangepwcheck}
-          />
-        </center>
+
+      <div className="flex flex-col items-start">
+        <p className="font-pre text-[14px] font-bold">비밀번호 확인</p>
+        <SignupAnswer
+          value={pwcheckanswerInputs}
+          onChange={onInputChangepwcheck}
+        />
       </div>
-      <div>
-        <span className="flex justify-center">
-          <SuccessButton onClick={handleSignup} disabled={!isPasswordValid} />
-        </span>
+
+      <div className="flex justify-center items-center">
+        <SuccessButton onClick={handleSignup} disabled={!isPasswordValid} />
       </div>
-      <div>
-        <center>
-          <GologinButton />
-        </center>
+
+      <div className="flex justify-center items-center">
+        <GologinButton />
       </div>
       {errorMessage && (
-        <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
+        <p className="font-pre text-[14px] font-bold text-red-400">
+          {errorMessage}
+        </p>
       )}
     </div>
   );
