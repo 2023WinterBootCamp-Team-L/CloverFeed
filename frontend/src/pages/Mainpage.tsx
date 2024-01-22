@@ -10,6 +10,9 @@ import ShareButton from "../components/ShareButton.tsx";
 import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
+
+
+
 function Mainpage() {
   const nextpage = "/QueryMain";
   const logoutpage = "/Signup";
