@@ -5,15 +5,12 @@ interface QuestionContextType {
   questions: QuestionProps[];
   setQuestions: React.Dispatch<React.SetStateAction<QuestionProps[]>>;
 }
-
 interface QuestionProviderProps {
   children: ReactNode;
 }
-
 const QuestionContext = createContext<QuestionContextType | undefined>(
   undefined
 );
-
 export const useQuestionContext = () => {
   const context = useContext(QuestionContext);
   if (!context) {
@@ -23,12 +20,10 @@ export const useQuestionContext = () => {
   }
   return context;
 };
-
 export const QuestionProvider: React.FC<QuestionProviderProps> = ({
   children,
 }) => {
   const [questions, setQuestions] = useState<QuestionProps[]>([]);
-
   return (
     <QuestionContext.Provider value={{ questions, setQuestions }}>
       {children}
