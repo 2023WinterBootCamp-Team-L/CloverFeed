@@ -3,15 +3,23 @@ import ChoiceButton from "./ChoiceButton";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { selectedAnswerState, answerListState } from "./AnswerStore";
 
+type Option = {
+  option: string;
+};
+
+type Color = {
+  color: string;
+};
+
 function ChoicePart() {
-  const Options = [
+  const Options: Option[] = [
     { option: "1점" },
     { option: "2점" },
     { option: "3점" },
     { option: "4점" },
   ];
 
-  const Colors = [
+  const Colors: Color[] = [
     { color: "#E2E9FF" },
     { color: "#F6EED4" },
     { color: "#EDD0F5" },
@@ -33,7 +41,8 @@ function ChoicePart() {
       const optionsToRemove = [option];
 
       setSelectedAnswer((prevSelectedAnswer) => ({
-        type: "choice",
+        content: "",
+        type: "객관식",
         answer:
           prevSelectedAnswer?.answer.filter(
             (selectedOption) => !optionsToRemove.includes(selectedOption)
@@ -42,6 +51,7 @@ function ChoicePart() {
 
       // 해당 텍스트를 answerList에서 제거
       setAnswerListState((prevAnswerList) => ({
+        ...prevAnswerList,
         answers: prevAnswerList.answers.filter(
           (answer) => !optionsToRemove.includes(answer.answer[0])
         ),
@@ -49,15 +59,17 @@ function ChoicePart() {
     } else {
       // 버튼 클릭 시 텍스트 추가
       setSelectedAnswer((prevSelectedAnswer) => ({
-        type: "choice",
+        content: "",
+        type: "객관식",
         answer: [...(prevSelectedAnswer?.answer || []), option],
       }));
 
       // 텍스트를 answerList에 추가
       setAnswerListState((prevAnswerList) => ({
+        ...prevAnswerList,
         answers: [
           ...prevAnswerList.answers,
-          { type: "choice", answer: [option] },
+          { content: "", type: "객관식", answer: [option] },
         ],
       }));
     }

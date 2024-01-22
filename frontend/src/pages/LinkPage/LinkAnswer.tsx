@@ -4,7 +4,7 @@ import BackButton from "../../components/BackButton";
 
 function LinkAnswer() {
   const data = {
-    answerType: "short",
+    answerType: "주관식",
   };
 
   return (
@@ -23,8 +23,8 @@ function LinkAnswer() {
           </p>
         </div>
         <div className="flex flex-1 flex-col justify-center items-center">
-          {data.answerType === "choice" && <ChoicePart />}
-          {data.answerType === "short" && <ShortPart />}
+          {data.answerType === "객관식" && <ChoicePart />}
+          {data.answerType === "주관식" && <ShortPart />}
         </div>
       </div>
     </div>
