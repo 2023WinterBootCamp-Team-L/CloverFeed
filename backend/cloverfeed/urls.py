@@ -45,4 +45,13 @@ urlpatterns = [
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
     ),
+    # 워드클라우드
+    path(
+        "feedbacks/wordcloud/", views.WordCloudContextView.as_view(), name="wordcloud"
+    ),
+    path(
+        "feedbacks/wordcloudkeyword/",
+        views.WordCloudKeywordView.as_view(),
+        name="wordcloudkeyword",
+    ),
 ]

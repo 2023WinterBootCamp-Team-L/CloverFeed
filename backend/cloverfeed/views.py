@@ -12,7 +12,8 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import BasicAuthentication
 from .authentication import CsrfExemptSessionAuthentication
-import json, random
+from collections import Counter
+import json, random, ast
 from datetime import datetime
 from .models import (
     Form,
@@ -28,9 +29,11 @@ from .serializers import (
     FeedbackResultSearchSerializer,
     FormSerializer,
     FeedbackTagSerializer,
+    WordCloudSerializer,
 )
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from krwordrank.word import summarize_with_keywords
 
 
 # 회원가입
@@ -749,3 +752,145 @@ class FeedbackChartView(APIView):
                 {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
                 status=400,
             )
+
+
+# 워드클라우드
+class WordCloudContextView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request):
+        userid = request.query_params.get("userid")
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        # 피드백 결과 조회
+        feedbacks = QuestionAnswer.objects.filter(
+            Q(feedback__form__user=user), Q(type="주관식")
+        )
+
+        contexts = []
+
+        for i in range(len(feedbacks)):
+            # print(feedbacks[i].context)
+            contexts.append(feedbacks[i].context)
+
+        if len(contexts) == 0:
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "피드백이 없습니다.",
+                },
+                status=404,
+            )
+
+        # stopwords = {'영화', '관람객', '너무', '정말', '보고', '일부', '완전히'} # 불용어
+        # keywords = summarize_with_keywords(contexts, min_count=3, max_length=10, beta=0.85, max_iter=10, stopwords=stopwords, verbose=True)
+        keywords = summarize_with_keywords(
+            contexts,
+            min_count=1,
+            max_length=10,
+            beta=0.85,
+            max_iter=10,
+            verbose=True,
+        )
+
+        # print(keywords)
+
+        wordlist = []
+        count = 0
+        for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
+            temp = {"name": key, "value": int(val * 100)}
+            wordlist.append(temp)
+            count += 1
+            if count >= 30:  # 출력 수 제한
+                break
+
+        # print(wordlist)
+
+        return Response({"status": "success", "words": wordlist})
+
+
+# 워드클라우드
+class WordCloudKeywordView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    # @swagger_auto_schema(
+    #     manual_parameters=[
+    #         openapi.Parameter(
+    #             "userid",
+    #             openapi.IN_QUERY,
+    #             description="사용자 ID",
+    #             required=True,
+    #             type=openapi.TYPE_NUMBER,
+    #         ),
+    #     ]
+    # )
+    def get(self, request):
+        userid = request.query_params.get("userid")
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        # 피드백 결과 조회
+        feedbacks = FeedbackResult.objects.filter(form__user=user)
+        tags = []
+
+        for i in range(len(feedbacks)):
+            tag_work_list = ast.literal_eval(feedbacks[i].tag_work)
+            tag_attitude_list = ast.literal_eval(feedbacks[i].tag_attitude)
+
+            for tag in tag_work_list:
+                tags.append(tag)
+            for tag in tag_attitude_list:
+                tags.append(tag)
+
+        # print(tags)
+
+        if len(tags) == 0:
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "피드백이 없거나, 피드백으로 받은 태그가 없습니다.",
+                },
+                status=401,
+            )
+
+        # 각 원소의 갯수를 세기
+        element_counts = Counter(tags)
+
+        # 결과를 원하는 형식으로 가공해서 응답
+        return Response(
+            {
+                "status": "success",
+                "words": [
+                    {"text": word, "count": count}
+                    for word, count in element_counts.items()
+                ],
+            }
+        )
