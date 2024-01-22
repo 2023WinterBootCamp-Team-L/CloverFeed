@@ -8,15 +8,17 @@ import { useQuestionContext } from "../components/QuestionUpdate";
 import { QuestionList } from "../components/QuestionList";
 import Modal from "../components/Modal";
 import axios from "axios";
+import {Question} from "../pages/QueryAdd"
+
 
 export interface Question {
-  questions?: Question[] | undefined;
   value: string;
   onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   context: string;
   type: "객관식" | "주관식";
   choices?: string[];
 }
+
 interface ApiResponse {
   status: "success" | "error";
   questions?: Question[];
@@ -25,74 +27,82 @@ interface ApiResponse {
 }
 
 function QueryList() {
-  const [questions, setQuestions] = useState<Question[] | undefined>(undefined);
+  const [questions, setQuestions] = useState<Question[]>([]); // 초기값을 빈 배열로 변경
+  const { questions: contextQuestions } = useQuestionContext();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.post<ApiResponse>(
-          "http://localhost:8000/api/questions/",
-          {
-            user_id: 4,
-            questions: questions
-            // [
-            //   {
-            //     context: "당신의 직무는 무엇인가요?",
-            //     type: "객관식",
-            //     choices: ["개발자", "디자이너", "기획자", "PM,PO", "기타직무"],
-            //   },
-            //   {
-            //     context: "님의 업무 능력 강점은 무엇인가요?",
-            //     type: "객관식",
-            //     choices: ["박학다식", "기획력", "문제 분석", "효율적인", "계획적인", "위기대처능력", "정보수집", "추진력", "규칙준수", "창의적인", "리더십", "전략적인", "의견다양성", "결단력", "협력적인"],
-            //   },
-            //   {
-            //     context: "님의 성격 및 태도는 어떤가요?",
-            //     type: "객관식",
-            //     choices: ["책임감", "공감능력", "경청하는", "성실함", "배려심", "적극적인", "꼼꼼함", "끈기", "분위기메이커", "주도적인", "긍정적인", "사교성이 좋은", "관대한", "도전적인", "센스있는"],
-            //   },
-            //   {
-            //     context: "님에게 전하고 싶은 칭찬이 있나요?",
-            //     type: "주관식",
-            //   },
-            //   {
-            //     context: "님이 보완해 줬으면 하는 부분이 있나요?",
-            //     type: "주관식",
-              // },
-            // ],
-          }
-        );
+  //   const fetchData = async () => { 
+  //     try {
+  //       const response = await axios.post<ApiResponse>(
+  //         "http://localhost:8000/api/questions/",
+  //         {
+  //           user_id: 4,
+  //           questions: [...questions, ...contextQuestions],
+  //         }
+  //       );
 
-        if (response.data.status === "success") {
-          console.log("성공적으로 등록되었습니다.");
-          setQuestions(response.data.questions);
-        } else {
-          console.error(
-            `Error: ${response.data.error_code}, ${response.data.message}`
-          );
-        }
-      } catch (error) {
-        console.error("Error submitting data:", error);
-      }
-    };
+  //       if (response.data.status === "success") {
+  //         console.log("성공적으로 등록되었습니다.");
+  //         setQuestions((prevQuestions) => [
+  //           ...(prevQuestions || []),
+  //           ...(response.data.questions || []),
+  //         ]);
+  //       } else {
+  //         console.error(
+  //           `Error: ${response.data.error_code}, ${response.data.message}`
+  //         );
+  //       }
+  //     } catch (error) {
+  //       console.error("Error submitting data:", error);
+  //     }
+  //   };
 
-    fetchData();
-  }, [questions]);
+  //   fetchData(); 
+  console.log(questions) 
+  }, [questions, contextQuestions] );
+
+  
 
   // 페이지 이동
   const navigate = useNavigate();
   const handleAddButtonClick = () => {
     navigate("/queryadd");
   };
-  const handleQuestionComplete = () => {
-    navigate("/queryshare");
+  const handleQuestionComplete = async () => {
+    try {
+      // 추가된 질문들을 서버로 전송
+      const response = await submitQuestions([...questions, ...contextQuestions]);
+
+      if (response.data.status === "success") {
+        console.log("성공적으로 등록되었습니다.");
+        setQuestions(response.data.questions || []);
+        navigate("/queryshare");
+      } else {
+        console.error(
+          `Error: ${response.data.error_code}, ${response.data.message}`
+        );
+      }
+    } catch (error) {
+      console.error("Error submitting data:", error);
+    }
   };
+
+  const submitQuestions = async (questions: Question[]) => {
+    return await axios.post<ApiResponse>(
+      "http://localhost:8000/api/questions/",
+      {
+        user_id: 4,
+        questions: questions,
+      }
+    );
+  };
+
   // 모달
-  const { questions: contextQuestions } = useQuestionContext();
   const [isOpen, setisOpen] = useState(false);
   const toggle = () => {
     setisOpen(!isOpen);
   };
+
   return (
     <div className="flex flex-col overflow-hidden w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
       <div className="flex justify-between">
@@ -115,7 +125,6 @@ function QueryList() {
           onClick={handleAddButtonClick}
         />
         <QuestionList questions={contextQuestions} />
-      
       </div>
       <Modal isOpen={isOpen} toggle={toggle}>
         <div className="flex flex-col items-center gap-4">
@@ -137,4 +146,5 @@ function QueryList() {
     </div>
   );
 }
+
 export default QueryList;

@@ -7,9 +7,14 @@ import AnswerOptionList from "../components/AnswerOptionList";
 import { useQuestionContext } from "../components/QuestionUpdate";
 import { useNavigate } from "react-router-dom";
 import PopupQuestion from "../components/PopupQuestion";
+
+
 export interface QuestionProps {
   value: string;
   onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
+  context: string;
+  type: "객관식" | "주관식";
+  choices?: string[];
   onFocus?: () => void;
   onBlur?: () => void;
 }
@@ -18,6 +23,8 @@ export const Question: React.FC<QuestionProps> = ({
   onTextChange,
   onFocus,
   onBlur,
+  context,
+  type,
 }) => {
   const textColor =
     value === "질문하고 싶은 내용을 입력하세요" ? "gray" : "black";
@@ -34,6 +41,8 @@ export const Question: React.FC<QuestionProps> = ({
         style={textAreaStyle}
         className="h-40 w-full border-c-green border-opacity-50 border-2 rounded-lg focus:outline-none leading-1.25 p-2 text-sm resize-none"
       />
+      <div>{context}</div>
+      <div>{type}</div>
     </div>
   );
 };
@@ -70,9 +79,9 @@ function QueryAdd() {
       (showAnswersAdd || (!showAnswersAdd && answerInputs.length >= 2))
     ) {
       // 기존 질문 리스트에 새로운 질문 추가
-      const newQuestionList = [
+      const newQuestionList: QuestionProps[] = [
         ...questions,
-        { value: questionInputs, onTextChange: handleQuestionChange },
+        { value: questionInputs, onTextChange: handleQuestionChange, context: "", type: "객관식" }, // context와 type을 더미값 추가
       ];
       setQuestions(newQuestionList);
       // 입력된 질문 초기화
@@ -106,6 +115,8 @@ function QueryAdd() {
           onTextChange={handleQuestionChange}
           onFocus={onFocus}
           onBlur={onBlur}
+          context={"하이"}
+          type="객관식"
         />
       </div>
       {!showAnswersAdd && (

@@ -1,29 +1,52 @@
+import { useState } from "react";
 import BackButton from "../components/BackButton";
+import FeedbackAnswerInput from "../components/FeedbackAnswerInput";
 
 function LinkAnswer1() {
+  const [answerInputs, setAnswerInputs] = useState("내용을 입력하세요");
+
+  const onFocus = () => {
+    if (answerInputs === "내용을 입력하세요") {
+      setAnswerInputs("");
+    }
+  };
+
+  const onBlur = () => {
+    if (answerInputs === "") {
+      setAnswerInputs("내용을 입력하세요");
+    }
+  };
+
+  const onInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setAnswerInputs(e.target.value);
+  };
+
   return (
-    <div className="flex justify-center items-center h-screen ">
+    <div className="flex justify-center items-center h-screen">
       <div
-        className="flex flex-col justify-center items-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50 "
+        className="flex flex-col overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-20"
         style={{ width: "393px", height: "852px" }}
       >
-        <div className="flex justify-between w-full px-4 pt-4">
+        <div className="flex justify-between w-full">
           <BackButton back page="/LinkTag2" />
           <BackButton back={false} page="/LinkAnswer2" />
         </div>
-        <div className="flex-col flex-full justify-between pt-12 pb-12">
-          <p className="text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
-            XXX님에게 전하고 싶은
-          </p>
-          <p className="text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
-            칭찬이 있나요?
-          </p>
-        </div>
-        <div className="flex flex-1 flex-col justify-center items-center">
-          <div className="w-[360px] h-[580px] flex flex-col items-start overflow-hidden relative border-2 rounded-lg border-[#C1C6CF] bg-white">
-            <p className="text-left font-Preahvihear text-[14px] font-normal mt-4 ml-4">
-              내용을 적어주세요
+        <div className="flex flex-col items-center gap-20">
+          <div className="flex-full">
+            <p className="font-pre text-[22px] font-bold text-center">
+              XXX님에게 전하고 싶은
             </p>
+            <p className="font-pre text-[22px] font-bold text-center">
+              칭찬이 있나요?
+            </p>
+          </div>
+          <div className="flex flex-1 flex-col justify-center items-center">
+            <FeedbackAnswerInput
+              value={answerInputs}
+              onTextChange={onInputChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+            />
           </div>
         </div>
       </div>

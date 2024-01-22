@@ -38,9 +38,8 @@ const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
 
   const tagClasses = classNames(
     color,
-    "py-1 px-3",
+    "py-2 px-5",
     "rounded-2xl",
-    "mt-4",
     "text-xs",
     "flex",
     "items-center",
@@ -50,13 +49,13 @@ const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
 
   const iconClasses = classNames(
     "mr-2",
-    "max-h-4",
+    "max-h-6",
     "object-contain",
     selectedColor?.icon
   );
 
   return (
-    <label className="inline-flex relative">
+    <label className="inline-flex relative m-4">
       <button className={tagClasses} onClick={handleButtonClick}>
         <img src={image} alt="Tag Icon" className={iconClasses} />
         {text}
