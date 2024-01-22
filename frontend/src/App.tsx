@@ -24,6 +24,7 @@ import Search from "./pages/Search";
 import FeedBackResult from "./pages/FeedBackResult";
 import LinkAnswer from "./pages/LinkPage/LinkAnswer";
 import AnswerCheck from "./pages/LinkPage/AnswerCheck";
+import FeedbackList from "./pages/FeedBackList";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -41,7 +42,7 @@ function App() {
         <Route path="/LinkTag1" element={<LinkTag1 />} />
         <Route path="/Chart" element={<Chart />} />
         <Route path="/Search" element={<Search />} />
-        <Route path="/feedbacks/:category" element={<FeedBackList />} />
+        <Route path="/feedbacks/:category" element={<FeedbackList />} />
         <Route path="/feedbackresult" element={<FeedBackResult />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
