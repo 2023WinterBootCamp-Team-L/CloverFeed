@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { QuestionProvider } from "./components/QuestionUpdate";
 import LinkMain from "./pages/LinkMain";
 import QueryMain from "./pages/QueryMain";
 import QueryStart from "./pages/QueryStart";
@@ -21,9 +20,10 @@ import Mainpage from "./pages/Mainpage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import WordCloud from "./components/wordcloud";
-import FeedBackList from "./pages/FeedBackList";
 import Search from "./pages/Search";
 import FeedBackResult from "./pages/FeedBackResult";
+import LinkAnswer from "./pages/LinkPage/LinkAnswer";
+import AnswerCheck from "./pages/LinkPage/AnswerCheck";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -52,14 +52,11 @@ function App() {
         <Route path="/mainpage" element={<Mainpage />} />
         <Route path="/gosignup" element={<Gosignup />} />
         <Route path="/wordcloud" element={<WordCloud />} />
+        <Route path="/test" element={<LinkAnswer />} />
+        <Route path="/queryadd" element={<QueryAdd />} />
+        <Route path="/querylist" element={<QueryList />} />
+        <Route path="/check" element={<AnswerCheck />} />
       </Routes>
-
-      <QuestionProvider>
-        <Routes>
-          <Route path="/queryadd" element={<QueryAdd />} />
-          <Route path="/querylist" element={<QueryList />} />
-        </Routes>
-      </QuestionProvider>
     </div>
   );
 }
