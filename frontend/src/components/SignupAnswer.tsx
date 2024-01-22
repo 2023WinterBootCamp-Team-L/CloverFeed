@@ -11,7 +11,7 @@ const SignupAnswer: React.FC<SignupAnswerProps> = ({ value, onChange }) => {
         value={value}
         onChange={onChange}
         disabled={false}
-        className="bg-white h-10 w-56 rounded-lg border-2 border-emerald-200 pl-5 outline-none focus:border-emerald-400 text-lg"
+        className="bg-white h-10 w-56 pl-3 border-2 border-emerald-200 rounded-lg outline-none focus:border-c-green font-pre text-[14px]"
       />
     </div>
   );

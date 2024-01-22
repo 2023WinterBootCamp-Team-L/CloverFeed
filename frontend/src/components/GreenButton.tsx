@@ -15,7 +15,7 @@ const GreenButton = ({ text, nextpage }: GreenButtonProps) => {
   return (
     <label className="relative inline-flex">
       <button
-        className="bg-c-green text-white px-2 py-2 rounded-xl mt-4 text-lg w-[332px]"
+        className="bg-c-green text-white p-3 rounded-lg w-[332px] text-[16px] font-pre"
         onClick={handleButtonClick}
       >
         {text}

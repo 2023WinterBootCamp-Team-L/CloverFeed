@@ -1,5 +1,5 @@
 import SignupAnswer from "../components/SignupAnswer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SuccessButton from "../components/SuccessButton";
 import GologinButton from "../components/GologinButton";
 import axios from "axios";
@@ -10,6 +10,8 @@ function Gosignup() {
   const [pwcheckanswerInputs, setpwcheckAnswerInputs] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false); // Added state for password validation
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isComplete, setIsComplete] = useState(false);
+
   const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setemailAnswerInputs(e.target.value);
     // You might want to add email validation logic here
@@ -52,6 +54,7 @@ function Gosignup() {
         setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         return;
       }
+
       // API request
       const response = await axios.post(
         "http://localhost:8000/api/user/auth/signup/",
@@ -68,6 +71,7 @@ function Gosignup() {
           "회원가입이 성공적으로 완료되었습니다.",
           response.data.message
         );
+        setIsComplete(true);
       } else {
         // 에러 응답처리
         setErrorMessage("회원가입에 실패했습니다. " + response.data.message);
@@ -79,60 +83,59 @@ function Gosignup() {
     }
   };
 
+  useEffect(() => {
+    // errorMessage가 변경되면 3초 후에 null로 설정하여 사라지게 함
+    const timeoutId = setTimeout(() => {
+      setErrorMessage(null);
+    }, 3000);
+
+    // useEffect 클린업 함수에서 타이머 제거
+    return () => clearTimeout(timeoutId);
+  }, [errorMessage]);
+
   return (
     <div
-      className="bg-emerald-50 flex flex-col overflow-hidden max-w-[24.56rem]
-    mx-auto h-screen gap-[20px] px-22px py-[48px] rounded-3xl"
+      className="bg-c-emerald bg-opacity-35 flex flex-col items-center mx-auto h-screen gap-10 px-5 py-[137px]"
+      style={{ width: "393px" }}
     >
-      <div className="mb-2">
-        <div className="pt-8 pl-[85px] mb-1 text-sm text-left flex-row gap-3 flex items-center">
-          Email입력
-        </div>
-        <div>
-          {/* 컴포넌트를 나란히 정렬하기 위해 flex 컨테이너 추가 */}
-          <center>
-            <SignupAnswer
-              value={emailanswerInputs}
-              onChange={onInputChangeemail}
-            />
-          </center>
-        </div>
+      <div className="flex flex-col items-start gap-2">
+        <p className="font-pre text-[14px] font-bold">Email입력</p>
+        <SignupAnswer value={emailanswerInputs} onChange={onInputChangeemail} />
       </div>
-      <div className="mb-2">
-        <center>
-          <p className="pt-8 pl-[85px] mb-1 text-sm text-left">
-            이름(또는 닉네임)
-          </p>
-          <SignupAnswer value={nameanswerInputs} onChange={onInputChangename} />
-        </center>
+
+      <div className="flex flex-col items-start gap-2">
+        <p className="font-pre text-[14px] font-bold">이름(또는 닉네임)</p>
+        <SignupAnswer value={nameanswerInputs} onChange={onInputChangename} />
       </div>
-      <div className="mb-2">
-        <p className="pt-8 pl-[85px] mb-1 text-sm text-left">비밀번호 입력</p>
-        <center>
-          <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
-        </center>
+
+      <div className="flex flex-col items-start gap-2">
+        <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
+        <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
       </div>
-      <div className="mb-8">
-        <p className="pt-8 pl-[85px] mb-1 text-sm text-left">비밀번호 확인</p>
-        <center>
-          <SignupAnswer
-            value={pwcheckanswerInputs}
-            onChange={onInputChangepwcheck}
-          />
-        </center>
+
+      <div className="flex flex-col items-start">
+        <p className="font-pre text-[14px] font-bold">비밀번호 확인</p>
+        <SignupAnswer
+          value={pwcheckanswerInputs}
+          onChange={onInputChangepwcheck}
+        />
       </div>
-      <div>
-        <span className="flex justify-center">
-          <SuccessButton onClick={handleSignup} disabled={!isPasswordValid} />
-        </span>
+
+      <div className="flex justify-center items-center">
+        <SuccessButton
+          onClick={handleSignup}
+          disabled={!isPasswordValid}
+          text={isComplete ? "회원가입 완료" : "회원가입"}
+        />
       </div>
-      <div>
-        <center>
-          <GologinButton />
-        </center>
+
+      <div className="flex justify-center items-center">
+        <GologinButton />
       </div>
       {errorMessage && (
-        <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>
+        <p className="font-pre text-[14px] font-bold text-red-400">
+          {errorMessage}
+        </p>
       )}
     </div>
   );
