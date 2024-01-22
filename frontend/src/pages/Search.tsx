@@ -6,20 +6,34 @@ import pmpo from "../assets/PMPO.svg";
 import TagAnswer from "../components/TagAnswer";
 import axios from 'axios';
 
+interface Feedback{
+title:string;
+tags:JSX.Element[];
+text:string;
+}
+
 const Search: React.FC = () => {
   const sampleTags = [
     <TagAnswer key={1} text="책임감" image={pmpo} />,
     <TagAnswer key={2} text="기획력" image={pmpo} />,
     <TagAnswer key={3} text="관대한" image={pmpo} />,
   ];
+  const [searchValue, setSearchValue] = useState("");
+  const [filteredFeedbacks, setFilteredFeedbacks] = useState<JSX.Element[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  
 
   const fetchFeedbacks = async() => {
     try{
-      const response = await axios.get('/feedbacks/response?userid=사용자ID&keyword=검색어')
+        //가상 userID
+      const userID = 1;
+      const response = await axios.get('http://localhost:8000/api/feedbacks/response?userid=${userId}&keyword=${searchValue}')
     }
   }
 
-  const [searchValue, setSearchValue] = useState("");
+
+ 
 
   const feedbacks = [
     {

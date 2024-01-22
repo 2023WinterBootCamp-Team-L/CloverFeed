@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import FeedCount from "../components/FeedCount.tsx";
 
 interface FeedButtonProps {
   category: string;
@@ -39,6 +40,7 @@ const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
     <div>
       <button className={buttonClassName} onClick={handleButtonClick}>
         {getCategoryText(category)}의 피드백
+        <FeedCount category={getCategoryText(category)} />
       </button>
     </div>
   );
