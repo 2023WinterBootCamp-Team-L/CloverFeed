@@ -377,6 +377,9 @@ class QuestionListView(APIView):
 
         # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
         # questions_data = list(Question.objects.all().values())
+
+        # questions_data에
+
         questions_data = Question.objects.filter(form__user_id=user_id)
         print(questions_data)
 
