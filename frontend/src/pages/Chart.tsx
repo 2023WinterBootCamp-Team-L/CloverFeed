@@ -4,7 +4,7 @@ import Line from "../components/Line";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -47,6 +47,9 @@ const SkillChart = ({
           boxWidth: 10,
           boxHeight: 10,
           color: "black",
+          font: {
+            family: "Pretendard",
+          },
         },
       },
       tooltip: {
@@ -78,8 +81,8 @@ const SkillChart = ({
   };
 
   return (
-    <div className="flex flex-col justify-center w-full gap-2">
-      <p className="text-sm">{generateSentence()}</p>
+    <div className="flex flex-col justify-center w-full gap-4">
+      <p className="font-pre text-[16px] font-bold">{generateSentence()}</p>
       <Doughnut data={chartData} options={options}></Doughnut>{" "}
       {/*오류가 나는데 실행은 또 잘됨...*/}
     </div>
@@ -116,133 +119,121 @@ function Chart() {
     getChart();
   }, [apiUrl]);
 
-  // React.useEffect(() => {
-  //   axios
-  //     .get(apiUrl)
-  //     .then((response: AxiosResponse) => {
-  //       if (response.data.status === "success") {
-  //         const workTags = response.data.work;
-  //         const attitudeTags = response.data.attitude;
-  //         setWorkData(workTags);
-  //         setAttitudeData(attitudeTags);
-  //         console.log("Work Tags:", workTags);
-  //         console.log("Attitude Tags:", attitudeTags);
-  //       } else {
-  //         console.error("사용자를 찾을 수 없습니다.", response.data.message);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("에러 응답:", error.message);
-  //     });
-  // }, [apiUrl]);
+  React.useEffect(() => {
+    axios
+      .get(apiUrl)
+      .then((response: AxiosResponse) => {
+        if (response.data.status === "success") {
+          const workTags = response.data.work;
+          const attitudeTags = response.data.attitude;
+          setWorkData(workTags);
+          setAttitudeData(attitudeTags);
+          console.log("Work Tags:", workTags);
+          console.log("Attitude Tags:", attitudeTags);
+        } else {
+          console.error("사용자를 찾을 수 없습니다.", response.data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("에러 응답:", error.message);
+      });
 
-  //   const dummyApiResponse = {
-  //     status: "success",
-  //     work: [
-  //       {
-  //         tag: "효율적인",
-  //         percentage: 40,
-  //       },
-  //       {
-  //         tag: "박학다식",
-  //         percentage: 20,
-  //       },
-  //       {
-  //         tag: "리더십",
-  //         percentage: 20,
-  //       },
-  //       {
-  //         tag: "전략적인",
-  //         percentage: 20,
-  //       },
-  //     ],
-  //     attitude: [
-  //       {
-  //         tag: "경청하는",
-  //         percentage: 25,
-  //       },
-  //       {
-  //         tag: "공감 능력",
-  //         percentage: 12.5,
-  //       },
-  //       {
-  //         tag: "책임감",
-  //         percentage: 12.5,
-  //       },
-  //       {
-  //         tag: "끈기",
-  //         percentage: 12.5,
-  //       },
-  //       {
-  //         tag: "성실함",
-  //         percentage: 12.5,
-  //       },
-  //       {
-  //         tag: "배려심",
-  //         percentage: 12.5,
-  //       },
-  //     ],
-  //   };
+    const dummyApiResponse = {
+      status: "success",
+      work: [
+        {
+          tag: "효율적인",
+          percentage: 40,
+        },
+        {
+          tag: "박학다식",
+          percentage: 20,
+        },
+        {
+          tag: "리더십",
+          percentage: 20,
+        },
+        {
+          tag: "전략적인",
+          percentage: 20,
+        },
+      ],
+      attitude: [
+        {
+          tag: "경청하는",
+          percentage: 25,
+        },
+        {
+          tag: "공감 능력",
+          percentage: 12.5,
+        },
+        {
+          tag: "책임감",
+          percentage: 12.5,
+        },
+        {
+          tag: "끈기",
+          percentage: 12.5,
+        },
+        {
+          tag: "성실함",
+          percentage: 12.5,
+        },
+        {
+          tag: "배려심",
+          percentage: 12.5,
+        },
+      ],
+    };
 
-  //   if (dummyApiResponse.status === "success") {
-  //     const workTags = dummyApiResponse.work;
-  //     const attitudeTags = dummyApiResponse.attitude;
-  //     setWorkData(workTags);
-  //     setAttitudeData(attitudeTags);
-  //     console.log("Work Tags:", workTags);
-  //     console.log("Attitude Tags:", attitudeTags);
-  //   } else {
-  //     console.error("Error:", dummyApiResponse.message);
-  //   }
-  // }, []);
+    if (dummyApiResponse.status === "success") {
+      const workTags = dummyApiResponse.work;
+      const attitudeTags = dummyApiResponse.attitude;
+      setWorkData(workTags);
+      setAttitudeData(attitudeTags);
+      console.log("Work Tags:", workTags);
+      console.log("Attitude Tags:", attitudeTags);
+    } else {
+      console.error("Error:");
+    }
+  }, [apiUrl]);
 
   return (
-    <div className="bg-c-blue bg-opacity-30 flex flex-col overflow-hidden w-[24.56rem] mx-auto h-full px-5 py-8 gap-4 overflow-y-auto overflow:hidden">
-      <div className="flex justify-between">
+    <div
+      className="bg-white flex flex-col mx-auto h-screen gap-10 px-5 py-8"
+      style={{ width: "393px" }}
+    >
+      <div>
         <BackButton back page="/mainpage" />
       </div>
-      <p className="text-2xl">피드백 차트</p>
-      <div className="space-y-8">
-        <div className="space-y-2">
-          <div className="flex flex-row justify-start">
-            <div className="flex flex-col justify-center items-center">
-              <p className="">업무 능력 강점</p>
-              <Line />
-            </div>
-          </div>
-          {/* 차트 및 요약 */}
-          <SkillChart data={workData} />
-        </div>
+      <p className="font-pre text-[22px] font-bold">피드백 차트</p>
 
-        <div className="space-y-2">
-          <div className="flex flex-row justify-start">
-            <div className="flex flex-col justify-center items-center">
-              <p className="">성격 및 태도</p>
-              <Line />
-            </div>
-          </div>
-          <SkillChart data={attitudeData} />
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-row justify-start">
+          <Line text="업무 능력 강점" />
         </div>
+        <SkillChart data={workData} />
+      </div>
 
-        <div className="space-y-2">
-          <div className="flex flex-row justify-start">
-            <div className="flex flex-col justify-center items-center">
-              <p className="">칭찬할 점</p>
-              <Line />
-            </div>
-          </div>
-          {/* 워드클라우드*/}
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-row justify-start">
+          <Line text="성격 및 태도" />
         </div>
+        <SkillChart data={attitudeData} />
+      </div>
 
-        <div className="space-y-2">
-          <div className="flex flex-row justify-start">
-            <div className="flex flex-col justify-center items-center">
-              <p className="">보완할 점</p>
-              <Line />
-            </div>
-          </div>
-          {/* 워드클라우드 */}
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-row justify-start">
+          <Line text="칭찬할 점" />
         </div>
+        {/* 워드클라우드 */}
+      </div>
+
+      <div className="flex flex-col gap-6">
+        <div className="flex flex-row justify-start">
+          <Line text="개선할 점" />
+        </div>
+        {/* 워드클라우드 */}
       </div>
     </div>
   );

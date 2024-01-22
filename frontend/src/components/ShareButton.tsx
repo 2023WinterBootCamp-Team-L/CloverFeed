@@ -1,6 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 
 interface ApiResponse {
   status: string;
@@ -10,7 +11,8 @@ interface ApiResponse {
 }
 
 interface ShareButtonProps {
-  iconSrc: string;
+  iconSrc: string; // 이미지 소스는 문자열로 표현
+  sharepage: string;
 }
 
 const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
@@ -49,7 +51,10 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
 
   return (
     <button onClick={handleButtonClick}>
-      <img src={iconSrc} alt="Share Icon" />
+      <div className="flex flex-col justify-center gap-2">
+        <img src={iconSrc} alt="Share Icon" className="h-[40px]" />
+        <p className="font-pre text-[14px] font-bold">질문폼 공유</p>
+      </div>
     </button>
   );
 };
