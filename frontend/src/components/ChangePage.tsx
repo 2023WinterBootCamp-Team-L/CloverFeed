@@ -13,7 +13,7 @@ function ChangePage({ nextpage }: ChangePageProps) {
     const timeoutId = setTimeout(() => {
       // 3초 후에 페이지를 변경
       setPage(true);
-    }, 3000);
+    }, 2000);
 
     return () => clearTimeout(timeoutId);
   }, []);
