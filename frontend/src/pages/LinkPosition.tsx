@@ -6,10 +6,17 @@ import 디자이너 from "../assets/디자이너.svg";
 import 기획자 from "../assets/기획자.svg";
 import PMPO from "../assets/PMPO.svg";
 import 기타직무 from "../assets/기타직무.svg";
+import LinkButton from "../components/LinkButton";
+import 개발자 from "../assets/개발자.svg";
+import 디자이너 from "../assets/디자이너.svg";
+import 기획자 from "../assets/기획자.svg";
+import PMPO from "../assets/PMPO.svg";
+import 기타직무 from "../assets/기타직무.svg";
 // import { useState } from 'react';
 // import ProgressBar from '../components/ProgressBar';
 
 function LinkPosition() {
+  const nextpage = "/LinkTag1";
   const nextpage = "/LinkTag1";
 
   // const [totalSteps, setTotalSteps] = useState<number>(5); // totalSteps는 배열의 첫 번째 요소
