@@ -1,13 +1,15 @@
 import React from "react";
+import { Question } from "../pages/QueryList";
 
 interface QuestionListProps {
-  questions: {
+  questions?: {
+    questions?: Question[] | undefined;
     value: string;
     onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
-  }[];
+  }[] | undefined;
 }
 
-export const QuestionList: React.FC<QuestionListProps> = ({ questions }) => {
+export const QuestionList: React.FC<QuestionListProps> = ({ questions = [] }) => {
   return (
     <div>
       {questions.map((question, index) => (

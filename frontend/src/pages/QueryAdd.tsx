@@ -1,3 +1,4 @@
+// QueryAdd.tsx
 import BackButton from "../components/BackButton";
 import { useState } from "react";
 import Toggle from "../components/Toggle";
@@ -6,14 +7,12 @@ import AnswerOptionList from "../components/AnswerOptionList";
 import { useQuestionContext } from "../components/QuestionUpdate";
 import { useNavigate } from "react-router-dom";
 import PopupQuestion from "../components/PopupQuestion";
-
 export interface QuestionProps {
   value: string;
   onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   onFocus?: () => void;
   onBlur?: () => void;
 }
-
 export const Question: React.FC<QuestionProps> = ({
   value,
   onTextChange,
@@ -38,7 +37,6 @@ export const Question: React.FC<QuestionProps> = ({
     </div>
   );
 };
-
 function QueryAdd() {
   const [showAnswersAdd, setShowAnswersAdd] = useState(false);
   const [answerInputs, setAnswerInputs] = useState<string[]>([]);
@@ -47,30 +45,24 @@ function QueryAdd() {
   const [answerComplete, setAnswerComplete] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const navigate = useNavigate();
-
   const onFocus = () => {
     if (questionInputs === "질문하고 싶은 내용을 입력하세요") {
       setQuestionInputs("");
     }
   };
-
   const onBlur = () => {
     if (questionInputs === "") {
       setQuestionInputs("질문하고 싶은 내용을 입력하세요");
     }
   };
-
   const { questions, setQuestions } = useQuestionContext();
-
   const handleToggleChange = (choice: boolean) => {
     setShowAnswersAdd(choice);
     setAnswerComplete(choice);
   };
-
   const handleAnswerAddButtonClick = () => {
     setAnswerInputs([...answerInputs, ""]);
   };
-
   const handleAddButtonClick = () => {
     if (
       questionInputs !== "질문하고 싶은 내용을 입력하세요" &&
@@ -83,7 +75,6 @@ function QueryAdd() {
         { value: questionInputs, onTextChange: handleQuestionChange },
       ];
       setQuestions(newQuestionList);
-
       // 입력된 질문 초기화
       setQuestionInputs("");
       navigate("/querylist");
@@ -91,19 +82,15 @@ function QueryAdd() {
       setPopupVisible(true);
     }
   };
-
   const handleQuestionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setQuestionInputs(e.target.value);
   };
-
   const handleAnswerCompleteChange = (complete: boolean) => {
     setAnswerComplete(complete);
   };
-
   const handlePopupClose = () => {
     setPopupVisible(false);
   };
-
   return (
     <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
       <div className="flex justify-between">
@@ -127,14 +114,14 @@ function QueryAdd() {
             <p className="text-xl">답변 옵션</p>
             <p className="text-xs text-gray-600 p-1">(2개 이상 필수)</p>
           </div>
+          <AddButton
+            text="답변 옵션을 추가하세요"
+            onClick={handleAnswerAddButtonClick}
+          />
           <AnswerOptionList
             inputs={answerInputs}
             setInputs={setAnswerInputs}
             onCompleteChange={handleAnswerCompleteChange}
-          />
-          <AddButton
-            text="답변 옵션을 추가하세요"
-            onClick={handleAnswerAddButtonClick}
           />
         </div>
       )}
@@ -142,5 +129,4 @@ function QueryAdd() {
     </div>
   );
 }
-
 export default QueryAdd;
