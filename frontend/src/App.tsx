@@ -22,7 +22,8 @@ import Signup from "./pages/Signup";
 import WordCloud from "./components/wordcloud";
 import Search from "./pages/Search";
 import FeedBackResult from "./pages/FeedBackResult";
-import Atest from "./pages/Atest";
+import LinkAnswer from "./pages/LinkPage/LinkAnswer";
+import AnswerCheck from "./pages/LinkPage/AnswerCheck";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -50,9 +51,10 @@ function App() {
         <Route path="/mainpage" element={<Mainpage />} />
         <Route path="/gosignup" element={<Gosignup />} />
         <Route path="/wordcloud" element={<WordCloud />} />
-        <Route path="/test" element={<Atest />} />
+        <Route path="/test" element={<LinkAnswer />} />
         <Route path="/queryadd" element={<QueryAdd />} />
         <Route path="/querylist" element={<QueryList />} />
+        <Route path="/check" element={<AnswerCheck />} />
       </Routes>
     </div>
   );

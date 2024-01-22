@@ -6,8 +6,8 @@ export type TagsAttitude = string;
 export type AnswerType = "choice" | "short";
 
 export type Answer = {
-  context: string;
-  answer: string;
+  type: AnswerType;
+  answer: string[];
 };
 
 export type AnswerList = {
