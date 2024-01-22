@@ -1,3 +1,4 @@
+import { useState } from "react";
 interface FeedbackAnswerInputProps {
   value: string;
   onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
@@ -15,15 +16,26 @@ const FeedbackAnswerInput: React.FC<FeedbackAnswerInputProps> = ({
   const textAreaStyle = {
     color: textColor,
   };
+
+  const [isFocused, setIsFocused] = useState(false);
   return (
     <div className="relative">
       <textarea
         value={value}
         onChange={onTextChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        style={textAreaStyle}
-        className="bg-white w-[340px] h-[380px] p-3 border-2 border-c-green rounded-3xl focus:outline-none resize-none font-pre text-[14px]"
+        onFocus={() => {
+          setIsFocused(true);
+          if (onFocus) onFocus();
+        }}
+        onBlur={() => {
+          setIsFocused(false);
+          if (onBlur) onBlur();
+        }}
+        style={{
+          ...textAreaStyle,
+          borderColor: isFocused ? "#50DA8C" : "white",
+        }}
+        className="bg-white w-[340px] h-[380px] p-3 border-2 rounded-2xl focus:outline-none resize-none font-pre text-[14px]"
       />
     </div>
   );

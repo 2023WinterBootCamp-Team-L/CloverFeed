@@ -1,28 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginModal from "../components/LoginModal";
 import { useNavigate } from "react-router-dom";
 import SignupAnswer from "./SignupAnswer";
 import axios from "axios";
 function GologinButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
   const SuccessLogin = () => {
     navigate("/login");
   };
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+
   const [emailanswerInputs, setemailAnswerInputs] = useState("");
   const [pwanswerInputs, setpwAnswerInputs] = useState("");
+
   const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setemailAnswerInputs(e.target.value);
   };
+
   const onInputChangepw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setpwAnswerInputs(e.target.value);
   };
+
   const emailValidationRegex =
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
   const handleLogin = async () => {
     try {
       setErrorMessage("");
@@ -62,6 +69,17 @@ function GologinButton() {
       );
     }
   };
+
+  useEffect(() => {
+    // errorMessage가 변경되면 3초 후에 null로 설정하여 사라지게 함
+    const timeoutId = setTimeout(() => {
+      setErrorMessage(null);
+    }, 3000);
+
+    // useEffect 클린업 함수에서 타이머 제거
+    return () => clearTimeout(timeoutId);
+  }, [errorMessage]);
+
   return (
     <div>
       <button className="font-pre text-[14px] underline" onClick={toggleModal}>
@@ -83,7 +101,7 @@ function GologinButton() {
 
           <button
             onClick={handleLogin}
-            className="bg-c-green text-white w-full h-10 rounded-lg font-pre text-[14px]"
+            className="bg-c-green text-white w-56 h-10 rounded-lg font-pre text-[14px]"
           >
             로그인
           </button>

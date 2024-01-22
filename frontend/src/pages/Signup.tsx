@@ -9,7 +9,9 @@ function Signup() {
       style={{ width: "393px" }}
     >
       <p className="font-pre text-[24px] font-bold text-center">Welcome</p>
-      <img src={loginclover} alt="로그인클로버" />
+      <div className="flex flex-col items-center">
+        <img src={loginclover} alt="로그인클로버" />
+      </div>
       <div className="flex justify-center items-center">
         <GreenButton text="회원가입 및 로그인" nextpage={nextpage} />
       </div>

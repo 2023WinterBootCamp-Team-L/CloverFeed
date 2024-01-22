@@ -8,7 +8,7 @@ function LinkMain() {
     <div className="flex justify-center items-center h-screen">
       <ChangePage nextpage={nextpage} />
       <div
-        className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-40"
+        className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-35"
         style={{ width: "393px", height: "852px" }}
       >
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center">

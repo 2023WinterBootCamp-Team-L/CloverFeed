@@ -1,5 +1,5 @@
 import SignupAnswer from "../components/SignupAnswer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import SuccessButton from "../components/SuccessButton";
 import GologinButton from "../components/GologinButton";
 import axios from "axios";
@@ -10,6 +10,8 @@ function Gosignup() {
   const [pwcheckanswerInputs, setpwcheckAnswerInputs] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false); // Added state for password validation
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [isComplete, setIsComplete] = useState(false);
+
   const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setemailAnswerInputs(e.target.value);
     // You might want to add email validation logic here
@@ -52,6 +54,7 @@ function Gosignup() {
         setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         return;
       }
+
       // API request
       const response = await axios.post(
         "http://localhost:8000/api/user/auth/signup/",
@@ -68,6 +71,7 @@ function Gosignup() {
           "회원가입이 성공적으로 완료되었습니다.",
           response.data.message
         );
+        setIsComplete(true);
       } else {
         // 에러 응답처리
         setErrorMessage("회원가입에 실패했습니다. " + response.data.message);
@@ -79,9 +83,19 @@ function Gosignup() {
     }
   };
 
+  useEffect(() => {
+    // errorMessage가 변경되면 3초 후에 null로 설정하여 사라지게 함
+    const timeoutId = setTimeout(() => {
+      setErrorMessage(null);
+    }, 3000);
+
+    // useEffect 클린업 함수에서 타이머 제거
+    return () => clearTimeout(timeoutId);
+  }, [errorMessage]);
+
   return (
     <div
-      className="bg-gradient-to-t from-c-emerald flex flex-col items-center mx-auto h-screen gap-10 px-5 py-[137px]"
+      className="bg-c-emerald bg-opacity-35 flex flex-col items-center mx-auto h-screen gap-10 px-5 py-[137px]"
       style={{ width: "393px" }}
     >
       <div className="flex flex-col items-start gap-2">
@@ -108,7 +122,11 @@ function Gosignup() {
       </div>
 
       <div className="flex justify-center items-center">
-        <SuccessButton onClick={handleSignup} disabled={!isPasswordValid} />
+        <SuccessButton
+          onClick={handleSignup}
+          disabled={!isPasswordValid}
+          text={isComplete ? "회원가입 완료" : "회원가입"}
+        />
       </div>
 
       <div className="flex justify-center items-center">

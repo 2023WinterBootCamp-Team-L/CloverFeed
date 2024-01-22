@@ -146,18 +146,20 @@ const FeedBackResult: React.FC = () => {
                     index % 2 === 0 ? "bg-c-l-purple" : "bg-c-l-blue"
                   } rounded-lg p-4 mb-4`}
                 >
-                  <p className="font-pre text-[14px] font-bold mb-6">
-                    {answer.question}
-                  </p>
-                  {answer.type === "주관식" ? (
-                    <p className="font-pre text-[14px] leading-6">
-                      {answer.answer}
+                  <div className="flex flex-col gap-6">
+                    <p className="font-pre text-[14px] font-bold leading-6">
+                      {answer.question}
                     </p>
-                  ) : (
-                    <span className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-2 font-pre text-[12px] text-white">
-                      {answer.answer}
-                    </span>
-                  )}
+                    {answer.type === "주관식" ? (
+                      <p className="font-pre text-[14px] leading-6">
+                        {answer.answer}
+                      </p>
+                    ) : (
+                      <span className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-1 font-pre text-[12px] text-white">
+                        {answer.answer}
+                      </span>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>

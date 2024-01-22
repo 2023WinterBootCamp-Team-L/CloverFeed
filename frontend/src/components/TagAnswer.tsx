@@ -28,6 +28,7 @@ const TagAnswer: React.FC<TagAnswerProps> = ({ text, image }) => {
 
   const tagStyle: React.CSSProperties = {
     backgroundColor: randomColor.bg,
+    boxShadow: "4px 4px 3px rgba(200,200,200,0.5)",
   };
 
   const imgStyle: React.CSSProperties = {

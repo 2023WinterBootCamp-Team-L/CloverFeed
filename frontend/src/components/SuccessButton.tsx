@@ -1,28 +1,29 @@
 import { useState } from "react";
 interface SuccessButtonProps {
+  text: string;
   onClick: () => void; // 수정된 부분
   disabled: boolean;
 }
-function SuccessButton({ onClick }: SuccessButtonProps) {
+function SuccessButton({ text, onClick }: SuccessButtonProps) {
   const [isClicked, setIsClicked] = useState(false);
   const [isDisabled, setIsDisabled] = useState(false);
   const handleButtonClick = () => {
     // 버튼 클릭 시 상태 변경
-    setIsClicked(true);
-    setIsDisabled(true);
+    setIsClicked(!setIsClicked);
+    setIsDisabled(!setIsDisabled);
     onClick();
   };
   return (
     <div>
       <button
         id="signupButton"
-        className={`bg-c-green text-white w-[332px] p-3 rounded-lg font-pre text-[14px]${
+        className={`bg-c-green text-white w-[332px] p-3 rounded-lg font-pre text-[14px] ${
           isClicked ? "cursor-not-allowed opacity-50" : "cursor-pointer"
-        }mx-auto`}
+        } mx-auto`}
         onClick={handleButtonClick}
         disabled={isDisabled || isClicked}
       >
-        {isClicked ? "회원가입 완료" : "회원가입"}
+        {text}
       </button>
     </div>
   );

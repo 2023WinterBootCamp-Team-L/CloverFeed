@@ -46,7 +46,7 @@ function LinkPosition() {
   return (
     <div className="flex justify-center items-center h-screen">
       <div
-        className="flex flex-col justify-center items-center overflow-hidden relative border-2 bg-c-emerald bg-opacity-40"
+        className="flex flex-col justify-center items-center overflow-hidden relative bg-c-emerald bg-opacity-35"
         style={{ width: "393px", height: "852px" }}
       >
         <div className="flex flex-col gap-20">

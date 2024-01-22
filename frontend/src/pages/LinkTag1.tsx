@@ -104,7 +104,7 @@ function LinkTag1() {
   return (
     <div className="flex justify-center items-center h-screen ">
       <div
-        className="flex flex-col justify-center overflow-hidden relative border-2 bg-c-emerald bg-opacity-40 px-5 py-8 gap-10"
+        className="flex flex-col justify-center overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-10"
         style={{ width: "393px", height: "852px" }}
       >
         <div className="flex justify-between w-full">
