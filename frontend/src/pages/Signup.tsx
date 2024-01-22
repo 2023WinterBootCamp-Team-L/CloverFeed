@@ -5,7 +5,7 @@ function Signup() {
   const nextpage = "/GoSignup";
   return (
     <div
-      className="bg-white flex flex-col mx-auto h-screen gap-20 px-5 py-[137px]"
+      className="bg-c-emerald bg-opacity-35 flex flex-col mx-auto h-screen gap-20 px-5 py-[137px]"
       style={{ width: "393px" }}
     >
       <p className="font-pre text-[24px] font-bold text-center">Welcome</p>

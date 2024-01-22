@@ -23,12 +23,12 @@ const LinkButton: React.FC<LinkButtonProps> = ({
 
   return (
     <button
-      className="flex flex-row items-center justify-between w-40 px-10 py-4 rounded-lg font-pre text-[14px] font-bold"
+      className="flex flex-row items-center justify-center w-40 p-4 rounded-lg font-pre text-[14px] font-bold"
       style={{ backgroundColor }}
       onClick={handleButtonClick}
     >
       {icon}
-      <span>{buttonText}</span>
+      <span className="ml-5">{buttonText}</span>
     </button>
   );
 };

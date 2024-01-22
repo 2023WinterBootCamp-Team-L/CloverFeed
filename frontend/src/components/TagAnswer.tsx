@@ -28,7 +28,7 @@ const TagAnswer: React.FC<TagAnswerProps> = ({ text, image }) => {
 
   const tagStyle: React.CSSProperties = {
     backgroundColor: randomColor.bg,
-    boxShadow: "4px 4px 3px rgba(200,200,200,0.5)",
+    boxShadow: "4px 4px 3px rgba(200,200,200,0.3)",
   };
 
   const imgStyle: React.CSSProperties = {
@@ -39,7 +39,7 @@ const TagAnswer: React.FC<TagAnswerProps> = ({ text, image }) => {
     <label className="inline-flex relative mt-2 mr-2">
       <div
         style={tagStyle}
-        className="flex flex-row items-center rounded-xl py-1 px-4 font-pre text-[10px]"
+        className="flex flex-row items-center rounded-xl py-1 px-5 font-pre text-[12px] font-bold"
       >
         <img
           src={image}

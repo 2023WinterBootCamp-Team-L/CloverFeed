@@ -144,7 +144,7 @@ const FeedBackResult: React.FC = () => {
                   key={index}
                   className={`h-auto w-full flex flex-col justify-start ${
                     index % 2 === 0 ? "bg-c-l-purple" : "bg-c-l-blue"
-                  } rounded-lg p-4 mb-4`}
+                  } rounded-lg p-4 mb-4 shadow-md`}
                 >
                   <div className="flex flex-col gap-6">
                     <p className="font-pre text-[14px] font-bold leading-6">
