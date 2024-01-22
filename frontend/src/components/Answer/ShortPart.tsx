@@ -1,7 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { selectedAnswerState, answerListState } from "./AnswerStore";
+import axios from "axios";
 
 export interface ShortAnswerProps {
   value: string[];
@@ -83,6 +84,41 @@ function ShortPart() {
       setShortAnswerValue(["답변을 입력하세요"]);
     }
   };
+
+  useEffect(() => {
+    const apiUrl = "http://localhost:8000/api/answers";
+
+    // POST 요청할 데이터
+    const postData = {
+      form_id: "타겟 폼 ID",
+      category: "개발자",
+      tags_work: ["박학다식", "기획력", "효율적인"],
+      tags_attitude: ["개성이 뚜렷한", "경청하는", "센스있는"],
+      answers: [
+        {
+          context: "이구름님에게 전하고 싶은 칭찬이 있나요?",
+          type: "주관식",
+          answer: "웃기고 귀여워.",
+        },
+        {
+          context: "이구름님이 보완해 줬으면 하는 부분이 있나요?",
+          type: "주관식",
+          answer: "자꾸 지각한다.",
+        },
+      ],
+    };
+
+    // POST 요청 보내기
+    axios
+      .post(apiUrl, postData)
+      .then((response) => {
+        console.log("답변 제출");
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error:", error.response.data);
+      });
+  }, []);
 
   return (
     <ShortAnswer
