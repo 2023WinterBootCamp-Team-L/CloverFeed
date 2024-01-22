@@ -2,37 +2,38 @@ import React, { useState } from "react";
 import BackButton from "../components/BackButton";
 import Searchbutton from "../components/Searchbutton";
 import FeedbackBox from "../components/FeedbackBox";
-import 돋보기 from "../assets/돋보기.svg";
-import Tag from "../components/Tag";
+import pmpo from "../assets/PMPO.svg";
+import TagAnswer from "../components/TagAnswer";
 
 const Search: React.FC = () => {
   const sampleTags = [
-    <Tag key={1} text="개성이 뚜렷한" image={돋보기} color="bg-c-yellow" />,
-    // ... 다른 TagProps를 원하는 만큼 추가
+    <TagAnswer key={1} text="책임감" image={pmpo} />,
+    <TagAnswer key={2} text="기획력" image={pmpo} />,
+    <TagAnswer key={3} text="관대한" image={pmpo} />,
   ];
 
   const [searchValue, setSearchValue] = useState("");
 
   const feedbacks = [
     {
-      title: "Feedback Title",
+      title: "#2356 디자이너님의 피드백",
       tags: sampleTags,
-      text: "This is all feedback text.",
+      text: "매사에 책임을 가지며 맡은 업무를 끝까지 해내는 모습이 인상깊었어요. 업무에 관해 알고 있는 지식들도 많고 팀원들의 의견도 하나하나 잘 들어주었습니다..",
     },
     {
-      title: "Feedback Title",
+      title: "#1238 개발자님의 피드백",
       tags: sampleTags,
-      text: "This is some feedback text.",
+      text: "리더십 있는 모습과 팀원을 배려하는 모습만으로도 충분히 좋은 팀원있지만, 아이디어 회의 때 다양한 아이디어를 제시해주는 모습까지 있다면 더 좋을 것 같습니다.",
     },
     {
-      title: "Feedback Title",
+      title: "#6583 기획자님의 피드백",
       tags: sampleTags,
-      text: "This is few feedback text.",
+      text: "항상 긍정적인 마인드로 팀 분위기를 활기차게 만들어주는 분위기 메이커입니다.",
     },
     {
-      title: "Feedback Title",
+      title: "#8467 개발자님의 피드백",
       tags: sampleTags,
-      text: "This is none feedback text.",
+      text: "팀원들과 적극적으로 교류하며 팀 프로젝트를 진행한 결과 함께 성장할 수 있어서 좋았습니다.",
     },
   ];
 
@@ -56,9 +57,8 @@ const Search: React.FC = () => {
 
     const filtered =
       searchValue.trim() !== ""
-        ? feedbacks.filter(
-            (feedback) =>
-              feedback.text?.toLowerCase().includes(searchValue.toLowerCase())
+        ? feedbacks.filter((feedback) =>
+            feedback.text?.toLowerCase().includes(searchValue.toLowerCase())
           )
         : feedbacks;
 
@@ -78,7 +78,7 @@ const Search: React.FC = () => {
   return (
     <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
       <div className="flex justify-between">
-        <BackButton back page="/Linkmain" />
+        <BackButton back page="/mainpage" />
       </div>
 
       <div>

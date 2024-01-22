@@ -1,6 +1,26 @@
 import BackButton from "../components/BackButton";
+import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { Answer, selectedAnswerState } from "../components/Answer/AnswerStore";
 
 function LinkOpti() {
+  const [selectedAnswer, setSelectedAnswer] =
+    useRecoilState(selectedAnswerState);
+  const [selectedButton, setSelectedButton] = useState("");
+
+  const handleButtonClick = (buttonText: string) => {
+    setSelectedButton(buttonText);
+    const newAnswer: Answer = {
+      type: "option",
+      content: buttonText,
+    };
+    setSelectedAnswer(newAnswer);
+  };
+
+  useEffect(() => {
+    // Recoil 상태 변경 후 추가적인 작업이 필요하면 이곳에 작성
+  }, [selectedAnswer]);
+
   return (
     <div className="flex justify-center items-center h-screen ">
       <div
@@ -20,16 +40,44 @@ function LinkOpti() {
           </p>
         </div>
         <div className="flex flex-1 flex-col justify-center items-center">
-          <button className="w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 border-[#E2E9FF] bg-white hover:border-[#E2E9FF] hover:bg-[#E2E9FF]">
+          <button
+            className={`w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 ${
+              selectedButton === "1점"
+                ? "border-[#E2E9FF] bg-[#E2E9FF]"
+                : "border-[#E2E9FF] bg-white hover:border-[#E2E9FF] hover:bg-[#E2E9FF]"
+            }`}
+            onClick={() => handleButtonClick("1점")}
+          >
             1점
           </button>
-          <button className="w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 border-[#F6EED4] bg-white hover:border-[#F6EED4] hover:bg-[#F6EED4]">
+          <button
+            className={`w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 ${
+              selectedButton === "2점"
+                ? "border-[#E2E9FF] bg-[#E2E9FF]"
+                : "border-[#E2E9FF] bg-white hover:border-[#E2E9FF] hover:bg-[#E2E9FF]"
+            }`}
+            onClick={() => handleButtonClick("2점")}
+          >
             2점
           </button>
-          <button className="w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 border-[#F8DEDE] bg-white hover:border-[#F8DEDE] hover:bg-[#F8DEDE]">
+          <button
+            className={`w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 ${
+              selectedButton === "3점"
+                ? "border-[#E2E9FF] bg-[#E2E9FF]"
+                : "border-[#E2E9FF] bg-white hover:border-[#E2E9FF] hover:bg-[#E2E9FF]"
+            }`}
+            onClick={() => handleButtonClick("3점")}
+          >
             3점
           </button>
-          <button className="w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 border-[#C1C6CF] bg-white hover:border-[#C1C6CF] hover:bg-[#C1C6CF]">
+          <button
+            className={`w-80 h-[70px] font-Preahvihear text-24 text-xl font-normal rounded-xl border-2 mb-12 ${
+              selectedButton === "4점"
+                ? "border-[#E2E9FF] bg-[#E2E9FF]"
+                : "border-[#E2E9FF] bg-white hover:border-[#E2E9FF] hover:bg-[#E2E9FF]"
+            }`}
+            onClick={() => handleButtonClick("4점")}
+          >
             4점
           </button>
         </div>

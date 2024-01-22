@@ -3,7 +3,14 @@
 
 # 모델을 JSON 형태로 변환해주는 Serializer를 정의
 from rest_framework import serializers
-from .models import AuthUser, Form, Question, FeedbackResult, MultipleChoice
+from .models import (
+    AuthUser,
+    Form,
+    Question,
+    FeedbackResult,
+    MultipleChoice,
+    QuestionAnswer,
+)
 from ast import literal_eval
 
 
@@ -51,7 +58,7 @@ class QuestionSerializer(serializers.ModelSerializer):
                     choices = MultipleChoice.objects.filter(
                         question=item.id
                     ).values_list("choice_context", flat=True)
-                    item["choices"] = literal_eval(choices[0])
+                    item["choices"] = choices[0]
 
             return instance
         else:
@@ -60,31 +67,56 @@ class QuestionSerializer(serializers.ModelSerializer):
                 choices = MultipleChoice.objects.filter(
                     question=instance.id
                 ).values_list("choice_context", flat=True)
-                representation["choices"] = literal_eval(choices[0])
+                representation["choices"] = choices[0]
 
             return representation
 
 
+# 피드백 상세내용 조회
 class FeedbackResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = FeedbackResult
         fields = "__all__"  # 모델의 모든 필드를 포함
 
 
+# 카테고리(직군)별 피드백 목록 조회
 class FeedbackResultSerializer(serializers.ModelSerializer):
-    respondent_name_category = serializers.SerializerMethodField()
-
     class Meta:
         model = FeedbackResult
         fields = [
             "id",
-            "tag",
-            "respondent_name_category",
+            "tag_work",
+            "tag_attitude",
+            "respondent_name",
+            "category",
             "summary",
             "created_at",
             "modified_at",
-            "field",
         ]
 
-    def get_respondent_name_category(self, obj):
-        return f"{obj.respondent_name} {obj.category}"
+# 받은 피드백답변 중 검색을 위한 Serializer
+class FeedbackResultSearchSerializer(serializers.ModelSerializer):
+    feedback_id = serializers.IntegerField(source="feedback.id")
+    respondent_name = serializers.CharField(source="feedback.respondent_name")
+    category = serializers.CharField(source="feedback.category")
+    tag_work = serializers.CharField(source="feedback.tag_work")
+    tag_attitude = serializers.CharField(source="feedback.tag_attitude")
+    result = serializers.CharField(source="context")
+
+    class Meta:
+        model = QuestionAnswer
+        fields = [
+            "feedback_id",
+            "respondent_name",
+            "category",
+            "tag_work",
+            "tag_attitude",
+            "result",
+        ]
+
+
+# 피드백 결과의 'tag_work'와 'tag_attitude'를 JSON으로 변환 -> 원형차트 시각화
+class FeedbackTagSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackResult
+        fields = ("tag_work", "tag_attitude")
