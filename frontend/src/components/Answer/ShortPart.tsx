@@ -48,28 +48,40 @@ function ShortPart() {
   ) => {
     const updatedAnswerList = [...answerList.answers];
     const answerIndex = updatedAnswerList.findIndex(
-      (answer) => answer.type === "short"
+      (answer) => answer.type === "주관식"
     );
 
     if (answerIndex !== -1) {
       // 기존의 짧은 답변 업데이트
       updatedAnswerList[answerIndex] = {
-        type: "short",
+        content: "",
+        type: "주관식",
         answer: [e.target.value],
       };
     } else {
       // 목록에 새로운 짧은 답변 추가
-      updatedAnswerList.push({ type: "short", answer: [e.target.value] });
+      updatedAnswerList.push({
+        content: "",
+        type: "주관식",
+        answer: [e.target.value],
+      });
     }
 
     // 업데이트된 answerList 상태 설정
-    setAnswerListState({ answers: updatedAnswerList });
+    setAnswerListState((prevAnswerList) => ({
+      ...prevAnswerList,
+      answers: updatedAnswerList,
+    }));
 
     // 짧은 답변 state 업데이트
     setShortAnswerValue([e.target.value]);
 
     // 선택된 답변 설정
-    setSelectedAnswer({ type: "short", answer: [e.target.value] });
+    setSelectedAnswer({
+      content: "",
+      type: "주관식",
+      answer: [e.target.value],
+    });
   };
 
   const handleFocus = () => {
