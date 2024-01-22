@@ -4,26 +4,31 @@ import XButton from "../components/XButton";
 
 function QueryStart() {
   const nextpage = "/querylist";
-  const closepage = "/";
+  const closepage = "/mainpage";
 
   return (
-    <div className="bg-gradient-to-t from-c-emerald flex flex-col items-center overflow-hidden w-[24.56rem] mx-auto h-[53.25rem]">
-      <div className="flex flex-col justify-center h-full items-end">
+    <div
+      className="bg-gradient-to-t from-c-emerald flex flex-col mx-auto h-screen gap-10 px-5 py-10"
+      style={{ width: "393px" }}
+    >
+      <div className="flex flex-row justify-end">
+        <XButton nextpage={closepage} />
+      </div>
+      <div className="flex flex-col gap-24">
         <div>
-          <XButton nextpage={closepage} />
+          <p className="font-pre text-[22px] font-bold text-center">
+            나만의 질문을 생성해서
+          </p>
+          <p className="font-pre text-[22px] font-bold text-center">
+            <span className="text-c-green font-bold">동료에게 피드백</span>을
+            받아봐요!
+          </p>
         </div>
-        <div className="flex flex-col gap-[6.13rem]">
-          <div>
-            <p className="text-2xl leading-1.25 text-center">
-              나만의 질문을 생성해서
-            </p>
-            <p className="text-2xl leading-1.25 text-center">
-              <span className="text-c-green font-bold">동료에게 피드백</span>을
-              받아봐요!
-            </p>
-          </div>
+        <div className="flex flex-col items-center">
           <img src={querystart} alt="쿼리시작" />
-          <GreenButton text="질문 생성하기" nextpage={nextpage} />
+        </div>
+        <div className="flex justify-center items-center">
+          <GreenButton text="질문 폼 생성하기" nextpage={nextpage} />
         </div>
       </div>
     </div>

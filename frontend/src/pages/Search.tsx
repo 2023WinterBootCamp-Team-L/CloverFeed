@@ -1,160 +1,96 @@
+import React, { useState } from "react";
 import BackButton from "../components/BackButton";
-import searchbutton from "../components/Searchbutton";
+import Searchbutton from "../components/Searchbutton";
+import FeedbackBox from "../components/FeedbackBox";
+import pmpo from "../assets/PMPO.svg";
+import TagAnswer from "../components/TagAnswer";
 
-import React from 'react';
+const Search: React.FC = () => {
+  const sampleTags = [
+    <TagAnswer key={1} text="책임감" image={pmpo} />,
+    <TagAnswer key={2} text="기획력" image={pmpo} />,
+    <TagAnswer key={3} text="관대한" image={pmpo} />,
+  ];
 
-declare module 'react' {
-  interface JSXIntrinsicElements {
-    // 새로운 JSX 요소 추가
-    searchbutton: React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-  }
-}
-function Search() {
-    return (
-        
-        
-        <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
-        <div className="flex justify-between">
-        <BackButton back page="/Linkmain" />
-         </div>
-         
-         <div>
-          <searchbutton value={q} onTextChange={handleQuestionChange}/>
-         </div>
+  const [searchValue, setSearchValue] = useState("");
 
-    
-        <div className="h-[800.89px] flex-col justify-start items-center gap-[15px] flex">
-          <div className="px-[22px] py-[11px] bg-zinc-100 rounded-[40px] border border-black flex-col justify-center items-center flex">
-            <input
-              type="text"
-              className="justify-center items-center gap-[231px] inline-flex"
-              placeholder="검색어df를 입력해주세요"
-            ></input>
-          </div>
-  
-          <div className="w-[365px] h-auto p-3 bg-white rounded-[15px] border-2 border-indigo-100 flex-col justify-center items-start flex">
-            <div className="px-1.5 flex-col justify-start items-start gap-[15px] flex">
-              <div className="text-center text-black text-base font-normal font-['Pretendard'] uppercase tracking-wider">
-                #3566 디자이너님의 피드백
-              </div>
-  
-              <div className="w-[203px] h-[29px] flex">
-                <div className="flex-start w-auto h-[29px] px-[9px]  bg-red-200 rounded-[20px] justify-start items-center gap-1 inline-flex">
-                  <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                    개성이 뚜렷한
-                  </div>
-                </div>
-                <div className="flex-start w-auto h-[29px] px-[9px]  bg-indigo-100 rounded-[20px] justify-start items-center gap-1 inline-flex">
-                  <div className=" text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                    경청하는
-                  </div>
-                </div>
-              </div>
-  
-              <div className="w-[300px] overflow-auto">
-                <div className=" text-start  text-black text-sm font-normal font-['Pretendard']">
-                  같asdsad이 일하는 동안
-                  좋았습니다.일하sssssfddddddddddsffffffffffssssssssssxcvvvvvvvvvvvvvsdss기gggdfasdfasdfasdfasdfasdfgggggasdaasdasdasdfgaweb4rtgvggggggDFGSDFGSDFGSDFGSDFGggggggggggggggggggggggggggggggggggg고서
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <div className="w-[365px] h-auto p-3 bg-white rounded-[15px] border-2 border-purple-200 border-opacity-50 flex-col justify-center items-start flex">
-          <div className="px-1.5 flex-col justify-center items-start gap-[15px] flex">
-            <div className="text-center text-black text-base font-normal font-['Pretendard'] uppercase tracking-wider">
-              #1238 디자이너님의 피드백
-            </div>
-            <div className="w-[311px] h-7 relative">
-              <div className="w-[125px] h-7 px-[9px] left-[93px] top-0 absolute opacity-80 bg-purple-200 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  공감 능력이 좋은
-                </div>
-              </div>
-              <div className="w-[85px] h-7 px-[9px] left-0 top-0 absolute opacity-80 bg-orange-100 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  경청하는
-                </div>
-              </div>
-              <div className="w-[85px] h-7 px-[9px] left-[226px] top-0 absolute bg-zinc-100 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  경청하는
-                </div>
-              </div>
-            </div>
-            <div className="w-[326px] h-auto">
-              <div className="text-black text-sm font-normal font-['Pretendard']">
-                회의시sdffffffffffffffsdffffffffffffffffffffffffffffffffffffffffffsdfffffffsdffffffffffffffffffffffffffffffffsdffffffffffffffffsdffffffffff간에
-                항상 집중하는 모습이{" "}
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <div className="w-[365px] h-[174px] p-3 bg-white rounded-[15px] border-2 border-indigo-100 flex-col justify-center items-start flex">
-          <div className="px-1.5 flex-col justify-start items-start gap-[15px] flex">
-            <div className="text-center text-black text-base font-normal font-['Pretendard'] uppercase tracking-wider">
-              #6583 디자이너님의 피드백
-            </div>
-            <div className="w-[178px] h-[29px] relative">
-              <div className="w-[85px] h-[29px] px-[9px] left-[93px] top-0 absolute bg-emerald-100 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  경청하는
-                </div>
-              </div>
-              <div className="w-[85px] h-[29px] px-[9px] left-0 top-0 absolute bg-indigo-100 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  경청하는
-                </div>
-              </div>
-            </div>
-            <div className="w-[329px] h-[54px]">
-              <div className="text-black text-sm font-normal font-['Pretendard']">
-                기존에 일하던 사람이 퇴사해서 걱정하던 와중에 들어왔
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <div className="w-[365px] h-[174px] p-3 bg-white rounded-[15px] border-2 border-purple-200 border-opacity-50 flex-col justify-center items-start flex">
-          <div className="px-1.5 flex-col justify-start items-start gap-[15px] flex">
-            <div className="text-black text-base font-normal font-['Pretendard'] uppercase tracking-wider">
-              #7892 개발자님의 피드백
-            </div>
-            <div className="w-[295px] h-[29px] relative">
-              <div className="w-[85px] h-7 px-[9px] left-0 top-[1px] absolute bg-zinc-100 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  경청하는
-                </div>
-              </div>
-              <div className="w-[110px] h-[29px] px-[9px] left-[92px] top-0 absolute bg-red-200 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  개성이 뚜렷한
-                </div>
-              </div>
-              <div className="w-[85px] h-[29px] px-[9px] left-[210px] top-0 absolute bg-indigo-100 rounded-[20px] justify-center items-center gap-1 inline-flex">
-                <div className="w-5 h-5 relative" />
-                <div className="text-center text-zinc-600 text-xs font-normal font-['Inter']">
-                  경청하는
-                </div>
-              </div>
-            </div>
-            <div className="w-[329px] h-[54px]">
-              <div className="text-black text-sm font-normal font-['Pretendard']">
-                기존에 일하던 사람이 퇴사해서{" "}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+  const feedbacks = [
+    {
+      title: "#2356 디자이너님의 피드백",
+      tags: sampleTags,
+      text: "매사에 책임을 가지며 맡은 업무를 끝까지 해내는 모습이 인상깊었어요. 업무에 관해 알고 있는 지식들도 많고 팀원들의 의견도 하나하나 잘 들어주었습니다..",
+    },
+    {
+      title: "#1238 개발자님의 피드백",
+      tags: sampleTags,
+      text: "리더십 있는 모습과 팀원을 배려하는 모습만으로도 충분히 좋은 팀원있지만, 아이디어 회의 때 다양한 아이디어를 제시해주는 모습까지 있다면 더 좋을 것 같습니다.",
+    },
+    {
+      title: "#6583 기획자님의 피드백",
+      tags: sampleTags,
+      text: "항상 긍정적인 마인드로 팀 분위기를 활기차게 만들어주는 분위기 메이커입니다.",
+    },
+    {
+      title: "#8467 개발자님의 피드백",
+      tags: sampleTags,
+      text: "팀원들과 적극적으로 교류하며 팀 프로젝트를 진행한 결과 함께 성장할 수 있어서 좋았습니다.",
+    },
+  ];
+
+  const [filteredFeedbacks, setFilteredFeedbacks] = useState<JSX.Element[]>(
+    feedbacks.map((feedback, index) => (
+      <FeedbackBox
+        key={index}
+        title={feedback.title}
+        tags={feedback.tags}
+        index={index}
+      />
+    ))
+  );
+
+  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearch = () => {
+    console.log("Searching...");
+
+    const filtered =
+      searchValue.trim() !== ""
+        ? feedbacks.filter((feedback) =>
+            feedback.text?.toLowerCase().includes(searchValue.toLowerCase())
+          )
+        : feedbacks;
+
+    setFilteredFeedbacks(
+      filtered.map((feedback, index) => (
+        <FeedbackBox
+          key={index}
+          title={feedback.title}
+          tags={feedback.tags}
+          text={searchValue.trim() !== "" ? feedback.text : undefined}
+          index={index}
+        />
+      ))
     );
-  }
-  export default Search;
+  };
+
+  return (
+    <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
+      <div className="flex justify-between">
+        <BackButton back page="/mainpage" />
+      </div>
+
+      <div>
+        <Searchbutton
+          value={searchValue}
+          onChange={handleInputChange}
+          onEnter={handleSearch}
+        ></Searchbutton>
+      </div>
+      <div className="flex flex-col gap-2">{filteredFeedbacks}</div>
+    </div>
+  );
+};
+
+export default Search;

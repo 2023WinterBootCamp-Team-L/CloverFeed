@@ -1,69 +1,71 @@
 # General
 # 일반적인 설정들을 무시합니다.
-.DS_Store        # macOS에서 생성되는 시스템 파일입니다.
-.env             # 환경 변수 파일을 무시합니다.
+*.DS_Store
+.env
 
 # Python
 # 파이썬과 관련된 파일 및 디렉토리를 무시합니다.
-__pycache__/     # 파이썬의 컴파일된 파일이 저장되는 디렉토리입니다.
-*.pyc            # 파이썬 컴파일된 파일을 무시합니다.
-*.pyo            # 파이썬 컴파일된 파일을 무시합니다.
-*.pyd            # 파이썬 동적 라이브러리를 무시합니다.
-*.sqlite3        # SQLite 데이터베이스 파일을 무시합니다.
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
 
 # Django
 # 장고 프레임워크와 관련된 파일을 무시합니다.
-*.pyc            # 장고 컴파일된 파일을 무시합니다.
-*.pyo            # 장고 컴파일된 파일을 무시합니다.
+*.pyc
+*.pyo
 
 # Django 프로젝트 설정 파일 무시
-backend/config/settings.py  # 백엔드 프로젝트의 장고 설정 파일을 무시합니다.
+backend/config/settings.py
 
 # Node.js
 # Node.js 프로젝트와 관련된 파일 및 디렉토리를 무시합니다.
-node_modules/    # Node.js 패키지 및 의존성 모듈을 무시합니다.
+node_modules/
 
 # React
 # React 프로젝트와 관련된 파일 및 디렉토리를 무시합니다.
-/build/          # React 빌드 결과물을 무시합니다.
-/.next/          # Next.js 빌드 결과물을 무시합니다.
+/build/
+/.next/
 
 # Vite
 # Vite 프로젝트와 관련된 파일 및 디렉토리를 무시합니다.
-/dist/           # Vite 빌드 결과물을 무시합니다.
+/dist/
 
 # Tailwind CSS
 # Tailwind CSS 프로젝트와 관련된 파일 및 디렉토리를 무시합니다.
-/.cache/         # Tailwind CSS 캐시 파일을 무시합니다.
-/.svelte-kit/    # Svelte Kit 프로젝트와 관련된 파일을 무시합니다.
-/node_modules/   # Tailwind CSS 패키지 및 의존성 모듈을 무시합니다.
+/.cache/
+/.svelte-kit/
+/node_modules/
 
 # Docker
 # Docker와 관련된 파일 및 디렉토리를 무시합니다.
-docker-compose.override.yml  # Docker Compose 설정을 무시합니다.
-.dockerignore    # Docker 이미지 빌드 시 무시할 파일을 지정합니다.
-Dockerfile*      # Dockerfile들을 무시합니다.
-*.log            # 로그 파일을 무시합니다.
-docker-compose.yml  # Docker Compose 설정 파일을 무시합니다.
+docker-compose.override.yml
+.dockerignore
+*.log
 
 # MySQL
 # MySQL 데이터베이스와 관련된 파일을 무시합니다.
-*.sql            # SQL 파일을 무시합니다.
-*.log            # MySQL 로그 파일을 무시합니다.
-*.pid            # MySQL 프로세스 ID 파일을 무시합니다.
-*.err            # MySQL 에러 로그 파일을 무시합니다.
-*.sock           # MySQL 소켓 파일을 무시합니다.
+*.log
+*.pid
+*.err
+*.sock
 
 # frontend 프로젝트의 빌드 디렉토리 무시
-frontend/build/  # 프론트엔드 빌드 결과물을 무시합니다.
+frontend/build/
 
 # backend 프로젝트의 가상 환경 디렉토리 무시
-backend/venv/   # 백엔드 프로젝트의 가상 환경 디렉토리를 무시합니다.
+backend/venv/
 
 # backend/config 디렉토리 내부의 민감한 정보가 담긴 파일을 무시
 backend/config/*.secret
 backend/config/*.conf
 backend/config/*.key
+backend/config/.env
 
 # .gitattributes 파일 
 .gitattributes
+
+# 파이참 임시파일 제외
+/.idea/
+.env
