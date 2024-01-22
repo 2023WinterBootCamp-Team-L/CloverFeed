@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import React, { useEffect } from "react";
+import React from "react";
 import axios from "axios";
 
 
@@ -30,7 +30,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
       if (response.data.status === "success") {
         if (response.data.feedbackform === "true") {
           // feedbackform이 true이면 sharepage로 이동
-          navigate("/sharepage");
+          navigate("/QueryShare");
         } else {
           // feedbackform이 false이면 QueryMain 페이지로 이동
           navigate("/QueryMain");
@@ -44,10 +44,7 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
     }
   };
 
-  useEffect(() => {
-    // 페이지 로드 시 자동으로 fetchUserData 호출
-    handleButtonClick();
-  }, []); // 빈 배열은 컴포넌트가 마운트될 때만 호출
+
 
   return (
     <button onClick={handleButtonClick}>
