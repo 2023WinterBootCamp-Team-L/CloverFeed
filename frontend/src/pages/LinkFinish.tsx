@@ -8,11 +8,11 @@ function LinkFinish() {
   const nextpage = "/";
 
   useEffect(() => {
-    const apiUrl = "http://localhost:8000/api/answers";
+    const apiUrl = "http://localhost:8000/api/answers/";
 
     // POST 요청할 데이터
     const postData = {
-      form_id: "타겟 폼 ID",
+      form_id: 1,
       category: "개발자",
       tags_work: ["박학다식", "기획력", "효율적인"],
       tags_attitude: ["개성이 뚜렷한", "경청하는", "센스있는"],
@@ -46,15 +46,19 @@ function LinkFinish() {
     };
 
     // POST 요청 보내기
-    axios
-      .post(apiUrl, postData)
-      .then((response) => {
-        console.log("답변 제출");
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Error:", error.response.data);
-      });
+    try {
+      axios
+        .post(apiUrl, postData)
+        .then((response) => {
+          console.log("답변 제출");
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error("폼 없음", error.response.data);
+        });
+    } catch (error) {
+      console.error("An error occurred during the request:", error);
+    }
   }, []);
 
   return (

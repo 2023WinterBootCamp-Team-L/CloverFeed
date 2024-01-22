@@ -1,11 +1,12 @@
 import { atom, selector } from "recoil";
 
-export type Category = string;
-export type TagsWork = string;
-export type TagsAttitude = string;
-export type AnswerType = "choice" | "short";
+export type category = string;
+export type tags_work = string;
+export type tags_attitude = string;
+export type AnswerType = "객관식" | "주관식";
 
 export type Answer = {
+  content: string;
   type: AnswerType;
   answer: string[];
 };
