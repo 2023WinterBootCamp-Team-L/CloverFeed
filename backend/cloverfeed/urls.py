@@ -45,6 +45,11 @@ urlpatterns = [
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
     ),
+    path(
+        "feedbacks/summary/",
+        views.GPTSummaryView.as_view(),
+        name="wordcloudkeyword",
+    ),
     # 워드클라우드
     path(
         "feedbacks/wordcloud/", views.WordCloudContextView.as_view(), name="wordcloud"

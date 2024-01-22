@@ -13,8 +13,10 @@ from rest_framework.permissions import AllowAny
 from rest_framework.authentication import BasicAuthentication
 from .authentication import CsrfExemptSessionAuthentication
 from collections import Counter
-import json, random, ast
+from openai import OpenAI
+import json, random, ast, environ
 from datetime import datetime
+
 from .models import (
     Form,
     Question,
@@ -752,6 +754,69 @@ class FeedbackChartView(APIView):
                 {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
                 status=400,
             )
+
+
+# 전체 주관식 피드백 요약
+class GPTSummaryView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request):
+        env = environ.Env()
+        environ.Env.read_env()
+        userid = request.query_params.get("userid")
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        # 피드백 결과 조회
+        feedbacks = QuestionAnswer.objects.filter(
+            Q(feedback__form__user=user), Q(type="주관식")
+        )
+
+        contexts = []
+
+        for i in range(len(feedbacks)):
+            # print(feedbacks[i].context)
+            contexts.append(feedbacks[i].context)
+
+        print(contexts)
+
+        client = OpenAI(
+            # defaults to os.environ.get("OPENAI_API_KEY")
+            api_key=env("OPENAI_KEY"),
+        )
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "user",
+                    "content": str(contexts)
+                    + "make a summary of these anonymous peer reviews in one sentences in polite korean like this example '사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.' but the subject and negative comment must not be included.",
+                    # 이 배열은 사용자에 대해 다른 동료들이 익명으로 평가한 문장이야. 이 문장을 한 문장 이내로 요약해서 이러한 평가를 받고 있다고 사용자에게 안내하는 말투로 한국어로 정리해줘. 단, 주어는 생략해야 하고, 부정적인 평가가 포함되어서는 안 돼.",
+                }
+            ],
+        )
+        summary = response.choices[0].message.content.strip()
+
+        return Response({"status": "success", "summary": summary})
 
 
 # 워드클라우드
