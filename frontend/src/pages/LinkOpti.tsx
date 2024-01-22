@@ -1,26 +1,6 @@
 import BackButton from "../components/BackButton";
-import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { Answer, selectedAnswerState } from "../components/Answer/AnswerStore";
 
 function LinkOpti() {
-  const [selectedAnswer, setSelectedAnswer] =
-    useRecoilState(selectedAnswerState);
-  const [selectedButton, setSelectedButton] = useState("");
-
-  const handleButtonClick = (buttonText: string) => {
-    setSelectedButton(buttonText);
-    const newAnswer: Answer = {
-      type: "option",
-      content: buttonText,
-    };
-    setSelectedAnswer(newAnswer);
-  };
-
-  useEffect(() => {
-    // Recoil 상태 변경 후 추가적인 작업이 필요하면 이곳에 작성
-  }, [selectedAnswer]);
-
   return (
     <div className="flex justify-center items-center h-screen">
       <div
