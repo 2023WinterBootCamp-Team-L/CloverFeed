@@ -26,103 +26,103 @@ function LinkTag2() {
   const tagsData: TagProps[] = [
     {
       text: "책임감",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/책임감.svg",
     },
     {
       text: "공감능력",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/공감능력.svg",
     },
     {
       text: "배려심",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/배려심.svg",
     },
     {
       text: "성실함",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/성실함.svg",
     },
     {
       text: "적극적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/적극적인.svg",
     },
     {
       text: "꼼꼼함",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/꼼꼼함.svg",
     },
     {
       text: "분위기 메이커",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/분위기메이커.svg",
     },
     {
       text: "주도적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/주도적인.svg",
     },
     {
       text: "센스있는",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/센스있는.svg",
     },
     {
       text: "긍정적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/긍정적인.svg",
     },
     {
       text: "사교성이 좋은",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/사교성이좋은.svg",
     },
     {
       text: "관대한",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/관대한.svg",
     },
     {
       text: "경청하는",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/경청하는.svg",
     },
     {
       text: "도전적인",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/도전적인.svg",
     },
     {
       text: "끈기",
-      color: "bg-[#EEEFF0]",
+      color: "bg-white",
       image: "../assets/TagIcon/끈기.svg",
     },
   ];
 
   return (
-    <div className="flex justify-center items-center h-screen ">
+    <div className="flex justify-center items-center h-screen">
       <div
-        className="flex flex-col justify-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50"
+        className="flex flex-col justify-center overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-10"
         style={{ width: "393px", height: "852px" }}
       >
-        <div className="flex justify-between w-full px-4 pt-4">
+        <div className="flex justify-between w-full">
           <BackButton back page="/LinkTag1" />
           <BackButton back={false} page="/LinkAnswer1" />
         </div>
-        <div className="flex-full justify-start pt-12 pb-12 pl-4">
-          <p className=" text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
+        <div className="flex-full">
+          <p className="font-pre text-[22px] font-bold text-center">
             당신이 생각하는 XXX 님의
           </p>
-          <p className=" text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
+          <p className="font-pre text-[22px] font-bold text-center">
             성격 및 태도는 어떤가요?
           </p>
-          <p className=" text-left font-Preahvihear text-[#767677] text-[14px] font-normal font-weight-400 ">
+          <p className="font-pre text-[14px] text-gray-400 text-center">
             키워드를 최대 5개까지 선택해주세요.
           </p>
         </div>
-        <div className="flex-1 px-4">
+        <div className="flex-1 text-center">
           {/* 15개의 태그 렌더링 */}
           {tagsData.map((tag, index) => (
             <Tag

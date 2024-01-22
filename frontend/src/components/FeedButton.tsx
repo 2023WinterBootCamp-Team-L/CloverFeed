@@ -1,5 +1,5 @@
 import React from "react";
-import FeedCount from "../components/FeedCount.tsx";
+// import FeedCount from "../components/FeedCount.tsx";
 import { useNavigate } from "react-router-dom";
 
 interface FeedButtonProps {
@@ -14,14 +14,17 @@ const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
   };
 
   const buttonClassName = `bg-white-400 text-black ${
-    color ? "border-purple-200" : "border-blue-200"
-  } border-2 w-full px-3 py-6 rounded-xl mb-2 text-xs font-medium text-left`;
+    color ? "bg-c-l-blue border-c-blue" : "bg-c-l-purple border-c-sl-purple"
+  }  w-[332px] pl-8 pr-10 py-5 rounded-lg mb-2 border-2 font-pre text-[14px] font-bold text-left`;
 
   return (
     <div>
       <button className={buttonClassName} onClick={handleButtonClick}>
-        {category}의 피드백
-        <FeedCount category={category} />
+        <div className="flex flex-row justify-between">
+          <p>{category}의 피드백</p>
+          <p>0</p>
+          {/* <FeedCount category={category} /> */}
+        </div>
       </button>
     </div>
   );

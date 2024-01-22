@@ -10,6 +10,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
+from rest_framework.authentication import BasicAuthentication
+from .authentication import CsrfExemptSessionAuthentication
 import json, random
 from datetime import datetime
 from .models import (
@@ -33,6 +35,8 @@ from drf_yasg import openapi
 
 # 회원가입
 class SignupView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         tags=["user"],
         request_body=openapi.Schema(
@@ -64,6 +68,18 @@ class SignupView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        user = AuthUser.objects.filter(email=email).first()
+
+        if user:
+            return JsonResponse(
+                {
+                    "status": "error",
+                    "error_code": 409,
+                    "message": "이미 존재하는 회원정보입니다.",
+                },
+                status=status.HTTP_409_CONFLICT,
+            )
+
         # 사용자 생성
         try:
             AuthUser.objects.create_user(
@@ -82,6 +98,7 @@ class SignupView(APIView):
 
 # 로그인
 class LoginView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
     permission_classes = [AllowAny]
 
     @swagger_auto_schema(
@@ -201,6 +218,8 @@ class LoginView(APIView):
 
 # 피드백 질문 목록 작성
 class SubmitFormView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
@@ -282,6 +301,8 @@ class SubmitFormView(APIView):
 
 # 피드백 폼 유무 조회
 class CheckFormExistenceView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
@@ -318,6 +339,8 @@ class CheckFormExistenceView(APIView):
 
 # 작성한 질문 목록 확인
 class QuestionListView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
@@ -372,6 +395,8 @@ class QuestionListView(APIView):
 
 # 피드백 질문에 답변 제출
 class AnswersView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
@@ -443,6 +468,8 @@ class AnswersView(APIView):
 
 # 카테고리(직군)별 피드백 개수 확인
 class CategoryCountView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
@@ -497,12 +524,24 @@ class CategoryCountView(APIView):
 
 # 카테고리(직군)별 피드백 목록 확인
 class FeedbackListByCategory(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
             openapi.Parameter(
-                'category', openapi.IN_QUERY, description='카테고리', required=False, type=openapi.TYPE_STRING),
+                "category",
+                openapi.IN_QUERY,
+                description="카테고리",
+                required=False,
+                type=openapi.TYPE_STRING,
+            ),
         ]
     )
     def get(self, request, format=None):
@@ -533,12 +572,24 @@ class FeedbackListByCategory(APIView):
 
 # 받은 피드백답변(주관식) 내용 검색
 class FeedbackSearchView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
             openapi.Parameter(
-                'keyword', openapi.IN_QUERY, description='검색 키워드', required=False, type=openapi.TYPE_STRING),
+                "keyword",
+                openapi.IN_QUERY,
+                description="검색 키워드",
+                required=False,
+                type=openapi.TYPE_STRING,
+            ),
         ]
     )
     def get(self, request):
@@ -565,10 +616,17 @@ class FeedbackSearchView(APIView):
 
 # 특정 피드백 상세 내용 확인
 class FeedbackResultDetail(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                'userid', openapi.IN_QUERY, description='사용자 ID', required=True, type=openapi.TYPE_NUMBER),
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
         ]
     )
     def get_object(self, pk, user_id):
@@ -599,6 +657,8 @@ class FeedbackResultDetail(APIView):
 
 # 피드백 결과의 태그들을 원형차트로 시각화
 class FeedbackChartView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(

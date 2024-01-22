@@ -15,7 +15,7 @@ export default function LoginModal(props: ModalType) {
           onClick={props.toggle}
         >
           <div
-            className="bg-emerald-50 bg-opacity-70w-flex h-flex p-4 rounded-2xl"
+            className="bg-emerald-50 w-flex h-flex p-4 rounded-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {props.children}
