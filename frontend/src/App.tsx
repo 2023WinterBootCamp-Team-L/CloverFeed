@@ -25,6 +25,7 @@ import FeedBackResult from "./pages/FeedBackResult";
 import LinkAnswer from "./pages/LinkPage/LinkAnswer";
 import AnswerCheck from "./pages/LinkPage/AnswerCheck";
 import FeedbackList from "./pages/FeedBackList";
+import { QuestionProvider } from "./components/QuestionUpdate";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -54,10 +55,15 @@ function App() {
         <Route path="/gosignup" element={<Gosignup />} />
         <Route path="/wordcloud" element={<WordCloud />} />
         <Route path="/test" element={<LinkAnswer />} />
-        <Route path="/queryadd" element={<QueryAdd />} />
-        <Route path="/querylist" element={<QueryList />} />
         <Route path="/check" element={<AnswerCheck />} />
       </Routes>
+
+      <QuestionProvider>
+        <Routes>
+          <Route path="/queryadd" element={<QueryAdd />} />
+          <Route path="/querylist" element={<QueryList />} />
+        </Routes>
+      </QuestionProvider>
     </div>
   );
 }

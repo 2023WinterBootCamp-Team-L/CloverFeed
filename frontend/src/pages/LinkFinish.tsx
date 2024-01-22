@@ -1,65 +1,40 @@
 import clover from "../assets/clover.svg";
 import HomeButton from "../components/HomeButton";
 import axios from "axios";
-import { useEffect } from "react";
-// import LinkButton from "../components/LinkButton";
+import { useRecoilValue } from "recoil";
+import { answerListSelector } from "../components/Answer/AnswerStore";
 
 function LinkFinish() {
   const nextpage = "/";
 
-  useEffect(() => {
-    const apiUrl = "http://localhost:8000/api/answers/";
+  const apiUrl = "http://localhost:8000/api/answers/";
 
-    // POST 요청할 데이터
-    const postData = {
-      form_id: 1,
-      category: "개발자",
-      tags_work: ["박학다식", "기획력", "효율적인"],
-      tags_attitude: ["개성이 뚜렷한", "경청하는", "센스있는"],
-      answers: [
-        {
-          context: "당신의 직무는 무엇인가요?",
-          type: "객관식",
-          answer: "개발자",
-        },
-        {
-          context: "이구름님의 업무 능력 강점은 무엇인가요?",
-          type: "객관식",
-          answer: "박학다식",
-        },
-        {
-          context: "이구름님의 성격 및 태도는 어떤가요?",
-          type: "객관식",
-          answer: "책임감",
-        },
-        {
-          context: "이구름님에게 전하고 싶은 칭찬이 있나요?",
-          type: "주관식",
-          answer: "웃기고 귀여워:)",
-        },
-        {
-          context: "이구름님이 보완해 줬으면 하는 부분이 있나요?",
-          type: "주관식",
-          answer: "자꾸 지각한다.",
-        },
-      ],
-    };
+  // Recoil의 상태값에서 AnswerList 가져오기
+  const answerList = useRecoilValue(answerListSelector);
 
-    // POST 요청 보내기
-    try {
-      axios
-        .post(apiUrl, postData)
-        .then((response) => {
-          console.log("답변 제출");
-          console.log(response.data);
-        })
-        .catch((error) => {
-          console.error("폼 없음", error.response.data);
-        });
-    } catch (error) {
-      console.error("An error occurred during the request:", error);
-    }
-  }, []);
+  // POST 요청할 데이터
+  const postData = {
+    form_id: 1,
+    category: answerList.category,
+    tags_work: answerList.tags_work,
+    tags_attitude: answerList.tags_attitude,
+    answers: answerList.answers,
+  };
+
+  // POST 요청 보내기
+  try {
+    axios
+      .post(apiUrl, postData)
+      .then((response) => {
+        console.log("답변 제출");
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("폼 없음", error.response.data);
+      });
+  } catch (error) {
+    console.error("요청 중 에러 발생:", error);
+  }
 
   return (
     <div className="flex justify-center items-center h-screen">
