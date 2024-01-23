@@ -10,10 +10,12 @@ urlpatterns = [
     path("user/auth/signup", views.SignupView.as_view(), name="signup"),
     # 로그인
     path("user/auth/login", views.LoginView.as_view(), name="login"),
-    # 피드백 질문 목록 작성, 피드백 폼 유무 조회
-    path("forms", views.FormView.as_view(), name="form"),
+    # 피드백 질문 목록 작성
+    path("questions", views.SubmitFormView.as_view(), name="form"),
+    # 피드백 폼 유무 조회
+    path("form", views.CheckFormExistenceView.as_view(), name="form"),
     # 작성한 질문 목록 확인
-    path("forms/questions", views.QuestionListView.as_view(), name="questionlist"),
+    path("form/questions", views.QuestionListView.as_view(), name="questionlist"),
     # 피드백 질문에 답변 제출
     path("answers", views.AnswersView.as_view(), name="answer"),
     # 카테고리(직군)별 피드백 개수 확인
@@ -43,6 +45,7 @@ urlpatterns = [
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
     ),
+    # 피드백 요약
     path(
         "feedbacks/summary/",
         views.GPTSummaryView.as_view(),

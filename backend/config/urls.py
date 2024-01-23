@@ -33,7 +33,6 @@ schema_view_v1 = get_schema_view(
     public=True,
     permission_classes=(AllowAny,),
 )
-
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/", include("cloverfeed.urls")),

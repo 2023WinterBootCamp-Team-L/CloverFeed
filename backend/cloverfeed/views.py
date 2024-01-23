@@ -37,6 +37,13 @@ from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from krwordrank.word import summarize_with_keywords
 
+env = environ.Env()
+environ.Env.read_env()
+client = OpenAI(
+    # defaults to os.environ.get("OPENAI_API_KEY")
+    api_key=env("OPENAI_KEY"),
+)
+
 
 # 회원가입
 class SignupView(APIView):
@@ -401,9 +408,6 @@ class QuestionListView(APIView):
         )
 
 
-openai.api_key = "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"
-client = openai.Completion.create
-
 # 피드백 질문에 답변 제출 + 특정 피드백 상세 주관식답변만 모아 챗 gpt 요약
 class AnswersView(APIView):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
@@ -434,6 +438,39 @@ class AnswersView(APIView):
         # 폼 존재 여부 확인
         form = get_object_or_404(Form, id=form_id)
 
+        answers = []
+
+        # 각 답변에 대한 처리
+        for answer_data in answers_data:
+            if answer_data.get("type") == "주관식" and answer_data.get("answer"):
+                answers.append(answer_data.get("answer"))
+
+        # 방금 생성한 FeedbackResult에서 주관식 답변 모으기
+
+        # 주관식 답변이 있는 경우, 요약을 생성
+        if len(answers) != 0:
+            # 주관식 답변을 하나의 문자열로 합침
+            # GPT-3.5-turbo 모델로 요약을 생성
+
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": str(answers)
+                        + "I want you to act like a co-worker or a corporate human resources manager. Pick out only the important points and summarize them in one sentence as briefly and concisely as possible. The length of the your answer must be 90~110 characters in Korean. Korean like this example '홍길동님은 개성이 뚜렷하고 경청하는 팀 분위기 메이커라고 피드백을 보내셨네요!' Your answer must be in polite Korean.",
+                    }
+                ],
+            )
+
+            # 요약된 텍스트를 추출
+            summary = response.choices[0].message.content.strip()
+            print(summary)
+
+            # # 요약 결과를 FeedbackResult의 summary 필드에 저장
+            # feedback_result.summary = summary
+            # feedback_result.save()
+
         try:
             # FeedbackResult 생성
             feedback_result = FeedbackResult.objects.create(
@@ -442,8 +479,11 @@ class AnswersView(APIView):
                 tag_work=tags_work,
                 tag_attitude=tags_attitude,
                 respondent_name=f"#{random.randint(1000, 9999)}",
+                summary=summary,
                 created_at=datetime.now(),
             )
+
+            feedback_result.save()
 
             # 각 답변에 대한 처리
             for answer_data in answers_data:
@@ -465,28 +505,8 @@ class AnswersView(APIView):
                     modified_at=datetime.now(),
                 )
 
-            # 방금 생성한 FeedbackResult에서 주관식 답변 모으기
-            subjective_answers = QuestionAnswer.objects.filter(feedback=feedback_result, type='주관식')
-
-            # 주관식 답변이 있는 경우, 요약을 생성
-            if subjective_answers.exists():
-                # 주관식 답변을 하나의 문자열로 합침
-                answers_text = ' '.join(answer.context for answer in subjective_answers)
-
-                # GPT-3.5-turbo 모델로 요약을 생성
-                model_name = 'gpt-3.5-turbo'
-                messages = [
-                    {'role': 'system', 'content': 'My goal is to summarize the following text:'},
-                    {'role': 'user', 'content': answers_text},
-                ]
-                response = client(model=model_name, messages=messages, max_tokens=60)
-
-                # 요약된 텍스트를 추출
-                summary = response.choices[0].text.strip()
-
-                # 요약 결과를 FeedbackResult의 summary 필드에 저장
-                feedback_result.summary = summary
-                feedback_result.save()
+                # 답변 DB에 넣어주는 부분 만들어야함
+                new_answer.save()
 
             # 요약을 포함하지 않은 응답을 반환합니다.
             return JsonResponse(
@@ -498,6 +518,7 @@ class AnswersView(APIView):
             return JsonResponse({"error": "해당 질문이 존재하지 않습니다."}, status=404)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
+
 
 # 카테고리(직군)별 피드백 개수 확인
 class CategoryCountView(APIView):
