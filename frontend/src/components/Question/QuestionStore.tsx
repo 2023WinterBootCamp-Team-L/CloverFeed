@@ -24,7 +24,7 @@ export const questionListState = atom<QuestionList>({
   default: {
     questions: [
       {
-        content: "본인의 포지션을 선택해주세요.",
+        content: "당신의 포지션을 선택해주세요.",
         type: "객관식",
         choice: ["개발자", "디자이너", "기획자", "PMPO", "기타직무"],
       },
@@ -71,12 +71,12 @@ export const questionListState = atom<QuestionList>({
         ],
       },
       {
-        content: "${username}에게 전하고 싶은 칭찬이 있나요?",
+        content: "${username}님에게 전하고 싶은 칭찬이 있나요?",
         type: "주관식",
         choice: null,
       },
       {
-        content: "${username}이 보완해 줬으면 하는 부분이 있나요?",
+        content: "${username}님이 보완해 줬으면 하는 부분이 있나요?",
         type: "주관식",
         choice: null,
       },
@@ -90,4 +90,22 @@ export const questionListSelector = selector<QuestionList>({
   get: ({ get }) => {
     return get(questionListState);
   },
+});
+
+// 입력된 질문을 저장하기 위한 Atom
+export const currentQuestionState = atom<string>({
+  key: "currentQuestionState",
+  default: "질문하고 싶은 내용을 입력하세요",
+});
+
+// 현재 질문의 타입을 저장하기 위한 Atom
+export const currentQuestionTypeState = atom<QuestionType>({
+  key: "currentQuestionTypeState",
+  default: "객관식",
+});
+
+// 현재 질문의 선지를 저장하기 위한 Atom
+export const currentQuestionChoiceState = atom<string[]>({
+  key: "currentQuestionChoiceState",
+  default: [],
 });
