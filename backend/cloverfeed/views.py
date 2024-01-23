@@ -11,6 +11,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 import json, random
+import openai
 from datetime import datetime
 from .models import (
     Form,
@@ -264,7 +265,10 @@ class QuestionListView(APIView):
         )
 
 
-# 피드백 질문에 답변 제출
+openai.api_key = "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"
+client = openai.Completion.create
+
+# 피드백 질문에 답변 제출 + 특정 피드백 상세 주관식답변만 모아 챗 gpt 요약
 class AnswersView(APIView):
     def post(self, request):
         form_id = request.data.get("form_id")
@@ -298,7 +302,7 @@ class AnswersView(APIView):
                 )
 
                 # QuestionAnswer 생성
-                new_answer = QuestionAnswer(
+                new_answer = QuestionAnswer.objects.create(
                     feedback=feedback_result,
                     question=question,
                     context=answer_content,
@@ -306,8 +310,31 @@ class AnswersView(APIView):
                     created_at=datetime.now(),
                     modified_at=datetime.now(),
                 )
-                new_answer.save()
 
+            # 방금 생성한 FeedbackResult에서 주관식 답변 모으기
+            subjective_answers = QuestionAnswer.objects.filter(feedback=feedback_result, type='주관식')
+
+            # 주관식 답변이 있는 경우, 요약을 생성
+            if subjective_answers.exists():
+                # 주관식 답변을 하나의 문자열로 합침
+                answers_text = ' '.join(answer.context for answer in subjective_answers)
+
+                # GPT-3.5-turbo 모델로 요약을 생성
+                model_name = 'gpt-3.5-turbo'
+                messages = [
+                    {'role': 'system', 'content': 'My goal is to summarize the following text:'},
+                    {'role': 'user', 'content': answers_text},
+                ]
+                response = client(model=model_name, messages=messages, max_tokens=60)
+
+                # 요약된 텍스트를 추출
+                summary = response.choices[0].text.strip()
+
+                # 요약 결과를 FeedbackResult의 summary 필드에 저장
+                feedback_result.summary = summary
+                feedback_result.save()
+
+            # 요약을 포함하지 않은 응답을 반환합니다.
             return JsonResponse(
                 {"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200
             )
@@ -317,7 +344,6 @@ class AnswersView(APIView):
             return JsonResponse({"error": "해당 질문이 존재하지 않습니다."}, status=404)
         except Exception as e:
             return JsonResponse({"error": str(e)}, status=500)
-
 
 # 카테고리(직군)별 피드백 개수 확인
 class CategoryCountView(APIView):
