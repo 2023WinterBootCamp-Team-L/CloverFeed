@@ -25,7 +25,6 @@ import FeedBackResult from "./pages/FeedBackResult";
 import LinkAnswer from "./pages/LinkPage/LinkAnswer";
 import AnswerCheck from "./pages/LinkPage/AnswerCheck";
 import FeedbackList from "./pages/FeedBackList";
-import { QuestionProvider } from "./components/QuestionUpdate";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -34,36 +33,31 @@ function App() {
     <div className="App">
       <Routes>
         <Route path="/" element={<Signup />} />
-        <Route path="/querymain" element={<QueryMain />} />
-        <Route path="/querystart" element={<QueryStart />} />
-        <Route path="/queryshare" element={<QueryShare />} />
+        <Route path="/Gosignup" element={<Gosignup />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/MainPage" element={<Mainpage />} />
+        <Route path="/Search" element={<Search />} />
+        <Route path="/Feedbacks/:category" element={<FeedbackList />} />
+        <Route path="/FeedbackResult" element={<FeedBackResult />} />
+        <Route path="/QueryMain" element={<QueryMain />} />
+        <Route path="/QueryStart" element={<QueryStart />} />
+        <Route path="/QueryAdd" element={<QueryAdd />} />
+        <Route path="/QueryList" element={<QueryList />} />
+        <Route path="/QueryShare" element={<QueryShare />} />
         <Route path="/LinkMain" element={<LinkMain />} />
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
-        <Route path="/Chart" element={<Chart />} />
-        <Route path="/Search" element={<Search />} />
-        <Route path="/feedbacks/:category" element={<FeedbackList />} />
-        <Route path="/feedbackresult" element={<FeedBackResult />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
         <Route path="LinkAnswer2" element={<LinkAnswer2 />} />
         <Route path="LinkOpti" element={<LinkOpti />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/mainpage" element={<Mainpage />} />
-        <Route path="/gosignup" element={<Gosignup />} />
-        <Route path="/wordcloud" element={<WordCloud />} />
-        <Route path="/test" element={<LinkAnswer />} />
-        <Route path="/check" element={<AnswerCheck />} />
+        <Route path="/Chart" element={<Chart />} />
+        <Route path="/WordCloud" element={<WordCloud />} />
+        <Route path="/Test" element={<LinkAnswer />} />
+        <Route path="/Check" element={<AnswerCheck />} />
       </Routes>
-
-      <QuestionProvider>
-        <Routes>
-          <Route path="/queryadd" element={<QueryAdd />} />
-          <Route path="/querylist" element={<QueryList />} />
-        </Routes>
-      </QuestionProvider>
     </div>
   );
 }

@@ -10,6 +10,9 @@ import ShareButton from "../components/ShareButton.tsx";
 import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
+
+
+
 function Mainpage() {
   const nextpage = "/QueryMain";
   const logoutpage = "/Signup";
@@ -21,7 +24,7 @@ function Mainpage() {
 
   return (
     <div
-      className="bg-c-gray bg-opacity-100 flex flex-col mx-auto h-full gap-10 px-5 py-8"
+      className=" flex flex-col mx-auto h-full gap-10 px-5 py-8"
       style={{ width: "393px" }}
     >
       <div>

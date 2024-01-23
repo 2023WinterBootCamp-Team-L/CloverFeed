@@ -14,7 +14,6 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
 }) => {
   const [isTrashcanVisible, setTrashcanVisible] = useState(true);
 
-  
   const handleFocus = () => {
     setTrashcanVisible(false);
   };
@@ -32,7 +31,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         placeholder="내용을 입력하세요"
-        className="bg-c-blue text-black w-full h-10 rounded-lg focus:outline-none leading-1.25 p-2 text-sm"
+        className="bg-c-blue w-full h-12 rounded-lg focus:outline-none leading-1.25 p-4 font-pre text-[14px]"
       />
       {isTrashcanVisible && (
         <button onClick={onDelete}>
