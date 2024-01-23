@@ -48,7 +48,7 @@ urlpatterns = [
     # 피드백 요약
     path(
         "feedbacks/summary/",
-        views.GPTSummaryView.as_view(),
+        views.SummaryView.as_view(),
         name="wordcloudkeyword",
     ),
     # 워드클라우드

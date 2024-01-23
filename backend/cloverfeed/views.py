@@ -445,13 +445,9 @@ class AnswersView(APIView):
             if answer_data.get("type") == "주관식" and answer_data.get("answer"):
                 answers.append(answer_data.get("answer"))
 
-        # 방금 생성한 FeedbackResult에서 주관식 답변 모으기
-
         # 주관식 답변이 있는 경우, 요약을 생성
         if len(answers) != 0:
-            # 주관식 답변을 하나의 문자열로 합침
             # GPT-3.5-turbo 모델로 요약을 생성
-
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -465,11 +461,7 @@ class AnswersView(APIView):
 
             # 요약된 텍스트를 추출
             summary = response.choices[0].message.content.strip()
-            print(summary)
-
-            # # 요약 결과를 FeedbackResult의 summary 필드에 저장
-            # feedback_result.summary = summary
-            # feedback_result.save()
+            # print(summary)
 
         try:
             # FeedbackResult 생성
@@ -508,7 +500,6 @@ class AnswersView(APIView):
                 # 답변 DB에 넣어주는 부분 만들어야함
                 new_answer.save()
 
-            # 요약을 포함하지 않은 응답을 반환합니다.
             return JsonResponse(
                 {"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200
             )
@@ -803,7 +794,7 @@ class FeedbackChartView(APIView):
 
 
 # 전체 주관식 피드백 요약
-class GPTSummaryView(APIView):
+class SummaryView(APIView):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     @swagger_auto_schema(
@@ -818,8 +809,6 @@ class GPTSummaryView(APIView):
         ]
     )
     def get(self, request):
-        env = environ.Env()
-        environ.Env.read_env()
         userid = request.query_params.get("userid")
 
         # 유저 검증
@@ -842,25 +831,91 @@ class GPTSummaryView(APIView):
             # print(feedbacks[i].context)
             contexts.append(feedbacks[i].context)
 
-        print(contexts)
-
-        client = OpenAI(
-            # defaults to os.environ.get("OPENAI_API_KEY")
-            api_key=env("OPENAI_KEY"),
-        )
-
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
+        if len(contexts) == 0:
+            return Response(
                 {
-                    "role": "user",
-                    "content": str(contexts)
-                    + "make a summary of these anonymous peer reviews in one sentences in polite korean like this example '사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.' but the subject and negative comment must not be included.",
-                    # 이 배열은 사용자에 대해 다른 동료들이 익명으로 평가한 문장이야. 이 문장을 한 문장 이내로 요약해서 이러한 평가를 받고 있다고 사용자에게 안내하는 말투로 한국어로 정리해줘. 단, 주어는 생략해야 하고, 부정적인 평가가 포함되어서는 안 돼.",
-                }
-            ],
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "피드백이 없습니다.",
+                },
+                status=404,
+            )
+
+        stopwords = {
+            "주셔서",
+            "거두고",
+            "정말",
+            "특히",
+            "팀에",
+            "앞으로",
+            "다른",
+            "전체",
+            "되고",
+            "우리팀",
+        }  # 불용어
+        keywords = summarize_with_keywords(
+            contexts,
+            min_count=3,
+            max_length=10,
+            beta=0.85,
+            max_iter=10,
+            stopwords=stopwords,
+            verbose=True,
         )
-        summary = response.choices[0].message.content.strip()
+
+        # keywords = summarize_with_keywords(
+        #     contexts,
+        #     min_count=1,
+        #     max_length=10,
+        #     beta=0.85,
+        #     max_iter=10,
+        #     verbose=True,
+        # )
+
+        # print(keywords)
+
+        wordlist = []
+        count = 0
+        for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
+            temp = {"keyword": key, "value": int(val * 100)}
+            wordlist.append(temp)
+            count += 1
+            if count >= 30:  # 출력 수 제한
+                break
+
+        # 사용자 모델의 keywords 필드에 값을 할당하고 저장
+        user.keywords = wordlist
+        user.save()
+
+        return Response({"status": "success", "words": wordlist})
+
+        # 절취선
+
+        # contexts = []
+
+        # for i in range(len(feedbacks)):
+        #     # print(feedbacks[i].context)
+        #     contexts.append(feedbacks[i].context)
+
+        # print(contexts)
+
+        # client = OpenAI(
+        #     # defaults to os.environ.get("OPENAI_API_KEY")
+        #     api_key=env("OPENAI_KEY"),
+        # )
+
+        # response = client.chat.completions.create(
+        #     model="gpt-3.5-turbo",
+        #     messages=[
+        #         {
+        #             "role": "user",
+        #             "content": str(contexts)
+        #             + "make a summary of these anonymous peer reviews in one sentences in polite korean like this example '사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.' but the subject and negative comment must not be included.",
+        #             # 이 배열은 사용자에 대해 다른 동료들이 익명으로 평가한 문장이야. 이 문장을 한 문장 이내로 요약해서 이러한 평가를 받고 있다고 사용자에게 안내하는 말투로 한국어로 정리해줘. 단, 주어는 생략해야 하고, 부정적인 평가가 포함되어서는 안 돼.",
+        #         }
+        #     ],
+        # )
+        # summary = response.choices[0].message.content.strip()
 
         return Response({"status": "success", "summary": summary})
 
