@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import React from "react";
 import axios from "axios";
 
-
 interface ApiResponse {
   status: string;
   feedbackform: string;

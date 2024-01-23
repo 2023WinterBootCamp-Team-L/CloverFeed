@@ -2,22 +2,24 @@ import React from "react";
 import AnswerOption from "./AnswerOption";
 
 interface AnswerOptionListProps {
-  
   inputs: string[];
   setInputs: React.Dispatch<React.SetStateAction<string[]>>;
   onCompleteChange: (complete: boolean) => void;
+  onUpdateInputs: (inputs: string[]) => void;
 }
 
 const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
   inputs,
   setInputs,
   onCompleteChange,
+  onUpdateInputs,
 }) => {
   const onInputChange =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
       const newInputs = [...inputs];
       newInputs[index] = e.target.value;
       setInputs(newInputs);
+      onUpdateInputs(newInputs);
     };
 
   const onItemDelete = (index: number) => {
