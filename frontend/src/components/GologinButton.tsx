@@ -1,28 +1,35 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginModal from "../components/LoginModal";
 import { useNavigate } from "react-router-dom";
 import SignupAnswer from "./SignupAnswer";
 import axios from "axios";
 function GologinButton() {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
+  const navigate = useNavigate();
+
   const SuccessLogin = () => {
     navigate("/login");
   };
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
+
   const [emailanswerInputs, setemailAnswerInputs] = useState("");
   const [pwanswerInputs, setpwAnswerInputs] = useState("");
+
   const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setemailAnswerInputs(e.target.value);
   };
+
   const onInputChangepw = (e: React.ChangeEvent<HTMLInputElement>) => {
     setpwAnswerInputs(e.target.value);
   };
+
   const emailValidationRegex =
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
   const handleLogin = async () => {
     try {
       setErrorMessage("");
@@ -37,10 +44,13 @@ function GologinButton() {
         setErrorMessage("올바른 이메일 형식이 아닙니다.");
         return;
       }
-      const response = await axios.post("/api/user/auth/login/", {
-        email: emailanswerInputs,
-        password: pwanswerInputs,
-      });
+      const response = await axios.post(
+        "http://localhost:8000/api/user/auth/login/",
+        {
+          email: emailanswerInputs,
+          password: pwanswerInputs,
+        }
+      );
       if (response.data.status === "success") {
         //로그인 성공
         console.log("로그인 성공", response.data);
@@ -59,27 +69,47 @@ function GologinButton() {
       );
     }
   };
+
+  useEffect(() => {
+    // errorMessage가 변경되면 3초 후에 null로 설정하여 사라지게 함
+    const timeoutId = setTimeout(() => {
+      setErrorMessage(null);
+    }, 3000);
+
+    // useEffect 클린업 함수에서 타이머 제거
+    return () => clearTimeout(timeoutId);
+  }, [errorMessage]);
+
   return (
     <div>
-      <button className="text-xs text-black underline" onClick={toggleModal}>
+      <button className="font-pre text-[14px] underline" onClick={toggleModal}>
         로그인하러가기
       </button>
       <LoginModal isOpen={isOpen} toggle={toggleModal}>
-        <div>
-          <p className="pt-8 pl-1 mb-1 text-sm text-left">Email 입력</p>
-          <SignupAnswer
-            value={emailanswerInputs}
-            onChange={onInputChangeemail}
-          />
-          <p className="pt-8 pl-1 mb-1 text-sm text-left">비밀번호 입력</p>
-          <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+        <div className="flex flex-col items-center gap-10 px-5 py-8">
+          <div className="flex flex-col items-start gap-2">
+            <p className="font-pre text-[14px] font-bold">Email 입력</p>
+            <SignupAnswer
+              value={emailanswerInputs}
+              onChange={onInputChangeemail}
+            />
+          </div>
+          <div className="flex flex-col items-start gap-2">
+            <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
+            <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
+          </div>
+
           <button
             onClick={handleLogin}
-            className="bg-c-green text-white w-full px-2 py-2 rounded-xl mt-12 text-lg"
+            className="bg-c-green text-white w-56 h-10 rounded-lg font-pre text-[14px]"
           >
             로그인
           </button>
+          {errorMessage && (
+            <p className="font-pre text-[14px] font-bold text-red-400">
+              {errorMessage}
+            </p>
+          )}
         </div>
       </LoginModal>
     </div>
