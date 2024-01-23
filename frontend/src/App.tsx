@@ -22,7 +22,7 @@ import Signup from "./pages/Signup";
 import WordCloud from "./components/wordcloud";
 import Search from "./pages/Search";
 import FeedBackResult from "./pages/FeedBackResult";
-import LinkAnswer from "./pages/LinkPage/LinkAnswer";
+import LinkAnswer from "./pages/LinkAnswer";
 import AnswerCheck from "./pages/LinkPage/AnswerCheck";
 import FeedbackList from "./pages/FeedBackList";
 

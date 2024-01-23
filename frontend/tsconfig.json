@@ -22,6 +22,12 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "src/components/Answer",
+    "src/components/Question",
+    "atoms/AnswerStore.tsx",
+    "atoms/QuestionStore.tsx"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -3,9 +3,9 @@ import { atom, selector } from "recoil";
 export type QuestionType = "객관식" | "주관식";
 
 export type Question = {
-  content: string;
+  context: string;
   type: QuestionType;
-  choice: QuestionType extends "주관식" ? null : string[] | null;
+  choices: QuestionType extends "주관식" ? null : string[] | null;
 };
 
 export type QuestionList = {
@@ -24,14 +24,14 @@ export const questionListState = atom<QuestionList>({
   default: {
     questions: [
       {
-        content: "당신의 포지션을 선택해주세요.",
+        context: "당신의 포지션을 선택해주세요.",
         type: "객관식",
-        choice: ["개발자", "디자이너", "기획자", "PMPO", "기타직무"],
+        choices: ["개발자", "디자이너", "기획자", "PMPO", "기타직무"],
       },
       {
-        content: "당신이 생각하는 ${username}님의 업무 능력 강점은 무엇인가요?",
+        context: "당신이 생각하는 ${username}님의 업무 능력 강점은 무엇인가요?",
         type: "객관식",
-        choice: [
+        choices: [
           "박학다식",
           "기획력",
           "문제 분석",
@@ -50,9 +50,9 @@ export const questionListState = atom<QuestionList>({
         ],
       },
       {
-        content: "당신이 생각하는 ${username}님의 성격 및 태도는 어떤가요?",
+        context: "당신이 생각하는 ${username}님의 성격 및 태도는 어떤가요?",
         type: "객관식",
-        choice: [
+        choices: [
           "책임감",
           "공감능력",
           "경청하는",
@@ -71,14 +71,14 @@ export const questionListState = atom<QuestionList>({
         ],
       },
       {
-        content: "${username}님에게 전하고 싶은 칭찬이 있나요?",
+        context: "${username}님에게 전하고 싶은 칭찬이 있나요?",
         type: "주관식",
-        choice: null,
+        choices: null,
       },
       {
-        content: "${username}님이 보완해 줬으면 하는 부분이 있나요?",
+        context: "${username}님이 보완해 줬으면 하는 부분이 있나요?",
         type: "주관식",
-        choice: null,
+        choices: null,
       },
     ],
   },
@@ -108,4 +108,12 @@ export const currentQuestionTypeState = atom<QuestionType>({
 export const currentQuestionChoiceState = atom<string[]>({
   key: "currentQuestionChoiceState",
   default: [],
+});
+
+// 피드백 답변 페이지의 QuestionList를 저장하기 위한 Atom
+export const feedbackQuestionListState = atom<QuestionList>({
+  key: "feedbackQuestionListState",
+  default: {
+    questions: [],
+  },
 });
