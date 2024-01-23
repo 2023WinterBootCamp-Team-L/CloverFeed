@@ -1,6 +1,6 @@
 # backend/cloverfeed/urls.py
 # URL 경로와 뷰를 매핑해주는 파일
-from django.urls import path, re_path
+from django.urls import path
 from . import views
 
 app_name = "cloverfeed"
@@ -36,7 +36,7 @@ urlpatterns = [
     ),
     # 특정 피드백 상세 내용 확인
     # <int:pk> 부분은 요청 URL에서 피드백 ID를 읽어오는 역할
-    path("feedbacks/<int:pk>", views.FeedbackResultDetail.as_view()),
+    path("feedbacks/<int:pk>/", views.FeedbackResultDetail.as_view()),
     # 피드백 결과의 태그들을 원형차트로 시각화
     path(
         "feedbacks/tags/chart",
