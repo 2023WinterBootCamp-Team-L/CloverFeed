@@ -15,6 +15,7 @@ typing_extensions==4.9.0
 jwt
 PyJWT
 django-environ==0.11.2
+openai
 django-cors-headers
 drf_yasg
 krwordrank
