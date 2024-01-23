@@ -33,9 +33,9 @@ const FeedbackAnswerInput: React.FC<FeedbackAnswerInputProps> = ({
         }}
         style={{
           ...textAreaStyle,
-          borderColor: isFocused ? "#50DA8C" : "white",
+          borderColor: isFocused ? "#50DA8C" : "#D5FBE5",
         }}
-        className="bg-white w-[340px] h-[380px] p-3 border-2 rounded-2xl focus:outline-none resize-none font-pre text-[14px]"
+        className="bg-white w-[340px] h-[380px] p-3 border-2  rounded-2xl focus:outline-none resize-none font-pre text-[14px]"
       />
     </div>
   );
