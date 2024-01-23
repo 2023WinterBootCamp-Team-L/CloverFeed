@@ -17,14 +17,14 @@ const PopupQuestion: React.FC<PopupQuestionProps> = ({ onClose }) => {
   }, [onClose]);
 
   return (
-    <div className="bg-[#1E2C49] text-white w-[332px] h-[50px] flex rounded-[50px] text-[15px]  justify-center items-center fixed bottom-0 left-0 right-0 mx-auto mb-4">
-      <img
-        src={checkcircle}
-        alt="Check Circle Icon"
-        className="w-5.5 h-5.5 px-15 px-1"
-      />
-      <div className="flex flex-col justify-center">
-        <span className="font-Preahvihear text-center text-[14px] px-1">
+    <div className="bg-[#1E2C49] text-white w-[332px] h-[50px] flex rounded-3xl justify-center items-center fixed bottom-0 left-0 right-0 mx-auto my-4">
+      <div className="flex flex-row justify-center items-center gap-2">
+        <img
+          src={checkcircle}
+          alt="Check Circle Icon"
+          className="w-5.5 h-5.5"
+        />
+        <span className="font-pre text-[14px]">
           답변 옵션 혹은 질문을 정확히 입력해주세요
         </span>
       </div>
