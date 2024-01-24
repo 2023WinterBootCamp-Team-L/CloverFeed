@@ -23,7 +23,7 @@ function LinkAnswer() {
   const backNavigate = useNavigate();
   const nextNavigate = useNavigate();
 
-  const [userId, setUserId] = useState("");
+  const [userid, setUserId] = useState("");
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("user_id");
@@ -34,7 +34,7 @@ function LinkAnswer() {
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse>(
-          `http://localhost:8000/api/form/questions/?user_id=${userId}`
+          `http://localhost:8000/api/form/questions/?user_id=${userid}`
         );
 
         if (response.data.status === "success") {
@@ -60,7 +60,7 @@ function LinkAnswer() {
     if (!questions.questions || questions.questions.length === 0) {
       fetchData();
     }
-  }, [userId, questions, setQuestions]);
+  }, [userid, questions, setQuestions]);
 
   const handleBackButtonClick = () => {
     if (currentQuestionIndex > 0) {

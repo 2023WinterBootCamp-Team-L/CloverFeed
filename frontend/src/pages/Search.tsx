@@ -15,19 +15,19 @@ const Search: React.FC = () => {
   const [filteredFeedbacks, setFilteredFeedbacks] = useState<JSX.Element[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const [userId, setUserId] = useState("");
+  const [userid, setUserid] = useState("");
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("user_id");
-    if (storedUserId) {
-      setUserId(storedUserId);
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
     }
   }, []);
 
   const fetchFeedbacks = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/feedbacks/response/?user_id=${userId}&keyword=${searchValue}`
+        `http://localhost:8000/api/feedbacks/response/?user_id=${userid}&keyword=${searchValue}`
       );
 
       if (response.data.status === "success") {

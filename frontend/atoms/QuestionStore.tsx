@@ -78,7 +78,7 @@ export const questionListState = atom<QuestionList>({
           choices: null,
         },
         {
-          context: `${username}님이 보완해 줬으면 하는 부분이 있나요?`,
+          context: `s${username}님이 보완해 줬으면 하는 부분이 있나요?`,
           type: "주관식",
           choices: null,
         },
