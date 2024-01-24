@@ -1,19 +1,19 @@
-import { useState } from "react";
-import BackButton from "../components/BackButton";
-import FeedbackAnswerInput from "../components/FeedbackAnswerInput";
+import { useState } from 'react';
+import BackButton from '../components/BackButton';
+import FeedbackAnswerInput from '../components/FeedbackAnswerInput';
 
 function LinkAnswer1() {
-  const [answerInputs, setAnswerInputs] = useState("내용을 입력하세요");
+  const [answerInputs, setAnswerInputs] = useState('내용을 입력하세요');
 
   const onFocus = () => {
-    if (answerInputs === "내용을 입력하세요") {
-      setAnswerInputs("");
+    if (answerInputs === '내용을 입력하세요') {
+      setAnswerInputs('');
     }
   };
 
   const onBlur = () => {
-    if (answerInputs === "") {
-      setAnswerInputs("내용을 입력하세요");
+    if (answerInputs === '') {
+      setAnswerInputs('내용을 입력하세요');
     }
   };
 
@@ -22,10 +22,10 @@ function LinkAnswer1() {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <div
-        className="flex flex-col overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-20"
-        style={{ width: "393px", height: "852px" }}
+        className="flex flex-col overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-20 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: '393px', height: '852px' }}
       >
         <div className="flex justify-between w-full">
           <BackButton back page="/LinkTag2" />

@@ -1,11 +1,11 @@
-import BackButton from "../components/BackButton";
+import BackButton from '../components/BackButton';
 
 function LinkOpti() {
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <div
-        className="flex flex-col overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-20"
-        style={{ width: "393px", height: "852px" }}
+        className="flex flex-col overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-20 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: '393px', height: '852px' }}
       >
         <div className="flex justify-between w-full">
           <BackButton back page="/LinkAnswer2" />
