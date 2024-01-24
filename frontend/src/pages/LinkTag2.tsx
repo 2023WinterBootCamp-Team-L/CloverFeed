@@ -109,7 +109,7 @@ function LinkTag2() {
       >
         <div className="flex justify-between w-full">
           <BackButton back page="/LinkTag1" />
-          <BackButton back={false} page="/LinkAnswer1" />
+          <BackButton back={false} page="/LinkAnswer" />
         </div>
         <div className="flex-full">
           <p className="font-pre text-[22px] font-bold text-center">
