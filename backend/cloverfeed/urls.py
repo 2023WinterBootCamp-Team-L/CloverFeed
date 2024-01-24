@@ -7,9 +7,9 @@ app_name = "cloverfeed"
 
 urlpatterns = [
     # 회원가입
-    path("user/auth/signup", views.SignupView.as_view(), name="signup"),
+    path("user/auth/signup/", views.SignupView.as_view(), name="signup"),
     # 로그인
-    path("user/auth/login", views.LoginView.as_view(), name="login"),
+    path("user/auth/login/", views.LoginView.as_view(), name="login"),
     # 피드백 질문 목록 작성
     path("questions", views.SubmitFormView.as_view(), name="form"),
     # 피드백 폼 유무 조회
@@ -53,7 +53,7 @@ urlpatterns = [
     ),
     # 워드클라우드
     path(
-        "feedbacks/wordcloud/", views.WordCloudContextView.as_view(), name="wordcloud"
+        "feedbacks/wordcloud/", views.WordCloudSummaryView.as_view(), name="wordcloud"
     ),
     path(
         "feedbacks/wordcloudkeyword/",

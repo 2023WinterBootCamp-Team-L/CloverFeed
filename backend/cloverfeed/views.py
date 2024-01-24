@@ -14,8 +14,9 @@ from rest_framework.authentication import BasicAuthentication
 from .authentication import CsrfExemptSessionAuthentication
 from collections import Counter
 from openai import OpenAI
-import json, random, ast, environ
+import json, random, ast, environ, re
 from datetime import datetime
+from konlpy.tag import Okt
 
 from .models import (
     Form,
@@ -798,18 +799,16 @@ class SummaryView(APIView):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     @swagger_auto_schema(
-        manual_parameters=[
-            openapi.Parameter(
-                "userid",
-                openapi.IN_QUERY,
-                description="사용자 ID",
-                required=True,
-                type=openapi.TYPE_NUMBER,
-            ),
-        ]
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "userid": openapi.Schema(type=openapi.TYPE_NUMBER),
+            },
+            required=["userid"],
+        )
     )
-    def get(self, request):
-        userid = request.query_params.get("userid")
+    def post(self, request):
+        userid = request.data.get("userid")
 
         # 유저 검증
         try:
@@ -841,36 +840,75 @@ class SummaryView(APIView):
                 status=404,
             )
 
-        stopwords = {
-            "주셔서",
-            "거두고",
-            "정말",
-            "특히",
-            "팀에",
-            "앞으로",
-            "다른",
-            "전체",
-            "되고",
-            "우리팀",
-        }  # 불용어
-        keywords = summarize_with_keywords(
-            contexts,
-            min_count=3,
-            max_length=10,
-            beta=0.85,
-            max_iter=10,
-            stopwords=stopwords,
-            verbose=True,
+        # print(contexts)
+
+        # 정규 표현식을 통한 불필요한 특수문자 제거
+        for i in range(len(contexts)):
+            contexts[i] = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s]", " ", contexts[i])
+
+        okt = Okt()
+        keywords = []
+
+        for i in range(len(contexts)):
+            # norm: 형태소의 표현을 정상화시킴 (예: 되나욬 -> 되나요)
+            # stem: 스테밍(원형복원; 예: 찾아 -> 찾다, 되나요 -> 되다)
+            contexts[i] = okt.pos(contexts[i], stem=True, norm=True)
+            for word, tag in contexts[i]:
+                if tag in ["Noun"] or tag in ["Adjective"]:
+                    keywords.append(word)
+                # if tag in ["Adjective"]:
+                #     keywords.append(word)
+
+        print(keywords)
+
+        # 각 원소의 갯수를 세기
+        element_counts = Counter(keywords)
+        keywords_withcounts = [
+            {"keyword": word, "value": count} for word, count in element_counts.items()
+        ]
+
+        print(keywords_withcounts)
+
+        # 'value' 키 값을 기준으로 내림차순으로 정렬
+        keywords_sorted = sorted(
+            keywords_withcounts, key=lambda x: x["value"], reverse=True
         )
 
+        # 결과 출력
+        print(keywords_sorted)
+
+        # print(contexts)
+
+        # stopwords = {
+        #     "주셔서",
+        #     "거두고",
+        #     "정말",
+        #     "특히",
+        #     "팀에",
+        #     "앞으로",
+        #     "다른",
+        #     "전체",
+        #     "되고",
+        #     "우리팀",
+        # }  # 불용어
         # keywords = summarize_with_keywords(
         #     contexts,
-        #     min_count=1,
+        #     min_count=3,
         #     max_length=10,
         #     beta=0.85,
         #     max_iter=10,
+        #     stopwords=stopwords,
         #     verbose=True,
         # )
+
+        keywords = summarize_with_keywords(
+            keywords,
+            min_count=1,
+            max_length=10,
+            beta=0.85,
+            max_iter=10,
+            verbose=True,
+        )
 
         # print(keywords)
 
@@ -883,45 +921,41 @@ class SummaryView(APIView):
             if count >= 30:  # 출력 수 제한
                 break
 
-        # 사용자 모델의 keywords 필드에 값을 할당하고 저장
-        user.keywords = wordlist
+        print(wordlist)
+
+        keywords_to_summary = []
+
+        key_to_print = "keyword"
+        for word in wordlist:
+            if key_to_print in word:
+                keywords_to_summary.append(word[key_to_print])
+                # print(f"{word[key_to_print]}")
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "user",
+                    "content": str(keywords_to_summary)
+                    + "make a summary of these keywords from anonymous peer reviews in one sentences in polite korean as briefly and concisely as possible like this example '사용자님께서는 사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.' The length of the your answer must be 90~110 characters. but the subject and negative comment must not be included.",
+                    # 이 배열은 사용자에 대해 다른 동료들이 익명으로 평가한 문장이야. 이 문장을 한 문장 이내로 요약해서 이러한 평가를 받고 있다고 사용자에게 안내하는 말투로 한국어로 정리해줘. 단, 주어는 생략해야 하고, 부정적인 평가가 포함되어서는 안 돼.",
+                }
+            ],
+        )
+        summary = response.choices[0].message.content.strip()
+        print(summary)
+
+        # 사용자 모델의 keywords, summary 필드에 값을 할당하고 저장
+        user.keywords = keywords_sorted
+        user.summary = summary
         user.save()
 
-        return Response({"status": "success", "words": wordlist})
-
-        # 절취선
-
-        # contexts = []
-
-        # for i in range(len(feedbacks)):
-        #     # print(feedbacks[i].context)
-        #     contexts.append(feedbacks[i].context)
-
-        # print(contexts)
-
-        # client = OpenAI(
-        #     # defaults to os.environ.get("OPENAI_API_KEY")
-        #     api_key=env("OPENAI_KEY"),
-        # )
-
-        # response = client.chat.completions.create(
-        #     model="gpt-3.5-turbo",
-        #     messages=[
-        #         {
-        #             "role": "user",
-        #             "content": str(contexts)
-        #             + "make a summary of these anonymous peer reviews in one sentences in polite korean like this example '사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.' but the subject and negative comment must not be included.",
-        #             # 이 배열은 사용자에 대해 다른 동료들이 익명으로 평가한 문장이야. 이 문장을 한 문장 이내로 요약해서 이러한 평가를 받고 있다고 사용자에게 안내하는 말투로 한국어로 정리해줘. 단, 주어는 생략해야 하고, 부정적인 평가가 포함되어서는 안 돼.",
-        #         }
-        #     ],
-        # )
-        # summary = response.choices[0].message.content.strip()
-
+        # return Response({"status": "success", "words": wordlist})
         return Response({"status": "success", "summary": summary})
 
 
 # 워드클라우드
-class WordCloudContextView(APIView):
+class WordCloudSummaryView(APIView):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
     @swagger_auto_schema(
@@ -947,52 +981,61 @@ class WordCloudContextView(APIView):
                 status=401,
             )
 
-        # 피드백 결과 조회
-        feedbacks = QuestionAnswer.objects.filter(
-            Q(feedback__form__user=user), Q(type="주관식")
-        )
+        print(user.keywords)
 
-        contexts = []
+        # 문자열을 파싱하여 리스트로 변환
+        parsed_keywords = ast.literal_eval(user.keywords)
 
-        for i in range(len(feedbacks)):
-            # print(feedbacks[i].context)
-            contexts.append(feedbacks[i].context)
+        print(parsed_keywords)
 
-        if len(contexts) == 0:
-            return Response(
-                {
-                    "status": "error",
-                    "error_code": 404,
-                    "message": "피드백이 없습니다.",
-                },
-                status=404,
-            )
+        # # 피드백 결과 조회
+        # feedbacks = QuestionAnswer.objects.filter(
+        #     Q(feedback__form__user=user), Q(type="주관식")
+        # )
+
+        # contexts = []
+
+        # for i in range(len(feedbacks)):
+        #     # print(feedbacks[i].context)
+        #     contexts.append(feedbacks[i].context)
+
+        # if len(contexts) == 0:
+        #     return Response(
+        #         {
+        #             "status": "error",
+        #             "error_code": 404,
+        #             "message": "피드백이 없습니다.",
+        #         },
+        #         status=404,
+        #     )
 
         # stopwords = {'영화', '관람객', '너무', '정말', '보고', '일부', '완전히'} # 불용어
         # keywords = summarize_with_keywords(contexts, min_count=3, max_length=10, beta=0.85, max_iter=10, stopwords=stopwords, verbose=True)
-        keywords = summarize_with_keywords(
-            contexts,
-            min_count=1,
-            max_length=10,
-            beta=0.85,
-            max_iter=10,
-            verbose=True,
-        )
+        # keywords = summarize_with_keywords(
+        #     contexts,
+        #     min_count=1,
+        #     max_length=10,
+        #     beta=0.85,
+        #     max_iter=10,
+        #     verbose=True,
+        # )
 
         # print(keywords)
 
-        wordlist = []
-        count = 0
-        for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
-            temp = {"name": key, "value": int(val * 100)}
-            wordlist.append(temp)
-            count += 1
-            if count >= 30:  # 출력 수 제한
-                break
+        # wordlist = []
+        # count = 0
+        # for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
+        #     temp = {"name": key, "value": int(val * 100)}
+        #     wordlist.append(temp)
+        #     count += 1
+        #     if count >= 30:  # 출력 수 제한
+        #         break
 
         # print(wordlist)
 
-        return Response({"status": "success", "words": wordlist})
+        return Response(
+            {"status": "success", "summary": user.summary, "words": parsed_keywords}
+        )
 
 
 # 워드클라우드
