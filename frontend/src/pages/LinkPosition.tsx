@@ -42,10 +42,10 @@ function LinkPosition() {
   ];
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <div
-        className="flex flex-col justify-center items-center overflow-hidden relative bg-c-emerald bg-opacity-35"
-        style={{ width: "393px", height: "852px" }}
+        className="flex flex-col justify-center items-center overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-10 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: '393px', height: '852px' }}
       >
         <div className="flex flex-col gap-20">
           {/* <ProgressBar totalSteps={totalSteps} currentStep={currentStep} /> */}

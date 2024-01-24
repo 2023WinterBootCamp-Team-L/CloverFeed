@@ -91,32 +91,38 @@ function LinkAnswer() {
     : undefined;
 
   return (
-    <div
-      className="bg-c-emerald bg-opacity-35 flex flex-col mx-auto h-screen gap-20 px-5 py-8"
-      style={{ width: "393px" }}
-    >
-      <div className="flex justify-between">
-        <BackButton back onClick={handleBackButtonClick} />
-        <BackButton back={false} onClick={handleNextButtonClick} />
-      </div>
-      <div className="flex flex-col items-center gap-20">
-        <p className="font-pre text-[22px] font-bold text-center overflow-hidden line-clamp-2 px-10">
-          {currentQuestion?.context}
-        </p>
-        {currentQuestion &&
-          currentQuestion.context === "당신의 포지션을 선택해주세요." && (
-            <CategoryPart questionIndex={currentQuestionIndex} /> // 질문 목록 인덱스
-          )}
-        {currentQuestionIndex >= 3 && (
-          <>
-            {currentQuestion?.type === "객관식" && (
-              <ChoicePart questionIndex={currentQuestionIndex} />
+    <div className="flex justify-center items-center min-h-screen">
+      <div
+        className="flex flex-col overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-20 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: '393px', height: '852px' }}
+      >
+        <div className="flex justify-between w-full">
+          <BackButton back onClick={handleBackButtonClick} />
+          <BackButton back={false} onClick={handleNextButtonClick} />
+        </div>
+        <div className="flex flex-col items-center gap-20">
+          <div className="flex-full">
+            <p className="font-pre text-[22px] font-bold text-center px-10">
+              {currentQuestion?.context}
+            </p>
+          </div>
+          <div className="flex flex-1 flex-col justify-center items-center">
+            {currentQuestion &&
+              currentQuestion.context === "당신의 포지션을 선택해주세요." && (
+                <CategoryPart questionIndex={currentQuestionIndex} /> // 질문 목록 인덱스
+              )}
+            {currentQuestionIndex >= 3 && (
+              <>
+                {currentQuestion?.type === "객관식" && (
+                  <ChoicePart questionIndex={currentQuestionIndex} />
+                )}
+                {currentQuestion?.type === "주관식" && (
+                  <ShortPart questionIndex={currentQuestionIndex} />
+                )}
+              </>
             )}
-            {currentQuestion?.type === "주관식" && (
-              <ShortPart questionIndex={currentQuestionIndex} />
-            )}
-          </>
-        )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -3,13 +3,12 @@ import GreenButton from "../components/GreenButton";
 // import LinkButton from "../components/LinkButton";
 
 function LinkStart() {
-  const nextpage = "/LinkPosition";
-
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <div
-        className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-35"
-        style={{ width: "393px", height: "852px" }}
+        //sm은 화면 너비 640px이상(모바일), md는 768px이상(테블릿), lg는 1024px이상(데스크탑)
+        className="flex px-5 py-10 flex-col  items-center relative bg-c-emerald bg-opacity-35 overflow-hidden min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        //style={{ width: '393px', height: '852px' }}
       >
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
           <p className="font-pre text-[22px] font-bold">XXX님의 본격적인</p>
@@ -26,8 +25,8 @@ function LinkStart() {
             alt="클로버 이미지"
           />
         </div>
-        <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
-          <GreenButton text="피드백 시작하기" nextpage={nextpage} />
+        <div className="w-full h-full flex flex-1 flex-col justify-center items-center mb-4">
+          <GreenButton text="피드백 시작하기" nextpage="/LinkPosition" />
         </div>
       </div>
     </div>

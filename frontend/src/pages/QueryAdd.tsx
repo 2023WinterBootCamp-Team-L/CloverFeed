@@ -112,7 +112,7 @@ function QueryAdd() {
       setCurrentQuestionType("객관식");
       setAnswerComplete(false);
       setAnswerInputs([]);
-      navigate("/querylist");
+      navigate("/QueryList");
     } else {
       setPopupVisible(true);
     }
@@ -136,7 +136,7 @@ function QueryAdd() {
       style={{ width: "393px" }}
     >
       <div className="flex justify-between">
-        <BackButton back page="/querylist" />
+        <BackButton back page="/QueryList" />
         <BackButton back={false} onClick={handleAddButtonClick} />
       </div>
       <div className="flex flex-col gap-4">
