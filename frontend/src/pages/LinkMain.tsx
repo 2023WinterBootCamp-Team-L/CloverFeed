@@ -1,15 +1,15 @@
-import clover from "../assets/clover.svg";
-import ChangePage from "../components/ChangePage";
+import clover from '../assets/clover.svg';
+import ChangePage from '../components/ChangePage';
 
 function LinkMain() {
-  const nextpage = "/LinkStart";
+  const nextpage = '/LinkStart';
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <ChangePage nextpage={nextpage} />
       <div
-        className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-35"
-        style={{ width: "393px", height: "852px" }}
+        className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-35 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: "393px", height: "852px" }}
       >
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
           <p className="text-black dark:text-white text-center font-pre text-[22px] font-bold">

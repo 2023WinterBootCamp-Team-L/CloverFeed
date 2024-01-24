@@ -1,13 +1,12 @@
-import clover from "../assets/clover.svg";
-import HomeButton from "../components/HomeButton";
-import axios from "axios";
-import { useRecoilValue } from "recoil";
-import { answerListSelector } from "../../atoms/AnswerStore";
-
+import clover from '../assets/clover.svg';
+import HomeButton from '../components/HomeButton';
+import axios from 'axios';
+import { useRecoilValue } from 'recoil';
+import { answerListSelector } from '../../atoms/AnswerStore';
 function LinkFinish() {
-  const nextpage = "/";
+  const nextpage = '/';
 
-  const apiUrl = "http://localhost:8000/api/answers/";
+  const apiUrl = 'http://localhost:8000/api/answers/';
 
   // Recoil의 상태값에서 AnswerList 가져오기
   const answerList = useRecoilValue(answerListSelector);
@@ -26,21 +25,21 @@ function LinkFinish() {
     axios
       .post(apiUrl, postData)
       .then((response) => {
-        console.log("답변 제출");
+        console.log('답변 제출');
         console.log(response.data);
       })
       .catch((error) => {
-        console.error("폼 없음", error.response.data);
+        console.error('폼 없음', error.response.data);
       });
   } catch (error) {
-    console.error("요청 중 에러 발생:", error);
+    console.error('요청 중 에러 발생:', error);
   }
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <div
-        className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-40"
-        style={{ width: "393px", height: "852px" }}
+        className="flex flex-col  overflow-hidden relative bg-c-emerald bg-opacity-40 px-5 py-8 gap-20 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: '393px', height: '852px' }}
       >
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
           <p className="font-pre text-[22px] font-bold">

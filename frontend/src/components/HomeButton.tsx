@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface HomeButtonProps {
   text: string;
@@ -14,7 +14,7 @@ const HomeButton = ({ text, nextpage }: HomeButtonProps) => {
 
   return (
     <button
-      className="bg-c-indigo text-white p-3 rounded-lg w-[332px] text-[16px] font-pre"
+      className="bg-c-indigo text-white p-3 rounded-lg text-[16px] font-pre min-w-[300px] sm:w-[320px] lg:w-[332px]"
       onClick={handleButtonClick}
     >
       {text}
