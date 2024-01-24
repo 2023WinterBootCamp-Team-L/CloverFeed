@@ -1,5 +1,3 @@
-// Tag.tsx
-
 import { useState } from "react";
 import classNames from "classnames";
 
@@ -9,54 +7,86 @@ export interface TagProps {
   color: string;
   image: string;
   onClick?: () => void;
+  currentIndex: number;
+  // setCurrentColorIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
-// Tag 컴포넌트를 정의합니다.
-const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
-  const [isSelected, setIsSelected] = useState(false);
+export const tagColors = [
+  { bg: "bg-[#E2E9FF]" },
+  { bg: "bg-[#F6EED4]" },
+  { bg: "bg-[#EDD0F5]" },
+  { bg: "bg-[#F9C7C7]" },
+  { bg: "bg-[#D5FBE5]" },
+];
+
+const Tag: React.FC<TagProps> = ({
+  text,
+  color,
+  image,
+  onClick,
+  currentIndex,
+}) => {
+  const [currentColorIndex, setCurrentColorIndex] = useState(0);
 
   const handleButtonClick = () => {
     if (onClick) {
       onClick();
     }
-    setIsSelected((prev) => !prev);
+
+    setCurrentColorIndex((prevIndex) => (prevIndex + 1) % tagColors.length);
   };
 
-  const tagColors = [
-    { bg: "bg-[#E2E9FF]", icon: "fill-[#9EACD0]" },
-    { bg: "bg-[#F6EED4]", icon: "fill-[#F5D781]" },
-    { bg: "bg-[#EDD0F5]", icon: "fill-[#EBBCF7]" },
-    { bg: "bg-[#F9C7C7]", icon: "fill-[#FE8C8C]" },
-    { bg: "bg-[#D5FBE5]", icon: "fill-[#9CECBE]" },
-  ];
+  const selectedColorIndex =
+    currentIndex !== -1 ? currentIndex : currentColorIndex;
+  const selectedColor = tagColors[selectedColorIndex];
 
-  const selectedColorIndex = isSelected ? tagColors.length - 1 : undefined;
-  const selectedColor =
-    selectedColorIndex !== undefined
-      ? tagColors[selectedColorIndex]
-      : undefined;
+  // Tag 컴포넌트를 정의합니다.
+  // const Tag: React.FC<TagProps> = ({
+  //   text,
+  //   color,
+  //   image,
+  //   onClick,
+  //   currentIndex,
+  // }) => {
+  //   const [isSelected, setIsSelected] = useState(currentIndex !== -1);
+  //   const [currentColorIndex, setCurrentColorIndex] = useState(0);
+
+  //   const handleButtonClick = () => {
+  //     if (onClick) {
+  //       onClick();
+  //     }
+
+  //     setIsSelected(!isSelected);
+  //     // 클릭할 때마다 다음 색상으로 변경
+  //     setCurrentColorIndex((prevIndex) => (prevIndex + 1) % tagColors.length);
+
+  //     console.log("isSelected:", !isSelected);
+  //     console.log(
+  //       "currentColorIndex:",
+  //       (currentColorIndex + 1) % tagColors.length
+  //     );
+  //   };
+
+  //   const selectedColorIndex =
+  //     currentIndex !== -1 ? currentIndex : currentColorIndex;
+  //   const selectedColor = tagColors[selectedColorIndex];
 
   const tagClasses = classNames(
-    color,
-    "py-1 px-3",
-    "rounded-2xl",
-    "mt-4",
+    color, //기본 배경색
+    "py-2 px-5",
+    "rounded-3xl",
     "text-xs",
     "flex",
     "items-center",
     "justify-center",
-    selectedColor?.bg
+    // selectedColor?.border,
+    currentIndex !== -1 && selectedColor?.bg // 선택된 경우 배경색 추가
   );
 
-  const iconClasses = classNames(
-    "mr-2",
-    "max-h-4",
-    "object-contain",
-    selectedColor?.icon
-  );
+  const iconClasses = classNames("mr-2", "max-h-4", "object-contain");
 
   return (
-    <label className="inline-flex relative">
+    <label className="inline-flex relative m-4">
       <button className={tagClasses} onClick={handleButtonClick}>
         <img src={image} alt="Tag Icon" className={iconClasses} />
         {text}

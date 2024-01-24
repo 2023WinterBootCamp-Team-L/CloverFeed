@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { QuestionProvider } from "./components/QuestionUpdate";
 import LinkMain from "./pages/LinkMain";
 import QueryMain from "./pages/QueryMain";
 import QueryStart from "./pages/QueryStart";
@@ -21,9 +20,12 @@ import Mainpage from "./pages/Mainpage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import WordCloud from "./components/wordcloud";
-import FeedBackList from "./pages/FeedBackList";
 import Search from "./pages/Search";
 import FeedBackResult from "./pages/FeedBackResult";
+import LinkAnswer from "./pages/LinkPage/LinkAnswer";
+import AnswerCheck from "./pages/LinkPage/AnswerCheck";
+import FeedbackList from "./pages/FeedBackList";
+import { QuestionProvider } from "./components/QuestionUpdate";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -41,18 +43,19 @@ function App() {
         <Route path="/LinkTag1" element={<LinkTag1 />} />
         <Route path="/Chart" element={<Chart />} />
         <Route path="/Search" element={<Search />} />
-        <Route path="/FeedBackResult" element={<FeedBackResult />} />
-        <Route path="/feedbacks/:category" element={<FeedBackList />} />
+        <Route path="/feedbacks/:category" element={<FeedbackList />} />
+        <Route path="/feedbackresult" element={<FeedBackResult />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
         <Route path="LinkAnswer2" element={<LinkAnswer2 />} />
         <Route path="LinkOpti" element={<LinkOpti />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         <Route path="/mainpage" element={<Mainpage />} />
         <Route path="/gosignup" element={<Gosignup />} />
         <Route path="/wordcloud" element={<WordCloud />} />
+        <Route path="/test" element={<LinkAnswer />} />
+        <Route path="/check" element={<AnswerCheck />} />
       </Routes>
 
       <QuestionProvider>

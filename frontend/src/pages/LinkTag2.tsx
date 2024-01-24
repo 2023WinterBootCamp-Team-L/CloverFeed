@@ -26,103 +26,103 @@ function LinkTag2() {
   const tagsData: TagProps[] = [
     {
       text: "책임감",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/책임감.svg",
+      color: "bg-white",
+      image: "../src/assets/책임감.png",
     },
     {
       text: "공감능력",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/공감능력.svg",
+      color: "bg-white",
+      image: "../src/assets/공감능력.png",
     },
     {
       text: "배려심",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/배려심.svg",
+      color: "bg-white",
+      image: "../src/assets/배려심.png",
     },
     {
       text: "성실함",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/성실함.svg",
+      color: "bg-white",
+      image: "../src/assets/성실함.png",
     },
     {
       text: "적극적인",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/적극적인.svg",
+      color: "bg-white",
+      image: "../src/assets/적극적인.png",
     },
     {
       text: "꼼꼼함",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/꼼꼼함.svg",
+      color: "bg-white",
+      image: "../src/assets/꼼꼼함.png",
     },
     {
       text: "분위기 메이커",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/분위기메이커.svg",
+      color: "bg-white",
+      image: "../src/assets/분위기메이커.png",
     },
     {
       text: "주도적인",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/주도적인.svg",
+      color: "bg-white",
+      image: "../src/assets/주도적인.png",
     },
     {
       text: "센스있는",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/센스있는.svg",
+      color: "bg-white",
+      image: "../src/assets/센스있는.png",
     },
     {
       text: "긍정적인",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/긍정적인.svg",
+      color: "bg-white",
+      image: "../src/assets/긍정적인.png",
     },
     {
       text: "사교성이 좋은",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/사교성이좋은.svg",
+      color: "bg-white",
+      image: "../src/assets/사교성이좋은.png",
     },
     {
       text: "관대한",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/관대한.svg",
+      color: "bg-white",
+      image: "../src/assets/관대한.png",
     },
     {
       text: "경청하는",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/경청하는.svg",
+      color: "bg-white",
+      image: "../src/assets/경청하는.png",
     },
     {
       text: "도전적인",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/도전적인.svg",
+      color: "bg-white",
+      image: "../src/assets/도전적인.png",
     },
     {
       text: "끈기",
-      color: "bg-[#EEEFF0]",
-      image: "../assets/TagIcon/끈기.svg",
+      color: "bg-white",
+      image: "../src/assets/끈기.png",
     },
   ];
 
   return (
-    <div className="flex justify-center items-center h-screen ">
+    <div className="flex justify-center items-center h-screen">
       <div
-        className="flex flex-col justify-center overflow-hidden relative border-2 border-gray-300 bg-emerald-50"
+        className="flex flex-col justify-center overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-10"
         style={{ width: "393px", height: "852px" }}
       >
-        <div className="flex justify-between w-full px-4 pt-4">
+        <div className="flex justify-between w-full">
           <BackButton back page="/LinkTag1" />
           <BackButton back={false} page="/LinkAnswer1" />
         </div>
-        <div className="flex-full justify-start pt-12 pb-12 pl-4">
-          <p className=" text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
+        <div className="flex-full">
+          <p className="font-pre text-[22px] font-bold text-center">
             당신이 생각하는 XXX 님의
           </p>
-          <p className=" text-left font-Preahvihear text-24 text-xl font-normal font-weight-400 ">
+          <p className="font-pre text-[22px] font-bold text-center">
             성격 및 태도는 어떤가요?
           </p>
-          <p className=" text-left font-Preahvihear text-[#767677] text-[14px] font-normal font-weight-400 ">
+          <p className="font-pre text-[14px] text-gray-400 text-center">
             키워드를 최대 5개까지 선택해주세요.
           </p>
         </div>
-        <div className="flex-1 px-4">
+        <div className="flex-1 text-center">
           {/* 15개의 태그 렌더링 */}
           {tagsData.map((tag, index) => (
             <Tag

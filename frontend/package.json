@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/babel__core": "^7.20.5",
     "@types/classnames": "^2.3.1",
     "@types/d3": "^7.4.3",
     "@types/d3-cloud": "^1.2.9",
@@ -23,9 +24,10 @@
     "msw": "^2.1.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
+    "react-d3-cloud": "^1.0.6",
     "react-dom": "^18.2.0",
     "react-query": "^3.39.3",
-    "react-router-dom": "^6.21.2",
+    "react-router-dom": "^6.21.3",
     "react-wordcloud": "^1.2.7",
     "recoil": "^0.7.7",
     "recoil-devtools": "^0.5.0",
@@ -46,7 +48,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.33",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.4",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.11"
