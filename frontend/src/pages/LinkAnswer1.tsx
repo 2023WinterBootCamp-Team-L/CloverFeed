@@ -55,4 +55,3 @@ function LinkAnswer1() {
 }
 
 export default LinkAnswer1;
-

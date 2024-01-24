@@ -19,10 +19,18 @@ interface Feedback {
 }
 
 const FeedbackList: React.FC = () => {
-  const userId = 1;
   const { category } = useParams<{ category?: string }>();
 
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/list/?userid=${userId}&category=${category}`;
+  const [userid, setUserid] = useState("");
+
+  useEffect(() => {
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
+    }
+  }, []);
+
+  const apiUrl = `http://localhost:8000/api/feedbacks/response/list/?user_id=${userid}&category=${category}`;
 
   // 더미 데이터
   const dummyData = {

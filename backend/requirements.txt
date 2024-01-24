@@ -17,3 +17,6 @@ PyJWT
 django-environ==0.11.2
 django-cors-headers
 drf_yasg
+krwordrank
+openai
+konlpy
