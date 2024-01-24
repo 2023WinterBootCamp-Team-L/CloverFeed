@@ -4,7 +4,7 @@
 from django.http import JsonResponse
 from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
-from django.db.models import Q, Count
+from django.db.models import Q, Max
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -287,13 +287,15 @@ class SubmitFormView(APIView):
 
         # 질문을 생성하고 데이터베이스에 저장
         for question_data in questions_data:
+            # 'choices' 데이터를 전달하기 전에 추출합니다.
+            choices = question_data.pop("choices", [])
+
             question_serializer = QuestionSerializer(data=question_data)
             if question_serializer.is_valid():
                 question = question_serializer.save(form=form)
 
-                # 질문이 "객관식"인 경우 MultipleChoice 객체를 생성
+                # 질문 타입이 "객관식"인 경우 'choices'를 별도로 처리
                 if question_data.get("type") == "객관식":
-                    choices = question_data.get("choice", [])
                     for choice_text in choices:
                         MultipleChoice.objects.create(
                             question=question, choice_context=choice_text
@@ -375,9 +377,25 @@ class QuestionListView(APIView):
                 {"error": "user_id를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
             )
 
+        # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
         try:
-            form = Form.objects.filter(user=user_id)
-        except Form.DoesNotExist:
+            # 각 user_id에 대한 최대 form_id를 얻기 위한 쿼리
+            subquery = (
+                Question.objects.filter(form__user_id=user_id)
+                .values("form__user_id")
+                .annotate(max_form_id=Max("form__id"))
+                .values("max_form_id")
+            )
+
+            # 서브쿼리를 사용하여 주 쿼리를 필터링
+            questions_data = Question.objects.filter(
+                form__user_id=user_id, form__id__in=subquery
+            )
+            print(questions_data)
+
+            # questions_data = Question.objects.filter(form__user_id=user_id)
+            # print(questions_data)
+        except Question.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
                 {
@@ -387,14 +405,6 @@ class QuestionListView(APIView):
                 },
                 status=404,
             )
-
-        # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
-        # questions_data = list(Question.objects.all().values())
-
-        # questions_data에
-
-        questions_data = Question.objects.filter(form__user_id=user_id)
-        print(questions_data)
 
         # 시리얼라이저를 사용하여 데이터 직렬화
         serializer = QuestionSerializer(questions_data, many=True)
