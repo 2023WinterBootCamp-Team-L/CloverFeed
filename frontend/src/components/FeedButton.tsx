@@ -1,5 +1,5 @@
 import React from "react";
-// import FeedCount from "../components/FeedCount.tsx";
+import FeedCount from "../components/FeedCount";
 import { useNavigate } from "react-router-dom";
 
 interface FeedButtonProps {
@@ -22,8 +22,9 @@ const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
       <button className={buttonClassName} onClick={handleButtonClick}>
         <div className="flex flex-row justify-between">
           <p>{category}의 피드백</p>
-          <p>0</p>
-          {/* <FeedCount category={category} /> */}
+          <p>
+            <FeedCount category={category} />
+          </p>
         </div>
       </button>
     </div>
