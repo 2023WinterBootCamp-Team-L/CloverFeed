@@ -1,20 +1,20 @@
 import { atom, selector } from "recoil";
 
 export type Category = string;
-export type TagsWork = string;
-export type TagsAttitude = string;
+export type TagWork = string[];
+export type TagAttitude = string[];
 export type AnswerType = "객관식" | "주관식";
 
 export type Answer = {
-  content: string;
+  context: string;
   type: AnswerType;
   answer: AnswerType extends "주관식" ? string : string[];
 };
 
 export type AnswerList = {
   category: Category;
-  tags_work: TagsWork[];
-  tags_attitude: TagsAttitude[];
+  tags_work: TagWork;
+  tags_attitude: TagAttitude;
   answers: Answer[];
 };
 

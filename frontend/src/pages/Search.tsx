@@ -1,10 +1,8 @@
-import React, { useState } from 'react';
-import BackButton from '../components/BackButton';
-import Searchbutton from '../components/Searchbutton';
-import FeedbackBox from '../components/FeedbackBox';
-// import pmpo from '../assets/PMPO.svg';
-// import TagAnswer from '../components/TagAnswer';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import BackButton from "../components/BackButton";
+import Searchbutton from "../components/Searchbutton";
+import FeedbackBox from "../components/FeedbackBox";
+import axios from "axios";
 
 interface Feedback {
   title: string;
@@ -13,50 +11,26 @@ interface Feedback {
 }
 
 const Search: React.FC = () => {
-  //샘플태그
-  // const sampleTags = [
-  //   <TagAnswer key={1} text="책임감" image={pmpo} />,
-  //   <TagAnswer key={2} text="기획력" image={pmpo} />,
-  //   <TagAnswer key={3} text="관대한" image={pmpo} />,
-  // ];
-
-  const [searchValue, setSearchValue] = useState('');
+  const [searchValue, setSearchValue] = useState("");
   const [filteredFeedbacks, setFilteredFeedbacks] = useState<JSX.Element[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  // 더미 데이터를 사용한 초기화
-  // const feedbacks: Feedback[] = [
-  //   {
-  //     title: '#2356 디자이너님의 피드백',
-  //     tags: sampleTags,
-  //     text: '더미 데이터: 매사에 책임을 가지며 맡은 업무를 끝까지 해내는 모습이 인상깊었어요. 업무에 관해 알고 있는 지식들도 많고 팀원들의 의견도 하나하나 잘 들어주었습니다.',
-  //   },
-  //   {
-  //     title: '#1238 개발자님의 피드백',
-  //     tags: sampleTags,
-  //     text: '더미 데이터: 리더십 있는 모습과 팀원을 배려하는 모습만으로도 충분히 좋은 팀원있지만, 아이디어 회의 때 다양한 아이디어를 제시해주는 모습까지 있다면 더 좋을 것 같습니다.',
-  //   },
-  //   {
-  //     title: '#6583 기획자님의 피드백',
-  //     tags: sampleTags,
-  //     text: '더미 데이터: 항상 긍정적인 마인드로 팀 분위기를 활기차게 만들어주는 분위기 메이커입니다.',
-  //   },
-  //   {
-  //     title: '#8467 개발자님의 피드백',
-  //     tags: sampleTags,
-  //     text: '더미 데이터: 팀원들과 적극적으로 교류하며 팀 프로젝트를 진행한 결과 함께 성장할 수 있어서 좋았습니다.',
-  //   },
-  // ];
+  const [userid, setUserid] = useState("");
+
+  useEffect(() => {
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
+    }
+  }, []);
 
   const fetchFeedbacks = async () => {
     try {
-      // 가상 userID
-      const userID = 1;
       const response = await axios.get(
-        `http://localhost:8000/api/feedbacks/response/?userid=${userID}&keyword=${searchValue}`
+        `http://localhost:8000/api/feedbacks/response/?user_id=${userid}&keyword=${searchValue}`
       );
 
-      if (response.data.status === 'success') {
+      if (response.data.status === "success") {
         const feedbacks = response.data.feedbacks;
         const filteredFeedbackElements = feedbacks.map(
           (feedback: Feedback, index: number) => (
@@ -74,7 +48,7 @@ const Search: React.FC = () => {
         setError(`에러 ${response.data.error_code}: ${response.data.message}`);
       }
     } catch (error) {
-      setError('피드백을 가져오는 동안 오류가 발생했습니다.');
+      setError("피드백을 가져오는 동안 오류가 발생했습니다.");
     }
   };
 
@@ -83,7 +57,7 @@ const Search: React.FC = () => {
   };
 
   const handleSearch = () => {
-    console.log('검색 중...');
+    console.log("검색 중...");
     fetchFeedbacks();
   };
 
