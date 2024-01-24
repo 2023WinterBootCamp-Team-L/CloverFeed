@@ -33,7 +33,7 @@ function QueryList() {
         questions: questionList.questions.map((question) => ({
           context: question.context,
           type: question.type,
-          choice: question.choices,
+          choices: question.choices,
         })),
       };
 

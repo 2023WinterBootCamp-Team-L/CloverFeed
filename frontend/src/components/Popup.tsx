@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import checkcircle from "../assets/checkcircle.svg";
 
-interface PopupQuestionProps {
+interface PopupProps {
+  text: string;
   onClose: () => void;
 }
 
-const PopupQuestion: React.FC<PopupQuestionProps> = ({ onClose }) => {
+const Popup: React.FC<PopupProps> = ({ text, onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
@@ -24,12 +25,10 @@ const PopupQuestion: React.FC<PopupQuestionProps> = ({ onClose }) => {
           alt="Check Circle Icon"
           className="w-5.5 h-5.5"
         />
-        <span className="font-pre text-[14px]">
-          답변 옵션 혹은 질문을 정확히 입력해주세요
-        </span>
+        <span className="font-pre text-[14px]">{text}</span>
       </div>
     </div>
   );
 };
 
-export default PopupQuestion;
+export default Popup;

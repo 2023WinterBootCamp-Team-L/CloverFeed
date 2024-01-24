@@ -9,6 +9,9 @@ function AnswerCheck() {
       <div>
         <h2>저장된 답변 목록</h2>
         <ul>
+          <p>Category: {answerList.category}</p>
+          <p>TagWork: {answerList.tags_work}</p>
+          <p>TagAttitude: {answerList.tags_attitude}</p>
           {answerList.answers.map((answer, index) => (
             <li key={index}>
               <p>Context: {answer.context}</p>

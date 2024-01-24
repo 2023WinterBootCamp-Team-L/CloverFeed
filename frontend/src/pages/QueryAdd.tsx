@@ -4,7 +4,7 @@ import Toggle from "../components/Toggle";
 import AddButton from "../components/AddButton";
 import AnswerOptionList from "../components/AnswerOptionList";
 import { useNavigate } from "react-router-dom";
-import PopupQuestion from "../components/PopupQuestion";
+import Popup from "../components/Popup";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   questionListState,
@@ -171,7 +171,12 @@ function QueryAdd() {
             />
           </div>
         )}
-        {popupVisible && <PopupQuestion onClose={handlePopupClose} />}
+        {popupVisible && (
+          <Popup
+            text="답변 옵션 혹은 질문을 정확히 입력해주세요"
+            onClose={handlePopupClose}
+          />
+        )}
       </div>
     </div>
   );
