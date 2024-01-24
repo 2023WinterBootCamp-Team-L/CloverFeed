@@ -5,8 +5,6 @@ import { useRecoilValue } from "recoil";
 import { answerListSelector } from "../../atoms/AnswerStore";
 
 function LinkFinish() {
-  const nextpage = "/";
-
   const apiUrl = "http://localhost:8000/api/answers/";
 
   // Recoil의 상태값에서 AnswerList 가져오기
@@ -55,10 +53,7 @@ function LinkFinish() {
           />
         </div>
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
-          <HomeButton
-            text="내 질문 폼 만들러가기"
-            nextpage={nextpage}
-          ></HomeButton>
+          <HomeButton text="내 질문 폼 만들러가기" nextpage={"/"}></HomeButton>
         </div>
       </div>
     </div>
