@@ -4,7 +4,7 @@ import BackButton from "../components/BackButton";
 import BaseQuest from "../components/BaseQuest";
 import { useNavigate } from "react-router-dom";
 import Modal from "../components/Modal";
-import { questionListState } from "../components/Question/QuestionStore";
+import { questionListState } from "../../atoms/QuestionStore";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
 
@@ -23,9 +23,9 @@ function QueryList() {
       const requestData = {
         user_id: user_id,
         questions: questionList.questions.map((question) => ({
-          context: question.content,
+          context: question.context,
           type: question.type,
-          choice: question.choice,
+          choice: question.choices,
         })),
       };
 
@@ -63,7 +63,7 @@ function QueryList() {
           {questionList.questions.slice(0, 5).map((question, index) => (
             <BaseQuest
               key={index}
-              text={question.content}
+              text={question.context}
               color={index % 2 === 0}
             />
           ))}
@@ -77,7 +77,7 @@ function QueryList() {
           {questionList.questions.slice(5).map((question, index) => (
             <BaseQuest
               key={index}
-              text={question.content}
+              text={question.context}
               color={index % 2 === 0}
             />
           ))}

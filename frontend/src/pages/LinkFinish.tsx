@@ -2,7 +2,7 @@ import clover from "../assets/clover.svg";
 import HomeButton from "../components/HomeButton";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { answerListSelector } from "../components/Answer/AnswerStore";
+import { answerListSelector } from "../../atoms/AnswerStore";
 
 function LinkFinish() {
   const nextpage = "/";

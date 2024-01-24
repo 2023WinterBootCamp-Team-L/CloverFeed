@@ -11,7 +11,7 @@ import {
   currentQuestionState,
   currentQuestionTypeState,
   currentQuestionChoiceState,
-} from "../components/Question/QuestionStore";
+} from "../../atoms/QuestionStore";
 
 export interface QuestionTextProps {
   value: string;
@@ -100,9 +100,9 @@ function QueryAdd() {
         questions: [
           ...prev.questions,
           {
-            content: currentQuestion,
+            context: currentQuestion,
             type: currentQuestionType,
-            choice: hiddenAnswersAdd ? null : currentQuestionChoice,
+            choices: hiddenAnswersAdd ? null : currentQuestionChoice,
           },
         ],
       }));

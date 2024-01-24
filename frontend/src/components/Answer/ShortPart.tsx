@@ -1,7 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { selectedAnswerState, answerListState } from "./AnswerStore";
+import {
+  selectedAnswerState,
+  answerListState,
+} from "../../../atoms/AnswerStore";
+import { feedbackQuestionListState } from "../../../atoms/QuestionStore";
 
 export interface ShortAnswerProps {
   value: string[];
@@ -20,21 +24,31 @@ export const ShortAnswer: React.FC<ShortAnswerProps> = ({
   const textAreaStyle = {
     color: textColor,
   };
+  const [isFocused, setIsFocused] = useState(false);
   return (
-    <div>
+    <div className="relative">
       <textarea
-        value={value[0]}
+        value={value}
         onChange={onTextChange}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        style={textAreaStyle}
-        className="h-40 w-full border-c-gray border-2 rounded-lg focus:outline-none leading-1.25 p-2 text-sm resize-none"
+        onFocus={() => {
+          setIsFocused(true);
+          if (onFocus) onFocus();
+        }}
+        onBlur={() => {
+          setIsFocused(false);
+          if (onBlur) onBlur();
+        }}
+        style={{
+          ...textAreaStyle,
+          borderColor: isFocused ? "#50DA8C" : "#D5FBE5",
+        }}
+        className="bg-white w-[340px] h-[380px] p-3 border-2  rounded-2xl focus:outline-none resize-none font-pre text-[14px]"
       />
     </div>
   );
 };
 
-function ShortPart() {
+function ShortPart({ questionIndex }: { questionIndex: number }) {
   const [shortAnswerValue, setShortAnswerValue] = useState([
     "답변을 입력하세요",
   ]);
@@ -42,27 +56,29 @@ function ShortPart() {
     useRecoilState(selectedAnswerState);
   const setAnswerListState = useSetRecoilState(answerListState);
   const answerList = useRecoilValue(answerListState);
+  const [questionList] = useRecoilState(feedbackQuestionListState);
+  const currentQuestion = questionList.questions[questionIndex];
 
   const handleTextChange: React.ChangeEventHandler<HTMLTextAreaElement> = (
     e
   ) => {
     const updatedAnswerList = [...answerList.answers];
     const answerIndex = updatedAnswerList.findIndex(
-      (answer) => answer.type === "주관식"
+      (answer) => answer.context === currentQuestion.context
     );
 
     if (answerIndex !== -1) {
-      // 기존의 짧은 답변 업데이트
+      // 이미 해당 질문에 대한 답변이 있는 경우 업데이트
       updatedAnswerList[answerIndex] = {
-        content: "",
-        type: "주관식",
+        context: currentQuestion.context,
+        type: currentQuestion.type,
         answer: [e.target.value],
       };
     } else {
-      // 목록에 새로운 짧은 답변 추가
+      // 해당 질문에 대한 답변이 없는 경우 추가
       updatedAnswerList.push({
-        content: "",
-        type: "주관식",
+        context: currentQuestion.context,
+        type: currentQuestion.type,
         answer: [e.target.value],
       });
     }
@@ -78,8 +94,8 @@ function ShortPart() {
 
     // 선택된 답변 설정
     setSelectedAnswer({
-      content: "",
-      type: "주관식",
+      context: currentQuestion.context,
+      type: currentQuestion.type,
       answer: [e.target.value],
     });
   };
@@ -95,6 +111,10 @@ function ShortPart() {
       setShortAnswerValue(["답변을 입력하세요"]);
     }
   };
+
+  useEffect(() => {
+    setShortAnswerValue(["답변을 입력하세요"]);
+  }, [questionIndex]);
 
   return (
     <ShortAnswer

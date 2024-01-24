@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChoiceButton from "./ChoiceButton";
-import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
-import { selectedAnswerState, answerListState } from "./AnswerStore";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  selectedAnswerState,
+  answerListState,
+} from "../../../atoms/AnswerStore";
+import { feedbackQuestionListState } from "../../../atoms/QuestionStore";
 
 type Option = {
   option: string;
@@ -11,14 +15,7 @@ type Color = {
   color: string;
 };
 
-function ChoicePart() {
-  const Options: Option[] = [
-    { option: "1점" },
-    { option: "2점" },
-    { option: "3점" },
-    { option: "4점" },
-  ];
-
+function ChoicePart({ questionIndex }: { questionIndex: number }) {
   const Colors: Color[] = [
     { color: "#E2E9FF" },
     { color: "#F6EED4" },
@@ -27,22 +24,25 @@ function ChoicePart() {
     { color: "#D5FBE5" },
   ];
 
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
   const [selectedAnswer, setSelectedAnswer] =
     useRecoilState(selectedAnswerState);
   const setAnswerListState = useSetRecoilState(answerListState);
-  const answerList = useRecoilValue(answerListState);
+  const [questionList] = useRecoilState(feedbackQuestionListState);
+  const currentQuestion = questionList.questions[questionIndex];
+  const Options: Option[] = currentQuestion.choices
+    ? currentQuestion.choices.map((choices) => ({ option: choices }))
+    : [];
+
+  const [isButtonClicked, setIsButtonClicked] = useState(true);
 
   const handleButtonClick = (option: string) => {
-    const isButtonClicked = selectedAnswer?.answer.includes(option);
-
     if (isButtonClicked) {
-      // 버튼이 이미 클릭된 경우 클릭 상태 해제
+      // 이미 선택된 옵션인 경우 선택 해제
       const optionsToRemove = [option];
 
       setSelectedAnswer((prevSelectedAnswer) => ({
-        content: "",
-        type: "객관식",
+        context: currentQuestion.context,
+        type: currentQuestion.type,
         answer:
           prevSelectedAnswer?.answer.filter(
             (selectedOption) => !optionsToRemove.includes(selectedOption)
@@ -57,26 +57,45 @@ function ChoicePart() {
         ),
       }));
     } else {
-      // 버튼 클릭 시 텍스트 추가
-      setSelectedAnswer((prevSelectedAnswer) => ({
-        content: "",
-        type: "객관식",
-        answer: [...(prevSelectedAnswer?.answer || []), option],
-      }));
+      // 객관식인 경우 선택한 옵션 추가
+      if (currentQuestion.type === "객관식" && currentQuestion.choices) {
+        setSelectedAnswer((prevSelectedAnswer) => ({
+          context: currentQuestion.context,
+          type: currentQuestion.type,
+          answer: [...(prevSelectedAnswer?.answer || []), option],
+        }));
 
-      // 텍스트를 answerList에 추가
-      setAnswerListState((prevAnswerList) => ({
-        ...prevAnswerList,
-        answers: [
-          ...prevAnswerList.answers,
-          { content: "", type: "객관식", answer: [option] },
-        ],
-      }));
+        // 선택한 옵션을 answerList에 추가
+        setAnswerListState((prevAnswerList) => ({
+          ...prevAnswerList,
+          answers: [
+            ...prevAnswerList.answers,
+            {
+              context: currentQuestion.context,
+              type: currentQuestion.type,
+              answer: [option],
+            },
+          ],
+        }));
+      }
+      setIsButtonClicked(!isButtonClicked);
     }
-
-    // 클릭 상태 업데이트
-    setIsButtonClicked(!isButtonClicked);
   };
+
+  useEffect(() => {
+    // currentQuestionIndex가 변경될 때 answer 값 초기화
+    setSelectedAnswer({
+      context: currentQuestion.context,
+      type: currentQuestion.type,
+      answer: [],
+    });
+    setIsButtonClicked(false); // 클릭된 버튼 초기화
+  }, [
+    questionIndex,
+    currentQuestion.context,
+    currentQuestion.type,
+    setSelectedAnswer,
+  ]);
 
   return (
     <div className="flex flex-1 flex-col justify-center items-center">
