@@ -22,13 +22,19 @@ function LinkAnswer() {
   const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
   const backNavigate = useNavigate();
   const nextNavigate = useNavigate();
-  const userId = 2;
+
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
+    const storedUserId = localStorage.getItem("user_id");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse>(
-          `http://localhost:8000/api/form/questions/?userid=${userId}`
+          `http://localhost:8000/api/form/questions/?user_id=${userId}`
         );
 
         if (response.data.status === "success") {

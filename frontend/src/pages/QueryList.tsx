@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import AddButton from "../components/AddButton";
 import BackButton from "../components/BackButton";
 import BaseQuest from "../components/BaseQuest";
@@ -11,17 +11,25 @@ import axios from "axios";
 function QueryList() {
   const questionList = useRecoilValue(questionListState);
   const navigate = useNavigate();
-  const user_id = 2;
 
   const handleAddButtonClick = () => {
     navigate("/queryadd");
   };
 
+  const [userid, setUserid] = useState("");
+
+  useEffect(() => {
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
+    }
+  }, []);
+
   const handleQuestionComplete = async () => {
     try {
       // POST 요청을 보낼 데이터 구성
       const requestData = {
-        user_id: user_id,
+        user_id: userid,
         questions: questionList.questions.map((question) => ({
           context: question.context,
           type: question.type,
