@@ -357,7 +357,7 @@ class QuestionListView(APIView):
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                "userid",
+                "user_id",
                 openapi.IN_QUERY,
                 description="사용자 ID",
                 required=True,
@@ -366,13 +366,13 @@ class QuestionListView(APIView):
         ]
     )
     def get(self, request):
-        # query_params에서 userid 가져오기
-        user_id = request.query_params.get("userid", None)
+        # query_params에서 user_id 가져오기
+        user_id = request.query_params.get("user_id", None)
 
         # 필요한 유효성 검사를 수행하고, 예를 들어, 사용자가 필수 매개변수를 제공했는지 확인
         if user_id is None:
             return Response(
-                {"error": "userid를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "user_id를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
             )
 
         try:
@@ -575,7 +575,7 @@ class FeedbackListByCategory(APIView):
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                "userid",
+                "user_id",
                 openapi.IN_QUERY,
                 description="사용자 ID",
                 required=True,
@@ -591,12 +591,12 @@ class FeedbackListByCategory(APIView):
         ]
     )
     def get(self, request, format=None):
-        userid = request.query_params.get("userid", None)
+        user_id = request.query_params.get("user_id", None)
         category = request.query_params.get("category", None)
 
         # 유저 검증
         try:
-            user = AuthUser.objects.get(pk=userid)
+            user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
                 {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
@@ -623,7 +623,7 @@ class FeedbackSearchView(APIView):
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                "userid",
+                "user_id",
                 openapi.IN_QUERY,
                 description="사용자 ID",
                 required=True,
@@ -639,13 +639,13 @@ class FeedbackSearchView(APIView):
         ]
     )
     def get(self, request):
-        userid = request.query_params.get("userid", None)
+        user_id = request.query_params.get("user_id", None)
         keyword = request.query_params.get("keyword", None)
-        if not userid:
+        if not user_id:
             return Response(
                 {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."}
             )
-        user = AuthUser.objects.get(pk=userid)
+        user = AuthUser.objects.get(pk=user_id)
         if keyword:
             feedbacks = QuestionAnswer.objects.filter(
                 Q(feedback__form__user=user),
@@ -667,7 +667,7 @@ class FeedbackResultDetail(APIView):
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                "userid",
+                "user_id",
                 openapi.IN_QUERY,
                 description="사용자 ID",
                 required=True,
@@ -687,8 +687,8 @@ class FeedbackResultDetail(APIView):
             )
 
     def get(self, request, pk, format=None):
-        # userid라는 쿼리 파라미터를 가져옴
-        user_id = request.query_params.get("userid", None)
+        # user_id라는 쿼리 파라미터를 가져옴
+        user_id = request.query_params.get("user_id", None)
         # get_object 메서드를 이용해 해당 FeedbackResult를 가져옴
         feedback_result = self.get_object(pk, user_id)
         # 예외가 발생하면 Response 객체가 반환되므로, 이를 확인
@@ -708,7 +708,7 @@ class FeedbackChartView(APIView):
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                "userid",
+                "user_id",
                 openapi.IN_QUERY,
                 description="사용자 ID",
                 required=True,
@@ -717,10 +717,10 @@ class FeedbackChartView(APIView):
         ]
     )
     def get(self, request):
-        userid = self.request.query_params.get("userid", None)
-        if userid is not None:
+        user_id = self.request.query_params.get("user_id", None)
+        if user_id is not None:
             try:
-                user = AuthUser.objects.get(id=userid)
+                user = AuthUser.objects.get(id=user_id)
                 feedbacks = FeedbackResult.objects.filter(form__user=user)
                 serializer = FeedbackTagSerializer(feedbacks, many=True)
                 data = serializer.data
@@ -802,17 +802,17 @@ class SummaryView(APIView):
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
-                "userid": openapi.Schema(type=openapi.TYPE_NUMBER),
+                "user_id": openapi.Schema(type=openapi.TYPE_NUMBER),
             },
-            required=["userid"],
+            required=["user_id"],
         )
     )
     def post(self, request):
-        userid = request.data.get("userid")
+        user_id = request.data.get("user_id")
 
         # 유저 검증
         try:
-            user = AuthUser.objects.get(pk=userid)
+            user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
                 {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
@@ -961,7 +961,7 @@ class WordCloudSummaryView(APIView):
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                "userid",
+                "user_id",
                 openapi.IN_QUERY,
                 description="사용자 ID",
                 required=True,
@@ -970,11 +970,11 @@ class WordCloudSummaryView(APIView):
         ]
     )
     def get(self, request):
-        userid = request.query_params.get("userid")
+        user_id = request.query_params.get("user_id")
 
         # 유저 검증
         try:
-            user = AuthUser.objects.get(pk=userid)
+            user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
                 {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
@@ -1045,7 +1045,7 @@ class WordCloudKeywordView(APIView):
     # @swagger_auto_schema(
     #     manual_parameters=[
     #         openapi.Parameter(
-    #             "userid",
+    #             "user_id",
     #             openapi.IN_QUERY,
     #             description="사용자 ID",
     #             required=True,
@@ -1054,11 +1054,11 @@ class WordCloudKeywordView(APIView):
     #     ]
     # )
     def get(self, request):
-        userid = request.query_params.get("userid")
+        user_id = request.query_params.get("user_id")
 
         # 유저 검증
         try:
-            user = AuthUser.objects.get(pk=userid)
+            user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
                 {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
