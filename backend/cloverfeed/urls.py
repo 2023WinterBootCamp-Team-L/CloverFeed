@@ -26,7 +26,7 @@ urlpatterns = [
     ),
     # 카테고리(직군)별 피드백 목록 확인
     path(
-        "feedbacks/response/list/",
+        "feedbacks/response/",
         views.FeedbackListByCategory.as_view(),
         name="feedback-list-by-category",
     ),
@@ -44,5 +44,20 @@ urlpatterns = [
         "feedbacks/tags/chart/",
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
+    ),
+    # 피드백 요약
+    path(
+        "feedbacks/summary/",
+        views.SummaryView.as_view(),
+        name="wordcloudkeyword",
+    ),
+    # 워드클라우드
+    path(
+        "feedbacks/wordcloud/", views.WordCloudSummaryView.as_view(), name="wordcloud"
+    ),
+    path(
+        "feedbacks/wordcloudkeyword/",
+        views.WordCloudKeywordView.as_view(),
+        name="wordcloudkeyword",
     ),
 ]

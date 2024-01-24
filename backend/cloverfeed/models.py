@@ -9,7 +9,7 @@ import random
 
 # 사용자
 class AuthUser(AbstractUser):
-    keywords = models.CharField(max_length=254, null=True)
+    keywords = models.TextField(null=True)
     summary = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(blank=True, null=True)  # nullable로 변경

@@ -12,8 +12,12 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import AllowAny
 from rest_framework.authentication import BasicAuthentication
 from .authentication import CsrfExemptSessionAuthentication
-import json, random
+from collections import Counter
+from openai import OpenAI
+import json, random, ast, environ, re
 from datetime import datetime
+from konlpy.tag import Okt
+
 from .models import (
     Form,
     Question,
@@ -28,9 +32,18 @@ from .serializers import (
     FeedbackResultSearchSerializer,
     FormSerializer,
     FeedbackTagSerializer,
+    WordCloudSerializer,
 )
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
+from krwordrank.word import summarize_with_keywords
+
+env = environ.Env()
+environ.Env.read_env()
+client = OpenAI(
+    # defaults to os.environ.get("OPENAI_API_KEY")
+    api_key=env("OPENAI_KEY"),
+)
 
 
 # 회원가입
@@ -396,7 +409,7 @@ class QuestionListView(APIView):
         )
 
 
-# 피드백 질문에 답변 제출
+# 피드백 질문에 답변 제출 + 특정 피드백 상세 주관식답변만 모아 챗 gpt 요약
 class AnswersView(APIView):
     authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
 
@@ -426,6 +439,31 @@ class AnswersView(APIView):
         # 폼 존재 여부 확인
         form = get_object_or_404(Form, id=form_id)
 
+        answers = []
+
+        # 각 답변에 대한 처리
+        for answer_data in answers_data:
+            if answer_data.get("type") == "주관식" and answer_data.get("answer"):
+                answers.append(answer_data.get("answer"))
+
+        # 주관식 답변이 있는 경우, 요약을 생성
+        if len(answers) != 0:
+            # GPT-3.5-turbo 모델로 요약을 생성
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[
+                    {
+                        "role": "user",
+                        "content": str(answers)
+                        + "I want you to act like a co-worker or a corporate human resources manager. Pick out only the important points and summarize them in one sentence as briefly and concisely as possible. The length of the your answer must be 90~110 characters in Korean. Korean like this example '홍길동님은 개성이 뚜렷하고 경청하는 팀 분위기 메이커라고 피드백을 보내셨네요!' Your answer must be in polite Korean.",
+                    }
+                ],
+            )
+
+            # 요약된 텍스트를 추출
+            summary = response.choices[0].message.content.strip()
+            # print(summary)
+
         try:
             # FeedbackResult 생성
             feedback_result = FeedbackResult.objects.create(
@@ -434,8 +472,11 @@ class AnswersView(APIView):
                 tag_work=tags_work,
                 tag_attitude=tags_attitude,
                 respondent_name=f"#{random.randint(1000, 9999)}",
+                summary=summary,
                 created_at=datetime.now(),
             )
+
+            feedback_result.save()
 
             # 각 답변에 대한 처리
             for answer_data in answers_data:
@@ -448,7 +489,7 @@ class AnswersView(APIView):
                 )
 
                 # QuestionAnswer 생성
-                new_answer = QuestionAnswer(
+                new_answer = QuestionAnswer.objects.create(
                     feedback=feedback_result,
                     question=question,
                     context=answer_content,
@@ -456,6 +497,8 @@ class AnswersView(APIView):
                     created_at=datetime.now(),
                     modified_at=datetime.now(),
                 )
+
+                # 답변 DB에 넣어주는 부분 만들어야함
                 new_answer.save()
 
             return JsonResponse(
@@ -749,3 +792,314 @@ class FeedbackChartView(APIView):
                 {"status": "error", "error_code": 400, "message": "잘못된 요청입니다."},
                 status=400,
             )
+
+
+# 전체 주관식 피드백 요약
+class SummaryView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    @swagger_auto_schema(
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "userid": openapi.Schema(type=openapi.TYPE_NUMBER),
+            },
+            required=["userid"],
+        )
+    )
+    def post(self, request):
+        userid = request.data.get("userid")
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        # 피드백 결과 조회
+        feedbacks = QuestionAnswer.objects.filter(
+            Q(feedback__form__user=user), Q(type="주관식")
+        )
+
+        contexts = []
+
+        for i in range(len(feedbacks)):
+            # print(feedbacks[i].context)
+            contexts.append(feedbacks[i].context)
+
+        if len(contexts) == 0:
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "피드백이 없습니다.",
+                },
+                status=404,
+            )
+
+        # print(contexts)
+
+        # 정규 표현식을 통한 불필요한 특수문자 제거
+        for i in range(len(contexts)):
+            contexts[i] = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s]", " ", contexts[i])
+
+        okt = Okt()
+        keywords = []
+
+        for i in range(len(contexts)):
+            # norm: 형태소의 표현을 정상화시킴 (예: 되나욬 -> 되나요)
+            # stem: 스테밍(원형복원; 예: 찾아 -> 찾다, 되나요 -> 되다)
+            contexts[i] = okt.pos(contexts[i], stem=True, norm=True)
+            for word, tag in contexts[i]:
+                if tag in ["Noun"] or tag in ["Adjective"]:
+                    keywords.append(word)
+                # if tag in ["Adjective"]:
+                #     keywords.append(word)
+
+        print(keywords)
+
+        # 각 원소의 갯수를 세기
+        element_counts = Counter(keywords)
+        keywords_withcounts = [
+            {"keyword": word, "value": count} for word, count in element_counts.items()
+        ]
+
+        print(keywords_withcounts)
+
+        # 'value' 키 값을 기준으로 내림차순으로 정렬
+        keywords_sorted = sorted(
+            keywords_withcounts, key=lambda x: x["value"], reverse=True
+        )
+
+        # 결과 출력
+        print(keywords_sorted)
+
+        # print(contexts)
+
+        # stopwords = {
+        #     "주셔서",
+        #     "거두고",
+        #     "정말",
+        #     "특히",
+        #     "팀에",
+        #     "앞으로",
+        #     "다른",
+        #     "전체",
+        #     "되고",
+        #     "우리팀",
+        # }  # 불용어
+        # keywords = summarize_with_keywords(
+        #     contexts,
+        #     min_count=3,
+        #     max_length=10,
+        #     beta=0.85,
+        #     max_iter=10,
+        #     stopwords=stopwords,
+        #     verbose=True,
+        # )
+
+        keywords = summarize_with_keywords(
+            keywords,
+            min_count=1,
+            max_length=10,
+            beta=0.85,
+            max_iter=10,
+            verbose=True,
+        )
+
+        # print(keywords)
+
+        wordlist = []
+        count = 0
+        for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
+            temp = {"keyword": key, "value": int(val * 100)}
+            wordlist.append(temp)
+            count += 1
+            if count >= 30:  # 출력 수 제한
+                break
+
+        print(wordlist)
+
+        keywords_to_summary = []
+
+        key_to_print = "keyword"
+        for word in wordlist:
+            if key_to_print in word:
+                keywords_to_summary.append(word[key_to_print])
+                # print(f"{word[key_to_print]}")
+
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "user",
+                    "content": str(keywords_to_summary)
+                    + "make a summary of these keywords from anonymous peer reviews in one sentences in polite korean as briefly and concisely as possible like this example '사용자님께서는 사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.' The length of the your answer must be 90~110 characters. but the subject and negative comment must not be included.",
+                    # 이 배열은 사용자에 대해 다른 동료들이 익명으로 평가한 문장이야. 이 문장을 한 문장 이내로 요약해서 이러한 평가를 받고 있다고 사용자에게 안내하는 말투로 한국어로 정리해줘. 단, 주어는 생략해야 하고, 부정적인 평가가 포함되어서는 안 돼.",
+                }
+            ],
+        )
+        summary = response.choices[0].message.content.strip()
+        print(summary)
+
+        # 사용자 모델의 keywords, summary 필드에 값을 할당하고 저장
+        user.keywords = keywords_sorted
+        user.summary = summary
+        user.save()
+
+        # return Response({"status": "success", "words": wordlist})
+        return Response({"status": "success", "summary": summary})
+
+
+# 워드클라우드
+class WordCloudSummaryView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    @swagger_auto_schema(
+        manual_parameters=[
+            openapi.Parameter(
+                "userid",
+                openapi.IN_QUERY,
+                description="사용자 ID",
+                required=True,
+                type=openapi.TYPE_NUMBER,
+            ),
+        ]
+    )
+    def get(self, request):
+        userid = request.query_params.get("userid")
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        print(user.keywords)
+
+        # 문자열을 파싱하여 리스트로 변환
+        parsed_keywords = ast.literal_eval(user.keywords)
+
+        print(parsed_keywords)
+
+        # # 피드백 결과 조회
+        # feedbacks = QuestionAnswer.objects.filter(
+        #     Q(feedback__form__user=user), Q(type="주관식")
+        # )
+
+        # contexts = []
+
+        # for i in range(len(feedbacks)):
+        #     # print(feedbacks[i].context)
+        #     contexts.append(feedbacks[i].context)
+
+        # if len(contexts) == 0:
+        #     return Response(
+        #         {
+        #             "status": "error",
+        #             "error_code": 404,
+        #             "message": "피드백이 없습니다.",
+        #         },
+        #         status=404,
+        #     )
+
+        # stopwords = {'영화', '관람객', '너무', '정말', '보고', '일부', '완전히'} # 불용어
+        # keywords = summarize_with_keywords(contexts, min_count=3, max_length=10, beta=0.85, max_iter=10, stopwords=stopwords, verbose=True)
+        # keywords = summarize_with_keywords(
+        #     contexts,
+        #     min_count=1,
+        #     max_length=10,
+        #     beta=0.85,
+        #     max_iter=10,
+        #     verbose=True,
+        # )
+
+        # print(keywords)
+
+        # wordlist = []
+        # count = 0
+        # for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
+        #     temp = {"name": key, "value": int(val * 100)}
+        #     wordlist.append(temp)
+        #     count += 1
+        #     if count >= 30:  # 출력 수 제한
+        #         break
+
+        # print(wordlist)
+
+        return Response(
+            {"status": "success", "summary": user.summary, "words": parsed_keywords}
+        )
+
+
+# 워드클라우드
+class WordCloudKeywordView(APIView):
+    authentication_classes = (CsrfExemptSessionAuthentication, BasicAuthentication)
+
+    # @swagger_auto_schema(
+    #     manual_parameters=[
+    #         openapi.Parameter(
+    #             "userid",
+    #             openapi.IN_QUERY,
+    #             description="사용자 ID",
+    #             required=True,
+    #             type=openapi.TYPE_NUMBER,
+    #         ),
+    #     ]
+    # )
+    def get(self, request):
+        userid = request.query_params.get("userid")
+
+        # 유저 검증
+        try:
+            user = AuthUser.objects.get(pk=userid)
+        except AuthUser.DoesNotExist:
+            return Response(
+                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                status=401,
+            )
+
+        # 피드백 결과 조회
+        feedbacks = FeedbackResult.objects.filter(form__user=user)
+        tags = []
+
+        for i in range(len(feedbacks)):
+            tag_work_list = ast.literal_eval(feedbacks[i].tag_work)
+            tag_attitude_list = ast.literal_eval(feedbacks[i].tag_attitude)
+
+            for tag in tag_work_list:
+                tags.append(tag)
+            for tag in tag_attitude_list:
+                tags.append(tag)
+
+        # print(tags)
+
+        if len(tags) == 0:
+            return Response(
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "피드백이 없거나, 피드백으로 받은 태그가 없습니다.",
+                },
+                status=401,
+            )
+
+        # 각 원소의 갯수를 세기
+        element_counts = Counter(tags)
+
+        # 결과를 원하는 형식으로 가공해서 응답
+        return Response(
+            {
+                "status": "success",
+                "words": [
+                    {"text": word, "count": count}
+                    for word, count in element_counts.items()
+                ],
+            }
+        )
