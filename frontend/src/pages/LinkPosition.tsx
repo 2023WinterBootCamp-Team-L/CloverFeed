@@ -10,11 +10,6 @@ import 기타직무 from "../assets/기타직무.svg";
 // import ProgressBar from '../components/ProgressBar';
 
 function LinkPosition() {
-  const nextpage = "/LinkTag1";
-
-  // const [totalSteps, setTotalSteps] = useState<number>(5); // totalSteps는 배열의 첫 번째 요소
-  // const [currentStep, setCurrentStep] = useState<number>(1); // currentStep은 배열의 첫 번째 요소
-
   const buttons = [
     {
       icon: <img src={개발자} className="w-5" alt="개발자" />,
@@ -67,7 +62,7 @@ function LinkPosition() {
                   icon={button.icon}
                   backgroundColor={button.backgroundColor}
                   buttonText={button.buttonText}
-                  nextpage={nextpage}
+                  nextpage="/LinkTag1"
                 />
               ))}
             </div>

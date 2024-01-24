@@ -1,52 +1,42 @@
 import { useState } from "react";
 import BackButton from "../components/BackButton";
 import Tag from "../components/Tag";
-import { tagColors } from "../components/Tag";
 import ExceedPopup from "../components/ExceedPopup";
 
 interface TagProps {
   text: string;
   image: string;
-  currentIndex?: number;
+  tagnumber: number;
 }
 
-// function LinkTag1() {
-//   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-
-//   const handleTagClick = (tag: string) => {
-//     const isSelected = selectedTags.includes(tag);
-
-//     setSelectedTags((prevSelectedTags) =>
-//       isSelected
-//         ? prevSelectedTags.filter((selectedTag) => selectedTag !== tag)
-//         : [...prevSelectedTags, tag]
-//     );
-//   };
-
 const LinkTag1: React.FC = () => {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<number[]>([]);
   const [showExceedPopup, setShowExceedPopup] = useState(false);
 
-  const handleTagClick = (index: number) => {
-    if (selectedTags.length < 5 || selectedTags.includes(index.toString())) {
-      // 5개 미만이거나 이미 선택된 태그라면 선택 허용
-      const isSelected = selectedTags.includes(index.toString());
+  // useEffect(() => {
+  //   console.log(selectedTags);
+  // }, [selectedTags]);
 
-      setSelectedTags((prevSelectedTags) =>
-        isSelected
-          ? prevSelectedTags.filter(
-              (selectedTag) => selectedTag !== index.toString()
-            )
-          : [...prevSelectedTags, index.toString()]
-      );
-      // 태그 선택 개수 체크
-      if (selectedTags.length >= 5 && !isSelected) {
+  const handleTagClick = (tagnumber: number) => {
+    setSelectedTags((prevSelectedTags) => {
+      const isSelected = prevSelectedTags.includes(tagnumber);
+
+      // 선택을 토글
+      let updatedSelectedTags = isSelected
+        ? prevSelectedTags.filter((selectedTag) => selectedTag !== tagnumber)
+        : [...prevSelectedTags, tagnumber];
+
+      // 선택된 태그 수가 제한을 초과하는지 확인
+      if (updatedSelectedTags.length > 5) {
         setShowExceedPopup(true);
+        // selectedTags가 5개를 초과하면 마지막으로 추가된 태그를 제거
+        updatedSelectedTags = updatedSelectedTags.slice(0, -1);
+      } else {
+        setShowExceedPopup(false);
       }
-    } else {
-      // 5개 이상이면 초과 팝업 띄우기
-      setShowExceedPopup(true);
-    }
+
+      return updatedSelectedTags;
+    });
   };
 
   const closeExceedPopup = () => {
@@ -58,62 +48,77 @@ const LinkTag1: React.FC = () => {
     {
       text: "효율적인",
       image: "../src/assets/효율적인.png",
+      tagnumber: 1,
     },
     {
       text: "박학다식",
       image: "../src/assets/박학다식.png",
+      tagnumber: 2,
     },
     {
       text: "문제분석",
       image: "../src/assets/문제분석.png",
+      tagnumber: 3,
     },
     {
       text: "계획적인",
       image: "../src/assets/계획적인.png",
+      tagnumber: 4,
     },
     {
       text: "기획력",
       image: "../src/assets/기획력.png",
+      tagnumber: 5,
     },
     {
       text: "눈치빠른",
       image: "../src/assets/눈치빠른.png",
+      tagnumber: 6,
     },
     {
       text: "규칙준수",
       image: "../src/assets/규칙준수.png",
+      tagnumber: 7,
     },
     {
       text: "위기대처 능력",
       image: "../src/assets/위기대처능력.png",
+      tagnumber: 8,
     },
     {
       text: "리더쉽",
       image: "../src/assets/리더쉽.png",
+      tagnumber: 9,
     },
     {
       text: "정보수집",
       image: "../src/assets/정보수집.png",
+      tagnumber: 10,
     },
     {
       text: "의견 다양성",
       image: "../src/assets/의견다양성.png",
+      tagnumber: 11,
     },
     {
       text: "추진력",
       image: "../src/assets/추진력.png",
+      tagnumber: 12,
     },
     {
       text: "전략적인",
       image: "../src/assets/전략적인.png",
+      tagnumber: 13,
     },
     {
       text: "결단력",
       image: "../src/assets/결단력.png",
+      tagnumber: 14,
     },
     {
       text: "협력적인",
       image: "../src/assets/협력적인.png",
+      tagnumber: 15,
     },
   ];
 
@@ -144,14 +149,18 @@ const LinkTag1: React.FC = () => {
             <Tag
               key={index}
               text={tag.text}
+              tagnumber={tag.tagnumber}
               color={
-                selectedTags.includes(tag.text)
-                  ? tagColors[selectedTags.indexOf(tag.text)].bg
-                  : "bg-white"
+                selectedTags.length < 5 ||
+                (selectedTags.length === 5 &&
+                  selectedTags.includes(tag.tagnumber))
+                  ? selectedTags.includes(tag.tagnumber)
+                    ? "bg-white"
+                    : tag.tagnumber
+                  : null
               }
               image={tag.image}
-              currentIndex={index}
-              onClick={() => handleTagClick(index)}
+              onClick={() => handleTagClick(tag.tagnumber)}
             />
           ))}
         </div>
