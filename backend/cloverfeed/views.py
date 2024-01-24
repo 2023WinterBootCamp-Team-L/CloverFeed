@@ -391,10 +391,6 @@ class QuestionListView(APIView):
             questions_data = Question.objects.filter(
                 form__user_id=user_id, form__id__in=subquery
             )
-            print(questions_data)
-
-            # questions_data = Question.objects.filter(form__user_id=user_id)
-            # print(questions_data)
         except Question.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
