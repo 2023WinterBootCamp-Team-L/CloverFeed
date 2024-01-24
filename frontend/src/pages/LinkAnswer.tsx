@@ -22,7 +22,7 @@ function LinkAnswer() {
   const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
   const backNavigate = useNavigate();
   const nextNavigate = useNavigate();
-  const userId = 1;
+  const userId = 2;
 
   useEffect(() => {
     const fetchData = async () => {

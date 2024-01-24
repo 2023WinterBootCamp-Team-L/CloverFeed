@@ -11,7 +11,7 @@ import axios from "axios";
 function QueryList() {
   const questionList = useRecoilValue(questionListState);
   const navigate = useNavigate();
-  const user_id = 1;
+  const user_id = 2;
 
   const handleAddButtonClick = () => {
     navigate("/queryadd");

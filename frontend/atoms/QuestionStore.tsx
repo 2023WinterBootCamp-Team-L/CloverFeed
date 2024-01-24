@@ -5,7 +5,7 @@ export type QuestionType = "객관식" | "주관식";
 export type Question = {
   context: string;
   type: QuestionType;
-  choices: QuestionType extends "주관식" ? null : string[] | null;
+  choices: string[] | null;
 };
 
 export type QuestionList = {
