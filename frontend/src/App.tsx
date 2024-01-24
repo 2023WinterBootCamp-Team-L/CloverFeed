@@ -11,9 +11,6 @@ import LinkPosition from "./pages/LinkPosition";
 import LinkTag1 from "./pages/LinkTag1";
 import Chart from "./pages/Chart";
 import LinkTag2 from "./pages/LinkTag2";
-import LinkAnswer1 from "./pages/LinkAnswer1";
-import LinkAnswer2 from "./pages/LinkAnswer2";
-import LinkOpti from "./pages/LinkOpti";
 import LinkFinish from "./pages/LinkFinish";
 import Gosignup from "./pages/Gosignup";
 import Mainpage from "./pages/Mainpage";
@@ -49,13 +46,10 @@ function App() {
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
         <Route path="/LinkTag2" element={<LinkTag2 />} />
-        <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
-        <Route path="LinkAnswer2" element={<LinkAnswer2 />} />
-        <Route path="LinkOpti" element={<LinkOpti />} />
+        <Route path="/LinkAnswer" element={<LinkAnswer />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
         <Route path="/Chart" element={<Chart />} />
         <Route path="/WordCloud" element={<WordCloud />} />
-        <Route path="/Test" element={<LinkAnswer />} />
         <Route path="/Check" element={<AnswerCheck />} />
       </Routes>
     </div>

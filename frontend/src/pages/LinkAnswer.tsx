@@ -62,7 +62,7 @@ function LinkAnswer() {
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     } else {
       // 마지막 질문이면 "/check" 페이지로 이동
-      backNavigate("/LinkStart");
+      backNavigate("/LinkTag2");
     }
   };
 
