@@ -22,13 +22,19 @@ function LinkAnswer() {
   const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
   const backNavigate = useNavigate();
   const nextNavigate = useNavigate();
-  const userId = 1;
+
+  const [userid, setUserId] = useState("");
 
   useEffect(() => {
+    const storedUserId = localStorage.getItem("user_id");
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get<ApiResponse>(
-          `http://localhost:8000/api/form/questions/?userid=${userId}`
+          `http://localhost:8000/api/form/questions/?user_id=${userid}`
         );
 
         if (response.data.status === "success") {
@@ -54,7 +60,7 @@ function LinkAnswer() {
     if (!questions.questions || questions.questions.length === 0) {
       fetchData();
     }
-  }, [userId, questions, setQuestions]);
+  }, [userid, questions, setQuestions]);
 
   const handleBackButtonClick = () => {
     if (currentQuestionIndex > 0) {

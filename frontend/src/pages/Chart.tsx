@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import BackButton from "../components/BackButton";
 import Line from "../components/Line";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
@@ -90,8 +90,16 @@ const SkillChart = ({
 };
 
 function Chart() {
-  const userId = 1;
-  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart/?userid=${userId}`;
+  const [userid, setUserid] = useState("");
+
+  useEffect(() => {
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
+    }
+  }, []);
+
+  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart/?user_id=${userid}`;
 
   const [workData, setWorkData] = React.useState<
     { tag: string; percentage: number }[]

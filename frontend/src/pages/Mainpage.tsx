@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import logouticon from "../assets/logouticon.svg";
 import researchicon from "../assets/researchicon.svg";
 import charticon from "../assets/charticon.svg";
@@ -10,9 +11,6 @@ import ShareButton from "../components/ShareButton.tsx";
 import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
-
-
-
 function Mainpage() {
   const nextpage = "/QueryMain";
   const logoutpage = "/Signup";
@@ -21,6 +19,15 @@ function Mainpage() {
   const sharepage = "/QueryShare";
 
   const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("user_name");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   return (
     <div
@@ -34,7 +41,9 @@ function Mainpage() {
             <LogoutButton iconSrc={logouticon} logoutpage={logoutpage} />
           </span>
         </p>
-        <p className="text-[14px] font-pre font-bold">강지은님의 네잎클로버</p>
+        <p className="text-[14px] font-pre font-bold">
+          {username}님의 네잎클로버
+        </p>
       </div>
 
       <div>
@@ -42,7 +51,7 @@ function Mainpage() {
       </div>
       <div>
         <p className="text-[14px] text-center font-pre font-bold">
-          강지은님은 사용자 관점을 잘 배려하는
+          {username}님은 사용자 관점을 잘 배려하는
         </p>
         <p className="text-[14px] text-center font-pre font-bold">
           프론트엔드 엔지니어로 평가받고 있습니다.

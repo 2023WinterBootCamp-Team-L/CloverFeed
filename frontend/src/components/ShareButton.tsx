@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
 
@@ -17,13 +18,20 @@ interface ShareButtonProps {
 const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
   const navigate = useNavigate();
 
-  const handleButtonClick = async () => {
-    const userId = 1;
+  const [userid, setUserid] = useState("");
 
+  useEffect(() => {
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
+    }
+  }, []);
+
+  const handleButtonClick = async () => {
     try {
       // 사용자 ID를 하드코딩하거나, 동적으로 설정할 수 있습니다.
       const response = await axios.get<ApiResponse>(
-        `http://localhost:8000/api/form/?user_id=${userId}`
+        `http://localhost:8000/api/form/?user_id=${userid}`
       );
 
       if (response.data.status === "success") {
@@ -42,8 +50,6 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
       console.error("API 호출 에러:", error);
     }
   };
-
-
 
   return (
     <button onClick={handleButtonClick}>
