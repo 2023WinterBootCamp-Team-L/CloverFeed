@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import LoginModal from '../components/LoginModal';
-import { useNavigate } from 'react-router-dom';
-import SignupAnswer from './SignupAnswer';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import LoginModal from "../components/LoginModal";
+import { useNavigate } from "react-router-dom";
+import SignupAnswer from "./SignupAnswer";
+import axios from "axios";
 function GologinButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
@@ -10,14 +10,14 @@ function GologinButton() {
   const navigate = useNavigate();
 
   const SuccessLogin = () => {
-    navigate('/login');
+    navigate("/login");
   };
   const toggleModal = () => {
     setIsOpen(!isOpen);
   };
 
-  const [emailanswerInputs, setemailAnswerInputs] = useState('');
-  const [pwanswerInputs, setpwAnswerInputs] = useState('');
+  const [emailanswerInputs, setemailAnswerInputs] = useState("");
+  const [pwanswerInputs, setpwAnswerInputs] = useState("");
 
   const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setemailAnswerInputs(e.target.value);
@@ -32,43 +32,43 @@ function GologinButton() {
 
   const handleLogin = async () => {
     try {
-      setErrorMessage('');
+      setErrorMessage("");
       if (!emailanswerInputs || !pwanswerInputs) {
         setErrorMessage(
-          '입력되지 않은 항목이 있습니다. 모든 항목을 입력하세요.'
+          "입력되지 않은 항목이 있습니다. 모든 항목을 입력하세요."
         );
         return;
       }
       // 이메일 유효성 검사
       if (!emailValidationRegex.test(emailanswerInputs)) {
-        setErrorMessage('올바른 이메일 형식이 아닙니다.');
+        setErrorMessage("올바른 이메일 형식이 아닙니다.");
         return;
       }
       const response = await axios.post(
-        'http://localhost:8000/api/user/auth/login/',
+        "http://localhost:8000/api/user/auth/login/",
         {
           email: emailanswerInputs,
           password: pwanswerInputs,
         }
       );
-      if (response.data.status === 'success') {
+      if (response.data.status === "success") {
         //로그인 성공
-        console.log('로그인 성공', response.data);
+        console.log("로그인 성공", response.data);
         // 로컬 스토리지에 user_id 저장
-        localStorage.setItem('user_id', response.data.user_id.toString());
-        localStorage.setItem('user_name', response.data.user_name.toString());
+        localStorage.setItem("user_id", response.data.user_id.toString());
+        localStorage.setItem("user_name", response.data.user_name.toString());
         SuccessLogin();
       } else {
         //로그인 실패
-        console.error('로그인에 실패했습니다.', response.data);
+        console.error("로그인에 실패했습니다.", response.data);
         setErrorMessage(
-          '로그인에 실패했습니다. 이메일 또는 비밀번호가 올바르지 않습니다.'
+          "로그인에 실패했습니다. 이메일 또는 비밀번호가 올바르지 않습니다."
         );
       }
     } catch (error) {
-      console.error('로그인 에러', error);
+      console.error("로그인 에러", error);
       setErrorMessage(
-        '로그인 중 오류가 발생했습니다. 나중에 다시 시도해주세요.'
+        "로그인 중 오류가 발생했습니다. 나중에 다시 시도해주세요."
       );
     }
   };
@@ -89,15 +89,15 @@ function GologinButton() {
         로그인하러가기
       </button>
       <LoginModal isOpen={isOpen} toggle={toggleModal}>
-        <div className="flex flex-col items-center gap-10 px-5 py-8 sm:w-[260px] md:w-[270px] lg:w-[280px] ">
-          <div className="flex flex-col items-start">
+        <div className="flex flex-col items-center gap-10 px-5 py-8">
+          <div className="flex flex-col items-start gap-2">
             <p className="font-pre text-[14px] font-bold">Email 입력</p>
             <SignupAnswer
               value={emailanswerInputs}
               onChange={onInputChangeemail}
             />
           </div>
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start gap-2">
             <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
             <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
           </div>
