@@ -26,11 +26,9 @@ const FeedbackList: React.FC = () => {
   useEffect(() => {
     const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
-      console.log(storedUserid);
       setApiUrl(
-        `http://localhost:8000/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category}/`
+        `http://localhost:8000/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category}`
       );
-      console.log(category);
     }
   }, [category]);
 
@@ -40,10 +38,10 @@ const FeedbackList: React.FC = () => {
     const getFeedbacks = async () => {
       try {
         const response = await axios.get(apiUrl);
-        console.log(apiUrl);
 
         if (response.data.status === "success") {
           setFeedbacks(response.data.feedbacks);
+          console.log(response.data.feedbacks);
           console.log("피드백 리스트");
         } else {
           console.error("에러 응답:", response.data.message);
