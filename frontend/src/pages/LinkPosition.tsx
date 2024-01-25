@@ -10,11 +10,6 @@ import 기타직무 from "../assets/기타직무.svg";
 // import ProgressBar from '../components/ProgressBar';
 
 function LinkPosition() {
-  const nextpage = "/LinkTag1";
-
-  // const [totalSteps, setTotalSteps] = useState<number>(5); // totalSteps는 배열의 첫 번째 요소
-  // const [currentStep, setCurrentStep] = useState<number>(1); // currentStep은 배열의 첫 번째 요소
-
   const buttons = [
     {
       icon: <img src={개발자} className="w-5" alt="개발자" />,
@@ -44,10 +39,10 @@ function LinkPosition() {
   ];
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex justify-center items-center min-h-screen">
       <div
-        className="flex flex-col justify-center items-center overflow-hidden relative bg-c-emerald bg-opacity-35"
-        style={{ width: "393px", height: "852px" }}
+        className="flex flex-col justify-center items-center overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-10 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: '393px', height: '852px' }}
       >
         <div className="flex flex-col gap-20">
           {/* <ProgressBar totalSteps={totalSteps} currentStep={currentStep} /> */}
@@ -66,7 +61,7 @@ function LinkPosition() {
                 icon={button.icon}
                 backgroundColor={button.backgroundColor}
                 buttonText={button.buttonText}
-                nextpage={nextpage}
+                nextpage="/LinkTag1"
               />
             ))}
           </div>

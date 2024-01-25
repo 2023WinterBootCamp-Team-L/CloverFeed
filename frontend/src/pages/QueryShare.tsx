@@ -3,15 +3,13 @@ import ShortButton from "../components/ShortButton";
 import XButton from "../components/XButton";
 
 function QueryShare() {
-  const nextpage = "/mainpage";
-
   return (
     <div
       className="bg-gradient-to-t from-c-emerald flex flex-col mx-auto h-screen gap-10 px-5 py-10"
       style={{ width: "393px" }}
     >
       <div className="flex flex-row justify-end">
-        <XButton nextpage={nextpage} />
+        <XButton nextpage="/MainPage" />
       </div>
       <div className="flex flex-col gap-20">
         <div>

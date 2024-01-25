@@ -3,9 +3,6 @@ import GreenButton from "../components/GreenButton";
 import XButton from "../components/XButton";
 
 function QueryStart() {
-  const nextpage = "/querylist";
-  const closepage = "/mainpage";
-
   return (
     <div className="bg-gradient-to-t from-c-emerald">
     <div
@@ -13,7 +10,7 @@ function QueryStart() {
       style={{ width: "393px" }}
     >
       <div className="flex flex-row justify-end">
-        <XButton nextpage={closepage} />
+        <XButton nextpage="/MainPage" />
       </div>
       <div className="flex flex-col gap-24">
         <div>
@@ -29,7 +26,7 @@ function QueryStart() {
           <img src={querystart} alt="쿼리시작" />
         </div>
         <div className="flex justify-center items-center">
-          <GreenButton text="질문 폼 생성하기" nextpage={nextpage} />
+          <GreenButton text="질문 폼 생성하기" nextpage="/QueryList" />
         </div>
       </div>
     </div>

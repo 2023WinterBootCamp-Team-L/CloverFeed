@@ -54,6 +54,9 @@ function GologinButton() {
       if (response.data.status === "success") {
         //로그인 성공
         console.log("로그인 성공", response.data);
+        // 로컬 스토리지에 user_id 저장
+        localStorage.setItem("user_id", response.data.user_id.toString());
+        localStorage.setItem("user_name", response.data.user_name.toString());
         SuccessLogin();
       } else {
         //로그인 실패

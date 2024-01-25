@@ -23,7 +23,7 @@ const Toggle: React.FC<ToggleProps> = ({ onChange }) => {
           onChange={() => handleToggleClick(!choice)}
           className="sr-only"
         />
-        <div className="shadow-card flex h-46 w-50 items-center justify-center rounded-md bg-gray-100">
+        <div className="shadow-card flex h-46 w-50 items-center justify-center rounded-md bg-gray-100  font-pre text-[14px]">
           <span
             onClick={() => handleToggleClick(true)}
             className={`flex h-7 w-15 items-center justify-center rounded text-sm px-2 ${

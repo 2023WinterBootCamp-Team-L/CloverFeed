@@ -45,4 +45,19 @@ urlpatterns = [
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
     ),
+    # 피드백 요약
+    path(
+        "feedbacks/summary/",
+        views.SummaryView.as_view(),
+        name="wordcloudkeyword",
+    ),
+    # 워드클라우드
+    path(
+        "feedbacks/wordcloud/", views.WordCloudSummaryView.as_view(), name="wordcloud"
+    ),
+    path(
+        "feedbacks/wordcloudkeyword/",
+        views.WordCloudKeywordView.as_view(),
+        name="wordcloudkeyword",
+    ),
 ]

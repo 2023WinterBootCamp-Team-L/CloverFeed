@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+// import axios from "axios";
 import logouticon from "../assets/logouticon.svg";
 import researchicon from "../assets/researchicon.svg";
 import charticon from "../assets/charticon.svg";
@@ -11,13 +13,16 @@ import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
 function Mainpage() {
-  const nextpage = "/QueryMain";
-  const logoutpage = "/Signup";
-  const researchpage = "/Search";
-  const chartpage = "/Chart";
-  const sharepage = "/QueryShare";
-
   const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("user_name");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   return (
     <div className="bg-c-gray bg-opacity-100">
@@ -26,7 +31,7 @@ function Mainpage() {
           <p className="text-[24px] font-pre font-bold text-green-500">
             CloverFeed
             <span className="float-right">
-              <LogoutButton iconSrc={logouticon} logoutpage={logoutpage} />
+              <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
@@ -39,20 +44,17 @@ function Mainpage() {
         </div>
         <div>
           <p className="text-[14px] text-center font-pre font-bold">
-            강지은님은 사용자 관점을 잘 배려하는
-          </p>
-          <p className="text-[14px] text-center font-pre font-bold">
-            프론트엔드 엔지니어로 평가받고 있습니다.
+            {username}님은
           </p>
         </div>
 
         <div className="flex justify-center">
-          <GreenButton text="질문폼 새로 생성하기" nextpage={nextpage} />
+          <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
         </div>
         <div className="flex flex-row justify-center gap-14 mt-1">
-          <ResearchButton iconSrc={researchicon} researchpage={researchpage} />
-          <ChartButton iconSrc={charticon} chartpage={chartpage} />
-          <ShareButton iconSrc={shareicon} sharepage={sharepage} />
+          <ResearchButton iconSrc={researchicon} researchpage="/Search" />
+          <ChartButton iconSrc={charticon} chartpage="/Chart" />
+          <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
         </div>
         <div className="flex justify-center">
           <div className="flex flex-col justify-start gap-4">

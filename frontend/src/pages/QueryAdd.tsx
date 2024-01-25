@@ -4,16 +4,22 @@ import Toggle from "../components/Toggle";
 import AddButton from "../components/AddButton";
 import AnswerOptionList from "../components/AnswerOptionList";
 import { useNavigate } from "react-router-dom";
-import PopupQuestion from "../components/PopupQuestion";
-import { useRecoilState } from "recoil";
-export interface QuestionProps {
+import Popup from "../components/Popup";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  questionListState,
+  currentQuestionState,
+  currentQuestionTypeState,
+  currentQuestionChoiceState,
+} from "../../atoms/QuestionStore";
+
+export interface QuestionTextProps {
   value: string;
   onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   onFocus?: () => void;
   onBlur?: () => void;
 }
-
-export const Question: React.FC<QuestionProps> = ({
+export const QuestionText: React.FC<QuestionTextProps> = ({
   value,
   onTextChange,
   onFocus,
@@ -32,55 +38,88 @@ export const Question: React.FC<QuestionProps> = ({
         onFocus={onFocus}
         onBlur={onBlur}
         style={textAreaStyle}
-        className="h-40 w-full border-c-green border-opacity-50 border-2 rounded-lg focus:outline-none leading-1.25 p-2 text-sm resize-none"
+        className="h-40 w-full border-c-green border-opacity-50 border-2 rounded-lg focus:outline-none leading-1.25 p-3 resize-none
+        font-pre text-[14px]"
       />
     </div>
   );
 };
 
 function QueryAdd() {
-  const [showAnswersAdd, setShowAnswersAdd] = useState(false);
-  const [questionInputs, setQuestionInputs] = useRecoilState(
-    questionInputState(questionId)
-  );
-  const [answerInputs, setAnswerInputs] = useRecoilState(
-    answerInputState(questionId)
-  );
+  const [hiddenAnswersAdd, setHiddenAnswersAdd] = useState(false);
+  const [answerInputs, setAnswerInputs] = useState<string[]>([]);
   const [answerComplete, setAnswerComplete] = useState(false);
   const [popupVisible, setPopupVisible] = useState(false);
   const navigate = useNavigate();
 
+  const [currentQuestion, setCurrentQuestion] =
+    useRecoilState(currentQuestionState);
+  const [currentQuestionType, setCurrentQuestionType] = useRecoilState(
+    currentQuestionTypeState
+  );
+  const [currentQuestionChoice, setCurrentQuestionChoice] = useRecoilState(
+    currentQuestionChoiceState
+  );
+
+  const setQuestions = useSetRecoilState(questionListState);
+
   const onFocus = () => {
-    if (questionInputs === "질문하고 싶은 내용을 입력하세요") {
-      setQuestionInputs("");
+    if (currentQuestion === "질문하고 싶은 내용을 입력하세요") {
+      setCurrentQuestion("");
     }
   };
-
   const onBlur = () => {
-    if (questionInputs === "") {
-      setQuestionInputs("질문하고 싶은 내용을 입력하세요");
+    if (currentQuestion === "") {
+      setCurrentQuestion("질문하고 싶은 내용을 입력하세요");
     }
   };
 
   const handleToggleChange = (choice: boolean) => {
-    setShowAnswersAdd(choice);
+    setHiddenAnswersAdd(choice);
     setAnswerComplete(choice);
+    setCurrentQuestionType(choice ? "주관식" : "객관식");
   };
 
   const handleAnswerAddButtonClick = () => {
     setAnswerInputs([...answerInputs, ""]);
   };
 
+  const handleAnswerOptionListUpdate = (updatedInputs: string[]) => {
+    setCurrentQuestionChoice(updatedInputs);
+  };
+
   const handleAddButtonClick = () => {
     if (
-      questionInputs !== "질문하고 싶은 내용을 입력하세요" &&
+      currentQuestion != "질문하고 싶은 내용을 입력하세요" &&
       answerComplete &&
-      (showAnswersAdd || (!showAnswersAdd && answerInputs.length >= 2))
+      (hiddenAnswersAdd || (!hiddenAnswersAdd && answerInputs.length >= 2))
     ) {
-      navigate("/querylist");
+      // Recoil state update
+      setQuestions((prev) => ({
+        ...prev,
+        questions: [
+          ...prev.questions,
+          {
+            context: currentQuestion,
+            type: currentQuestionType,
+            choices: hiddenAnswersAdd ? null : currentQuestionChoice,
+          },
+        ],
+      }));
+
+      // Reset current question Recoil states
+      setCurrentQuestion("질문하고 싶은 내용을 입력하세요");
+      setCurrentQuestionType("객관식");
+      setAnswerComplete(false);
+      setAnswerInputs([]);
+      navigate("/QueryList");
     } else {
       setPopupVisible(true);
     }
+  };
+
+  const handleQuestionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setCurrentQuestion(e.target.value);
   };
 
   const handleAnswerCompleteChange = (complete: boolean) => {
@@ -92,42 +131,54 @@ function QueryAdd() {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
+    <div
+      className=" flex flex-col mx-auto h-full gap-10 px-5 py-8"
+      style={{ width: "393px" }}
+    >
       <div className="flex justify-between">
-        <BackButton back page="/querylist" />
+        <BackButton back page="/QueryList" />
         <BackButton back={false} onClick={handleAddButtonClick} />
       </div>
-      <p className="text-2xl">질문 추가 작성</p>
-      <Toggle onChange={handleToggleChange} />
-      <div className="flex flex-col gap-2">
-        <p className="text-xl">질문 내용</p>
-        <Question
-          value={questionInputs}
-          onTextChange={(e) => setQuestionInputs(e.target.value)}
-          onFocus={onFocus}
-          onBlur={onBlur}
-        />
-      </div>
-      {!showAnswersAdd && (
+      <div className="flex flex-col gap-4">
+        <p className="font-pre text-[22px] font-bold">질문 추가 작성</p>
+        <Toggle onChange={handleToggleChange} />
         <div className="flex flex-col gap-2">
-          <div className="flex flex-row items-end gap-1">
-            <p className="text-xl">답변 옵션</p>
-            <p className="text-xs text-gray-600 p-1">(2개 이상 필수)</p>
-          </div>
-          <AnswerOptionList
-            inputs={answerInputs}
-            setInputs={setAnswerInputs}
-            onCompleteChange={handleAnswerCompleteChange}
-          />
-          <AddButton
-            text="답변 옵션을 추가하세요"
-            onClick={handleAnswerAddButtonClick}
+          <p className="font-pre text-[14px] font-bold">질문 내용</p>
+          <QuestionText
+            value={currentQuestion}
+            onTextChange={handleQuestionChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
         </div>
-      )}
-      {popupVisible && <PopupQuestion onClose={handlePopupClose} />}
+        {!hiddenAnswersAdd && (
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-row items-end gap-1">
+              <p className="font-pre text-[14px] font-bold">답변 옵션</p>
+              <p className="font-pre text-[14px] text-gray-600">
+                (2개 이상 필수)
+              </p>
+            </div>
+            <AddButton
+              text="답변 옵션을 추가하세요"
+              onClick={handleAnswerAddButtonClick}
+            />
+            <AnswerOptionList
+              inputs={answerInputs}
+              setInputs={setAnswerInputs}
+              onCompleteChange={handleAnswerCompleteChange}
+              onUpdateInputs={handleAnswerOptionListUpdate}
+            />
+          </div>
+        )}
+        {popupVisible && (
+          <Popup
+            text="답변 옵션 혹은 질문을 정확히 입력해주세요"
+            onClose={handlePopupClose}
+          />
+        )}
+      </div>
     </div>
   );
 }
-
 export default QueryAdd;

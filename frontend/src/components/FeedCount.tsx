@@ -11,8 +11,15 @@ interface FeedCountProps {
 }
 
 const FeedCount: React.FC<FeedCountProps> = ({ category }) => {
-  const userId = 1;
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/count/?userid=${userId}/`;
+  const [userid, setUserid] = useState("");
+  useEffect(() => {
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
+    }
+  }, []);
+
+  const apiUrl = `http://localhost:8000/api/feedbacks/response/count/?user_id=${userid}`;
 
   const [feedbackCounts, setFeedbackCounts] = useState<FeedbackCounts[]>([]);
 

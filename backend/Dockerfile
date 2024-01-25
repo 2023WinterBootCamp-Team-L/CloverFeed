@@ -6,8 +6,11 @@ ENV PYTHONUNBUFFERED=1
 COPY . /backend
 WORKDIR /backend
 
+ENV JAVA_HOME /usr/lib/jvm/java-1.7-openjdk/jre
+
 # 패키지 업데이트 및 설치
 RUN apt-get update && apt-get install -y pkg-config
+RUN apt-get update && apt-get install -y g++ default-jdk
 
 # requirements.txt 복사 및 의존성 설치
 COPY requirements.txt .
