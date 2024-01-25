@@ -3,6 +3,7 @@ import HomeButton from "../components/HomeButton";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { answerListSelector } from "../../atoms/AnswerStore";
+import { questionListState } from "../../atoms/QuestionStore";
 
 function LinkFinish() {
   const apiUrl = "http://localhost:8000/api/answers/";
