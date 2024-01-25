@@ -1,6 +1,6 @@
 // TagAnswer.tsx
 
-import React from "react";
+import React from 'react';
 
 export interface TagAnswerProps {
   text: string;
@@ -9,11 +9,11 @@ export interface TagAnswerProps {
 
 const TagAnswer: React.FC<TagAnswerProps> = ({ text, image }) => {
   const tagColors = [
-    { bg: "#E2E9FF", icon: "#9EACD0" },
-    { bg: "#F6EED4", icon: "#F5D781" },
-    { bg: "#EDD0F5", icon: "#EBBCF7" },
-    { bg: "#F9C7C7", icon: "#FE8C8C" },
-    { bg: "#D5FBE5", icon: "#94fbbf" },
+    { bg: '#E2E9FF', icon: '#9EACD0' },
+    { bg: '#F6EED4', icon: '#F5D781' },
+    { bg: '#EDD0F5', icon: '#EBBCF7' },
+    { bg: '#F9C7C7', icon: '#FE8C8C' },
+    { bg: '#D5FBE5', icon: '#94fbbf' },
   ];
 
   // 배열 섞기
@@ -29,7 +29,7 @@ const TagAnswer: React.FC<TagAnswerProps> = ({ text, image }) => {
   const tagStyle: React.CSSProperties = {
     backgroundColor: randomColor.bg,
     borderColor: randomColor.icon,
-    boxShadow: "4px 4px 3px rgba(200,200,200,0.3)",
+    boxShadow: '4px 4px 3px rgba(200,200,200,0.3)',
   };
 
   const imgStyle: React.CSSProperties = {
