@@ -25,51 +25,50 @@ function Mainpage() {
   }, []);
 
   return (
-    <div
-      className=" flex flex-col mx-auto h-full gap-10 px-5 py-8"
-      style={{ width: "393px" }}
-    >
-      <div>
-        <p className="text-[24px] font-pre font-bold text-green-500">
-          CloverFeed
-          <span className="float-right">
-            <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
-          </span>
-        </p>
-        <p className="text-[14px] font-pre font-bold">
-          {username}님의 네잎클로버
-        </p>
-      </div>
+    <div className="bg-c-gray bg-opacity-100">
+      <div className=" flex flex-col mx-auto gap-10 px-5 py-8 min-h-screen w-full sm:max-w-[393px] lg:max-w-[393px]">
+        <div>
+          <p className="text-[24px] font-pre font-bold text-green-500">
+            CloverFeed
+            <span className="float-right">
+              <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
+            </span>
+          </p>
+          <p className="text-[14px] font-pre font-bold">
+            강지은님의 네잎클로버
+          </p>
+        </div>
 
-      <div>
-        <SimpleWordcloud />
-      </div>
-      <div>
-        <p className="text-[14px] text-center font-pre font-bold">
-          {username}님은
-        </p>
-      </div>
+        <div>
+          <SimpleWordcloud />
+        </div>
+        <div>
+          <p className="text-[14px] text-center font-pre font-bold">
+            {username}님은
+          </p>
+        </div>
 
-      <div className="flex justify-center">
-        <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
-      </div>
-      <div className="flex flex-row justify-center gap-14 mt-1">
-        <ResearchButton iconSrc={researchicon} researchpage="/Search" />
-        <ChartButton iconSrc={charticon} chartpage="/Chart" />
-        <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
-      </div>
-      <div className="flex justify-center">
-        <div className="flex flex-col justify-start gap-4">
-          <p className="font-pre text-[15px] font-bold">Feedback</p>
+        <div className="flex justify-center">
+          <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
+        </div>
+        <div className="flex flex-row justify-center gap-14 mt-1">
+          <ResearchButton iconSrc={researchicon} researchpage="/Search" />
+          <ChartButton iconSrc={charticon} chartpage="/Chart" />
+          <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
+        </div>
+        <div className="flex justify-center">
+          <div className="flex flex-col justify-start gap-4">
+            <p className="font-pre text-[15px] font-bold">Feedback</p>
 
-          <div className="flex flex-col justify-center">
-            {categories.map((category, index) => (
-              <FeedButton
-                key={category}
-                category={category}
-                color={index % 2 === 0}
-              />
-            ))}
+            <div className="flex flex-col justify-center">
+              {categories.map((category, index) => (
+                <FeedButton
+                  key={category}
+                  category={category}
+                  color={index % 2 === 0}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

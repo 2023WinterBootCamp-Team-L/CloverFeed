@@ -56,10 +56,7 @@ function QueryList() {
   };
 
   return (
-    <div
-      className=" flex flex-col mx-auto h-full gap-10 px-5 py-8"
-      style={{ width: "393px" }}
-    >
+    <div className=" w-full sm:max-w-[393px] lg:max-w-[393px] flex flex-col mx-auto h-full gap-10 px-5 py-8">
       <div className="flex justify-between">
         <BackButton back page="/querystart" />
         <BackButton back={false} onClick={toggle} />
