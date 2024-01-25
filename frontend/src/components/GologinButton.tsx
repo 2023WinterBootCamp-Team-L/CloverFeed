@@ -89,7 +89,7 @@ function GologinButton() {
         로그인하러가기
       </button>
       <LoginModal isOpen={isOpen} toggle={toggleModal}>
-        <div className="flex flex-col items-center gap-10 px-5 py-8 sm:w-[260px] md:w-[270px] lg:w-[280px]">
+        <div className="flex flex-col items-center gap-10 px-5 py-8 sm:w-[260px] md:w-[270px] lg:w-[280px] ">
           <div className="flex flex-col items-start">
             <p className="font-pre text-[14px] font-bold">Email 입력</p>
             <SignupAnswer
