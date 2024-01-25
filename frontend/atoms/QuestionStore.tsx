@@ -30,27 +30,7 @@ export const questionListState = atom<QuestionList>({
           type: "객관식",
           choices: ["개발자", "디자이너", "기획자", "PMPO", "기타직무"],
         },
-        {
-          context: `당신이 생각하는 ${username}님의 업무 능력 강점은 무엇인가요?`,
-          type: "객관식",
-          choices: [
-            "박학다식",
-            "기획력",
-            "문제 분석",
-            "효율적인",
-            "계획적인",
-            "위기대처능력",
-            "정보수집",
-            "추진력",
-            "규칙준수",
-            "창의적인",
-            "리더십",
-            "전략적인",
-            "의견다양성",
-            "결단력",
-            "협력적인",
-          ],
-        },
+
         {
           context: `당신이 생각하는 ${username}님의 성격 및 태도는 어떤가요?`,
           type: "객관식",
@@ -78,7 +58,7 @@ export const questionListState = atom<QuestionList>({
           choices: null,
         },
         {
-          context: `s${username}님이 보완해 줬으면 하는 부분이 있나요?`,
+          context: `${username}님이 보완해 줬으면 하는 부분이 있나요?`,
           type: "주관식",
           choices: null,
         },

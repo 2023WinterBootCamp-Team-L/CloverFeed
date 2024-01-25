@@ -2,14 +2,12 @@ import ChangePage from "../components/ChangePage";
 import clover from "../assets/loginclover.svg";
 
 function QueryMain() {
-  const nextpage = "/querystart";
-
   return (
     <div
       className="bg-gradient-to-t from-c-emerald flex flex-col mx-auto h-screen gap-20 px-5 py-[95px]"
       style={{ width: "393px" }}
     >
-      <ChangePage nextpage={nextpage} />
+      <ChangePage nextpage="/QueryStart" />
       <div>
         <p className="font-pre text-[22px] font-bold text-center">
           질문리스트는 <span className="text-c-green">기본질문</span>과

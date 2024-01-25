@@ -12,12 +12,6 @@ import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
 function Mainpage() {
-  const nextpage = "/QueryMain";
-  const logoutpage = "/Signup";
-  const researchpage = "/Search";
-  const chartpage = "/Chart";
-  const sharepage = "/QueryShare";
-
   const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
 
   const [username, setUsername] = useState("");
@@ -38,7 +32,7 @@ function Mainpage() {
         <p className="text-[24px] font-pre font-bold text-green-500">
           CloverFeed
           <span className="float-right">
-            <LogoutButton iconSrc={logouticon} logoutpage={logoutpage} />
+            <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
           </span>
         </p>
         <p className="text-[14px] font-pre font-bold">
@@ -59,12 +53,12 @@ function Mainpage() {
       </div>
 
       <div className="flex justify-center">
-        <GreenButton text="질문폼 새로 생성하기" nextpage={nextpage} />
+        <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
       </div>
       <div className="flex flex-row justify-center gap-14 mt-1">
-        <ResearchButton iconSrc={researchicon} researchpage={researchpage} />
-        <ChartButton iconSrc={charticon} chartpage={chartpage} />
-        <ShareButton iconSrc={shareicon} sharepage={sharepage} />
+        <ResearchButton iconSrc={researchicon} researchpage="/Search" />
+        <ChartButton iconSrc={charticon} chartpage="/Chart" />
+        <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
       </div>
       <div className="flex justify-center">
         <div className="flex flex-col justify-start gap-4">

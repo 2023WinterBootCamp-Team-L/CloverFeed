@@ -13,7 +13,7 @@ function QueryList() {
   const navigate = useNavigate();
 
   const handleAddButtonClick = () => {
-    navigate("/queryadd");
+    navigate("/QueryAdd");
   };
 
   const [userid, setUserid] = useState("");
@@ -33,7 +33,7 @@ function QueryList() {
         questions: questionList.questions.map((question) => ({
           context: question.context,
           type: question.type,
-          choice: question.choices,
+          choices: question.choices,
         })),
       };
 
@@ -43,7 +43,7 @@ function QueryList() {
       );
 
       console.log(response.data);
-      navigate("/check");
+      navigate("/QueryShare");
     } catch (error) {
       console.error(error);
     }

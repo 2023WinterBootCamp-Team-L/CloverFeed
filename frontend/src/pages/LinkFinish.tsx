@@ -1,12 +1,11 @@
-import clover from '../assets/clover.svg';
-import HomeButton from '../components/HomeButton';
-import axios from 'axios';
-import { useRecoilValue } from 'recoil';
-import { answerListSelector } from '../../atoms/AnswerStore';
-function LinkFinish() {
-  const nextpage = '/';
+import clover from "../assets/clover.svg";
+import HomeButton from "../components/HomeButton";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { answerListSelector } from "../../atoms/AnswerStore";
 
-  const apiUrl = 'http://localhost:8000/api/answers/';
+function LinkFinish() {
+  const apiUrl = "http://localhost:8000/api/answers/";
 
   // Recoil의 상태값에서 AnswerList 가져오기
   const answerList = useRecoilValue(answerListSelector);
@@ -25,14 +24,14 @@ function LinkFinish() {
     axios
       .post(apiUrl, postData)
       .then((response) => {
-        console.log('답변 제출');
+        console.log("답변 제출");
         console.log(response.data);
       })
       .catch((error) => {
-        console.error('폼 없음', error.response.data);
+        console.error("폼 없음", error.response.data);
       });
   } catch (error) {
-    console.error('요청 중 에러 발생:', error);
+    console.error("요청 중 에러 발생:", error);
   }
 
   return (
@@ -54,10 +53,7 @@ function LinkFinish() {
           />
         </div>
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
-          <HomeButton
-            text="내 질문 폼 만들러가기"
-            nextpage={nextpage}
-          ></HomeButton>
+          <HomeButton text="내 질문 폼 만들러가기" nextpage={"/"}></HomeButton>
         </div>
       </div>
     </div>

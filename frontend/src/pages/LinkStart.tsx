@@ -1,10 +1,8 @@
-import clover from '../assets/clover.svg';
-import GreenButton from '../components/GreenButton';
+import clover from "../assets/clover.svg";
+import GreenButton from "../components/GreenButton";
 // import LinkButton from "../components/LinkButton";
 
 function LinkStart() {
-  const nextpage = '/LinkPosition';
-
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div
@@ -28,7 +26,7 @@ function LinkStart() {
           />
         </div>
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center mb-4">
-          <GreenButton text="피드백 시작하기" nextpage={nextpage} />
+          <GreenButton text="피드백 시작하기" nextpage="/LinkPosition" />
         </div>
       </div>
     </div>
