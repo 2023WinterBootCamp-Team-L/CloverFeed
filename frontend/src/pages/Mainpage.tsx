@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+// import axios from "axios";
 import logouticon from "../assets/logouticon.svg";
 import researchicon from "../assets/researchicon.svg";
 import charticon from "../assets/charticon.svg";
@@ -45,10 +46,7 @@ function Mainpage() {
       </div>
       <div>
         <p className="text-[14px] text-center font-pre font-bold">
-          {username}님은 사용자 관점을 잘 배려하는
-        </p>
-        <p className="text-[14px] text-center font-pre font-bold">
-          프론트엔드 엔지니어로 평가받고 있습니다.
+          {username}님은
         </p>
       </div>
 
