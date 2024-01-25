@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
 import logouticon from "../assets/logouticon.svg";
 import researchicon from "../assets/researchicon.svg";
 import charticon from "../assets/charticon.svg";
@@ -13,19 +13,44 @@ import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
 function Mainpage() {
-  const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
-
   const [username, setUsername] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [counts, setCounts] = useState([]);
+
+  const fetchCounts = async () => {
+    const response = await axios.get(
+      `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
+    );
+    console.log(response.data.counts);
+    const categoriesData = response.data.counts.map(
+      (item: { category: string }) => item.category
+    );
+    const countsData = response.data.counts.map(
+      (item: { count: number }) => item.count
+    );
+
+    setCategories(categoriesData);
+    setCounts(countsData);
+  };
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("user_name");
     if (storedUsername) {
       setUsername(storedUsername);
     }
+    fetchCounts();
   }, []);
 
+  useEffect(() => {
+    console.log(categories);
+  }, [categories]);
+
+  useEffect(() => {
+    console.log(counts);
+  }, [counts]);
+
   return (
-    <div className="bg-c-gray bg-opacity-100">
+    <div className="bg-white">
       <div className=" flex flex-col mx-auto gap-10 px-5 py-8 min-h-screen w-full sm:max-w-[393px] lg:max-w-[393px]">
         <div>
           <p className="text-[24px] font-pre font-bold text-green-500">
@@ -62,11 +87,13 @@ function Mainpage() {
 
             <div className="flex flex-col justify-center">
               {categories.map((category, index) => (
-                <FeedButton
-                  key={category}
-                  category={category}
-                  color={index % 2 === 0}
-                />
+                <div key={category}>
+                  <FeedButton
+                    category={category}
+                    count={counts[index]}
+                    color={index % 2 === 0}
+                  />
+                </div>
               ))}
             </div>
           </div>
