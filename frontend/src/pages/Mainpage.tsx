@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
 import logouticon from "../assets/logouticon.svg";
 import researchicon from "../assets/researchicon.svg";
 import charticon from "../assets/charticon.svg";
@@ -12,11 +12,6 @@ import ShareButton from "../components/ShareButton.tsx";
 import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
-interface ApiResponse {
-  status: "success" | "error";
-  summary?: string;
-}
-
 function Mainpage() {
   const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
 
@@ -28,43 +23,6 @@ function Mainpage() {
       setUsername(storedUsername);
     }
   }, []);
-
-  const [userid, setUserid] = useState("");
-  const [summary, setSummary] = useState<string | undefined>(undefined);
-
-  useEffect(() => {
-    const storedUserid = localStorage.getItem("user_id");
-    if (storedUserid) {
-      setUserid(storedUserid);
-    }
-  }, []);
-
-  const apiUrl = "http://localhost:8000/api/feedbacks/summary/";
-  useEffect(() => {
-    // API 데이터를 가져오는 비동기 함수 정의
-    const fetchData = async () => {
-      try {
-        // axios를 사용해 POST 요청 보내기
-        const response = await axios.post<ApiResponse>(apiUrl, {
-          user_id: userid,
-        });
-
-        // API 응답이 성공인 경우 요약 정보를 상태 변수에 저장
-        if (response.data.status === "success") {
-          setSummary(response.data.summary);
-        } else {
-          // API 응답이 실패인 경우 에러 메시지 출력
-          console.error("데이터 없음:", response.data.status);
-        }
-      } catch (error) {
-        // 비동기 함수 실행 중 발생한 에러 처리
-        console.error("API 요청 실패:", error);
-      }
-    };
-
-    // fetchData 함수 호출
-    fetchData();
-  }, [userid, setSummary]);
 
   return (
     <div
@@ -88,7 +46,7 @@ function Mainpage() {
       </div>
       <div>
         <p className="text-[14px] text-center font-pre font-bold">
-          {username}님은 {summary}
+          {username}님은
         </p>
       </div>
 
