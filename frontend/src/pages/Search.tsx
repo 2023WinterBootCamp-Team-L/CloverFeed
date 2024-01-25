@@ -62,9 +62,12 @@ const Search: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col overflow-hidden max-w-[24.56rem] mx-auto h-[53.25rem] px-5 py-8 gap-4">
+    <div
+      className="bg-c-emerald flex flex-col mx-auto h-screen gap-10 px-5 py-8"
+      style={{ width: "393px" }}
+    >
       <div className="flex justify-between">
-        <BackButton back page="/mainpage" />
+        <BackButton back page="/MainPage" />
       </div>
 
       <div>
@@ -78,7 +81,9 @@ const Search: React.FC = () => {
       {error ? (
         <p>에러: {error}</p>
       ) : (
-        <div className="flex flex-col gap-2">{filteredFeedbacks}</div>
+        <div className="flex flex-col items-center gap-4">
+          {filteredFeedbacks}
+        </div>
       )}
     </div>
   );
