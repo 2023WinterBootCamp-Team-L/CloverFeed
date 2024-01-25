@@ -564,7 +564,8 @@ class CategoryCountView(APIView):
             response_data = {
                 "status": "success",
                 "counts": [
-                    {category: count} for category, count in category_counts.items()
+                    {"category": category, "count": count}
+                    for category, count in category_counts.items()
                 ],
             }
 
