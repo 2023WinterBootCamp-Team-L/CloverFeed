@@ -25,7 +25,7 @@ function Mainpage() {
   }, []);
 
   return (
-    <div className="bg-c-gray bg-opacity-100">
+    <div className="bg-white">
       <div className=" flex flex-col mx-auto gap-10 px-5 py-8 min-h-screen w-full sm:max-w-[393px] lg:max-w-[393px]">
         <div>
           <p className="text-[24px] font-pre font-bold text-green-500">
@@ -62,11 +62,9 @@ function Mainpage() {
 
             <div className="flex flex-col justify-center">
               {categories.map((category, index) => (
-                <FeedButton
-                  key={category}
-                  category={category}
-                  color={index % 2 === 0}
-                />
+                <div key={category}>
+                  <FeedButton category={category} color={index % 2 === 0} />
+                </div>
               ))}
             </div>
           </div>

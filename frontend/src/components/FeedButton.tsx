@@ -22,9 +22,6 @@ const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
       <button className={buttonClassName} onClick={handleButtonClick}>
         <div className="flex flex-row justify-between">
           <p>{category}의 피드백</p>
-          <p>
-            <FeedCount category={category} />
-          </p>
         </div>
       </button>
     </div>
