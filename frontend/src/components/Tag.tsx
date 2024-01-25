@@ -26,14 +26,10 @@ const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
       onClick();
 
       if (typeof color === "number") {
-        setCurrentColor("bg-[#E2E9FF]");
-        // console.log(color);
         setCurrentColor(tagColors[color % tagColors.length]);
       } else if (color === "bg-white") {
         setCurrentColor(color);
       }
-
-      // console.log(`currentColor, ${color}`);
     }
   };
 
@@ -44,7 +40,10 @@ const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
     "text-xs",
     "flex",
     "items-center",
-    "justify-center"
+    "justify-center",
+    "sm:py-1 sm:px-4", // 모바일 화면 이상에서 더 큰 크기로 조절
+    "md:py-2 md:px-5", // 테블릿 화면 이상에서 더 큰 크기로 조절
+    "lg:py-2 lg:px-5" // 데스크탑 화면 이상에서 더 큰 크기로 조절
   );
 
   const iconClasses = classNames("mr-2", "max-h-4", "object-contain");
@@ -60,34 +59,3 @@ const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
 };
 
 export default Tag;
-
-// Tag 컴포넌트를 정의합니다.
-// const Tag: React.FC<TagProps> = ({
-//   text,
-//   color,
-//   image,
-//   onClick,
-//   currentIndex,
-// }) => {
-//   const [isSelected, setIsSelected] = useState(currentIndex !== -1);
-//   const [currentColorIndex, setCurrentColorIndex] = useState(0);
-
-//   const handleButtonClick = () => {
-//     if (onClick) {
-//       onClick();
-//     }
-
-//     setIsSelected(!isSelected);
-//     // 클릭할 때마다 다음 색상으로 변경
-//     setCurrentColorIndex((prevIndex) => (prevIndex + 1) % tagColors.length);
-
-//     console.log("isSelected:", !isSelected);
-//     console.log(
-//       "currentColorIndex:",
-//       (currentColorIndex + 1) % tagColors.length
-//     );
-//   };
-
-//   const selectedColorIndex =
-//     currentIndex !== -1 ? currentIndex : currentColorIndex;
-//   const selectedColor = tagColors[selectedColorIndex];
