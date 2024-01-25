@@ -17,15 +17,8 @@ const Search: React.FC = () => {
   const [searchValue, setSearchValue] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [filteredFeedbacks, setFilteredFeedbacks] = useState<JSX.Element[]>([]);
-  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
+  // const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
   const [userid, setUserid] = useState("");
-
-  useEffect(() => {
-    const storedUserid = localStorage.getItem("user_id");
-    if (storedUserid) {
-      setUserid(storedUserid);
-    }
-  }, []);
 
   const fetchFeedbacks = async () => {
     try {
@@ -35,15 +28,18 @@ const Search: React.FC = () => {
 
       if (response.data.status === "success") {
         const feedbacksData = response.data.feedbacks;
-        setFeedbacks(feedbacksData);
-        const filteredFeedbackElements = feedbacks.map(
+        const filteredFeedbackElements = feedbacksData.map(
           (feedback: Feedback, index: number) => (
             <FeedbackBox
               key={index}
               title={`${feedback.respondent_name} ${feedback.category}님의 피드백`}
               tag_work={feedback.tag_work}
               tag_attitude={feedback.tag_attitude}
-              text={searchValue.trim() !== "" ? feedback.result : undefined}
+              text={
+                searchValue.trim() !== ""
+                  ? feedback.result.slice(0, 100)
+                  : undefined
+              }
               index={index}
             />
           )
@@ -61,9 +57,16 @@ const Search: React.FC = () => {
   };
 
   useEffect(() => {
+    const storedUserid = localStorage.getItem("user_id");
+    if (storedUserid) {
+      setUserid(storedUserid);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("userid: " + userid);
     fetchFeedbacks();
-    setFilteredFeedbacks;
-  }, [feedbacks]);
+  }, [userid, searchValue]);
 
   const handleSearch = () => {
     fetchFeedbacks();
