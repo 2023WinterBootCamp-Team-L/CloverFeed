@@ -402,6 +402,8 @@ class QuestionListView(APIView):
                 status=404,
             )
 
+        user = AuthUser.objects.filter(id=user_id).first()
+
         # 시리얼라이저를 사용하여 데이터 직렬화
         serializer = QuestionSerializer(questions_data, many=True)
 
@@ -409,6 +411,8 @@ class QuestionListView(APIView):
         return Response(
             {
                 "status": "success",
+                "user_name": user.username,
+                "form_id": subquery[0].get("max_form_id"),
                 "questions": serializer.data,
             },
             status=status.HTTP_200_OK,
@@ -560,7 +564,8 @@ class CategoryCountView(APIView):
             response_data = {
                 "status": "success",
                 "counts": [
-                    {category: count} for category, count in category_counts.items()
+                    {"category": category, "count": count}
+                    for category, count in category_counts.items()
                 ],
             }
 

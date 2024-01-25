@@ -6,101 +6,70 @@ import TagAnswer from '../components/TagAnswer';
 import 디자이너 from '../assets/디자이너.svg';
 import { useNavigate } from 'react-router-dom';
 
-interface RespondentInfo {
-  respondent_name: string;
-  category: string;
-}
-
 interface Feedback {
   feedback_id: string;
-  respondent_info: RespondentInfo;
-  tags_work: string[];
-  tags_attitude: string[];
+  respondent_name: string;
+  tag_work: string;
+  tag_attitude: string;
+  tags_work_parsed: string[];
+  tags_attitude_parsed: string[];
 }
 
 const FeedbackList: React.FC = () => {
   const { category } = useParams<{ category?: string }>();
-
-  const [userid, setUserid] = useState('');
+  const [apiUrl, setApiUrl] = useState('');
 
   useEffect(() => {
     const storedUserid = localStorage.getItem('user_id');
     if (storedUserid) {
-      setUserid(storedUserid);
+      setApiUrl(
+        `http://localhost:8000/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category}`
+      );
     }
-  }, []);
-
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/list/?user_id=${userid}&category=${category}`;
-
-  // 더미 데이터
-  const dummyData = {
-    status: 'success',
-    feedbacks: [
-      {
-        feedback_id: '2',
-        respondent_info: {
-          respondent_name: '#2356',
-          category: '디자이너',
-        },
-        tags_work: ['효율적인', '박학다식', '리더십'],
-        tags_attitude: ['책임감', '경청하는', '공감 능력'],
-      },
-      {
-        feedback_id: '5',
-        respondent_info: {
-          respondent_name: '#1238',
-          category: '디자이너',
-        },
-        tags_work: ['전략적인', '기획력', '문제 분석'],
-        tags_attitude: ['성실함', '배려심', '적극적인'],
-      },
-      {
-        feedback_id: '11',
-        respondent_info: {
-          respondent_name: '#6583',
-          category: '디자이너',
-        },
-        tags_work: ['계획적인', '정보 수집', '결단력'],
-        tags_attitude: ['꼼꼼함', '끈기', '분위기메이커'],
-      },
-    ],
-  };
+  }, [category]);
 
   const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
-  useEffect(() => {
-    //   const getFeedbacks = async () => {
-    //     try {
-    //       const response = await axios.get(apiUrl);
-
-    //       if (response.data.status === "success") {
-    //         setFeedbacks(response.data.feedbacks);
-    //         console.log("피드백 리스트");
-    //       } else {
-    //         console.error("에러 응답:", response.data.message);
-    //         // 사용자에게 에러 메시지를 보여줄 수 있는 처리 추가
-    //       }
-    //     } catch (error) {
-    //       console.error("네트워크 오류:", error);
-    //       // 사용자에게 네트워크 오류 메시지를 보여줄 수 있는 처리 추가
-    //     }
-    //   };
-
-    //   getFeedbacks();
-    // }, [apiUrl]);
-
-    const data = dummyData;
-
-    if (data.status === 'success') {
-      setFeedbacks(data.feedbacks);
-    } else {
-      console.error('에러 응답:');
+  const parseTags = (tagsString: string) => {
+    try {
+      return tagsString
+        .replace(/^\[|\]$/g, '') // Remove square brackets
+        .split(', ') // Split by comma and space
+        .map((tag) => tag.replace(/^'|'$/g, '')); // Remove single quotes from the beginning and end
+    } catch (error) {
+      console.error('Error parsing tags:', error);
+      return [];
     }
+  };
+
+  const getFeedbacks = async () => {
+    try {
+      const response = await axios.get(apiUrl);
+
+      if (response.data.status === 'success') {
+        const parsedFeedbacks = response.data.feedbacks.map(
+          (feedback: Feedback) => ({
+            ...feedback,
+            tags_work_parsed: parseTags(feedback.tag_work),
+            tags_attitude_parsed: parseTags(feedback.tag_attitude),
+          })
+        );
+
+        setFeedbacks(parsedFeedbacks);
+        console.log(response.data);
+      }
+    } catch (error) {
+      console.error('네트워크 오류:', error);
+    }
+  };
+
+  useEffect(() => {
+    getFeedbacks();
   }, [apiUrl]);
 
-  const filteredFeedbacks = feedbacks.filter(
-    (feedback) => feedback.respondent_info.category === category
-  );
+  useEffect(() => {
+    console.log(feedbacks);
+  }, [feedbacks]);
 
   const navigate = useNavigate();
 

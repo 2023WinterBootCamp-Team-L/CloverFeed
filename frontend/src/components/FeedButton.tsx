@@ -1,13 +1,13 @@
 import React from "react";
-// import FeedCount from "../components/FeedCount.tsx";
 import { useNavigate } from "react-router-dom";
 
 interface FeedButtonProps {
   category: string;
+  count: number;
   color: boolean; // color가 true면 purple, false면 blue
 }
 
-const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
+const FeedButton: React.FC<FeedButtonProps> = ({ category, count, color }) => {
   const navigate = useNavigate();
   const handleButtonClick = () => {
     navigate(`/feedbacks/${category}`);
@@ -22,8 +22,7 @@ const FeedButton: React.FC<FeedButtonProps> = ({ category, color }) => {
       <button className={buttonClassName} onClick={handleButtonClick}>
         <div className="flex flex-row justify-between">
           <p>{category}의 피드백</p>
-          <p>0</p>
-          {/* <FeedCount category={category} /> */}
+          <p>{count}</p>
         </div>
       </button>
     </div>

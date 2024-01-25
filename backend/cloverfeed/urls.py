@@ -26,7 +26,7 @@ urlpatterns = [
     ),
     # 카테고리(직군)별 피드백 목록 확인
     path(
-        "feedbacks/response/",
+        "feedbacks/response/list/",
         views.FeedbackListByCategory.as_view(),
         name="feedback-list-by-category",
     ),

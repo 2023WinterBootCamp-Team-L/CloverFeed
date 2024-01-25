@@ -13,7 +13,7 @@ function QueryList() {
   const navigate = useNavigate();
 
   const handleAddButtonClick = () => {
-    navigate("/queryadd");
+    navigate("/QueryAdd");
   };
 
   const [userid, setUserid] = useState("");
@@ -33,7 +33,7 @@ function QueryList() {
         questions: questionList.questions.map((question) => ({
           context: question.context,
           type: question.type,
-          choice: question.choices,
+          choices: question.choices,
         })),
       };
 
@@ -43,7 +43,7 @@ function QueryList() {
       );
 
       console.log(response.data);
-      navigate("/check");
+      navigate("/QueryShare");
     } catch (error) {
       console.error(error);
     }
@@ -56,10 +56,7 @@ function QueryList() {
   };
 
   return (
-    <div
-      className=" flex flex-col mx-auto h-full gap-10 px-5 py-8"
-      style={{ width: "393px" }}
-    >
+    <div className=" w-full sm:max-w-[393px] lg:max-w-[393px] flex flex-col mx-auto h-full gap-10 px-5 py-8">
       <div className="flex justify-between">
         <BackButton back page="/querystart" />
         <BackButton back={false} onClick={toggle} />
