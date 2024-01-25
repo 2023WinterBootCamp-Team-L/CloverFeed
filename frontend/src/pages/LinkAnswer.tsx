@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ChoicePart from "../components/Answer/ChoicePart";
 import ShortPart from "../components/Answer/ShortPart";
-import CategoryPart from "../components/Answer/CategotyPart";
+import CategoryPart from "../components/Answer/CategoryPart";
 import BackButton from "../components/BackButton";
 import {
   QuestionList,
@@ -11,6 +11,13 @@ import {
 } from "../../atoms/QuestionStore";
 import { useRecoilState } from "recoil";
 import TagPart from "../components/Answer/TagPart";
+import { atom } from "recoil";
+// import { selectedTagsState } from "../../atoms/AnswerStore";
+
+export const currentQuestionIndexState = atom<number>({
+  key: "currentQuestionIndexState",
+  default: 0,
+});
 
 interface ApiResponse {
   status: "success" | "error";
@@ -20,6 +27,7 @@ interface ApiResponse {
 }
 
 function LinkAnswer() {
+  // const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
   const backNavigate = useNavigate();
@@ -37,10 +45,13 @@ function LinkAnswer() {
         console.log(response); // 전체 응답 콘솔에 기록
 
         // 데이터 업데이트
-        setQuestions((prevQuestions) => ({
-          ...prevQuestions,
-          questions: response.data.questions || [],
-        }));
+        setQuestions(
+          (prevQuestions: QuestionList) =>
+            ({
+              ...prevQuestions,
+              questions: response.data.questions || [],
+            }) as QuestionList
+        );
       } else {
         console.error(
           `폼 없음: ${response.data.error_code}, ${response.data.message}`
@@ -81,7 +92,7 @@ function LinkAnswer() {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     } else {
       // 마지막 질문이면 "/check" 페이지로 이동
-      nextNavigate("/LinkFinish");
+      nextNavigate("/check");
     }
   };
 
@@ -106,6 +117,9 @@ function LinkAnswer() {
             <p className="font-pre text-[22px] font-bold text-center px-10">
               {currentQuestion?.context}
             </p>
+            <p className="font-pre text-[14px] text-gray-400 text-center">
+              키워드를 최대 5개까지 선택해주세요.
+            </p>
           </div>
           <div className="flex flex-1 flex-col justify-center items-center">
             {currentQuestion &&
@@ -115,21 +129,15 @@ function LinkAnswer() {
             {currentQuestionIndex === 1 && (
               <>
                 {currentQuestion?.type === "객관식" && (
-                  <ChoicePart questionIndex={currentQuestionIndex} />
+                  <TagPart questionIndex={currentQuestionIndex} />
                 )}
-                {/* {currentQuestion?.type === "주관식" && (
-                  <ShortPart questionIndex={currentQuestionIndex} />
-                )} */}
               </>
             )}
             {currentQuestionIndex === 2 && (
               <>
                 {currentQuestion?.type === "객관식" && (
-                  <ChoicePart questionIndex={currentQuestionIndex} />
+                  <TagPart questionIndex={currentQuestionIndex} />
                 )}
-                {/* {currentQuestion?.type === "주관식" && (
-                  <ShortPart questionIndex={currentQuestionIndex} />
-                )} */}
               </>
             )}
             {currentQuestionIndex >= 3 && (

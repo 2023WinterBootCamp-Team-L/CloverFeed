@@ -33,12 +33,12 @@ function LinkStart() {
     getQuestionList();
   }, []);
 
-  // useEffect(() => {
-  //   console.log("user_name: " + user_name);
-  // }, [user_name]);
+  useEffect(() => {
+    console.log("user_name: " + user_name);
+  }, [user_name]);
 
   useEffect(() => {
-    // console.log("form_id: " + form_id);
+    console.log("form_id: " + form_id);
     setAnswerList((oldState) => ({
       ...oldState,
       form_id: form_id,
@@ -73,7 +73,7 @@ function LinkStart() {
           />
         </div>
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center mb-4">
-          <GreenButton text="피드백 시작하기" nextpage="/LinkPosition" />
+          <GreenButton text="피드백 시작하기" nextpage="/LinkAnswer" />
         </div>
       </div>
     </div>

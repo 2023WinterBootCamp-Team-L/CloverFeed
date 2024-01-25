@@ -19,6 +19,11 @@ export type AnswerList = {
   answers: Answer[];
 };
 
+// export const selectedTagsState = atom<TagProps[]>({
+//   key: "selectedTagsState",
+//   default: [],
+// });
+
 // 개별 Answer를 저장하기 위한 Atom
 export const selectedAnswerState = atom<Answer | null>({
   key: "selectedAnswerState",
