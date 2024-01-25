@@ -1,3 +1,5 @@
+import { useState, useEffect } from "react";
+// import axios from "axios";
 import logouticon from "../assets/logouticon.svg";
 import researchicon from "../assets/researchicon.svg";
 import charticon from "../assets/charticon.svg";
@@ -11,67 +13,65 @@ import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
 
 function Mainpage() {
-  const nextpage = "/QueryMain";
-  const logoutpage = "/Signup";
-  const researchpage = "/Search";
-  const chartpage = "/Chart";
-  const sharepage = "/QueryShare";
+  const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
 
-  const categories = ["developer", "designer", "planner", "pmpo", "others"];
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("user_name");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+  }, []);
 
   return (
     <div
-      className="bg-white flex flex-col 
-     max-w-[24.56rem] mx-auto h-screen gap-[20px] px-22px py-36px"
+      className=" flex flex-col mx-auto h-full gap-10 px-5 py-8"
+      style={{ width: "393px" }}
     >
       <div>
-        <p className="text-4xl mt-4">
-          Home
+        <p className="text-[24px] font-pre font-bold text-green-500">
+          CloverFeed
           <span className="float-right">
-            <LogoutButton iconSrc={logouticon} logoutpage={logoutpage} />
+            <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
           </span>
         </p>
-        <p className="text-xl">keyword cloud</p>
-      </div>
-      <div className="flex flex-col items-center gap-6">
-        <div>
-          <SimpleWordcloud />
-        </div>
-        <div>
-          <p className="text-sm text-center">
-            사용자 관점을 잘 배려하는 프론트엔드
-          </p>
-          <p className="text-sm text-center">엔지니어로 평가받고 있습니다.</p>
-        </div>
-      </div>
-      <div className="flex justify-center">
-        <GreenButton text="질문 새로 생성하기" nextpage={nextpage} />
-      </div>
-      <div className="flex justify-center space-x-8xl mt-4">
-        <p>
-          <span className="mr-12">
-            <ResearchButton
-              iconSrc={researchicon}
-              researchpage={researchpage}
-            />
-          </span>
-          <span className="mr-12">
-            <ChartButton iconSrc={charticon} chartpage={chartpage} />
-          </span>
-          <span>
-            <ShareButton iconSrc={shareicon} sharepage={sharepage} />
-          </span>
+        <p className="text-[14px] font-pre font-bold">
+          {username}님의 네잎클로버
         </p>
+      </div>
+
+      <div>
+        <SimpleWordcloud />
       </div>
       <div>
-        <p className="text-xl mt-0">feedback</p>
-        {categories.map((category, index) => (
-          <FeedButton
-            key={category}
-            category={category}
-            color={index % 2 === 0}
-          />
-        ))}
+        <p className="text-[14px] text-center font-pre font-bold">
+          {username}님은
+        </p>
+      </div>
+
+      <div className="flex justify-center">
+        <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
+      </div>
+      <div className="flex flex-row justify-center gap-14 mt-1">
+        <ResearchButton iconSrc={researchicon} researchpage="/Search" />
+        <ChartButton iconSrc={charticon} chartpage="/Chart" />
+        <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
+      </div>
+      <div className="flex justify-center">
+        <div className="flex flex-col justify-start gap-4">
+          <p className="font-pre text-[15px] font-bold">Feedback</p>
+
+          <div className="flex flex-col justify-center">
+            {categories.map((category, index) => (
+              <FeedButton
+                key={category}
+                category={category}
+                color={index % 2 === 0}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

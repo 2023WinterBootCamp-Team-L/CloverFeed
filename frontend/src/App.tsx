@@ -1,6 +1,5 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { QuestionProvider } from "./components/QuestionUpdate";
 import LinkMain from "./pages/LinkMain";
 import QueryMain from "./pages/QueryMain";
 import QueryStart from "./pages/QueryStart";
@@ -12,18 +11,17 @@ import LinkPosition from "./pages/LinkPosition";
 import LinkTag1 from "./pages/LinkTag1";
 import Chart from "./pages/Chart";
 import LinkTag2 from "./pages/LinkTag2";
-import LinkAnswer1 from "./pages/LinkAnswer1";
-import LinkAnswer2 from "./pages/LinkAnswer2";
-import LinkOpti from "./pages/LinkOpti";
 import LinkFinish from "./pages/LinkFinish";
 import Gosignup from "./pages/Gosignup";
 import Mainpage from "./pages/Mainpage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import WordCloud from "./components/wordcloud";
-import FeedBackList from "./pages/FeedBackList";
 import Search from "./pages/Search";
 import FeedBackResult from "./pages/FeedBackResult";
+import LinkAnswer from "./pages/LinkAnswer";
+import AnswerCheck from "./pages/LinkPage/AnswerCheck";
+import FeedbackList from "./pages/FeedBackList";
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -31,36 +29,36 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<LinkMain />} />
-        <Route path="/querymain" element={<QueryMain />} />
-        <Route path="/querystart" element={<QueryStart />} />
-        <Route path="/queryshare" element={<QueryShare />} />
+        <Route path="/" element={<Signup />} />
+        <Route path="/Gosignup" element={<Gosignup />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="/MainPage" element={<Mainpage />} />
+        <Route path="/Search" element={<Search />} />
+        <Route path="/Feedbacks/:category" element={<FeedbackList />} />
+        <Route path="/FeedbackResult" element={<FeedBackResult />} />
+        <Route path="/QueryMain" element={<QueryMain />} />
+        <Route path="/QueryStart" element={<QueryStart />} />
+        <Route path="/QueryAdd" element={<QueryAdd />} />
+        <Route path="/QueryList" element={<QueryList />} />
+        <Route path="/QueryShare" element={<QueryShare />} />
         <Route path="/LinkMain" element={<LinkMain />} />
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
+<<<<<<< HEAD
         <Route path="/Chart" element={<Chart />} />
         <Route path="/Search" element={<Search />} />
         <Route path="/feedbackresult" element={<FeedBackResult />} />{" "}
         <Route path="/feedbacks/:category" element={<FeedBackList />} />
+=======
+>>>>>>> dcedd4f919b98ac64a4f09782e6c88366d5d3feb
         <Route path="/LinkTag2" element={<LinkTag2 />} />
-        <Route path="LinkAnswer1" element={<LinkAnswer1 />} />
-        <Route path="LinkAnswer2" element={<LinkAnswer2 />} />
-        <Route path="LinkOpti" element={<LinkOpti />} />
+        <Route path="/LinkAnswer" element={<LinkAnswer />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/mainpage" element={<Mainpage />} />
-        <Route path="/gosignup" element={<Gosignup />} />
-        <Route path="/wordcloud" element={<WordCloud />} />
+        <Route path="/Chart" element={<Chart />} />
+        <Route path="/WordCloud" element={<WordCloud />} />
+        <Route path="/Check" element={<AnswerCheck />} />
       </Routes>
-
-      <QuestionProvider>
-        <Routes>
-          <Route path="/queryadd" element={<QueryAdd />} />
-          <Route path="/querylist" element={<QueryList />} />
-        </Routes>
-      </QuestionProvider>
     </div>
   );
 }

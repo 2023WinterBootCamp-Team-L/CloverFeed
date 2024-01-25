@@ -40,7 +40,7 @@ const Searchbutton: React.FC<SearchbuttonProps> = ({
         onBlur={handleBlur}
         onKeyPress={handleKeyPress} // 추가: 엔터키 감지
         placeholder={placeholder}
-        className="border border-black bg-white text-black w-full h-10 rounded-lg focus:outline-none leading-1.25 p-2 text-sm"
+        className="border border-black bg-white w-full h-10 rounded-lg focus:outline-none leading-1.25 p-2 font-pre text-[14px]"
       />
       {is돋보기Visible && (
         <button onClick={onEnter}>

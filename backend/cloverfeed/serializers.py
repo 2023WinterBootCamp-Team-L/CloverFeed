@@ -58,7 +58,7 @@ class QuestionSerializer(serializers.ModelSerializer):
                     choices = MultipleChoice.objects.filter(
                         question=item.id
                     ).values_list("choice_context", flat=True)
-                    item["choices"] = choices[0]
+                    item["choices"] = choices
 
             return instance
         else:
@@ -67,7 +67,7 @@ class QuestionSerializer(serializers.ModelSerializer):
                 choices = MultipleChoice.objects.filter(
                     question=instance.id
                 ).values_list("choice_context", flat=True)
-                representation["choices"] = choices[0]
+                representation["choices"] = choices
 
             return representation
 
@@ -92,7 +92,6 @@ class FeedbackResultSerializer(serializers.ModelSerializer):
             "summary",
             "created_at",
             "modified_at",
-            "field",
         ]
 
 # 받은 피드백답변 중 검색을 위한 Serializer
@@ -121,3 +120,12 @@ class FeedbackTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = FeedbackResult
         fields = ("tag_work", "tag_attitude")
+
+
+class WordCloudSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FeedbackResult
+        fields = [
+            "tag_work",
+            "tag_attitude",
+        ]
