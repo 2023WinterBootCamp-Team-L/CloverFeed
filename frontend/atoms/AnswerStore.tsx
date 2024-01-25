@@ -12,6 +12,7 @@ export type Answer = {
 };
 
 export type AnswerList = {
+  form_id: number; // Add form_id property
   category: Category;
   tags_work: TagWork;
   tags_attitude: TagAttitude;
@@ -28,6 +29,7 @@ export const selectedAnswerState = atom<Answer | null>({
 export const answerListState = atom<AnswerList>({
   key: "answerListState",
   default: {
+    form_id: 0, // Add default value for form_id
     category: "",
     tags_work: [],
     tags_attitude: [],
