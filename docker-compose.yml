@@ -54,6 +54,24 @@ services:
       - ./frontend:/frontend
       - /frontend/node_modules
 
+  celery:
+    build: ./backend
+    command: celery -A config.celery worker --loglevel=info
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      - db
+      - rabbitmq
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672 # RabbitMQ의 기본 AMQP 포트
+      - 15672:15672 # RabbitMQ 관리자 콘솔, 서버 및 대시보드를 모니터링 및 관리
+    environment:
+      RABBITMQ_DEFAULT_USER: clover
+      RABBITMQ_DEFAULT_PASS: feed
+
 volumes:
   mysql_data:
 

@@ -32,6 +32,9 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# CELERY 설정
+CELERY_BROKER_URL = 'amqp://clover:feed@rabbitmq:5672/'
+
 # chat gpt 시크릿키
 OPENAI_API_KEY = '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'
 

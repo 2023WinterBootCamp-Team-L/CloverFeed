@@ -17,6 +17,8 @@ from openai import OpenAI
 import json, random, ast, environ, re
 from datetime import datetime
 from konlpy.tag import Okt
+from .tasks import generate_summary
+
 
 from .models import (
     Form,
@@ -452,24 +454,6 @@ class AnswersView(APIView):
             if answer_data.get("type") == "주관식" and answer_data.get("answer"):
                 answers.append(answer_data.get("answer"))
 
-        # 주관식 답변이 있는 경우, 요약을 생성
-        if len(answers) != 0:
-            # GPT-3.5-turbo 모델로 요약을 생성
-            response = client.chat.completions.create(
-                model="gpt-3.5-turbo",
-                messages=[
-                    {
-                        "role": "user",
-                        "content": str(answers)
-                        + "I want you to act like a co-worker or a corporate human resources manager. Pick out only the important points and summarize them in one sentence as briefly and concisely as possible. The length of the your answer must be 90~110 characters in Korean. Korean like this example '홍길동님은 개성이 뚜렷하고 경청하는 팀 분위기 메이커라고 피드백을 보내셨네요!' Your answer must be in polite Korean.",
-                    }
-                ],
-            )
-
-            # 요약된 텍스트를 추출
-            summary = response.choices[0].message.content.strip()
-            # print(summary)
-
         try:
             # FeedbackResult 생성
             feedback_result = FeedbackResult.objects.create(
@@ -478,9 +462,11 @@ class AnswersView(APIView):
                 tag_work=tags_work,
                 tag_attitude=tags_attitude,
                 respondent_name=f"#{random.randint(1000, 9999)}",
-                summary=summary,
                 created_at=datetime.now(),
             )
+            # 주관식 답변이 있는 경우, 비동기로 요약 생성
+            if len(answers) != 0:
+                summary_task = generate_summary.delay(answers, feedback_result.id)  # 작업 ID를 파라미터로 전달
 
             feedback_result.save()
 
