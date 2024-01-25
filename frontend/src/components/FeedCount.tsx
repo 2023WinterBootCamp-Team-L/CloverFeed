@@ -19,7 +19,7 @@ const FeedCount: React.FC<FeedCountProps> = ({ category }) => {
     }
   }, []);
 
-  const apiUrl = `http://localhost:8000/api/feedbacks/response/count/?user_id=${userid}/`;
+  const apiUrl = `http://localhost:8000/api/feedbacks/response/count/?user_id=${userid}`;
 
   const [feedbackCounts, setFeedbackCounts] = useState<FeedbackCounts[]>([]);
 
