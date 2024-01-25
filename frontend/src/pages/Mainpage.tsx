@@ -60,7 +60,7 @@ function Mainpage() {
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
-            강지은님의 네잎클로버
+            {username}님의 네잎클로버
           </p>
         </div>
 
@@ -84,7 +84,11 @@ function Mainpage() {
         <div className="flex justify-center">
           <div className="flex flex-col justify-start gap-4">
             <p className="font-pre text-[15px] font-bold">Feedback</p>
-
+            {counts.length > 0 ? null : (
+              <p className="font-pre text-[14px] text-gray-400">
+                아직 받은 피드백이 없습니다.
+              </p>
+            )}
             <div className="flex flex-col justify-center">
               {categories.map((category, index) => (
                 <div key={category}>
