@@ -7,7 +7,7 @@ function Login() {
     <div className="flex justify-center items-center min-h-screen">
       <div
         className="bg-white flex flex-col items-center relative min-h-screen gap-20 px-5 py-10 overflow-hidden  w-full sm:w-[393px] lg:w-[393px]"
-        style={{ width: '393px' }}
+        // style={{ width: '393px' }}
       >
         <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
           <p className="font-pre text-[24px] font-bold text-center">Welcome</p>
