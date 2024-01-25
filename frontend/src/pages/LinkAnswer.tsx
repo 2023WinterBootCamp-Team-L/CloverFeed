@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ChoicePart from "../components/Answer/ChoicePart";
 import ShortPart from "../components/Answer/ShortPart";
-import CategoryPart from "../components/Answer/CategotyPart";
+import CategoryPart from "../components/Answer/CategoryPart";
 import BackButton from "../components/BackButton";
 import {
   QuestionList,

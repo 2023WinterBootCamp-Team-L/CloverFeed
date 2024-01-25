@@ -146,53 +146,53 @@ function Chart() {
         console.error("에러 응답:", error.message);
       });
 
-    const dummyApiResponse = {
-      status: "success",
-      work: [
-        {
-          tag: "효율적인",
-          percentage: 40,
-        },
-        {
-          tag: "박학다식",
-          percentage: 20,
-        },
-        {
-          tag: "리더십",
-          percentage: 20,
-        },
-        {
-          tag: "전략적인",
-          percentage: 20,
-        },
-      ],
-      attitude: [
-        {
-          tag: "경청하는",
-          percentage: 25,
-        },
-        {
-          tag: "공감 능력",
-          percentage: 12.5,
-        },
-        {
-          tag: "책임감",
-          percentage: 12.5,
-        },
-        {
-          tag: "끈기",
-          percentage: 12.5,
-        },
-        {
-          tag: "성실함",
-          percentage: 12.5,
-        },
-        {
-          tag: "배려심",
-          percentage: 12.5,
-        },
-      ],
-    };
+    // const dummyApiResponse = {
+    //   status: "success",
+    //   work: [
+    //     {
+    //       tag: "효율적인",
+    //       percentage: 40,
+    //     },
+    //     {
+    //       tag: "박학다식",
+    //       percentage: 20,
+    //     },
+    //     {
+    //       tag: "리더십",
+    //       percentage: 20,
+    //     },
+    //     {
+    //       tag: "전략적인",
+    //       percentage: 20,
+    //     },
+    //   ],
+    //   attitude: [
+    //     {
+    //       tag: "경청하는",
+    //       percentage: 25,
+    //     },
+    //     {
+    //       tag: "공감 능력",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "책임감",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "끈기",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "성실함",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "배려심",
+    //       percentage: 12.5,
+    //     },
+    //   ],
+    // };
 
     if (dummyApiResponse.status === "success") {
       const workTags = dummyApiResponse.work;

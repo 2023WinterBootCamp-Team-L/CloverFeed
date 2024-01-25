@@ -11,7 +11,7 @@ interface RespondentInfo {
 }
 interface FeedbackResponse {
   status: string;
-  feedback_id?: string;
+  feedback_id?: number;
   respondent_info: RespondentInfo;
   tags_work?: string[];
   tags_attitude?: string[];
