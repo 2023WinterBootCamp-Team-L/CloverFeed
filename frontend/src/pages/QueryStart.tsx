@@ -7,8 +7,9 @@ function QueryStart() {
   const closepage = "/mainpage";
 
   return (
+    <div className="bg-gradient-to-t from-c-emerald">
     <div
-      className="bg-gradient-to-t from-c-emerald flex flex-col mx-auto h-screen gap-10 px-5 py-10"
+      className=" flex flex-col mx-auto h-screen gap-10 px-5 py-10 min-width 768 "
       style={{ width: "393px" }}
     >
       <div className="flex flex-row justify-end">
@@ -31,6 +32,7 @@ function QueryStart() {
           <GreenButton text="질문 폼 생성하기" nextpage={nextpage} />
         </div>
       </div>
+    </div>
     </div>
   );
 }
