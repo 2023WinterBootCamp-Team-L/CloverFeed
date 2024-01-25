@@ -41,9 +41,3 @@
   color: #888;
 } */
 
-@media (max-width: 376px) {
-  .tags-attitude {
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-}
