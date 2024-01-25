@@ -10,6 +10,7 @@ import {
   feedbackQuestionListState,
 } from "../../atoms/QuestionStore";
 import { useRecoilState } from "recoil";
+import TagPart from "../components/Answer/TagPart";
 
 interface ApiResponse {
   status: "success" | "error";
@@ -66,11 +67,11 @@ function LinkAnswer() {
 
   const handleBackButtonClick = () => {
     if (currentQuestionIndex > 0) {
-      // 다음 질문으로 이동
+      // 이전 질문으로 이동
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     } else {
-      // 마지막 질문이면 "/check" 페이지로 이동
-      backNavigate("/LinkTag2");
+      // 처음 질문이면 "/check" 페이지로 이동
+      backNavigate("/LinkStart");
     }
   };
 
@@ -111,6 +112,26 @@ function LinkAnswer() {
               currentQuestion.context === "당신의 포지션을 선택해주세요." && (
                 <CategoryPart questionIndex={currentQuestionIndex} /> // 질문 목록 인덱스
               )}
+            {currentQuestionIndex === 1 && (
+              <>
+                {currentQuestion?.type === "객관식" && (
+                  <ChoicePart questionIndex={currentQuestionIndex} />
+                )}
+                {/* {currentQuestion?.type === "주관식" && (
+                  <ShortPart questionIndex={currentQuestionIndex} />
+                )} */}
+              </>
+            )}
+            {currentQuestionIndex === 2 && (
+              <>
+                {currentQuestion?.type === "객관식" && (
+                  <ChoicePart questionIndex={currentQuestionIndex} />
+                )}
+                {/* {currentQuestion?.type === "주관식" && (
+                  <ShortPart questionIndex={currentQuestionIndex} />
+                )} */}
+              </>
+            )}
             {currentQuestionIndex >= 3 && (
               <>
                 {currentQuestion?.type === "객관식" && (
