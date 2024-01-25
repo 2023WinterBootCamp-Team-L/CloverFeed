@@ -45,13 +45,6 @@ function App() {
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
         <Route path="/LinkTag1" element={<LinkTag1 />} />
-<<<<<<< HEAD
-        <Route path="/Chart" element={<Chart />} />
-        <Route path="/Search" element={<Search />} />
-        <Route path="/feedbackresult" element={<FeedBackResult />} />{" "}
-        <Route path="/feedbacks/:category" element={<FeedBackList />} />
-=======
->>>>>>> dcedd4f919b98ac64a4f09782e6c88366d5d3feb
         <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="/LinkAnswer" element={<LinkAnswer />} />
         <Route path="LinkFinish" element={<LinkFinish />} />

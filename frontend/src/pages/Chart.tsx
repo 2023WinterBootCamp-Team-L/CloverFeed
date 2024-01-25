@@ -90,10 +90,6 @@ const SkillChart = ({
 };
 
 function Chart() {
-<<<<<<< HEAD
-  const userId = 1;
-  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart/?userid=${userId}`;
-=======
   const [userid, setUserid] = useState("");
 
   useEffect(() => {
@@ -104,7 +100,6 @@ function Chart() {
   }, []);
 
   const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart/?user_id=${userid}`;
->>>>>>> dcedd4f919b98ac64a4f09782e6c88366d5d3feb
 
   const [workData, setWorkData] = React.useState<
     { tag: string; percentage: number }[]
@@ -144,84 +139,61 @@ function Chart() {
           console.log("Work Tags:", workTags);
           console.log("Attitude Tags:", attitudeTags);
         } else {
-<<<<<<< HEAD
-          console.error("Error:", response.data.message);
-        }
-      })
-      .catch((error) => {
-        console.error("Network Error:", error.message);
-      });
-  }, [apiUrl]);
-=======
           console.error("사용자를 찾을 수 없습니다.", response.data.message);
         }
       })
       .catch((error) => {
         console.error("에러 응답:", error.message);
       });
->>>>>>> dcedd4f919b98ac64a4f09782e6c88366d5d3feb
 
-  // const dummyApiResponse = {
-  //   status: "success",
-  //   work: [
-  //     {
-  //       tag: "효율적인",
-  //       percentage: 40,
-  //     },
-  //     {
-  //       tag: "박학다식",
-  //       percentage: 20,
-  //     },
-  //     {
-  //       tag: "리더십",
-  //       percentage: 20,
-  //     },
-  //     {
-  //       tag: "전략적인",
-  //       percentage: 20,
-  //     },
-  //   ],
-  //   attitude: [
-  //     {
-  //       tag: "경청하는",
-  //       percentage: 25,
-  //     },
-  //     {
-  //       tag: "공감 능력",
-  //       percentage: 12.5,
-  //     },
-  //     {
-  //       tag: "책임감",
-  //       percentage: 12.5,
-  //     },
-  //     {
-  //       tag: "끈기",
-  //       percentage: 12.5,
-  //     },
-  //     {
-  //       tag: "성실함",
-  //       percentage: 12.5,
-  //     },
-  //     {
-  //       tag: "배려심",
-  //       percentage: 12.5,
-  //     },
-  //   ],
-  // };
+    // const dummyApiResponse = {
+    //   status: "success",
+    //   work: [
+    //     {
+    //       tag: "효율적인",
+    //       percentage: 40,
+    //     },
+    //     {
+    //       tag: "박학다식",
+    //       percentage: 20,
+    //     },
+    //     {
+    //       tag: "리더십",
+    //       percentage: 20,
+    //     },
+    //     {
+    //       tag: "전략적인",
+    //       percentage: 20,
+    //     },
+    //   ],
+    //   attitude: [
+    //     {
+    //       tag: "경청하는",
+    //       percentage: 25,
+    //     },
+    //     {
+    //       tag: "공감 능력",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "책임감",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "끈기",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "성실함",
+    //       percentage: 12.5,
+    //     },
+    //     {
+    //       tag: "배려심",
+    //       percentage: 12.5,
+    //     },
+    //   ],
+    // };
 
-<<<<<<< HEAD
-  // if (dummyApiResponse.status === "success") {
-  //   const workTags = dummyApiResponse.work;
-  //   const attitudeTags = dummyApiResponse.attitude;
-  //   setWorkData(workTags);
-  //   setAttitudeData(attitudeTags);
-  //   console.log("Work Tags:", workTags);
-  //   console.log("Attitude Tags:", attitudeTags);
-  // } else {
-  //   console.error("Error:", dummyApiResponse.message);
-  // }
-  // }, []);
-=======
     if (dummyApiResponse.status === "success") {
       const workTags = dummyApiResponse.work;
       const attitudeTags = dummyApiResponse.attitude;
@@ -233,7 +205,6 @@ function Chart() {
       console.error("Error:");
     }
   }, [apiUrl]);
->>>>>>> dcedd4f919b98ac64a4f09782e6c88366d5d3feb
 
   return (
     <div

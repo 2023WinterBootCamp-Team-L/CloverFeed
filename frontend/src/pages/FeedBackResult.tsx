@@ -39,27 +39,10 @@ const FeedBackResult: React.FC = () => {
   const [userid, setUserid] = useState("");
 
   useEffect(() => {
-<<<<<<< HEAD
-    const feedbackId = 1;
-    const userId = 1;
-
-    const apiUrl = `http://localhost:8000/api/feedbacks/${feedbackId}?userid=${userId}`;
-
-    axios
-      .get(apiUrl)
-      .then((response: AxiosResponse<FeedbackResponse>) => {
-        const data: FeedbackResponse = response.data;
-        setFeedbackData(data);
-      })
-      .catch((error: ErrorResponse) => {
-        setError(error.message);
-      });
-=======
     const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
       setUserid(storedUserid);
     }
->>>>>>> dcedd4f919b98ac64a4f09782e6c88366d5d3feb
   }, []);
 
   useEffect(() => {
