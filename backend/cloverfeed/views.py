@@ -467,7 +467,12 @@ class AnswersView(APIView):
             # 주관식 답변이 있는 경우, 비동기로 요약 생성
             if len(answers) != 0:
                 summary_task = generate_summary.delay(answers, feedback_result.id)  # 작업 ID를 파라미터로 전달
-
+                print(f'Task ID: {summary_task.id}')  # 작업 ID 출력
+                print(f'Task Status: {summary_task.status}')  # 작업 상태 출력
+                # PENDING: 작업이아직시작되지않았습니다.
+                # STARTED: 작업이시작되었습니다.
+                # SUCCESS: 작업이성공적으로완료되었습니다.
+                # FAILURE: 작업이실패하였습니다.
             feedback_result.save()
 
             # 각 답변에 대한 처리

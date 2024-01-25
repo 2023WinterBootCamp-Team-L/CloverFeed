@@ -33,7 +33,7 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = True
 
 # CELERY 설정
-CELERY_BROKER_URL = 'amqp://clover:feed@rabbitmq:5672/'
+CELERY_BROKER_URL = 'amqp://cloverfeed:feed@rabbitmq:5672/'
 
 # chat gpt 시크릿키
 OPENAI_API_KEY = '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'
@@ -55,6 +55,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "drf_yasg",
+    "django_celery_beat",
+    "django_celery_results",
 ]
 
 MIDDLEWARE = [
@@ -158,3 +160,10 @@ CORS_ALLOW_CREDENTIALS = True  # 쿠키가 cross-site HTTP 요청에 포함될 �
 CORS_ALLOW_HEADERS = [
     "*",
 ]  # 요청시 사용될 수 있는 non-standard HTTP 헤더 목록
+
+# CELERY
+CELERY_BROKER_URL = 'AWS public DNS 주소'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
