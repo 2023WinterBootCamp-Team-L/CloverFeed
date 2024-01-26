@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import BackButton from "../components/BackButton";
-import Line from "../components/Line";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-import ChartDataLabels from "chartjs-plugin-datalabels";
-import axios, { AxiosResponse } from "axios";
+import React, { useState, useEffect } from 'react';
+import BackButton from '../components/BackButton';
+import Line from '../components/Line';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import axios, { AxiosResponse } from 'axios';
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -19,20 +19,20 @@ const SkillChart = ({
       {
         data: data.map((item) => item.percentage),
         backgroundColor: [
-          "#D5FBE5",
-          "#F9C7C7",
-          "#F6EED4",
-          "#E2E9FF",
-          "#EDD0F5",
-          "#EEEFF0",
+          '#D5FBE5',
+          '#F9C7C7',
+          '#F6EED4',
+          '#E2E9FF',
+          '#EDD0F5',
+          '#EEEFF0',
         ],
         borderColor: [
-          "#D5FBE5",
-          "#F9C7C7",
-          "#F6EED4",
-          "#E2E9FF",
-          "#EDD0F5",
-          "#EEEFF0",
+          '#D5FBE5',
+          '#F9C7C7',
+          '#F6EED4',
+          '#E2E9FF',
+          '#EDD0F5',
+          '#EEEFF0',
         ],
       },
     ],
@@ -46,9 +46,9 @@ const SkillChart = ({
           fontSize: 10,
           boxWidth: 10,
           boxHeight: 10,
-          color: "black",
+          color: 'black',
           font: {
-            family: "Pretendard",
+            family: 'Pretendard',
           },
         },
       },
@@ -56,8 +56,8 @@ const SkillChart = ({
         enabled: true,
       },
       datalabels: {
-        color: "black",
-        textAlign: "center",
+        color: 'black',
+        textAlign: 'center',
         formatter: function (value: number, context: any) {
           const dataLabel = chartData.labels[context.dataIndex];
           return `${dataLabel}\n${value}%`;
@@ -83,17 +83,17 @@ const SkillChart = ({
   return (
     <div className="flex flex-col justify-center w-full gap-4">
       <p className="font-pre text-[16px] font-bold">{generateSentence()}</p>
-      <Doughnut data={chartData} options={options}></Doughnut>{" "}
+      <Doughnut data={chartData} options={options}></Doughnut>{' '}
       {/*오류가 나는데 실행은 또 잘됨...*/}
     </div>
   );
 };
 
 function Chart() {
-  const [userid, setUserid] = useState("");
+  const [userid, setUserid] = useState('');
 
   useEffect(() => {
-    const storedUserid = localStorage.getItem("user_id");
+    const storedUserid = localStorage.getItem('user_id');
     if (storedUserid) {
       setUserid(storedUserid);
     }
@@ -112,15 +112,15 @@ function Chart() {
     const getChart = async () => {
       try {
         const response = await axios.get(apiUrl);
-        if (response.data.status === "success") {
+        if (response.data.status === 'success') {
           setWorkData(response.data.work);
           setAttitudeData(response.data.attitude);
-          console.log("차트");
+          console.log('차트');
         } else {
-          console.error("에러 응답:", response.data.message);
+          console.error('에러 응답:', response.data.message);
         }
       } catch (error) {
-        console.error("네트워크 오류:", error);
+        console.error('네트워크 오류:', error);
       }
     };
 
@@ -131,19 +131,19 @@ function Chart() {
     axios
       .get(apiUrl)
       .then((response: AxiosResponse) => {
-        if (response.data.status === "success") {
+        if (response.data.status === 'success') {
           const workTags = response.data.work;
           const attitudeTags = response.data.attitude;
           setWorkData(workTags);
           setAttitudeData(attitudeTags);
-          console.log("Work Tags:", workTags);
-          console.log("Attitude Tags:", attitudeTags);
+          console.log('Work Tags:', workTags);
+          console.log('Attitude Tags:', attitudeTags);
         } else {
-          console.error("사용자를 찾을 수 없습니다.", response.data.message);
+          console.error('사용자를 찾을 수 없습니다.', response.data.message);
         }
       })
       .catch((error) => {
-        console.error("에러 응답:", error.message);
+        console.error('에러 응답:', error.message);
       });
 
     // const dummyApiResponse = {
@@ -194,22 +194,22 @@ function Chart() {
     //   ],
     // };
 
-    if (dummyApiResponse.status === "success") {
+    if (dummyApiResponse.status === 'success') {
       const workTags = dummyApiResponse.work;
       const attitudeTags = dummyApiResponse.attitude;
       setWorkData(workTags);
       setAttitudeData(attitudeTags);
-      console.log("Work Tags:", workTags);
-      console.log("Attitude Tags:", attitudeTags);
+      console.log('Work Tags:', workTags);
+      console.log('Attitude Tags:', attitudeTags);
     } else {
-      console.error("Error:");
+      console.error('Error:');
     }
   }, [apiUrl]);
 
   return (
     <div
-      className="bg-white flex flex-col mx-auto h-screen gap-10 px-5 py-8"
-      style={{ width: "393px" }}
+      className="bg-white flex flex-col mx-auto min-h-screen gap-10 px-5 py-8 overflow-hidden w-full sm:w-[393px] lg:w-[393px]"
+      style={{ width: '393px' }}
     >
       <div>
         <BackButton back page="/mainpage" />
