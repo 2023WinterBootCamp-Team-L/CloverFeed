@@ -106,7 +106,11 @@ const FeedbackList: React.FC = () => {
                     className="font-pre text-[14px] font-bold mb-2"
                     onClick={() => {
                       if (feedback.id) {
-                        navigate(`/feedbackresult/${feedback.id}`);
+                        const cleanedName = feedback.respondent_name.replace(
+                          "#",
+                          ""
+                        );
+                        navigate(`/feedbackresult/${cleanedName}`);
                       }
                     }}
                   >

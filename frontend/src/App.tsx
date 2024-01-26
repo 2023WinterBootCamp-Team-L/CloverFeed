@@ -36,7 +36,7 @@ function App() {
         <Route path="/Search" element={<Search />} />
         <Route path="/Feedbacks/:category" element={<FeedbackList />} />
         <Route
-          path="/FeedbackResult/:feedbackId"
+          path="/FeedbackResult/:respondentName"
           element={<FeedBackResult />}
         />
         <Route path="/QueryMain" element={<QueryMain />} />
