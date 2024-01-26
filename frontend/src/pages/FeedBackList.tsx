@@ -113,14 +113,12 @@ const FeedbackList: React.FC = () => {
                   >
                     {feedback.respondent_name} {category}님의 피드백{" "}
                   </button>
-                  <div className="flex">
+                  <div className="flex flex-wrap">
                     {feedback.tags_work_parsed
                       .slice(0, 3)
                       .map((tag: string) => (
                         <TagAnswer key={tag} text={tag} image={디자이너} />
                       ))}
-                  </div>
-                  <div className="flex gap-1">
                     {feedback.tags_attitude_parsed
                       .slice(0, 3)
                       .map((tag: string) => (
