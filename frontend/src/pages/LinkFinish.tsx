@@ -15,6 +15,7 @@ function LinkFinish() {
 
   // Recoil의 상태값에서 AnswerList 가져오기
   const answerList = useRecoilValue(answerListSelector);
+  console.log(answerList);
 
   // POST 요청할 데이터
   const postData = {
