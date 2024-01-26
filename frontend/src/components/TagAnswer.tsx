@@ -30,7 +30,7 @@ const TagAnswer: React.FC<TagAnswerProps> = ({ text, color, image }) => {
     <label className="inline-flex relative mt-2 mr-2">
       <div
         style={tagStyle}
-        className="flex flex-row items-center border-2 rounded-3xl py-1 px-4 font-pre text-[12px] font-bold"
+        className="flex flex-row items-center border-2 rounded-3xl py-1 px-4 font-pre text-[12px]"
       >
         <img
           src={image}

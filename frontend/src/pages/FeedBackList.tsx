@@ -55,42 +55,42 @@ const FeedbackList: React.FC = () => {
     {
       text: "위기대처 능력",
       image: "../src/assets/위기대처능력.png",
-      tagnumber: 7,
+      tagnumber: 8,
     },
     {
       text: "리더쉽",
       image: "../src/assets/리더쉽.png",
-      tagnumber: 8,
+      tagnumber: 9,
     },
     {
       text: "정보수집",
       image: "../src/assets/정보수집.png",
-      tagnumber: 9,
+      tagnumber: 10,
     },
     {
       text: "의견 다양성",
       image: "../src/assets/의견다양성.png",
-      tagnumber: 10,
+      tagnumber: 11,
     },
     {
       text: "추진력",
       image: "../src/assets/추진력.png",
-      tagnumber: 11,
+      tagnumber: 12,
     },
     {
       text: "전략적인",
       image: "../src/assets/전략적인.png",
-      tagnumber: 12,
+      tagnumber: 13,
     },
     {
       text: "결단력",
       image: "../src/assets/결단력.png",
-      tagnumber: 13,
+      tagnumber: 14,
     },
     {
       text: "협력적인",
       image: "../src/assets/협력적인.png",
-      tagnumber: 14,
+      tagnumber: 15,
     },
   ];
 
@@ -270,46 +270,38 @@ const FeedbackList: React.FC = () => {
                     {feedback.respondent_name} {category}님의 피드백{" "}
                   </button>
                   <div className="flex flex-wrap">
-                    {feedback.tags_work_parsed
-                      .slice(0, 3)
-                      .map((tag: string) => (
-                        <TagAnswer
-                          key={index}
-                          text={tag}
-                          tagnumber={workData.findIndex(
-                            (data) => data.text === tag
-                          )}
-                          color={workData.findIndex(
-                            (data) => data.text === tag
-                          )}
-                          image={
-                            workData.find((data) => data.text === tag)?.image ||
-                            ""
-                          }
-                        />
-                      ))}
-                    {feedback.tags_attitude_parsed
-                      .slice(0, 3)
-                      .map((tag: string) => (
-                        <TagAnswer
-                          key={index}
-                          text={tag}
-                          tagnumber={
-                            attitudeData.findIndex(
-                              (data) => data.text === tag
-                            ) + 1
-                          }
-                          color={
-                            attitudeData.findIndex(
-                              (data) => data.text === tag
-                            ) + 1
-                          }
-                          image={
-                            attitudeData.find((data) => data.text === tag)
-                              ?.image || ""
-                          }
-                        />
-                      ))}
+                    {feedback.tags_work_parsed.map((tag: string) => (
+                      <TagAnswer
+                        key={index}
+                        text={tag}
+                        tagnumber={workData.findIndex(
+                          (data) => data.text === tag
+                        )}
+                        color={workData.findIndex((data) => data.text === tag)}
+                        image={
+                          workData.find((data) => data.text === tag)?.image ||
+                          ""
+                        }
+                      />
+                    ))}
+                    {feedback.tags_attitude_parsed.map((tag: string) => (
+                      <TagAnswer
+                        key={index}
+                        text={tag}
+                        tagnumber={
+                          attitudeData.findIndex((data) => data.text === tag) +
+                          1
+                        }
+                        color={
+                          attitudeData.findIndex((data) => data.text === tag) +
+                          1
+                        }
+                        image={
+                          attitudeData.find((data) => data.text === tag)
+                            ?.image || ""
+                        }
+                      />
+                    ))}
                   </div>
                 </div>
               </li>
