@@ -10,6 +10,16 @@ import {
   feedbackQuestionListState,
 } from "../../atoms/QuestionStore";
 import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
+import TagPart from "../components/Answer/TagPart";
+import { atom } from "recoil";
+import { selectedTags, selectedTagsState } from "../../atoms/AnswerStore";
+// import { selectedTagsState } from "../../atoms/AnswerStore";
+
+export const currentQuestionIndexState = atom<number>({
+  key: "currentQuestionIndexState",
+  default: 0,
+});
 
 interface ApiResponse {
   status: "success" | "error";
@@ -18,7 +28,27 @@ interface ApiResponse {
   message?: string;
 }
 
+export const answerListSelector = selector<AnswerList>({
+  key: "answerListSelector",
+  get: ({ get }) => {
+    const selectedTags = get(selectedTagsState);
+
+    // 기존의 answerListState 가져오기
+    const previousState = get(answerListState);
+
+    // 기존의 state를 유지하면서 tags_work만 업데이트
+    const updatedState: AnswerList = {
+      ...previousState,
+      tags_work: selectedTags.map((tag) => tag.value), // 여기에서는 tag.value를 사용해서 가져옴
+    };
+
+    return updatedState;
+  },
+});
+
 function LinkAnswer() {
+  const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState);
+  const answerList = useRecoilValue(answerListSelector);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
   const backNavigate = useNavigate();
@@ -36,10 +66,13 @@ function LinkAnswer() {
         console.log(response); // 전체 응답 콘솔에 기록
 
         // 데이터 업데이트
-        setQuestions((prevQuestions) => ({
-          ...prevQuestions,
-          questions: response.data.questions || [],
-        }));
+        setQuestions(
+          (prevQuestions: QuestionList) =>
+            ({
+              ...prevQuestions,
+              questions: response.data.questions || [],
+            }) as QuestionList
+        );
       } else {
         console.error(
           `폼 없음: ${response.data.error_code}, ${response.data.message}`
@@ -66,11 +99,11 @@ function LinkAnswer() {
 
   const handleBackButtonClick = () => {
     if (currentQuestionIndex > 0) {
-      // 다음 질문으로 이동
+      // 이전 질문으로 이동
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     } else {
-      // 마지막 질문이면 "/check" 페이지로 이동
-      backNavigate("/LinkTag2");
+      // 처음 질문이면 "/check" 페이지로 이동
+      backNavigate("/LinkStart");
     }
   };
 
@@ -80,7 +113,7 @@ function LinkAnswer() {
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     } else {
       // 마지막 질문이면 "/check" 페이지로 이동
-      nextNavigate("/LinkFinish");
+      nextNavigate("/check");
     }
   };
 
@@ -105,12 +138,29 @@ function LinkAnswer() {
             <p className="font-pre text-[22px] font-bold text-center px-10">
               {currentQuestion?.context}
             </p>
+            <p className="font-pre text-[14px] text-gray-400 text-center">
+              키워드를 최대 5개까지 선택해주세요.
+            </p>
           </div>
           <div className="flex flex-1 flex-col justify-center items-center">
             {currentQuestion &&
               currentQuestion.context === "당신의 포지션을 선택해주세요." && (
                 <CategoryPart questionIndex={currentQuestionIndex} /> // 질문 목록 인덱스
               )}
+            {currentQuestionIndex === 1 && (
+              <>
+                {currentQuestion?.type === "객관식" && (
+                  <TagPart questionIndex={currentQuestionIndex} />
+                )}
+              </>
+            )}
+            {currentQuestionIndex === 2 && (
+              <>
+                {currentQuestion?.type === "객관식" && (
+                  <TagPart questionIndex={currentQuestionIndex} />
+                )}
+              </>
+            )}
             {currentQuestionIndex >= 3 && (
               <>
                 {currentQuestion?.type === "객관식" && (
