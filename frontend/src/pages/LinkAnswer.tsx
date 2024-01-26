@@ -10,8 +10,10 @@ import {
   feedbackQuestionListState,
 } from "../../atoms/QuestionStore";
 import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import TagPart from "../components/Answer/TagPart";
 import { atom } from "recoil";
+import { selectedTags, selectedTagsState } from "../../atoms/AnswerStore";
 // import { selectedTagsState } from "../../atoms/AnswerStore";
 
 export const currentQuestionIndexState = atom<number>({
@@ -26,8 +28,27 @@ interface ApiResponse {
   message?: string;
 }
 
+export const answerListSelector = selector<AnswerList>({
+  key: "answerListSelector",
+  get: ({ get }) => {
+    const selectedTags = get(selectedTagsState);
+
+    // 기존의 answerListState 가져오기
+    const previousState = get(answerListState);
+
+    // 기존의 state를 유지하면서 tags_work만 업데이트
+    const updatedState: AnswerList = {
+      ...previousState,
+      tags_work: selectedTags.map((tag) => tag.value), // 여기에서는 tag.value를 사용해서 가져옴
+    };
+
+    return updatedState;
+  },
+});
+
 function LinkAnswer() {
-  // const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState);
+  const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState);
+  const answerList = useRecoilValue(answerListSelector);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
   const backNavigate = useNavigate();
