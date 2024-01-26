@@ -28,6 +28,7 @@ const Search: React.FC = () => {
 
       if (response.data.status === "success") {
         const feedbacksData = response.data.feedbacks;
+        console.log(feedbacksData);
         const filteredFeedbackElements = feedbacksData.map(
           (feedback: Feedback, index: number) => (
             <FeedbackBox

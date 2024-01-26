@@ -7,7 +7,7 @@ import 디자이너 from "../assets/디자이너.svg";
 import { useNavigate } from "react-router-dom";
 
 interface Feedback {
-  feedback_id: string;
+  id: string;
   respondent_name: string;
   tag_work: string;
   tag_attitude: string;
@@ -47,6 +47,7 @@ const FeedbackList: React.FC = () => {
       const response = await axios.get(apiUrl);
 
       if (response.data.status === "success") {
+        console.log(response.data); // API 응답 확인
         const parsedFeedbacks = response.data.feedbacks.map(
           (feedback: Feedback) => ({
             ...feedback,
@@ -56,7 +57,7 @@ const FeedbackList: React.FC = () => {
         );
 
         setFeedbacks(parsedFeedbacks);
-        console.log(response.data);
+        // console.log(response.data);
       }
     } catch (error) {
       console.error("네트워크 오류:", error);
@@ -93,7 +94,7 @@ const FeedbackList: React.FC = () => {
           <ul>
             {feedbacks.map((feedback, index) => (
               <li
-                key={feedback.feedback_id}
+                key={feedback.id}
                 className={`h-50 w-full flex flex-col justify-start p-4 rounded-lg border-2 ${
                   index % 2 === 0
                     ? "bg-c-l-blue border-c-blue"
@@ -103,11 +104,13 @@ const FeedbackList: React.FC = () => {
                 <div>
                   <button
                     className="font-pre text-[14px] font-bold mb-2"
-                    onClick={() =>
-                      navigate(`/feedbackresult/${feedback.respondent_name}`)
-                    }
+                    onClick={() => {
+                      if (feedback.id) {
+                        navigate(`/feedbackresult/${feedback.id}`);
+                      }
+                    }}
                   >
-                    {feedback.respondent_name} {category}님의 피드백
+                    {feedback.respondent_name} {category}님의 피드백{" "}
                   </button>
                   <div className="flex">
                     {feedback.tags_work_parsed

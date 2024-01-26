@@ -30,12 +30,11 @@ interface ErrorResponse {
 }
 
 const FeedBackResult: React.FC = () => {
+  const { feedbackId } = useParams<{ feedbackId: string }>();
   const [feedbackData, setFeedbackData] = useState<FeedbackResponse | null>(
     null
   );
   const [error, setError] = useState<string | null>(null);
-  const { feedbackId } = useParams<{ feedbackId: string }>();
-
   const [userid, setUserid] = useState("");
 
   useEffect(() => {
@@ -43,12 +42,13 @@ const FeedBackResult: React.FC = () => {
     if (storedUserid) {
       setUserid(storedUserid);
     }
+    console.log("feedbackId: " + feedbackId);
   }, []);
 
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8000/api/feedbacks/${feedbackId}/?userid=${userid}`
+        `http://localhost:8000/api/feedbacks/${feedbackId}/?user_id=${userid}`
       )
       .then((response: AxiosResponse<FeedbackResponse>) => {
         const data: FeedbackResponse = response.data;
