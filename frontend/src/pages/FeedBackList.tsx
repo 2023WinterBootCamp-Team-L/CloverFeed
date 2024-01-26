@@ -47,7 +47,6 @@ const FeedbackList: React.FC = () => {
       const response = await axios.get(apiUrl);
 
       if (response.data.status === "success") {
-        console.log(response.data); // API 응답 확인
         const parsedFeedbacks = response.data.feedbacks.map(
           (feedback: Feedback) => ({
             ...feedback,
@@ -67,10 +66,6 @@ const FeedbackList: React.FC = () => {
   useEffect(() => {
     getFeedbacks();
   }, [apiUrl]);
-
-  useEffect(() => {
-    console.log(feedbacks);
-  }, [feedbacks]);
 
   const navigate = useNavigate();
 
@@ -110,7 +105,9 @@ const FeedbackList: React.FC = () => {
                           "#",
                           ""
                         );
-                        navigate(`/feedbackresult/${cleanedName}`);
+                        navigate(
+                          `/feedbackresult/categorylist/${category}/${cleanedName}`
+                        );
                       }
                     }}
                   >

@@ -30,6 +30,7 @@ interface ErrorResponse {
 
 const FeedBackResult: React.FC = () => {
   const { respondentName } = useParams<{ respondentName: string }>();
+  const { origin } = useParams<{ origin: string }>();
   const [feedbackData, setFeedbackData] = useState<FeedbackResponse | null>(
     null
   );
@@ -54,7 +55,6 @@ const FeedBackResult: React.FC = () => {
       )
       .then((response: AxiosResponse<FeedbackResponse>) => {
         const data: FeedbackResponse = response.data;
-        console.log(response.data);
 
         if (data.tag_work) {
           data.tag_work_parsed = parseTags(data.tag_work);
@@ -64,8 +64,6 @@ const FeedBackResult: React.FC = () => {
         }
 
         setFeedbackData(data);
-        console.log("피드백 상세");
-        console.log(data);
       })
       .catch((error: ErrorResponse) => {
         console.error("피드백을 찾을 수 없습니다.");
@@ -87,7 +85,11 @@ const FeedBackResult: React.FC = () => {
       style={{ width: "393px" }}
     >
       <div>
-        <BackButton back page={`/feedbacks/${feedbackData.category}`} />
+        {origin === "categorylist" ? (
+          <BackButton back page={`/feedbacks/${feedbackData.category}`} />
+        ) : origin === "search" ? (
+          <BackButton back page={`/search/`} />
+        ) : null}
       </div>
       <div className="flex flex-col gap-8">
         <p className="font-pre text-[22px] font-bold">

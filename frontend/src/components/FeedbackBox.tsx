@@ -39,7 +39,7 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
           className="font-pre text-[14px] font-bold mb-2"
           onClick={() => {
             const cleanedName = respondent_name.replace("#", "");
-            navigate(`/feedbackresult/${cleanedName}`);
+            navigate(`/feedbackresult/search/${category}/${cleanedName}`);
           }}
         >
           {`${respondent_name} ${category}님의 피드백`}

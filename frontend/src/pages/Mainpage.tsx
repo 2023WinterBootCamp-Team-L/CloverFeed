@@ -21,7 +21,6 @@ function Mainpage() {
     const response = await axios.get(
       `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
     );
-    console.log(response.data.counts);
     const categoriesData = response.data.counts.map(
       (item: { category: string }) => item.category
     );
@@ -40,14 +39,6 @@ function Mainpage() {
     }
     fetchCounts();
   }, []);
-
-  useEffect(() => {
-    console.log(categories);
-  }, [categories]);
-
-  useEffect(() => {
-    console.log(counts);
-  }, [counts]);
 
   return (
     <div className="bg-white">
