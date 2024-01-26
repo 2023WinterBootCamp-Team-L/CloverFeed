@@ -11,7 +11,7 @@ const ExceedPopup: React.FC<ExceedPopupProps> = ({ onClose }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       onClose();
-    }, 5000);
+    }, 2000);
 
     return () => {
       clearTimeout(timer);

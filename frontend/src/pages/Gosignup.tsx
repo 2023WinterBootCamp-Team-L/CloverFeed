@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import SuccessButton from "../components/SuccessButton";
 import GologinButton from "../components/GologinButton";
 import axios from "axios";
+
 function Gosignup() {
   const [emailanswerInputs, setemailAnswerInputs] = useState("");
   const [nameanswerInputs, setnameAnswerInputs] = useState("");
@@ -30,6 +31,7 @@ function Gosignup() {
   };
   const emailValidationRegex =
     /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
   const handleSignup = async () => {
     try {
       //필수 입력값 확인
@@ -66,7 +68,6 @@ function Gosignup() {
       );
       //성공적인 응답처리
       if (response.data.status === "success") {
-        // Optionally, you can do something on successful signup
         console.log(
           "회원가입이 성공적으로 완료되었습니다.",
           response.data.message

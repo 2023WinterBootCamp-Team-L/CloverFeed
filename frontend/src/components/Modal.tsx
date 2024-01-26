@@ -15,7 +15,7 @@ export default function Modal(props: ModalType) {
           onClick={props.toggle}
         >
           <div
-            className="bg-white w-flex h-flex p-4 rounded-lg"
+            className="bg-white w-flex h-flex p-6 rounded-lg"
             onClick={(e) => e.stopPropagation()}
           >
             {props.children}

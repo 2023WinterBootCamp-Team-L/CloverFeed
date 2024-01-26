@@ -70,10 +70,11 @@ const SimpleWordcloud: React.FC = () => {
   return (
     <div
       style={{
-        width: "334px",
-        height: "335px",
         backgroundImage: `url(${clovercloud})`,
         backgroundPosition: "center top",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "contain", // 이미지를 가득 채우도록 설정
+        margin: "auto", // 가운데 정렬을 위한 추가
       }}
     >
       <ReactWordcloud words={words} options={options} />

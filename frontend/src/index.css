@@ -3,15 +3,24 @@
 @tailwind utilities;
 @font-face {
   font-family: "Pretendard";
-  src: url("../src/assets/fonts/Pretendard-Medium.otf") format("otf");
+  src: url("../src/assets/fonts/Pretendard-Medium.woff") format("woff");
   font-weight: 500;
   font-style: normal;
 }
 @font-face {
   font-family: "Pretendard";
-  src: url("../src/assets/fonts/Pretendard-Bold.otf") format("otf");
+  src: url("../src/assets/fonts/Pretendard-Bold.woff") format("woff");
   font-weight: 700;
   font-style: normal;
+}
+
+@layer utilities {
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
 }
 
 /* :root {

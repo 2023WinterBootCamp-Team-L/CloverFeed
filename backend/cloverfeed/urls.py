@@ -38,11 +38,26 @@ urlpatterns = [
     ),
     # 특정 피드백 상세 내용 확인
     # <int:pk> 부분은 요청 URL에서 피드백 ID를 읽어오는 역할
-    path("feedbacks/<int:pk>/", views.FeedbackResultDetail.as_view()),
+    path("feedbacks/", views.FeedbackResultDetail.as_view()),
     # 피드백 결과의 태그들을 원형차트로 시각화
     path(
         "feedbacks/tags/chart/",
         views.FeedbackChartView.as_view(),
         name="feedback_chart",
+    ),
+    # 피드백 요약
+    path(
+        "feedbacks/summary/",
+        views.SummaryView.as_view(),
+        name="wordcloudkeyword",
+    ),
+    # 워드클라우드
+    path(
+        "feedbacks/wordcloud/", views.WordCloudSummaryView.as_view(), name="wordcloud"
+    ),
+    path(
+        "feedbacks/wordcloudkeyword/",
+        views.WordCloudKeywordView.as_view(),
+        name="wordcloudkeyword",
     ),
 ]
