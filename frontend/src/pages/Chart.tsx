@@ -194,16 +194,16 @@ function Chart() {
     //   ],
     // };
 
-    if (dummyApiResponse.status === "success") {
-      const workTags = dummyApiResponse.work;
-      const attitudeTags = dummyApiResponse.attitude;
-      setWorkData(workTags);
-      setAttitudeData(attitudeTags);
-      console.log("Work Tags:", workTags);
-      console.log("Attitude Tags:", attitudeTags);
-    } else {
-      console.error("Error:");
-    }
+    // if (dummyApiResponse.status === "success") {
+    //   const workTags = dummyApiResponse.work;
+    //   const attitudeTags = dummyApiResponse.attitude;
+    //   setWorkData(workTags);
+    //   setAttitudeData(attitudeTags);
+    //   console.log("Work Tags:", workTags);
+    //   console.log("Attitude Tags:", attitudeTags);
+    // } else {
+    //   console.error("Error:");
+    // }
   }, [apiUrl]);
 
   return (
