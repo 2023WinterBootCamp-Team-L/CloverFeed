@@ -700,11 +700,33 @@ class FeedbackResultDetail(APIView):
 
         try:
             # 요청받은 respondent_name으로 FeedbackResult를 조회, 가져온 FeedbackResult를 Serializer를 이용해 JSON 형태로 변환
+            feedbackresult_id = FeedbackResult.objects.get(
+                respondent_name=respondent_name
+            ).id
+            questionanswers = QuestionAnswer.objects.filter(
+                feedback_id=feedbackresult_id
+            )
+
+            answers = []
+
+            for questionanswer in questionanswers:
+                answers.append(
+                    {
+                        "question": Question.objects.get(
+                            id=questionanswer.question_id
+                        ).context,
+                        "type": questionanswer.type,
+                        "context": questionanswer.context,
+                    }
+                )
+
             serializer = FeedbackResultSerializer(
                 FeedbackResult.objects.get(respondent_name=respondent_name)
             )  # "id=user_id" 대신 "respondent_name=respondent_name" 사용
             # 변환된 데이터를 Response 객체에 담아 반환, status 필드를 추가
-            return Response({"status": "success", **serializer.data})
+            return Response(
+                {"status": "success", **serializer.data, "answers": answers}
+            )
         except FeedbackResult.DoesNotExist:
             # 해당하는 FeedbackResult가 없으면 404 에러를 발생
             return Response(

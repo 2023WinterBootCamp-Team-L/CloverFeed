@@ -33,9 +33,10 @@ const Search: React.FC = () => {
           (feedback: Feedback, index: number) => (
             <FeedbackBox
               key={index}
-              title={`${feedback.respondent_name} ${feedback.category}님의 피드백`}
               tag_work={feedback.tag_work}
               tag_attitude={feedback.tag_attitude}
+              respondent_name={feedback.respondent_name}
+              category={feedback.category}
               text={
                 searchValue.trim() !== ""
                   ? feedback.result.slice(0, 100)
