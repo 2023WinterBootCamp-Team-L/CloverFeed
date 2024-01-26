@@ -145,103 +145,46 @@ function Chart() {
       .catch((error) => {
         console.error('에러 응답:', error.message);
       });
-
-    // const dummyApiResponse = {
-    //   status: "success",
-    //   work: [
-    //     {
-    //       tag: "효율적인",
-    //       percentage: 40,
-    //     },
-    //     {
-    //       tag: "박학다식",
-    //       percentage: 20,
-    //     },
-    //     {
-    //       tag: "리더십",
-    //       percentage: 20,
-    //     },
-    //     {
-    //       tag: "전략적인",
-    //       percentage: 20,
-    //     },
-    //   ],
-    //   attitude: [
-    //     {
-    //       tag: "경청하는",
-    //       percentage: 25,
-    //     },
-    //     {
-    //       tag: "공감 능력",
-    //       percentage: 12.5,
-    //     },
-    //     {
-    //       tag: "책임감",
-    //       percentage: 12.5,
-    //     },
-    //     {
-    //       tag: "끈기",
-    //       percentage: 12.5,
-    //     },
-    //     {
-    //       tag: "성실함",
-    //       percentage: 12.5,
-    //     },
-    //     {
-    //       tag: "배려심",
-    //       percentage: 12.5,
-    //     },
-    //   ],
-    // };
-
-    if (dummyApiResponse.status === 'success') {
-      const workTags = dummyApiResponse.work;
-      const attitudeTags = dummyApiResponse.attitude;
-      setWorkData(workTags);
-      setAttitudeData(attitudeTags);
-      console.log('Work Tags:', workTags);
-      console.log('Attitude Tags:', attitudeTags);
-    } else {
-      console.error('Error:');
-    }
   }, [apiUrl]);
 
   return (
-    <div
-      className="bg-white flex flex-col mx-auto min-h-screen gap-10 px-5 py-8 overflow-hidden w-full sm:w-[393px] lg:w-[393px]"
-      style={{ width: '393px' }}
-    >
-      <div>
-        <BackButton back page="/mainpage" />
-      </div>
-      <p className="font-pre text-[22px] font-bold">피드백 차트</p>
-
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-row justify-start">
-          <Line text="업무 능력 강점" />
+    <div className="flex justify-center items-center min-h-screen">
+      <div
+        className="bg-white flex flex-col mx-auto min-h-screen gap-10 px-5 py-8 overflow-hidden w-full sm:w-[393px] lg:w-[393px]"
+        style={{ width: '393px' }}
+      >
+        <div>
+          <BackButton back page="/mainpage" />
         </div>
-        <SkillChart data={workData} />
-      </div>
+        <p className="font-pre text-[22px] font-bold">피드백 차트</p>
 
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-row justify-start">
-          <Line text="성격 및 태도" />
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row justify-start">
+            <Line text="업무 능력 강점" />
+          </div>
+          <SkillChart data={workData} />
         </div>
-        <SkillChart data={attitudeData} />
-      </div>
 
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-row justify-start">
-          <Line text="칭찬할 점" />
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row justify-start">
+            <Line text="성격 및 태도" />
+          </div>
+          <SkillChart data={attitudeData} />
         </div>
-        {/* 워드클라우드 */}
-      </div>
 
-      <div className="flex flex-col gap-6">
-        <div className="flex flex-row justify-start">
-          <Line text="개선할 점" />
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row justify-start">
+            <Line text="칭찬할 점" />
+          </div>
+          {/* 워드클라우드 */}
         </div>
-        {/* 워드클라우드 */}
+
+        <div className="flex flex-col gap-6">
+          <div className="flex flex-row justify-start">
+            <Line text="개선할 점" />
+          </div>
+          {/* 워드클라우드 */}
+        </div>
       </div>
     </div>
   );
