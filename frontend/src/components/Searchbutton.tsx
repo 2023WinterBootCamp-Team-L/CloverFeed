@@ -47,7 +47,7 @@ const Searchbutton: React.FC<SearchbuttonProps> = ({
           <img
             src={돋보기}
             alt="돋보기"
-            className="absolute right-0 top-0 h-full w-9 pr-5 cursor-pointer"
+            className="absolute right-0 top-3 w-7 pr-3 cursor-pointer"
           />
         </button>
       )}
