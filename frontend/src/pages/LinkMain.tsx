@@ -1,5 +1,5 @@
-import clover from "../assets/clover.svg";
-import ChangePage from "../components/ChangePage";
+import clover from '../assets/clover.svg';
+import ChangePage from '../components/ChangePage';
 
 function LinkMain() {
   return (

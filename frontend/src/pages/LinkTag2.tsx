@@ -1,7 +1,7 @@
-import { useState } from "react";
-import BackButton from "../components/BackButton";
-import Tag from "../components/Tag";
-import ExceedPopup from "../components/ExceedPopup";
+import { useState } from 'react';
+import BackButton from '../components/BackButton';
+import Tag from '../components/Tag';
+import ExceedPopup from '../components/ExceedPopup';
 
 interface TagProps {
   text: string;
@@ -42,78 +42,78 @@ const LinkTag2: React.FC = () => {
   // 태그에 사용될 데이터 배열
   const tagsData: TagProps[] = [
     {
-      text: "책임감",
-      image: "../src/assets/책임감.png",
+      text: '책임감',
+      image: '../src/assets/책임감.png',
       tagnumber: 1,
     },
     {
-      text: "공감능력",
-      image: "../src/assets/공감능력.png",
+      text: '공감능력',
+      image: '../src/assets/공감능력.png',
       tagnumber: 2,
     },
     {
-      text: "배려심",
-      image: "../src/assets/배려심.png",
+      text: '배려심',
+      image: '../src/assets/배려심.png',
       tagnumber: 3,
     },
     {
-      text: "성실함",
-      image: "../src/assets/성실함.png",
+      text: '성실함',
+      image: '../src/assets/성실함.png',
       tagnumber: 4,
     },
     {
-      text: "적극적인",
-      image: "../src/assets/적극적인.png",
+      text: '적극적인',
+      image: '../src/assets/적극적인.png',
       tagnumber: 5,
     },
     {
-      text: "꼼꼼함",
-      image: "../src/assets/꼼꼼함.png",
+      text: '꼼꼼함',
+      image: '../src/assets/꼼꼼함.png',
       tagnumber: 6,
     },
     {
-      text: "분위기 메이커",
-      image: "../src/assets/분위기메이커.png",
+      text: '분위기 메이커',
+      image: '../src/assets/분위기메이커.png',
       tagnumber: 7,
     },
     {
-      text: "주도적인",
-      image: "../src/assets/주도적인.png",
+      text: '주도적인',
+      image: '../src/assets/주도적인.png',
       tagnumber: 8,
     },
     {
-      text: "센스있는",
-      image: "../src/assets/센스있는.png",
+      text: '센스있는',
+      image: '../src/assets/센스있는.png',
       tagnumber: 9,
     },
     {
-      text: "긍정적인",
-      image: "../src/assets/긍정적인.png",
+      text: '긍정적인',
+      image: '../src/assets/긍정적인.png',
       tagnumber: 10,
     },
     {
-      text: "사교성이 좋은",
-      image: "../src/assets/사교성이좋은.png",
+      text: '사교성이 좋은',
+      image: '../src/assets/사교성이좋은.png',
       tagnumber: 11,
     },
     {
-      text: "관대한",
-      image: "../src/assets/관대한.png",
+      text: '관대한',
+      image: '../src/assets/관대한.png',
       tagnumber: 12,
     },
     {
-      text: "경청하는",
-      image: "../src/assets/경청하는.png",
+      text: '경청하는',
+      image: '../src/assets/경청하는.png',
       tagnumber: 13,
     },
     {
-      text: "도전적인",
-      image: "../src/assets/도전적인.png",
+      text: '도전적인',
+      image: '../src/assets/도전적인.png',
       tagnumber: 14,
     },
     {
-      text: "끈기",
-      image: "../src/assets/끈기.png",
+      text: '끈기',
+      image: '../src/assets/끈기.png',
       tagnumber: 15,
     },
   ];
@@ -151,7 +151,7 @@ const LinkTag2: React.FC = () => {
                 (selectedTags.length === 5 &&
                   selectedTags.includes(tag.tagnumber))
                   ? selectedTags.includes(tag.tagnumber)
-                    ? "bg-white"
+                    ? 'bg-white'
                     : tag.tagnumber
                   : null
               }
