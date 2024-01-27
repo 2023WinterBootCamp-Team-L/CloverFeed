@@ -1,8 +1,10 @@
 import React from "react";
 import { TagProps } from "../components/Tag";
+import { useNavigate } from "react-router-dom";
 
 interface FeedbackBoxProps {
-  title: string;
+  respondent_name: string;
+  category: string;
   tag_work: React.ReactElement<TagProps>[];
   tag_attitude: React.ReactElement<TagProps>[];
   text?: string;
@@ -10,12 +12,15 @@ interface FeedbackBoxProps {
 }
 
 const FeedbackBox: React.FC<FeedbackBoxProps> = ({
-  title,
+  respondent_name,
+  category,
   tag_work,
   tag_attitude,
   text,
   index,
 }) => {
+  const navigate = useNavigate();
+
   const hasText = !!text;
   const isOddIndex = index % 2 === 0; // index가 홀수인지 짝수인지 확인
 
@@ -30,7 +35,15 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
       } border-2 rounded-lg`}
     >
       <div className="flex flex-col items-start p-2 m-4">
-        <p className="font-pre text-[14px] font-bold mb-2">{title}</p>
+        <button
+          className="font-pre text-[14px] font-bold mb-2"
+          onClick={() => {
+            const cleanedName = respondent_name.replace("#", "");
+            navigate(`/feedbackresult/search/${category}/${cleanedName}`);
+          }}
+        >
+          {`${respondent_name} ${category}님의 피드백`}
+        </button>
         <div className="flex flex-col items-start gap-2">
           <div className="flex flex-row gap-4">{tag_work}</div>
           <div className="flex flex-row gap-4">{tag_attitude}</div>

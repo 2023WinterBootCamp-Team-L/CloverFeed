@@ -21,7 +21,6 @@ function Mainpage() {
     const response = await axios.get(
       `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
     );
-    console.log(response.data.counts);
     const categoriesData = response.data.counts.map(
       (item: { category: string }) => item.category
     );
@@ -41,14 +40,6 @@ function Mainpage() {
     fetchCounts();
   }, []);
 
-  useEffect(() => {
-    console.log(categories);
-  }, [categories]);
-
-  useEffect(() => {
-    console.log(counts);
-  }, [counts]);
-
   return (
     <div className="bg-white">
       <div className=" flex flex-col mx-auto gap-10 px-5 py-8 min-h-screen w-full sm:max-w-[393px] lg:max-w-[393px]">
@@ -60,7 +51,7 @@ function Mainpage() {
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
-            {username}님의 네잎클로버
+            강지은님의 네잎클로버
           </p>
         </div>
 
@@ -84,11 +75,7 @@ function Mainpage() {
         <div className="flex justify-center">
           <div className="flex flex-col justify-start gap-4">
             <p className="font-pre text-[15px] font-bold">Feedback</p>
-            {counts.length > 0 ? null : (
-              <p className="font-pre text-[14px] text-gray-400">
-                아직 받은 피드백이 없습니다.
-              </p>
-            )}
+
             <div className="flex flex-col justify-center">
               {categories.map((category, index) => (
                 <div key={category}>
