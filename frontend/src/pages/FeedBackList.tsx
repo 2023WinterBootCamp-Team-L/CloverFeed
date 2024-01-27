@@ -226,88 +226,68 @@ const FeedbackList: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div
-      className="bg-white flex flex-col mx-auto h-screen gap-10 px-5 py-8"
-      style={{ width: "393px" }}
-    >
-      <div>
-        <BackButton back page="/mainpage" />
-      </div>
-      <div className="flex flex-col gap-4">
-        <div className="font-pre text-[22px] font-bold">
-          {category}의 피드백
+    <div className="flex justify-center items-center min-h-screen">
+      <div
+        className="bg-white flex flex-col mx-auto min-h-screen gap-10 px-5 py-8 overflow-hidden w-full sm:w-[393px] lg:w-[393px]"
+        // style={{ width: '393px' }}
+      >
+        <div>
+          <BackButton back page="/mainpage" />
         </div>
-        {feedbacks.length === 0 ? (
-          <p className="font-pre text-[14px] text-gray-400">
-            받은 피드백 목록이 없습니다.
-          </p>
-        ) : (
-          <ul>
-            {feedbacks.map((feedback, index) => (
-              <li
-                key={feedback.id}
-                className={`h-50 w-full flex flex-col justify-start pt-3 pb-4 px-3 rounded-lg border-2 ${
-                  index % 2 === 0
-                    ? "bg-c-l-blue border-c-blue"
-                    : "bg-c-l-purple border-c-sl-purple"
-                } mb-4`}
-              >
-                <div>
-                  <button
-                    className="font-pre text-[14px] font-bold mb-2"
-                    onClick={() => {
-                      if (feedback.id) {
-                        const cleanedName = feedback.respondent_name.replace(
-                          "#",
-                          ""
-                        );
-                        navigate(
-                          `/feedbackresult/categorylist/${category}/${cleanedName}`
-                        );
-                      }
-                    }}
-                  >
-                    {feedback.respondent_name} {category}님의 피드백{" "}
-                  </button>
-                  <div className="flex flex-wrap">
-                    {feedback.tags_work_parsed.map((tag: string) => (
-                      <TagAnswer
-                        key={index}
-                        text={tag}
-                        tagnumber={workData.findIndex(
-                          (data) => data.text === tag
-                        )}
-                        color={workData.findIndex((data) => data.text === tag)}
-                        image={
-                          workData.find((data) => data.text === tag)?.image ||
-                          ""
+        <div className="flex flex-col gap-4">
+          <div className="font-pre text-[22px] font-bold">
+            {category}의 피드백
+          </div>
+          {feedbacks.length === 0 ? (
+            <p className="font-pre text-[14px] text-gray-400">
+              받은 피드백 목록이 없습니다.
+            </p>
+          ) : (
+            <ul>
+              {feedbacks.map((feedback, index) => (
+                <li
+                  key={feedback.id}
+                  className={`h-50 w-full flex flex-col justify-start p-4 rounded-lg border-2 ${
+                    index % 2 === 0
+                      ? "bg-c-l-blue border-c-blue"
+                      : "bg-c-l-purple border-c-sl-purple"
+                  } mb-4`}
+                >
+                  <div>
+                    <button
+                      className="font-pre text-[14px] font-bold mb-2"
+                      onClick={() => {
+                        if (feedback.id) {
+                          const cleanedName = feedback.respondent_name.replace(
+                            "#",
+                            ""
+                          );
+                          navigate(
+                            `/feedbackresult/categorylist/${category}/${cleanedName}`
+                          );
                         }
-                      />
-                    ))}
-                    {feedback.tags_attitude_parsed.map((tag: string) => (
-                      <TagAnswer
-                        key={index}
-                        text={tag}
-                        tagnumber={
-                          attitudeData.findIndex((data) => data.text === tag) +
-                          1
-                        }
-                        color={
-                          attitudeData.findIndex((data) => data.text === tag) +
-                          1
-                        }
-                        image={
-                          attitudeData.find((data) => data.text === tag)
-                            ?.image || ""
-                        }
-                      />
-                    ))}
+                      }}
+                    >
+                      {feedback.respondent_name} {category}님의 피드백{" "}
+                    </button>
+                    <div className="flex flex-wrap">
+                      {feedback.tags_work_parsed
+                        .slice(0, 3)
+                        .map((tag: string) => (
+                          <TagAnswer key={tag} text={tag} image={디자이너} />
+                        ))}
+                      {feedback.tags_attitude_parsed
+                        .slice(0, 3)
+                        .map((tag: string) => (
+                          <TagAnswer key={tag} text={tag} image={디자이너} />
+                        ))}
+                    </div>
                   </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );
