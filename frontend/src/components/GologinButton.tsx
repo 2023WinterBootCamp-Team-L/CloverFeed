@@ -114,9 +114,15 @@ function GologinButton() {
         로그인하러가기
       </button>
       <LoginModal isOpen={isOpen} toggle={toggleModal}>
-        <div className="flex flex-col items-center gap-10 px-5 py-8">
+        <div
+          className="flex flex-col items-center gap-10 px-5 py-8 sm:w-[260px] md:w-[270px] lg:w-[280px]"
+          style={{
+            maxHeight: "80vh",
+            overflowY: "auto",
+          }}
+        >
           {["Email", "비밀번호"].map((label, index) => (
-            <div key={index} className="flex flex-col items-start gap-2">
+            <div key={index} className="flex flex-col items-start mb-2">
               <p className="font-pre text-[14px] font-bold">{`${label} 입력`}</p>
               <SignupAnswer
                 value={index === 0 ? emailanswerInputs : pwanswerInputs}
@@ -131,7 +137,7 @@ function GologinButton() {
           ))}
           <button
             onClick={handleLogin}
-            className="bg-c-green text-white w-56 h-10 rounded-lg font-pre text-[14px]"
+            className="bg-c-green text-white w-56 h-10 min-h-10 rounded-lg font-pre text-[14px] min-w-56"
           >
             로그인
           </button>
