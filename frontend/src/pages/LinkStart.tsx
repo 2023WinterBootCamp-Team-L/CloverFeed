@@ -1,5 +1,5 @@
-import clover from "../assets/clover.svg";
-import GreenButton from "../components/GreenButton";
+import clover from '../assets/clover.svg';
+import GreenButton from '../components/GreenButton';
 // import LinkButton from "../components/LinkButton";
 
 function LinkStart() {
