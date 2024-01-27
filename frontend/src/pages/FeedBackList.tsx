@@ -179,7 +179,7 @@ const FeedbackList: React.FC = () => {
     const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
       setApiUrl(
-        `http://localhost:8000/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category}`
+        `http://localhost:8000/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category.replace("PMPO", "PM/PO")}`
       );
     }
   }, [category]);

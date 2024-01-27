@@ -22,10 +22,7 @@ function Mainpage() {
       `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
     );
     const categoriesData = response.data.counts.map(
-      (item: { category: string }) => {
-        const modifiedCategory = item.category.replace(/\//g, ""); // "PM/PO"를 "PMPO"로 변경
-        return modifiedCategory;
-      }
+      (item: { category: string }) => item.category
     );
     const countsData = response.data.counts.map(
       (item: { count: number }) => item.count
