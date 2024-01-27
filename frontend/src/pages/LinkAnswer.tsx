@@ -13,6 +13,7 @@ import { useRecoilState } from "recoil";
 
 interface ApiResponse {
   status: "success" | "error";
+  form_id?: number;
   questions?: QuestionList;
   error_code?: number;
   message?: string;
@@ -40,6 +41,11 @@ function LinkAnswer() {
           ...prevQuestions,
           questions: response.data.questions || [],
         }));
+
+        const formId = response.data.form_id || null;
+        if (formId) {
+          localStorage.setItem("form_id", formId.toString());
+        }
       } else {
         console.error(
           `폼 없음: ${response.data.error_code}, ${response.data.message}`
