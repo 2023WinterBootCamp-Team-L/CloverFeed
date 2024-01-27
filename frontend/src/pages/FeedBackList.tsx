@@ -271,16 +271,42 @@ const FeedbackList: React.FC = () => {
                       {feedback.respondent_name} {category}님의 피드백{" "}
                     </button>
                     <div className="flex flex-wrap">
-                      {feedback.tags_work_parsed
-                        .slice(0, 3)
-                        .map((tag: string) => (
-                          <TagAnswer key={tag} text={tag} image={디자이너} />
-                        ))}
-                      {feedback.tags_attitude_parsed
-                        .slice(0, 3)
-                        .map((tag: string) => (
-                          <TagAnswer key={tag} text={tag} image={디자이너} />
-                        ))}
+                      {feedback.tags_work_parsed.map((tag: string) => (
+                        <TagAnswer
+                          key={index}
+                          text={tag}
+                          tagnumber={workData.findIndex(
+                            (data) => data.text === tag
+                          )}
+                          color={workData.findIndex(
+                            (data) => data.text === tag
+                          )}
+                          image={
+                            workData.find((data) => data.text === tag)?.image ||
+                            ""
+                          }
+                        />
+                      ))}
+                      {feedback.tags_attitude_parsed.map((tag: string) => (
+                        <TagAnswer
+                          key={index}
+                          text={tag}
+                          tagnumber={
+                            attitudeData.findIndex(
+                              (data) => data.text === tag
+                            ) + 1
+                          }
+                          color={
+                            attitudeData.findIndex(
+                              (data) => data.text === tag
+                            ) + 1
+                          }
+                          image={
+                            attitudeData.find((data) => data.text === tag)
+                              ?.image || ""
+                          }
+                        />
+                      ))}
                     </div>
                   </div>
                 </li>
