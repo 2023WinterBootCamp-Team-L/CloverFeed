@@ -1,9 +1,14 @@
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
 import clover from "../assets/clover.svg";
 import GreenButton from "../components/GreenButton";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { answerListState } from "../../atoms/AnswerStore";
+=======
+import clover from '../assets/clover.svg';
+import GreenButton from '../components/GreenButton';
+>>>>>>> 76a9d8c599019ed683e0383e67df3ea011e8836f
 // import LinkButton from "../components/LinkButton";
 
 function LinkStart() {
