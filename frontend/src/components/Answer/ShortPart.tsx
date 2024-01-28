@@ -20,7 +20,7 @@ export const ShortAnswer: React.FC<ShortAnswerProps> = ({
   onFocus,
   onBlur,
 }) => {
-  const textColor = value[0] === "답변을 입력하세요" ? "gray" : "black";
+  const textColor = value === "답변을 입력하세요" ? "gray" : "black";
   const textAreaStyle = {
     color: textColor,
   };
