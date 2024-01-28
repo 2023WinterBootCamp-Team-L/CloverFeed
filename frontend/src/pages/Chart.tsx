@@ -13,27 +13,19 @@ const SkillChart = ({
 }: {
   data: { tag: string; percentage: number }[];
 }) => {
-  const chartData = {
-    labels: data.map((item) => item.tag),
+  const top5ChartData = {
+    labels: data.slice(0, 5).map((item) => item.tag),
     datasets: [
       {
-        data: data.map((item) => item.percentage),
+        data: data.slice(0, 5).map((item) => item.percentage),
         backgroundColor: [
           "#D5FBE5",
           "#F9C7C7",
           "#F6EED4",
           "#E2E9FF",
           "#EDD0F5",
-          "#EEEFF0",
         ],
-        borderColor: [
-          "#D5FBE5",
-          "#F9C7C7",
-          "#F6EED4",
-          "#E2E9FF",
-          "#EDD0F5",
-          "#EEEFF0",
-        ],
+        borderColor: ["#D5FBE5", "#F9C7C7", "#F6EED4", "#E2E9FF", "#EDD0F5"],
       },
     ],
   };
@@ -57,9 +49,12 @@ const SkillChart = ({
       },
       datalabels: {
         color: "black",
+        font: {
+          family: "Pretendard",
+        },
         textAlign: "center",
         formatter: function (value: number, context: any) {
-          const dataLabel = chartData.labels[context.dataIndex];
+          const dataLabel = top5ChartData.labels[context.dataIndex];
           return `${dataLabel}\n${value}%`;
         },
       },
@@ -75,7 +70,7 @@ const SkillChart = ({
   // return `${dataLabel}\n${percentage}%`;
 
   const generateSentence = () => {
-    const [first, second, third] = chartData.labels.slice(0, 3);
+    const [first, second, third] = top5ChartData.labels.slice(0, 3);
     const sentence = `당신은 ${first}, ${second}, ${third}있는 사람이네요`;
     return sentence;
   };
@@ -83,7 +78,7 @@ const SkillChart = ({
   return (
     <div className="flex flex-col justify-center w-full gap-4">
       <p className="font-pre text-[16px] font-bold">{generateSentence()}</p>
-      <Doughnut data={chartData} options={options}></Doughnut>{" "}
+      <Doughnut data={top5ChartData} options={options}></Doughnut>{" "}
       {/*오류가 나는데 실행은 또 잘됨...*/}
     </div>
   );
