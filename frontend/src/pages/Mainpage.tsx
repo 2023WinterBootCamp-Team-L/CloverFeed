@@ -58,11 +58,6 @@ function Mainpage() {
         <div>
           <SimpleWordcloud />
         </div>
-        <div>
-          <p className="text-[14px] text-center font-pre font-bold">
-            {username}님은
-          </p>
-        </div>
 
         <div className="flex justify-center">
           <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
