@@ -1,10 +1,10 @@
-import axios from 'axios';
-import BackButton from '../components/BackButton';
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import TagAnswer from '../components/TagAnswer';
-import 디자이너 from '../assets/디자이너.svg';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import BackButton from "../components/BackButton";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import TagAnswer from "../components/TagAnswer";
+import 디자이너 from "../assets/디자이너.svg";
+import { useNavigate } from "react-router-dom";
 
 interface Feedback {
   id: string;
@@ -17,10 +17,10 @@ interface Feedback {
 
 const FeedbackList: React.FC = () => {
   const { category } = useParams<{ category?: string }>();
-  const [apiUrl, setApiUrl] = useState('');
+  const [apiUrl, setApiUrl] = useState("");
 
   useEffect(() => {
-    const storedUserid = localStorage.getItem('user_id');
+    const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
       setApiUrl(
         `http://localhost:8000/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category}`
@@ -33,11 +33,11 @@ const FeedbackList: React.FC = () => {
   const parseTags = (tagsString: string) => {
     try {
       return tagsString
-        .replace(/^\[|\]$/g, '') // Remove square brackets
-        .split(', ') // Split by comma and space
-        .map((tag) => tag.replace(/^'|'$/g, '')); // Remove single quotes from the beginning and end
+        .replace(/^\[|\]$/g, "") // Remove square brackets
+        .split(", ") // Split by comma and space
+        .map((tag) => tag.replace(/^'|'$/g, "")); // Remove single quotes from the beginning and end
     } catch (error) {
-      console.error('Error parsing tags:', error);
+      console.error("Error parsing tags:", error);
       return [];
     }
   };
@@ -46,7 +46,7 @@ const FeedbackList: React.FC = () => {
     try {
       const response = await axios.get(apiUrl);
 
-      if (response.data.status === 'success') {
+      if (response.data.status === "success") {
         const parsedFeedbacks = response.data.feedbacks.map(
           (feedback: Feedback) => ({
             ...feedback,
@@ -59,7 +59,7 @@ const FeedbackList: React.FC = () => {
         // console.log(response.data);
       }
     } catch (error) {
-      console.error('네트워크 오류:', error);
+      console.error("네트워크 오류:", error);
     }
   };
 
@@ -93,8 +93,8 @@ const FeedbackList: React.FC = () => {
                   key={feedback.id}
                   className={`h-50 w-full flex flex-col justify-start p-4 rounded-lg border-2 ${
                     index % 2 === 0
-                      ? 'bg-c-l-blue border-c-blue'
-                      : 'bg-c-l-purple border-c-sl-purple'
+                      ? "bg-c-l-blue border-c-blue"
+                      : "bg-c-l-purple border-c-sl-purple"
                   } mb-4`}
                 >
                   <div>
@@ -103,8 +103,8 @@ const FeedbackList: React.FC = () => {
                       onClick={() => {
                         if (feedback.id) {
                           const cleanedName = feedback.respondent_name.replace(
-                            '#',
-                            ''
+                            "#",
+                            ""
                           );
                           navigate(
                             `/feedbackresult/categorylist/${category}/${cleanedName}`
@@ -112,7 +112,7 @@ const FeedbackList: React.FC = () => {
                         }
                       }}
                     >
-                      {feedback.respondent_name} {category}님의 피드백{' '}
+                      {feedback.respondent_name} {category}님의 피드백{" "}
                     </button>
                     <div className="flex flex-wrap">
                       {feedback.tags_work_parsed
