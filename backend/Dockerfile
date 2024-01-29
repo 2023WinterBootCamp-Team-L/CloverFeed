@@ -1,25 +1,24 @@
 FROM python:3.11.7
 
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-COPY . /backend
-WORKDIR /backend
-
+# 환경 변수 설정
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 ENV JAVA_HOME /usr/lib/jvm/java-1.7-openjdk/jre
 
 # 패키지 업데이트 및 설치
-RUN apt-get update && apt-get install -y pkg-config
-RUN apt-get update && apt-get install -y g++ default-jdk
+RUN apt-get update && apt-get install -y pkg-config g++ default-jdk
+
+# 작업 디렉토리 설정
+WORKDIR /backend
 
 # requirements.txt 복사 및 의존성 설치
 COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt --no-cache-dir
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
+RUN pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir
 
 # MySQL 클라이언트 라이브러리 관련 환경 변수 설정
-RUN export MYSQLCLIENT_LDFLAGS=$(pkg-config --libs mysqlclient)
-RUN export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
+ENV MYSQLCLIENT_LDFLAGS="-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -ldl"
+ENV MYSQLCLIENT_CFLAGS="-I/usr/include/mysql"
 
-CMD ["sh", "-c", "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"]
-# RUN apt-get update && apt-get install -y python3-pip libffi-dev python3-dev && apt-get install -y default-libmysqlclient-dev && apt-get install -y default-jdk
+# CMD 설정
+CMD ["sh", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
