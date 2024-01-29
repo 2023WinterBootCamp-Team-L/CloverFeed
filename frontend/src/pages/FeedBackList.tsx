@@ -2,9 +2,8 @@ import axios from "axios";
 import BackButton from "../components/BackButton";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import TagAnswer from "../components/TagAnswer";
+import TagAnswer, { TagAnswerProps } from "../components/TagAnswer";
 import { useNavigate } from "react-router-dom";
-import { TagAnswerProps } from "../components/TagAnswer";
 
 interface Feedback {
   id: string;
