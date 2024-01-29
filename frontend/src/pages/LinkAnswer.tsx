@@ -10,6 +10,7 @@ import {
   feedbackQuestionListState,
 } from "../../atoms/QuestionStore";
 import { useRecoilState } from "recoil";
+import ProgressBar from "../components/ProgressBar";
 
 interface ApiResponse {
   status: "success" | "error";
@@ -90,14 +91,20 @@ function LinkAnswer() {
     ? questions.questions[currentQuestionIndex]
     : undefined;
 
+  const totalSteps = questions.questions.length;
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div
         className="flex flex-col overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-20 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
         // style={{ width: '393px', height: '852px' }}
       >
-        <div className="flex justify-between w-full">
+        <div className="flex flex-row items-center justify-between w-full">
           <BackButton back onClick={handleBackButtonClick} />
+          <ProgressBar
+            totalSteps={totalSteps}
+            currentIndex={currentQuestionIndex + 1}
+          />
           <BackButton back={false} onClick={handleNextButtonClick} />
         </div>
         <div className="flex flex-col items-center gap-20">

@@ -1,12 +1,30 @@
-const ProgressBar = ({ progressPercentage }) => {
+import React from "react";
+
+interface ProgressBarProps {
+  totalSteps: number;
+  currentIndex: number;
+}
+
+const ProgressBar: React.FC<ProgressBarProps> = ({
+  totalSteps,
+  currentIndex,
+}) => {
   return (
-    <div className="h-1 w-full bg-gray-300">
-      <div
-        style={{ width: `${progressPercentage}%` }}
-        className={`h-full ${
-          progressPercentage < 70 ? "bg-red-600" : "bg-green-600"
-        }`}
-      ></div>
+    <div className="flex justify-center items-center mt-1">
+      {Array.from({ length: totalSteps }).map((_, index) => (
+        <div
+          key={index}
+          style={{
+            width: "10px",
+            height: "10px",
+            borderRadius: "100%",
+            margin: "10px",
+            background: index < currentIndex ? "#50DA8C" : "#1E2C49",
+          }}
+        ></div>
+      ))}
     </div>
   );
 };
+
+export default ProgressBar;
