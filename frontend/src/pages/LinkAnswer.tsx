@@ -121,7 +121,10 @@ function LinkAnswer() {
         </div>
         <div className="flex flex-col items-center gap-20">
           <div className="flex-full">
-            <p className="font-pre text-[22px] font-bold text-center px-10">
+            <p
+              className="font-pre text-[22px] font-bold text-center px-10 "
+              style={{ wordBreak: "keep-all" }}
+            >
               {currentQuestion?.context}
             </p>
           </div>
