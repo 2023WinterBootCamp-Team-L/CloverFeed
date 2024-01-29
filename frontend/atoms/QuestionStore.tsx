@@ -18,6 +18,11 @@ export const selectedQuestionState = atom<Question | null>({
   default: null,
 });
 
+export const currentQuestionIndexState = atom<number>({
+  key: "currentQuestionIndexState",
+  default: 0, // 초기값 설정
+});
+
 // QuestionList를 저장하기 위한 Atom
 export const questionListState = atom<QuestionList>({
   key: "questionListState",
@@ -28,7 +33,7 @@ export const questionListState = atom<QuestionList>({
         {
           context: "당신의 포지션을 선택해주세요.",
           type: "객관식",
-          choices: ["개발자", "디자이너", "기획자", "PMPO", "기타직무"],
+          choices: ["개발자", "디자이너", "기획자", "PM/PO", "기타직무"],
         },
         {
           context: `당신이 생각하는 ${username}님의 업무 능력 강점은 무엇인가요?`,

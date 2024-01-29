@@ -51,17 +51,12 @@ function Mainpage() {
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
-            강지은님의 네잎클로버
+            {username}님의 네잎클로버
           </p>
         </div>
 
         <div>
           <SimpleWordcloud />
-        </div>
-        <div>
-          <p className="text-[14px] text-center font-pre font-bold">
-            {username}님은
-          </p>
         </div>
 
         <div className="flex justify-center">

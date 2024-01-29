@@ -1,12 +1,13 @@
 import React from "react";
-import { TagProps } from "../components/Tag";
 import { useNavigate } from "react-router-dom";
+import TagAnswer from "./TagAnswer";
+import 디자이너 from "../assets/디자이너.svg";
 
 interface FeedbackBoxProps {
   respondent_name: string;
   category: string;
-  tag_work: React.ReactElement<TagProps>[];
-  tag_attitude: React.ReactElement<TagProps>[];
+  tag_work: string[];
+  tag_attitude: string[];
   text?: string;
   index: number; // index 추가
 }
@@ -34,7 +35,7 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
           : "border-c-sl-purple bg-c-l-purple"
       } border-2 rounded-lg`}
     >
-      <div className="flex flex-col items-start p-2 m-4">
+      <div className="flex flex-col items-start p-2 m-2">
         <button
           className="font-pre text-[14px] font-bold mb-2"
           onClick={() => {
@@ -44,9 +45,15 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
         >
           {`${respondent_name} ${category}님의 피드백`}
         </button>
-        <div className="flex flex-col items-start gap-2">
-          <div className="flex flex-row gap-4">{tag_work}</div>
-          <div className="flex flex-row gap-4">{tag_attitude}</div>
+        <div className="flex flex-col items-start gap-4">
+          <div className="flex flex-wrap">
+            {tag_work.map((tag: string) => (
+              <TagAnswer key={tag} text={tag} image={디자이너} />
+            ))}
+            {tag_attitude.map((tag: string) => (
+              <TagAnswer key={tag} text={tag} image={디자이너} />
+            ))}
+          </div>
           {hasText && <p className="font-pre text-[14px]">{text}</p>}
         </div>
       </div>
