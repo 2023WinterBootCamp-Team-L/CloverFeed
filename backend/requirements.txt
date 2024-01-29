@@ -20,3 +20,4 @@ drf_yasg
 krwordrank
 openai
 konlpy
+django_prometheus
