@@ -47,7 +47,7 @@ function Mainpage() {
           <p className="text-[24px] font-pre font-bold text-green-500">
             CloverFeed
             <span className="float-right">
-              <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
+              <LogoutButton iconSrc={logouticon} logoutpage="/" />
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
