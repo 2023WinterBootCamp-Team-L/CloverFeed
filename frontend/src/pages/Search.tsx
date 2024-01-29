@@ -42,7 +42,7 @@ const Search: React.FC = () => {
         const filteredFeedbackElements = feedbacksData.map(
           (feedback: Feedback, index: number) => (
             <FeedbackBox
-              key={index}
+              key={`feedback-${feedback.feedback_id}`}
               tag_work={parseTags(feedback.tag_work)}
               tag_attitude={parseTags(feedback.tag_attitude)}
               respondent_name={feedback.respondent_name}
@@ -56,13 +56,22 @@ const Search: React.FC = () => {
             />
           )
         );
-        setFilteredFeedbacks(filteredFeedbackElements);
+
+        const uniqueFeedbacks = Array.from(
+          new Set(filteredFeedbackElements.map((element) => element.key))
+        ).map((key) =>
+          filteredFeedbackElements.find((element) => element.key === key)
+        );
+
+        setFilteredFeedbacks(uniqueFeedbacks);
         setError(null);
       }
     } catch (error) {
       setError("피드백을 가져오는 동안 오류가 발생했습니다.");
     }
   };
+
+  console.log(filteredFeedbacks);
 
   const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchValue(e.target.value);
