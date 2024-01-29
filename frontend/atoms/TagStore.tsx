@@ -36,8 +36,8 @@ export const tagsWorkDataState = atom<TagProps[]>({
       tagnumber: 5,
     },
     {
-      text: "눈치빠른",
-      image: "../src/assets/눈치빠른.png",
+      text: "창의적인",
+      image: "../src/assets/창의적인.png",
       tagnumber: 6,
     },
     {
