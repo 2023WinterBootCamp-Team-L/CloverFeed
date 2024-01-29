@@ -195,7 +195,10 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
           className="font-pre text-[14px] font-bold mb-2"
           onClick={() => {
             const cleanedName = respondent_name.replace("#", "");
-            navigate(`/feedbackresult/search/${category}/${cleanedName}`);
+            const modifiedCategory = category === "PM/PO" ? "PMPO" : category;
+            navigate(
+              `/feedbackresult/search/${modifiedCategory}/${cleanedName}`
+            );
           }}
         >
           {`${respondent_name} ${category}님의 피드백`}
