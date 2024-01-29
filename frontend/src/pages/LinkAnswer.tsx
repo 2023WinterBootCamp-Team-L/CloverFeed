@@ -17,6 +17,7 @@ export const currentQuestionIndexState = atom<number>({
 });
 
 function LinkAnswer() {
+  // const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [questions] = useRecoilState(feedbackQuestionListState);
   const answerList = useRecoilState(answerListState);
@@ -25,11 +26,11 @@ function LinkAnswer() {
 
   const handleBackButtonClick = () => {
     if (currentQuestionIndex > 0) {
-      // 다음 질문으로 이동
+      // 이전 질문으로 이동
       setCurrentQuestionIndex((prevIndex) => prevIndex - 1);
     } else {
-      // 마지막 질문이면 "/check" 페이지로 이동
-      backNavigate("/LinkTag2");
+      // 처음 질문이면 "/check" 페이지로 이동
+      backNavigate("/LinkStart");
     }
   };
 
@@ -40,7 +41,7 @@ function LinkAnswer() {
       console.log(answerList);
     } else {
       // 마지막 질문이면 "/check" 페이지로 이동
-      nextNavigate("/LinkFinish");
+      nextNavigate("/check");
     }
   };
 
@@ -70,12 +71,29 @@ function LinkAnswer() {
             <p className="font-pre text-[22px] font-bold text-center px-10">
               {currentQuestion?.context}
             </p>
+            <p className="font-pre text-[14px] text-gray-400 text-center">
+              키워드를 최대 5개까지 선택해주세요.
+            </p>
           </div>
           <div className="flex flex-1 flex-col justify-center items-center">
             {currentQuestion &&
               currentQuestion.context === "당신의 포지션을 선택해주세요." && (
                 <CategoryPart questionIndex={currentQuestionIndex} /> // 질문 목록 인덱스
               )}
+            {currentQuestionIndex === 1 && (
+              <>
+                {currentQuestion?.type === "객관식" && (
+                  <TagPart questionIndex={currentQuestionIndex} />
+                )}
+              </>
+            )}
+            {currentQuestionIndex === 2 && (
+              <>
+                {currentQuestion?.type === "객관식" && (
+                  <TagPart questionIndex={currentQuestionIndex} />
+                )}
+              </>
+            )}
             {currentQuestionIndex >= 3 && (
               <>
                 {currentQuestion?.type === "객관식" && (

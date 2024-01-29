@@ -1,5 +1,4 @@
 import { atom, selector } from "recoil";
-import { TagProps } from "./TagStore";
 
 export type Category = string;
 export type TagWork = string[];
@@ -20,10 +19,10 @@ export type AnswerList = {
   answers: Answer[];
 };
 
-export const selectedTagsState = atom<TagProps[]>({
-  key: "selectedTagsState",
-  default: [],
-});
+// export const selectedTagsState = atom<TagProps[]>({
+//   key: "selectedTagsState",
+//   default: [],
+// });
 
 // 개별 Answer를 저장하기 위한 Atom
 export const selectedAnswerState = atom<Answer | null>({
@@ -43,26 +42,10 @@ export const answerListState = atom<AnswerList>({
   },
 });
 
+// AnswerList를 얻기 위한 Selector
 export const answerListSelector = selector<AnswerList>({
   key: "answerListSelector",
   get: ({ get }) => {
-    const selectedTags = get(selectedTagsState);
-
-    const previousState = get(answerListState);
-
-    const updatedState: AnswerList = {
-      ...previousState,
-      tags_work: selectedTags.map((tag) => tag.text),
-    };
-
-    return updatedState;
+    return get(answerListState);
   },
 });
-
-// AnswerList를 얻기 위한 Selector
-// export const answerListSelector = selector<AnswerList>({
-//   key: "answerListSelector",
-//   get: ({ get }) => {
-//     return get(answerListState);
-//   },
-// });
