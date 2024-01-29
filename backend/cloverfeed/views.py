@@ -15,6 +15,7 @@ from .authentication import CsrfExemptSessionAuthentication
 from collections import Counter
 from openai import OpenAI
 import json, random, ast, environ, re
+from django.utils import timezone
 from datetime import datetime
 from konlpy.tag import Okt
 from .tasks import generate_summary
@@ -39,6 +40,7 @@ from .serializers import (
 from drf_yasg.utils import swagger_auto_schema
 from drf_yasg import openapi
 from krwordrank.word import summarize_with_keywords
+# import pika
 
 env = environ.Env()
 environ.Env.read_env()
@@ -47,6 +49,21 @@ client = OpenAI(
     api_key=env("OPENAI_KEY"),
 )
 
+# def send_message_to_topic_exchange(message, topic):
+#     # RabbitMQ 연결 설정
+#     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+#     channel = connection.channel()
+#
+#     # Topic Exchange로 메시지 보내기
+#     channel.exchange_declare(exchange='gpt_topic', exchange_type='topic')
+#     channel.basic_publish(exchange='gpt_topic', routing_key=topic, body=message)
+#
+#     print(f" [x] Sent '{message}' with topic '{topic}'")
+#
+#     connection.close()
+#
+# # 메시지 보내기
+# send_message_to_topic_exchange("Hello from producer!", "gpt.topic.example")
 
 # 회원가입
 class SignupView(APIView):
@@ -453,18 +470,13 @@ class AnswersView(APIView):
 
         answers = []
 
-        # 각 답변에 대한 처리
-        for answer_data in answers_data:
-            if answer_data.get("type") == "주관식" and answer_data.get("answer"):
-                answers.append(answer_data.get("answer"))
-
         try:
             # respondent_name 생성
             respondent_name = f"#{random.randint(1000, 9999)}"
 
             # respondent_name이 중복되면 새로운 값을 생성
             while FeedbackResult.objects.filter(
-                respondent_name=respondent_name
+                    respondent_name=respondent_name
             ).exists():
                 respondent_name = f"#{random.randint(1000, 9999)}"
 
@@ -474,11 +486,12 @@ class AnswersView(APIView):
                 tag_work=tags_work,
                 tag_attitude=tags_attitude,
                 respondent_name=respondent_name,
-                summary=summary,
-                created_at=datetime.now(),
+                # summary=summary,
+                created_at=datetime.now()
             )
             # 주관식 답변이 있는 경우, 비동기로 요약 생성
-            if len(answers) != 0:
+            if answers:  # 주관식 답변이 있는 경우에만 실행
+                print(1111)
                 summary_task = generate_summary.delay(answers, feedback_result.id)  # 작업 ID를 파라미터로 전달
                 print(f'Task ID: {summary_task.id}')  # 작업 ID 출력
                 print(f'Task Status: {summary_task.status}')  # 작업 상태 출력
@@ -490,26 +503,30 @@ class AnswersView(APIView):
 
             # 각 답변에 대한 처리
             for answer_data in answers_data:
-                question_context = answer_data.get("context")
-                question_type = answer_data.get("type")
-                answer_content = answer_data.get("answer")
+                if answer_data.get("type") == "주관식" and answer_data.get("answer"):
+                    answers.append(answer_data.get("answer"))
+                elif answer_data.get("type") == "객관식" and answer_data.get("answer"):
+                    answers.append(answer_data.get("answer"))  # 객관식 답변도 추가
+                    question_context = answer_data.get("context")
+                    question_type = answer_data.get("type")
+                    answer_content = answer_data.get("answer")
 
-                question = get_object_or_404(
-                    Question, form=form, context=question_context
-                )
+                    question = get_object_or_404(
+                        Question, form=form, context=question_context
+                    )
 
-                # QuestionAnswer 생성
-                new_answer = QuestionAnswer.objects.create(
-                    feedback=feedback_result,
-                    question=question,
-                    context=answer_content,
-                    type=question_type,
-                    created_at=datetime.now(),
-                    modified_at=datetime.now(),
-                )
+                    # QuestionAnswer 생성
+                    new_answer = QuestionAnswer.objects.create(
+                        feedback=feedback_result,
+                        question=question,
+                        context=answer_content,
+                        type=question_type,
+                        created_at=datetime.now(),
+                        modified_at = datetime.now()
+                    )
 
-                # 답변 DB에 넣어주는 부분 만들어야함
-                new_answer.save()
+                    # 답변 DB에 넣어주는 부분 만들어야함
+                    new_answer.save()
 
             return JsonResponse(
                 {"status": "success", "message": "응답해주셔서 감사합니다!"}, status=200

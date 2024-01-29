@@ -34,6 +34,10 @@ DEBUG = True
 
 # CELERY 설정
 CELERY_BROKER_URL = 'amqp://cloverfeed:feed@rabbitmq:5672/'
+CELERY_RESULT_BACKEND = 'django-db'  # Celery 작업 결과를 저장할 백엔드 지정
+# CELERY_ACCEPT_CONTENT = ['application/json']  # Celery worker가 받아들일 수 있는 내용유형 지정
+# CELERY_TASK_SERIALIZER = 'json'  # Celery 작업을 직렬화하는 데 사용되는 방식 지정
+# CELERY_RESULT_SERIALIZER = 'json' # Celery 작업 결과를 직렬화하는 데 사용되는 방식 지정
 
 # chat gpt 시크릿키
 OPENAI_API_KEY = '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'
@@ -160,10 +164,3 @@ CORS_ALLOW_CREDENTIALS = True  # 쿠키가 cross-site HTTP 요청에 포함될 �
 CORS_ALLOW_HEADERS = [
     "*",
 ]  # 요청시 사용될 수 있는 non-standard HTTP 헤더 목록
-
-# CELERY
-CELERY_BROKER_URL = 'AWS public DNS 주소'
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
