@@ -45,7 +45,7 @@ const SkillChart = ({
         },
       },
       tooltip: {
-        enabled: true,
+        enabled: false,
       },
       datalabels: {
         color: "black",
@@ -167,19 +167,7 @@ function Chart() {
           <SkillChart data={attitudeData} />
         </div>
 
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-row justify-start">
-            <Line text="칭찬할 점" />
-          </div>
-          {/* 워드클라우드 */}
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-row justify-start">
-            <Line text="개선할 점" />
-          </div>
-          {/* 워드클라우드 */}
-        </div>
+        
       </div>
     </div>
   );
