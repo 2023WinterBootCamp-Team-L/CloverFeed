@@ -51,7 +51,7 @@ function Mainpage() {
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
-            강지은님의 네잎클로버
+            {username}님의 네잎클로버
           </p>
         </div>
 
