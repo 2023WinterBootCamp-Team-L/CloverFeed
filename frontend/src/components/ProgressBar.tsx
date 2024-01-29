@@ -19,7 +19,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({
             height: "10px",
             borderRadius: "100%",
             margin: "10px",
-            background: index < currentIndex ? "#50DA8C" : "#1E2C49",
+            background: index < currentIndex ? "#50DA8C" : "#BABABA",
           }}
         ></div>
       ))}
