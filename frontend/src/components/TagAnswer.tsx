@@ -4,48 +4,37 @@ import React from "react";
 
 export interface TagAnswerProps {
   text: string;
+  color?: string | number | null;
   image: string;
+  tagnumber: number;
 }
 
-const TagAnswer: React.FC<TagAnswerProps> = ({ text, image }) => {
-  const tagColors = [
-    { bg: "#E2E9FF", icon: "#9EACD0" },
-    { bg: "#F6EED4", icon: "#F5D781" },
-    { bg: "#EDD0F5", icon: "#EBBCF7" },
-    { bg: "#F9C7C7", icon: "#FE8C8C" },
-    { bg: "#D5FBE5", icon: "#94fbbf" },
-  ];
+const TagAnswer: React.FC<TagAnswerProps> = ({ text, color, image }) => {
+  const bgColors = ["#E2E9FF", "#F6EED4", "#EDD0F5", "#F9C7C7", "#D5FBE5"];
 
-  // 배열 섞기
-  const shuffledColors = [...tagColors].sort(() => Math.random() - 0.5);
+  const borderColors = ["#9EACD0", "#F5D781", "#EBBCF7", "#FE8C8C", "#94fbbf"];
 
-  const getRandomColor = () => {
-    const randomIndex = Math.floor(Math.random() * shuffledColors.length);
-    return shuffledColors[randomIndex];
-  };
+  const tagBgColor =
+    typeof color === "number" ? bgColors[color % bgColors.length] : "";
 
-  const randomColor = getRandomColor();
+  const tagBorderColor =
+    typeof color === "number" ? borderColors[color % borderColors.length] : "";
 
   const tagStyle: React.CSSProperties = {
-    backgroundColor: randomColor.bg,
-    borderColor: randomColor.icon,
+    backgroundColor: tagBgColor,
+    borderColor: tagBorderColor,
     boxShadow: "4px 4px 3px rgba(200,200,200,0.3)",
-  };
-
-  const imgStyle: React.CSSProperties = {
-    color: randomColor.icon,
   };
 
   return (
     <label className="inline-flex relative mt-2 mr-2">
       <div
         style={tagStyle}
-        className="flex flex-row items-center border-2 rounded-3xl py-1 px-4 font-pre text-[12px] font-bold"
+        className="flex flex-row items-center border-2 rounded-3xl py-1 px-4 font-pre text-[12px]"
       >
         <img
           src={image}
-          alt="Tag Icon"
-          style={imgStyle}
+          alt="태그 아이콘"
           className="mr-2 max-w-fit max-h-3 object-contain"
         />
         {text}

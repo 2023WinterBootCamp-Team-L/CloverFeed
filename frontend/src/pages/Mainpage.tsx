@@ -21,7 +21,6 @@ function Mainpage() {
     const response = await axios.get(
       `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
     );
-    console.log(response.data.counts);
     const categoriesData = response.data.counts.map(
       (item: { category: string }) => item.category
     );
@@ -41,14 +40,6 @@ function Mainpage() {
     fetchCounts();
   }, []);
 
-  useEffect(() => {
-    console.log(categories);
-  }, [categories]);
-
-  useEffect(() => {
-    console.log(counts);
-  }, [counts]);
-
   return (
     <div className="bg-white">
       <div className=" flex flex-col mx-auto gap-10 px-5 py-8 min-h-screen w-full sm:max-w-[393px] lg:max-w-[393px]">
@@ -60,17 +51,12 @@ function Mainpage() {
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
-            강지은님의 네잎클로버
+            {username}님의 네잎클로버
           </p>
         </div>
 
         <div>
           <SimpleWordcloud />
-        </div>
-        <div>
-          <p className="text-[14px] text-center font-pre font-bold">
-            {username}님은
-          </p>
         </div>
 
         <div className="flex justify-center">

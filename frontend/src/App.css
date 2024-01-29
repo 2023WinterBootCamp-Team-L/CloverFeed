@@ -41,3 +41,29 @@
   color: #888;
 } */
 
+@media (max-width: 375px) {
+  .tags attitude {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+/* 모달이 반응형이 되도록 CSS를 추가합니다. */
+.LoginModal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* 모달의 오버레이/백드롭에 대한 CSS를 추가합니다. */
+.ModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}

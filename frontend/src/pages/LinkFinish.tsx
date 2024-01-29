@@ -3,7 +3,7 @@ import HomeButton from "../components/HomeButton";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { answerListSelector } from "../../atoms/AnswerStore";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface ApiResponse {
   status: "success" | "error";
@@ -15,30 +15,52 @@ function LinkFinish() {
 
   // Recoil의 상태값에서 AnswerList 가져오기
   const answerList = useRecoilValue(answerListSelector);
+  console.log(answerList);
+  const formId = localStorage.getItem("form_id");
 
   // POST 요청할 데이터
   const postData = {
-    form_id: 1,
+    form_id: formId ? parseInt(formId, 10) : 0,
     category: answerList.category,
     tags_work: answerList.tags_work,
     tags_attitude: answerList.tags_attitude,
     answers: answerList.answers,
   };
 
+  // Ref를 사용하여 컴포넌트 마운트 상태 추적
+  const isMounted = useRef(true);
+
   // POST 요청 보내기
-  try {
-    axios
-      .post(feedApiUrl, postData)
-      .then((response) => {
+  useEffect(() => {
+    // 컴포넌트가 여전히 마운트되어 있는지 추적
+    isMounted.current = true;
+
+    const sendPostData = async () => {
+      try {
+        const response = await axios.post(feedApiUrl, postData);
         console.log("답변 제출");
         console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("폼 없음", error.response.data);
-      });
-  } catch (error) {
-    console.error("요청 중 에러 발생:", error);
-  }
+
+        if (isMounted.current) {
+          // 컴포넌트가 여전히 마운트되어 있으면 상태 업데이트
+          isMounted.current = false;
+        }
+      } catch (error) {
+        console.error("폼 없음", error);
+        // 필요한 경우 에러 처리
+      }
+    };
+
+    // 답변이 있는지 확인
+    if (answerList && answerList.answers.length > 0) {
+      sendPostData();
+    }
+
+    // 컴포넌트가 언마운트될 때 요청을 취소하는 클린업 함수
+    return () => {
+      isMounted.current = false;
+    };
+  }, [answerList]);
 
   const [userid, setUserid] = useState("");
   const [summary, setSummary] = useState<string | undefined>(undefined);

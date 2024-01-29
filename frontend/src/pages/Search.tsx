@@ -8,8 +8,8 @@ interface Feedback {
   feedback_id: number;
   respondent_name: string;
   category: string;
-  tag_work: JSX.Element[];
-  tag_attitude: JSX.Element[];
+  tag_work: string;
+  tag_attitude: string;
   result: string;
 }
 
@@ -27,14 +27,26 @@ const Search: React.FC = () => {
       );
 
       if (response.data.status === "success") {
+        const parseTags = (tagsString: string) => {
+          try {
+            return tagsString
+              .replace(/^\[|\]$/g, "") // Remove square brackets
+              .split(", ") // Split by comma and space
+              .map((tag) => tag.replace(/^'|'$/g, "")); // Remove single quotes from the beginning and end
+          } catch (error) {
+            console.error("Error parsing tags:", error);
+            return [];
+          }
+        };
         const feedbacksData = response.data.feedbacks;
         const filteredFeedbackElements = feedbacksData.map(
           (feedback: Feedback, index: number) => (
             <FeedbackBox
               key={index}
-              title={`${feedback.respondent_name} ${feedback.category}님의 피드백`}
-              tag_work={feedback.tag_work}
-              tag_attitude={feedback.tag_attitude}
+              tag_work={parseTags(feedback.tag_work)}
+              tag_attitude={parseTags(feedback.tag_attitude)}
+              respondent_name={feedback.respondent_name}
+              category={feedback.category}
               text={
                 searchValue.trim() !== ""
                   ? feedback.result.slice(0, 100)
@@ -64,7 +76,7 @@ const Search: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    console.log("userid: " + userid);
+    // console.log("userid: " + userid);
     fetchFeedbacks();
   }, [userid, searchValue]);
 
