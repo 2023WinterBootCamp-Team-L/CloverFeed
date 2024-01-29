@@ -8,7 +8,7 @@ export type AnswerType = "객관식" | "주관식";
 export type Answer = {
   context: string;
   type: AnswerType;
-  answer: string[];
+  answer: string[] | string;
 };
 
 export type AnswerList = {

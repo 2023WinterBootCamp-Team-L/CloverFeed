@@ -1,15 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import ChoicePart from "../components/Answer/ChoicePart";
 import ShortPart from "../components/Answer/ShortPart";
 import CategoryPart from "../components/Answer/CategoryPart";
 import BackButton from "../components/BackButton";
-import {
-  QuestionList,
-  feedbackQuestionListState,
-} from "../../atoms/QuestionStore";
+import { feedbackQuestionListState } from "../../atoms/QuestionStore";
 import { useRecoilState } from "recoil";
+import { answerListState } from "../../atoms/AnswerStore";
 import TagPart from "../components/Answer/TagPart";
 import { atom } from "recoil";
 // import { selectedTagsState } from "../../atoms/AnswerStore";
@@ -19,62 +16,13 @@ export const currentQuestionIndexState = atom<number>({
   default: 0,
 });
 
-interface ApiResponse {
-  status: "success" | "error";
-  questions?: QuestionList;
-  error_code?: number;
-  message?: string;
-}
-
 function LinkAnswer() {
   // const [selectedTags, setSelectedTags] = useRecoilState(selectedTagsState);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
+  const [questions] = useRecoilState(feedbackQuestionListState);
+  const answerList = useRecoilState(answerListState);
   const backNavigate = useNavigate();
   const nextNavigate = useNavigate();
-
-  const [userid, setUserid] = useState("");
-
-  const fetchData = async (userid: string) => {
-    try {
-      const response = await axios.get<ApiResponse>(
-        `http://localhost:8000/api/form/questions/?user_id=${userid}`
-      );
-      if (response.data.status === "success") {
-        console.log("피드백 질문");
-        console.log(response); // 전체 응답 콘솔에 기록
-
-        // 데이터 업데이트
-        setQuestions(
-          (prevQuestions: QuestionList) =>
-            ({
-              ...prevQuestions,
-              questions: response.data.questions || [],
-            }) as QuestionList
-        );
-      } else {
-        console.error(
-          `폼 없음: ${response.data.error_code}, ${response.data.message}`
-        );
-      }
-    } catch (error) {
-      console.error("API 요청 중 에러:", error);
-    }
-  };
-
-  useEffect(() => {
-    const storedUserid = localStorage.getItem("user_id");
-    if (storedUserid) {
-      setUserid(storedUserid);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Recoil 상태를 초기화하는 대신, 데이터가 비어 있을 때만 API 요청
-    if (!questions.questions || questions.questions.length === 0) {
-      fetchData(userid);
-    }
-  }, [userid, setQuestions]);
 
   const handleBackButtonClick = () => {
     if (currentQuestionIndex > 0) {
@@ -90,13 +38,19 @@ function LinkAnswer() {
     if (currentQuestionIndex < questions.questions.length - 1) {
       // 다음 질문으로 이동
       setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      console.log(answerList);
     } else {
       // 마지막 질문이면 "/check" 페이지로 이동
       nextNavigate("/check");
     }
   };
 
-  console.log(currentQuestionIndex);
+  useEffect(() => {
+    console.log("답변 목록");
+    console.log(answerList);
+  }, [answerList]);
+
+  // console.log(currentQuestionIndex + "번 문제");
 
   const currentQuestion = questions.questions
     ? questions.questions[currentQuestionIndex]

@@ -1,5 +1,5 @@
-import { atom, selector } from "recoil";
-import { currentQuestionIndexState } from "../src/pages/LinkAnswer";
+import { atom } from "recoil";
+// import { currentQuestionIndexState } from "../src/pages/LinkAnswer";
 
 export type TagProps = {
   text: string;
@@ -7,8 +7,8 @@ export type TagProps = {
   tagnumber: number;
 };
 
-export const tagsDataState = atom<TagProps[]>({
-  key: "tagsDataState1",
+export const tagsWorkDataState = atom<TagProps[]>({
+  key: "tagsWorkDataState",
   default: [
     {
       text: "효율적인",
@@ -88,94 +88,83 @@ export const tagsDataState = atom<TagProps[]>({
   ],
 });
 
-// currentQuestionIndex에 따라 선택된 태그 데이터 반환
-export const selectedTagsDataState = selector<TagProps[]>({
-  key: "tagsDataState2",
-  get: ({ get }) => {
-    const currentQuestionIndex = get(currentQuestionIndexState);
-
-    if (currentQuestionIndex === 1) {
-      return get(tagsDataState);
-    } else if (currentQuestionIndex === 2) {
-      return [
-        {
-          text: "책임감",
-          image: "../src/assets/책임감.png",
-          tagnumber: 1,
-        },
-        {
-          text: "공감능력",
-          image: "../src/assets/공감능력.png",
-          tagnumber: 2,
-        },
-        {
-          text: "배려심",
-          image: "../src/assets/배려심.png",
-          tagnumber: 3,
-        },
-        {
-          text: "성실함",
-          image: "../src/assets/성실함.png",
-          tagnumber: 4,
-        },
-        {
-          text: "적극적인",
-          image: "../src/assets/적극적인.png",
-          tagnumber: 5,
-        },
-        {
-          text: "꼼꼼함",
-          image: "../src/assets/꼼꼼함.png",
-          tagnumber: 6,
-        },
-        {
-          text: "분위기 메이커",
-          image: "../src/assets/분위기메이커.png",
-          tagnumber: 7,
-        },
-        {
-          text: "주도적인",
-          image: "../src/assets/주도적인.png",
-          tagnumber: 8,
-        },
-        {
-          text: "센스있는",
-          image: "../src/assets/센스있는.png",
-          tagnumber: 9,
-        },
-        {
-          text: "긍정적인",
-          image: "../src/assets/긍정적인.png",
-          tagnumber: 10,
-        },
-        {
-          text: "사교성이 좋은",
-          image: "../src/assets/사교성이좋은.png",
-          tagnumber: 11,
-        },
-        {
-          text: "관대한",
-          image: "../src/assets/관대한.png",
-          tagnumber: 12,
-        },
-        {
-          text: "경청하는",
-          image: "../src/assets/경청하는.png",
-          tagnumber: 13,
-        },
-        {
-          text: "도전적인",
-          image: "../src/assets/도전적인.png",
-          tagnumber: 14,
-        },
-        {
-          text: "끈기",
-          image: "../src/assets/끈기.png",
-          tagnumber: 15,
-        },
-      ];
-    }
-
-    return [];
-  },
+export const tagsAttitudeDataState = atom<TagProps[]>({
+  key: "tagsAttitudeDataState",
+  default: [
+    {
+      text: "책임감",
+      image: "../src/assets/책임감.png",
+      tagnumber: 1,
+    },
+    {
+      text: "공감능력",
+      image: "../src/assets/공감능력.png",
+      tagnumber: 2,
+    },
+    {
+      text: "배려심",
+      image: "../src/assets/배려심.png",
+      tagnumber: 3,
+    },
+    {
+      text: "성실함",
+      image: "../src/assets/성실함.png",
+      tagnumber: 4,
+    },
+    {
+      text: "적극적인",
+      image: "../src/assets/적극적인.png",
+      tagnumber: 5,
+    },
+    {
+      text: "꼼꼼함",
+      image: "../src/assets/꼼꼼함.png",
+      tagnumber: 6,
+    },
+    {
+      text: "분위기 메이커",
+      image: "../src/assets/분위기메이커.png",
+      tagnumber: 7,
+    },
+    {
+      text: "주도적인",
+      image: "../src/assets/주도적인.png",
+      tagnumber: 8,
+    },
+    {
+      text: "센스있는",
+      image: "../src/assets/센스있는.png",
+      tagnumber: 9,
+    },
+    {
+      text: "긍정적인",
+      image: "../src/assets/긍정적인.png",
+      tagnumber: 10,
+    },
+    {
+      text: "사교성이 좋은",
+      image: "../src/assets/사교성이좋은.png",
+      tagnumber: 11,
+    },
+    {
+      text: "관대한",
+      image: "../src/assets/관대한.png",
+      tagnumber: 12,
+    },
+    {
+      text: "경청하는",
+      image: "../src/assets/경청하는.png",
+      tagnumber: 13,
+    },
+    {
+      text: "도전적인",
+      image: "../src/assets/도전적인.png",
+      tagnumber: 14,
+    },
+    {
+      text: "끈기",
+      image: "../src/assets/끈기.png",
+      tagnumber: 15,
+    },
+  ],
 });

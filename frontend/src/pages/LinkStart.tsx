@@ -3,6 +3,10 @@ import clover from "../assets/clover.svg";
 import GreenButton from "../components/GreenButton";
 import axios from "axios";
 import { useRecoilState } from "recoil";
+import {
+  QuestionList,
+  feedbackQuestionListState,
+} from "../../atoms/QuestionStore";
 import { answerListState } from "../../atoms/AnswerStore";
 // import LinkButton from "../components/LinkButton";
 
@@ -10,6 +14,7 @@ function LinkStart() {
   const [user_name, setUser_name] = useState("");
   const [form_id, setForm_id] = useState(0);
   const [answerList, setAnswerList] = useRecoilState(answerListState);
+  const [questions, setQuestions] = useRecoilState(feedbackQuestionListState);
 
   const getQuestionList = async () => {
     // Query Parameters를 가져오기
@@ -22,23 +27,42 @@ function LinkStart() {
       const response = await axios.get(
         "http://localhost:8000/api/form/questions/?user_id=" + userId
       );
-      setUser_name(response.data.user_name);
-      setForm_id(response.data.form_id);
+
+      if (response.data.status === "success") {
+        // console.log("피드백 질문");
+        // console.log(response); // 전체 응답 콘솔에 기록
+
+        // 데이터 업데이트
+        setUser_name(response.data.user_name);
+        setForm_id(response.data.form_id);
+        setQuestions(
+          (prevQuestions: QuestionList) =>
+            ({
+              ...prevQuestions,
+              questions: response.data.questions || [],
+            }) as QuestionList
+        );
+      } else {
+        console.error(
+          `폼 없음: ${response.data.error_code}, ${response.data.message}`
+        );
+      }
     } catch (error) {
-      console.error(error);
+      console.error("API 요청 중 에러:", error);
     }
   };
 
   useEffect(() => {
+    // 여기에 Recoil State 초기화 코드 추가
     getQuestionList();
   }, []);
 
   useEffect(() => {
-    console.log("user_name: " + user_name);
+    // console.log("user_name: " + user_name);
   }, [user_name]);
 
   useEffect(() => {
-    console.log("form_id: " + form_id);
+    // console.log("form_id: " + form_id);
     setAnswerList((oldState) => ({
       ...oldState,
       form_id: form_id,
@@ -46,7 +70,13 @@ function LinkStart() {
   }, [form_id]);
 
   useEffect(() => {
-    console.log(answerList);
+    // console.log("질문 목록");
+    // console.log(questions);
+  }, [questions]);
+
+  useEffect(() => {
+    // console.log("답변 목록");
+    // console.log(answerList);
   }, [answerList]);
 
   return (
