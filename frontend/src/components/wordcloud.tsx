@@ -1,4 +1,3 @@
-import React from "react";
 import ReactWordcloud from "react-wordcloud";
 import clovercloud from "../assets/clovercloud.svg";
 
