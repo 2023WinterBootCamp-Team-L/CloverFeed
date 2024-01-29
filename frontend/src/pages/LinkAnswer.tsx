@@ -11,6 +11,7 @@ import { answerListState } from "../../atoms/AnswerStore";
 import TagPart from "../components/Answer/TagPart";
 import { atom } from "recoil";
 import axios from "axios";
+import Modal from "../components/Modal";
 
 export const currentQuestionIndexState = atom<number>({
   key: "currentQuestionIndexState",
@@ -24,6 +25,10 @@ function LinkAnswer() {
   const answerList = useRecoilState(answerListState);
   const backNavigate = useNavigate();
   const nextNavigate = useNavigate();
+  const [isOpen, setisOpen] = useState(false);
+  const toggle = () => {
+    setisOpen(!isOpen);
+  };
 
   const handleBackButtonClick = () => {
     if (currentQuestionIndex > 0) {
@@ -42,6 +47,9 @@ function LinkAnswer() {
       console.log(answerList);
     } else {
       // 마지막 질문의 경우
+      // 로딩 모달 열기
+      toggle();
+
       const feedApiUrl = "http://localhost:8000/api/answers/";
       const gptApiUrl = "http://localhost:8000/api/feedbacks/summary/";
 
@@ -87,7 +95,8 @@ function LinkAnswer() {
       }
 
       localStorage.setItem("author_id", "0");
-      // "/LinkFinish" 페이지로 이동
+
+      toggle();
       nextNavigate("/LinkFinish");
     }
   };
@@ -157,6 +166,18 @@ function LinkAnswer() {
           </div>
         </div>
       </div>
+      <Modal isOpen={isOpen} toggle={toggle}>
+        <div className="flex flex-col items-center gap-3">
+          <p className="font-pre text-[16px] font-bold">
+            답변이 제출 중입니다.
+          </p>
+          <p className="font-pre text-[16px] font-bold">잠시만 기다려주세요.</p>
+          <div
+            className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite] mt-2"
+            role="status"
+          ></div>
+        </div>
+      </Modal>
     </div>
   );
 }
