@@ -22,6 +22,9 @@ function LinkStart() {
 
     // user_id 값을 가져오기
     const userId = queryParams.get("user_id");
+    if (userId) {
+      localStorage.setItem("author_id", userId);
+    }
 
     try {
       const response = await axios.get(
