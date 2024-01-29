@@ -8,7 +8,7 @@ import {
 import { feedbackQuestionListState } from "../../../atoms/QuestionStore";
 
 export interface ShortAnswerProps {
-  value: string[];
+  value: string;
   onTextChange: React.ChangeEventHandler<HTMLTextAreaElement>;
   onFocus: () => void;
   onBlur: () => void;
@@ -20,7 +20,7 @@ export const ShortAnswer: React.FC<ShortAnswerProps> = ({
   onFocus,
   onBlur,
 }) => {
-  const textColor = value[0] === "답변을 입력하세요" ? "gray" : "black";
+  const textColor = value === "답변을 입력하세요" ? "gray" : "black";
   const textAreaStyle = {
     color: textColor,
   };
@@ -49,9 +49,7 @@ export const ShortAnswer: React.FC<ShortAnswerProps> = ({
 };
 
 function ShortPart({ questionIndex }: { questionIndex: number }) {
-  const [shortAnswerValue, setShortAnswerValue] = useState([
-    "답변을 입력하세요",
-  ]);
+  const [shortAnswerValue, setShortAnswerValue] = useState("답변을 입력하세요");
   const [selectedAnswer, setSelectedAnswer] =
     useRecoilState(selectedAnswerState);
   const setAnswerListState = useSetRecoilState(answerListState);
@@ -72,14 +70,14 @@ function ShortPart({ questionIndex }: { questionIndex: number }) {
       updatedAnswerList[answerIndex] = {
         context: currentQuestion.context,
         type: currentQuestion.type,
-        answer: [e.target.value],
+        answer: e.target.value,
       };
     } else {
       // 해당 질문에 대한 답변이 없는 경우 추가
       updatedAnswerList.push({
         context: currentQuestion.context,
         type: currentQuestion.type,
-        answer: [e.target.value],
+        answer: e.target.value,
       });
     }
 
@@ -90,7 +88,7 @@ function ShortPart({ questionIndex }: { questionIndex: number }) {
     }));
 
     // 짧은 답변 state 업데이트
-    setShortAnswerValue([e.target.value]);
+    setShortAnswerValue(e.target.value);
 
     // 선택된 답변 설정
     setSelectedAnswer({
@@ -101,19 +99,19 @@ function ShortPart({ questionIndex }: { questionIndex: number }) {
   };
 
   const handleFocus = () => {
-    if (shortAnswerValue[0] === "답변을 입력하세요") {
-      setShortAnswerValue([""]);
+    if (shortAnswerValue === "답변을 입력하세요") {
+      setShortAnswerValue("");
     }
   };
 
   const handleBlur = () => {
-    if (shortAnswerValue[0] === "") {
-      setShortAnswerValue(["답변을 입력하세요"]);
+    if (shortAnswerValue === "") {
+      setShortAnswerValue("답변을 입력하세요");
     }
   };
 
   useEffect(() => {
-    setShortAnswerValue(["답변을 입력하세요"]);
+    setShortAnswerValue("답변을 입력하세요");
   }, [questionIndex]);
 
   return (
