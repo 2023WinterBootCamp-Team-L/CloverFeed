@@ -21,7 +21,6 @@ const TagPart: React.FC<TagPartProps> = ({ questionIndex }) => {
   const [showExceedPopup, setShowExceedPopup] = useState(false);
   const [tagTexts, setTagTexts] = useState<string[]>([]);
   const [questionList] = useRecoilState(feedbackQuestionListState);
-  const currentQuestion = questionList.questions[questionIndex];
 
   // Add useRecoilState for answerList
   const [answerList, setAnswerList] = useRecoilState(answerListState);
@@ -59,53 +58,15 @@ const TagPart: React.FC<TagPartProps> = ({ questionIndex }) => {
   };
 
   useEffect(() => {
-    const updatedAnswerList = [...answerList.answers];
-    const answerIndex = updatedAnswerList.findIndex(
-      (answer) => answer.context === currentQuestion.context
-    );
-
     if (questionIndex === 1) {
-      if (answerIndex !== -1) {
-        // 이미 해당 질문에 대한 답변이 있는 경우 업데이트
-        updatedAnswerList[answerIndex] = {
-          context: currentQuestion.context,
-          type: currentQuestion.type,
-          answer: tagTexts,
-        };
-      } else {
-        // 해당 질문에 대한 답변이 없는 경우 추가
-        updatedAnswerList.push({
-          context: currentQuestion.context,
-          type: currentQuestion.type,
-          answer: tagTexts,
-        });
-      }
-
       setAnswerList((oldState) => ({
         ...oldState,
         tags_work: tagTexts,
-        answers: updatedAnswerList,
       }));
     } else if (questionIndex === 2) {
-      if (answerIndex !== -1) {
-        // 이미 해당 질문에 대한 답변이 있는 경우 업데이트
-        updatedAnswerList[answerIndex] = {
-          context: currentQuestion.context,
-          type: currentQuestion.type,
-          answer: tagTexts,
-        };
-      } else {
-        // 해당 질문에 대한 답변이 없는 경우 추가
-        updatedAnswerList.push({
-          context: currentQuestion.context,
-          type: currentQuestion.type,
-          answer: tagTexts,
-        });
-      }
       setAnswerList((oldState) => ({
         ...oldState,
         tags_attitude: tagTexts,
-        answers: updatedAnswerList,
       }));
     }
   }, [tagTexts]);
