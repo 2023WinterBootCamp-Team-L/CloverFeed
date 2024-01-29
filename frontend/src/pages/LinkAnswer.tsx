@@ -41,7 +41,7 @@ function LinkAnswer() {
       console.log(answerList);
     } else {
       // 마지막 질문이면 "/check" 페이지로 이동
-      nextNavigate("/check");
+      nextNavigate("/LinkFinish");
     }
   };
 
