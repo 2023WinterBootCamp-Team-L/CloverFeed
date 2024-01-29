@@ -324,9 +324,18 @@ const FeedBackResult: React.FC = () => {
                           {answer.context}
                         </p>
                       ) : (
-                        <span className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-1 font-pre text-[12px] text-white">
-                          {answer.context}
-                        </span>
+                        <div className="flex flex-wrap gap-2">
+                          {answer.context
+                            .split(",")
+                            .map((value, valueIndex) => (
+                              <span
+                                key={valueIndex}
+                                className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-1 font-pre text-[12px] text-white"
+                              >
+                                {value.trim()}
+                              </span>
+                            ))}
+                        </div>
                       )}
                     </div>
                   </li>

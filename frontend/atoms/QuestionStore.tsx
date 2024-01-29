@@ -18,6 +18,11 @@ export const selectedQuestionState = atom<Question | null>({
   default: null,
 });
 
+export const currentQuestionIndexState = atom<number>({
+  key: "currentQuestionIndexState",
+  default: 0, // 초기값 설정
+});
+
 // QuestionList를 저장하기 위한 Atom
 export const questionListState = atom<QuestionList>({
   key: "questionListState",

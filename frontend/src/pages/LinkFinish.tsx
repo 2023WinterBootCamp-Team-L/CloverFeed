@@ -16,10 +16,11 @@ function LinkFinish() {
   // Recoil의 상태값에서 AnswerList 가져오기
   const answerList = useRecoilValue(answerListSelector);
   console.log(answerList);
+  const formId = localStorage.getItem("form_id");
 
   // POST 요청할 데이터
   const postData = {
-    form_id: 15,
+    form_id: formId ? parseInt(formId, 10) : 0,
     category: answerList.category,
     tags_work: answerList.tags_work,
     tags_attitude: answerList.tags_attitude,
