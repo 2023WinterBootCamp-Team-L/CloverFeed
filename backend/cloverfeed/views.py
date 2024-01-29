@@ -1022,6 +1022,12 @@ class WordCloudSummaryView(APIView):
 
         print(parsed_keywords)
 
+        # 'keyword'를 'name'으로 변경하는 코드
+        new_parsed_keywords = [
+            {"text": entry["keyword"], "value": entry["value"]}
+            for entry in parsed_keywords
+        ]
+
         # # 피드백 결과 조회
         # feedbacks = QuestionAnswer.objects.filter(
         #     Q(feedback__form__user=user), Q(type="주관식")
@@ -1068,7 +1074,7 @@ class WordCloudSummaryView(APIView):
         # print(wordlist)
 
         return Response(
-            {"status": "success", "summary": user.summary, "words": parsed_keywords}
+            {"status": "success", "summary": user.summary, "words": new_parsed_keywords}
         )
 
 
