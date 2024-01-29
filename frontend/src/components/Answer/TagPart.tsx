@@ -1,19 +1,30 @@
-import { useState } from "react";
-// import BackButton from "../BackButton";
+import { useEffect, useState } from "react";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  tagsWorkDataState,
+  tagsAttitudeDataState,
+} from "../../../atoms/TagStore";
 import Tag from "../Tag";
 import ExceedPopup from "../ExceedPopup";
-import { useRecoilValue } from "recoil";
-import { tagsDataState } from "../../../atoms/TagStore";
-// import { useRecoilState, useSetRecoilState } from "recoil";
+import { answerListState } from "../../../atoms/AnswerStore";
+import { feedbackQuestionListState } from "../../../atoms/QuestionStore";
 
 interface TagPartProps {
   questionIndex: number;
 }
 
-const TagPart: React.FC<TagPartProps> = () => {
-  const tagsData = useRecoilValue(tagsDataState);
+const TagPart: React.FC<TagPartProps> = ({ questionIndex }) => {
+  const tagsData =
+    questionIndex === 1 ? tagsWorkDataState : tagsAttitudeDataState;
+  const currentQuestionTags = useRecoilValue(tagsData);
   const [selectedTags, setSelectedTags] = useState<number[]>([]);
   const [showExceedPopup, setShowExceedPopup] = useState(false);
+  const [tagTexts, setTagTexts] = useState<string[]>([]);
+  const [questionList] = useRecoilState(feedbackQuestionListState);
+  const currentQuestion = questionList.questions[questionIndex];
+
+  // Add useRecoilState for answerList
+  const [answerList, setAnswerList] = useRecoilState(answerListState);
 
   const handleTagClick = (tagnumber: number) => {
     setSelectedTags((prevSelectedTags) => {
@@ -33,40 +44,85 @@ const TagPart: React.FC<TagPartProps> = () => {
         setShowExceedPopup(false);
       }
 
+      // Update tagTexts state
+      setTagTexts(
+        updatedSelectedTags.map((tagNumber) => {
+          return (
+            currentQuestionTags.find((tag) => tag.tagnumber === tagNumber)
+              ?.text || ""
+          );
+        })
+      );
+
       return updatedSelectedTags;
     });
   };
+
+  useEffect(() => {
+    const updatedAnswerList = [...answerList.answers];
+    const answerIndex = updatedAnswerList.findIndex(
+      (answer) => answer.context === currentQuestion.context
+    );
+
+    if (questionIndex === 1) {
+      if (answerIndex !== -1) {
+        // 이미 해당 질문에 대한 답변이 있는 경우 업데이트
+        updatedAnswerList[answerIndex] = {
+          context: currentQuestion.context,
+          type: currentQuestion.type,
+          answer: tagTexts,
+        };
+      } else {
+        // 해당 질문에 대한 답변이 없는 경우 추가
+        updatedAnswerList.push({
+          context: currentQuestion.context,
+          type: currentQuestion.type,
+          answer: tagTexts,
+        });
+      }
+
+      setAnswerList((oldState) => ({
+        ...oldState,
+        tags_work: tagTexts,
+        answers: updatedAnswerList,
+      }));
+    } else if (questionIndex === 2) {
+      if (answerIndex !== -1) {
+        // 이미 해당 질문에 대한 답변이 있는 경우 업데이트
+        updatedAnswerList[answerIndex] = {
+          context: currentQuestion.context,
+          type: currentQuestion.type,
+          answer: tagTexts,
+        };
+      } else {
+        // 해당 질문에 대한 답변이 없는 경우 추가
+        updatedAnswerList.push({
+          context: currentQuestion.context,
+          type: currentQuestion.type,
+          answer: tagTexts,
+        });
+      }
+      setAnswerList((oldState) => ({
+        ...oldState,
+        tags_attitude: tagTexts,
+        answers: updatedAnswerList,
+      }));
+    }
+  }, [tagTexts]);
 
   const closeExceedPopup = () => {
     setShowExceedPopup(false);
   };
 
-  // 태그에 사용될 데이터 배열
-
   return (
     <div className="flex justify-center items-center min-h-screen ">
       <div
-        className="flex flex-col justify-center overflow-hidden relative bg-c-emerald bg-opacity-35 px-5 py-8 gap-10 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
+        className="flex flex-col justify-center overflow-hidden relative bg-opacity-35 px-5 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
         // style={{ width: '393px', height: '852px' }}
       >
-        {/* <div className="flex justify-between w-full">
-          <BackButton back page="/LinkPosition" />
-          <BackButton back={false} page="/LinkTag2" />
-        </div> */}
-        <div className="flex-full">
-          {/* <p className="font-pre text-[22px] font-bold text-center">
-            당신이 생각하는 XXX 님의
-          </p>
-          <p className="font-pre text-[22px] font-bold text-center">
-            업무 능력 강점은 무엇인가요?
-          </p>
-          <p className="font-pre text-[14px] text-gray-400 text-center">
-            키워드를 최대 5개까지 선택해주세요.
-          </p> */}
-        </div>
         <div className="flex-1 text-center">
           {/* 15개의 태그 렌더링 */}
-          {tagsData.map((tag, index) => (
+          {currentQuestionTags.map((tag, index) => (
             <Tag
               key={index}
               text={tag.text}
