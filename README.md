@@ -21,9 +21,8 @@
 
 ---
 ### 주요 기능 설명(혹은 데모영상) -> Feature
-
 <br><br><br><br>
----
+
 
 # 📌System Architecture
 ![Untitled](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/5f06e555-5e0c-42b9-89d5-c013325cdccd)
