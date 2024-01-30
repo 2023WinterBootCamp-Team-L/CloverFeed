@@ -52,7 +52,6 @@ const SkillChart = ({
         font: {
           family: "Pretendard",
         },
-        textAlign: "center",
         formatter: function (value: number, context: any) {
           const dataLabel = top5ChartData.labels[context.dataIndex];
           return `${dataLabel}\n${value}%`;
@@ -166,8 +165,6 @@ function Chart() {
           </div>
           <SkillChart data={attitudeData} />
         </div>
-
-        
       </div>
     </div>
   );
