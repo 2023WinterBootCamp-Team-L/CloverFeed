@@ -193,7 +193,8 @@
          </td>
         <td width="100" align="center">
             <a href="https://github.com/changyeonyes">
-                <img src="http://img.shields.io/badge/changyeonyes-green?style=social&logo=github"/>
+                <img src="![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/67bda2ad-c538-4651-8ef8-7f5e17e31aa1)
+"/>
             </a>
         </td>
      </tr>
