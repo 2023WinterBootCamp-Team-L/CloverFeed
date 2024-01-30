@@ -28,7 +28,7 @@
 <br><br><br><br>
 
 
-# 🧩Tech Stacks
+# 🧩 Tech Stacks
 <table>
   <tr>
     <th>Frontend</th>
@@ -86,7 +86,8 @@
 <br><br><br><br>
 
 
-# ![icons8-감시-장치](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/cacdeb91-7ceb-4c9b-8da7-39afb2dd75da)Monitoring
+# 🖥️ Monitoring
+
 
 
 ---
