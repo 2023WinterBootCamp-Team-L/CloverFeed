@@ -99,4 +99,6 @@
 ### 디렉토리 구조
 ---
 ### ERD 설계
+![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/798a439c-f4b0-42fd-afc6-bde839ffcaa8)
+
 
