@@ -1,3 +1,4 @@
+![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/94ca12af-cf63-4472-a980-3e3437330951)
 # ☘️CloverFeed 익명 피드백 서비스
 ## 📃 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, 익명으로 피드백 받을 수 있는 웹서비스입니다. 
