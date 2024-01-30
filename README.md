@@ -3,10 +3,12 @@
 ## 📃 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 __내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, 익명으로 피드백 받을 수 있는 웹서비스입니다.__ 
 
+
+<br>
+
 ![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/22ceab1f-2c26-4bdc-9a2a-242a10f0b0e2)
 
-
-<br><br><br><br>
+<br><br>
 
 ## 💡 주요 기능 설명(혹은 데모영상) -> Feature
 <br><br><br><br>
