@@ -92,3 +92,120 @@
 + 정현수-프론트엔드
 + 한현서-프론트엔드
 + 이창연-프론트엔드
+# 👥 Member
+
+<table width="1000">
+    <thead>
+    </thead>
+    <tbody>
+    <tr>
+        <th>Pictures</th>
+         <td width="100" align="center">
+            <a href="https://github.com/Mayreeel">
+                <img src="https://avatars.githubusercontent.com/u/112528747?v=4" width="60" height="60">
+            </a>
+        </td>
+        <td width="100" align="center">
+             <a href="https://github.com/raceStarter">
+                <img src="https://avatars.githubusercontent.com/u/103251717?v=4" width="60" height="60">
+            </a>
+        </td>
+        <td width="100" align="center">
+             <a href="https://github.com/sejongpark">
+                <img src="https://avatars.githubusercontent.com/u/117425885?v=4" width="60" height="60">
+            </a>
+        </td>
+        <td width="100" align="center">
+             <a href="https://github.com/meem3443">
+                <img src="https://avatars.githubusercontent.com/u/101982673?v=4" width="60" height="60">
+            </a>
+        </td>
+        <td width="100" align="center">
+             <a href="https://github.com/dleogh476">
+                <img src="https://avatars.githubusercontent.com/u/67044438?v=4" width="60" height="60">
+        </td>
+        <td width="100" align="center">
+             <a href="https://github.com/leeseoin">
+                <img src="https://avatars.githubusercontent.com/u/46620909?v=4" width="60" height="60">
+        </td>
+        <td width="100" align="center">
+             <a href="https://github.com/wjsqudtjs2">
+                <img src="https://avatars.githubusercontent.com/u/137774867?v=4" width="60" height="60">
+            </a>
+        </td>
+    </tr>
+    <tr>
+        <th>Name</th>
+        <td width="100" align="center">강석규</td>
+        <td width="100" align="center">조상아</td>
+        <td width="100" align="center">석민정</td>
+        <td width="100" align="center">강지은</td>
+        <td width="100" align="center">정현수</td>
+        <td width="100" align="center">한현서</td>
+        <td width="100" align="center">이창연</td>
+    </tr>
+    <tr>
+        <th>Position</th>
+        <td width="150" align="center">
+            Leader<br>
+            Backend<br>
+            DevOps<br>          
+        </td>
+        <td width="150" align="center">            
+            Backend<br>
+            DevOps<br>
+        </td>
+        <td width="150" align="center">
+            Backend<br>
+        </td>
+        <td width="150" align="center">
+            Frontend<br>
+        </td>
+        <td width="150" align="center">
+            Frontend<br>
+        </td>
+        <td width="150" align="center">
+            Frontend<br>
+        </td>
+        <td width="150" align="center">
+            Frontend<br>
+        </td>
+    </tr>
+    <tr>
+        <th>GitHub</th>
+        <td width="100" align="center">
+            <a href="https://github.com/AlgeMoya">
+                <img src="http://img.shields.io/badge/AlgeMoya-green?style=social&logo=github"/>
+            </a>
+        </td>
+        <td width="100" align="center">
+            <a href="https://github.com/SalguJam">
+                <img src="http://img.shields.io/badge/SalguJam-green?style=social&logo=github"/>
+            </a>
+        </td>
+        <td width="100" align="center">
+            <a href="https://github.com/minjaon">
+                <img src="http://img.shields.io/badge/minjaon-green?style=social&logo=github"/>
+            </a>
+        </td>
+        <td width="100" align="center">
+            <a href="https://github.com/antisdun">
+                <img src="http://img.shields.io/badge/antisdun-green?style=social&logo=github"/>
+            </a>
+        </td>
+        <td width="100" align="center">
+            <a href="https://github.com/hyeonsu00">
+                <img src="http://img.shields.io/badge/hyeonsu00-green?style=social&logo=github"/>
+         </td>
+        <td width="100" align="center">
+            <a href="https://github.com/Hseooo">
+                <img src="http://img.shields.io/badge/Hseooo-green?style=social&logo=github"/>
+         </td>
+        <td width="100" align="center">
+            <a href="https://github.com/changyeonyes">
+                <img src="http://img.shields.io/badge/changyeonyes-green?style=social&logo=github"/>
+            </a>
+        </td>
+     </tr>
+    </tbody>
+</table>
