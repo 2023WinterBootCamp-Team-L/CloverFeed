@@ -1,12 +1,9 @@
-# ☘️CloverFeed(익명 피드백 서비스)
+# ☘️CloverFeed(익명 피드백 서비스)클로피(CloverFeed)
 
-### 1. 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
-<br><br><br><br>
-### 2. 서비스 이름: 클로피(CloverFeed)
+# 1. 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 <br><br><br><br>
 
-
-### 💡 주요 기능 설명(혹은 데모영상) -> Feature
+# 💡 주요 기능 설명(혹은 데모영상) -> Feature
 <br><br><br><br>
 
 
@@ -75,11 +72,11 @@
 
 # 🖥️ Monitoring
 <br><br><br><br>
-### 📈 API(swagger)
+# 📈 API(swagger)
 <br><br><br><br>
-### 디렉토리 구조
+# 디렉토리 구조
 <br><br><br><br>
-### 🔐 ERD 설계
+# 🔐 ERD 설계
 ![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
 <br><br><br><br>
   
