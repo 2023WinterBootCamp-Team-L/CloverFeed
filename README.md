@@ -193,7 +193,7 @@
          </td>
         <td width="100" align="center">
             <a href="https://github.com/changyeonyes">
-                <img src="![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/67bda2ad-c538-4651-8ef8-7f5e17e31aa1)
+                <img src="![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/8c94caf4-887e-4792-9287-591262f0f55c)
 "/>
             </a>
         </td>
