@@ -1,4 +1,6 @@
-![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2cd9c0af-b6fc-472f-be7c-0bf2a9d026d9)
+<div style="text-align: center;">
+  <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2cd9c0af-b6fc-472f-be7c-0bf2a9d026d9" alt="image" width="200">
+</div>
 
 
 # ☘️CloverFeed 익명 피드백 서비스
