@@ -6,7 +6,8 @@ __내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, �
 
 <br>
 
-![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/22ceab1f-2c26-4bdc-9a2a-242a10f0b0e2)
+![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/9ba6be1c-a051-4194-90c6-4917290d9179)
+
 
 <br><br>
 
