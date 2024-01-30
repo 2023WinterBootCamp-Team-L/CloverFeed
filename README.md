@@ -1,5 +1,8 @@
 # ☘️CloverFeed(익명 피드백 서비스)클로피(CloverFeed)
-<a width="50" align="center">![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/ed4df0db-c542-4413-8d83-00afa63c8979)</a>
+<div style="text-align: center;">
+  <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/ed4df0db-c542-4413-8d83-00afa63c8979" alt="image" width="50">
+</div>
+
 
 
 ## 📃 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
