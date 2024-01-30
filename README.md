@@ -1,34 +1,21 @@
 # ☘️CloverFeed(익명 피드백 서비스)
 
 ### 1. 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
----
+<br><br><br><br>
 ### 2. 서비스 이름: 클로피(CloverFeed)
----
-### 3. 개발 기간
-+ 2023년 12월26일 ~ 2024년 2월3일
-
----
-### 개발자 소개
-+ 강석규-백엔드
-+ 석민정-백엔드
-+ 조상아-백엔드
-+ 강지은-프론트엔드
-+ 정현수-프론트엔드
-+ 한현서-프론트엔드
-+ 이창연-프론트엔드
-
-
----
-### 주요 기능 설명(혹은 데모영상) -> Feature
 <br><br><br><br>
 
 
-# 📌System Architecture
+### 💡 주요 기능 설명(혹은 데모영상) -> Feature
+<br><br><br><br>
+
+
+# 📌 System Architecture
 ![Untitled](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/5f06e555-5e0c-42b9-89d5-c013325cdccd)
 <br><br><br><br>
 
 
-# 🧩 Tech Stacks
+# 📚 Tech Stacks
 <table>
   <tr>
     <th>Frontend</th>
@@ -88,13 +75,20 @@
 
 # 🖥️ Monitoring
 <br><br><br><br>
-
-
-
-### API(swagger)
+### 📈 API(swagger)
 <br><br><br><br>
 ### 디렉토리 구조
 <br><br><br><br>
-### ERD 설계
+### 🔐 ERD 설계
 ![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
-
+<br><br><br><br>
+### 3. 개발 기간
++ 2023년 12월26일 ~ 2024년 2월3일
+### 개발자 소개
++ 강석규-백엔드
++ 석민정-백엔드
++ 조상아-백엔드
++ 강지은-프론트엔드
++ 정현수-프론트엔드
++ 한현서-프론트엔드
++ 이창연-프론트엔드
