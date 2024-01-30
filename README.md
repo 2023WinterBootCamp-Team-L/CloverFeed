@@ -1,5 +1,4 @@
 # ☘️CloverFeed(익명 피드백 서비스)
----
 
 ### 1. 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 ---
@@ -87,10 +86,7 @@
 <br><br><br><br>
 
 ---
-### 프론트엔드 - TypeScript, React.js,Vite, Tailwind CSS
-
-
-### 백엔드 - Node.js, Express.js, TypeScript, MySQL
+# ![icons8-감시-장치](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/cacdeb91-7ceb-4c9b-8da7-39afb2dd75da)Monitoring
 
 
 ---
