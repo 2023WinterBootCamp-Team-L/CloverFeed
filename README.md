@@ -1,6 +1,6 @@
 # ☘️CloverFeed(익명 피드백 서비스)클로피(CloverFeed)
 <div style="text-align: center;">
-  <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/ed4df0db-c542-4413-8d83-00afa63c8979" alt="image" width="50">
+  <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/ed4df0db-c542-4413-8d83-00afa63c8979" alt="image" width="100">
 </div>
 
 
