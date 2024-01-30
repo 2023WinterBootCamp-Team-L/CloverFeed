@@ -24,7 +24,7 @@
 
 
 ---
-### 시스템 아키텍쳐
+# 시스템 아키텍쳐
 ![Untitled](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/5f06e555-5e0c-42b9-89d5-c013325cdccd)
 
 
