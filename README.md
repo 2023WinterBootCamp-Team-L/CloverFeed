@@ -2,7 +2,7 @@
 ![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/ed4df0db-c542-4413-8d83-00afa63c8979)
 
 
-## 1. 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
+## 📃 주제: 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 <br><br><br><br>
 
 ## 💡 주요 기능 설명(혹은 데모영상) -> Feature
