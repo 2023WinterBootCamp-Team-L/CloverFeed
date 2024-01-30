@@ -130,8 +130,7 @@
         </td>
         <td width="100" align="center">
              <a href="https://github.com/wjsqudtjs2">
-                <img src="![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/cbdf39cd-c58d-42a3-be26-749a188f941c)
-" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/cbdf39cd-c58d-42a3-be26-749a188f941c" width="60" height="60">
             </a>
         </td>
     </tr>
