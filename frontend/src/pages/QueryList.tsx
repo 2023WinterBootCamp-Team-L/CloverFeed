@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react";
-import AddButton from "../components/AddButton";
-import BackButton from "../components/BackButton";
-import BaseQuest from "../components/BaseQuest";
-import { useNavigate } from "react-router-dom";
-import Modal from "../components/Modal";
-import { questionListState } from "../../atoms/QuestionStore";
-import { useRecoilValue } from "recoil";
-import axios from "axios";
+import { useState, useEffect } from 'react';
+import AddButton from '../components/AddButton';
+import BackButton from '../components/BackButton';
+import BaseQuest from '../components/BaseQuest';
+import { useNavigate } from 'react-router-dom';
+import Modal from '../components/Modal';
+import { questionListState } from '../../atoms/QuestionStore';
+import { useRecoilValue } from 'recoil';
+import axios from 'axios';
 
 function QueryList() {
   const questionList = useRecoilValue(questionListState);
   const navigate = useNavigate();
 
   const handleAddButtonClick = () => {
-    navigate("/QueryAdd");
+    navigate('/QueryAdd');
   };
 
-  const [userid, setUserid] = useState("");
+  const [userid, setUserid] = useState('');
 
   useEffect(() => {
-    const storedUserid = localStorage.getItem("user_id");
+    const storedUserid = localStorage.getItem('user_id');
     if (storedUserid) {
       setUserid(storedUserid);
     }
@@ -38,12 +38,13 @@ function QueryList() {
       };
 
       const response = await axios.post(
-        "http://localhost:8000/api/questions/",
+        'http://localhost:8000/api/questions/',
         requestData
       );
 
       console.log(response.data);
-      navigate("/QueryShare");
+
+      navigate('/QueryShare');
     } catch (error) {
       console.error(error);
     }
@@ -56,11 +57,12 @@ function QueryList() {
   };
 
   return (
-    <div className=" w-full sm:max-w-[393px] lg:max-w-[393px] flex flex-col mx-auto h-full gap-10 px-5 py-8">
+    <div className="gsap-container transition-opacity duration-500 ease-in-out w-full sm:max-w-[393px] lg:max-w-[393px] flex flex-col mx-auto h-full gap-10 px-5 py-8">
       <div className="flex justify-between">
         <BackButton back page="/querystart" />
         <BackButton back={false} onClick={toggle} />
       </div>
+
       <div className="flex flex-col gap-4">
         <p className="font-pre text-[22px] font-bold">질문 리스트</p>
         <p className="font-pre text-[14px] font-bold">기본 질문</p>
@@ -98,7 +100,7 @@ function QueryList() {
           </p>
 
           <button
-            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px]"
+            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px] transition ease-in-out delay-150 hover:-translate-y-1 hover:bg-indigo-900 duration-300"
             onClick={handleQuestionComplete}
           >
             질문폼 완성

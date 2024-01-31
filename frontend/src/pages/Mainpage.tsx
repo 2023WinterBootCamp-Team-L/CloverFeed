@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react";
-import axios from "axios";
-import logouticon from "../assets/logouticon.svg";
-import researchicon from "../assets/researchicon.svg";
-import charticon from "../assets/charticon.svg";
-import shareicon from "../assets/shareicon.svg";
-import GreenButton from "../components/GreenButton";
-import LogoutButton from "../components/LogoutButton.tsx";
-import ResearchButton from "../components/ResearchButton.tsx";
-import ChartButton from "../components/ChartButton.tsx";
-import ShareButton from "../components/ShareButton.tsx";
-import FeedButton from "../components/FeedButton.tsx";
-import SimpleWordcloud from "../components/wordcloud.tsx";
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import logouticon from '../assets/logouticon.svg';
+import researchicon from '../assets/researchicon.svg';
+import charticon from '../assets/charticon.svg';
+import shareicon from '../assets/shareicon.svg';
+import GreenButton from '../components/GreenButton';
+import LogoutButton from '../components/LogoutButton.tsx';
+import ResearchButton from '../components/ResearchButton.tsx';
+import ChartButton from '../components/ChartButton.tsx';
+import ShareButton from '../components/ShareButton.tsx';
+import FeedButton from '../components/FeedButton.tsx';
+import SimpleWordcloud from '../components/wordcloud.tsx';
 
 function Mainpage() {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState('');
   const [categories, setCategories] = useState([]);
   const [counts, setCounts] = useState([]);
 
   const fetchCounts = async () => {
     const response = await axios.get(
-      `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
+      `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem('user_id')}`
     );
     const categoriesData = response.data.counts.map(
       (item: { category: string }) => item.category
@@ -33,7 +33,7 @@ function Mainpage() {
   };
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem("user_name");
+    const storedUsername = localStorage.getItem('user_name');
     if (storedUsername) {
       setUsername(storedUsername);
     }
@@ -47,7 +47,7 @@ function Mainpage() {
           <p className="text-[24px] font-pre font-bold text-green-500">
             CloverFeed
             <span className="float-right">
-              <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
+              <LogoutButton iconSrc={logouticon} logoutpage="/" />
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">

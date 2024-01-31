@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import trashcan from "../assets/trashcan.svg";
+import React, { useState } from 'react';
+import trashcan from '../assets/trashcan.svg';
 
 interface AnswerOptionProps {
   value: string;
@@ -38,7 +38,7 @@ const AnswerOption: React.FC<AnswerOptionProps> = ({
           <img
             src={trashcan}
             alt="휴지통"
-            className="absolute right-0 top-0 h-full w-9 pr-5"
+            className="absolute right-0 top-0 h-full w-9 pr-5 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 duration-300"
           />
         </button>
       )}
