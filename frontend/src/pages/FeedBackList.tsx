@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import TagAnswer, { TagAnswerProps } from "../components/TagAnswer";
 import { useNavigate } from "react-router-dom";
+import 협력적인 from "../assets/협력적인.png";
 
 interface Feedback {
   id: string;
@@ -88,7 +89,7 @@ const FeedbackList: React.FC = () => {
     },
     {
       text: "협력적인",
-      image: "../src/assets/협력적인.png",
+      image: 협력적인,
       tagnumber: 15,
     },
   ];
