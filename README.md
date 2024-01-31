@@ -117,7 +117,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/antisdun">
-                <img src="https://avatars.githubusercontent.com/u/101982673?v=4" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/2013f8e7-2982-4ce7-b6dd-611c009dfb64" width="60" height="80">
             </a>
         </td>
         <td width="100" align="center">
@@ -130,7 +130,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/changyeonyes">
-                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/cbdf39cd-c58d-42a3-be26-749a188f941c" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/cbdf39cd-c58d-42a3-be26-749a188f941c" width="60" height="80">
             </a>
         </td>
     </tr>
