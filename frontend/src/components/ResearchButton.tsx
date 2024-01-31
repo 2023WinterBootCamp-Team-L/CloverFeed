@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 interface ResearchButtonProps {
   iconSrc: string; // 이미지 소스는 문자열로 표현
@@ -17,7 +17,7 @@ const ResearchButton: React.FC<ResearchButtonProps> = ({
 
   return (
     <button onClick={handleButtonClick}>
-      <div className="flex flex-col justify-center gap-2">
+      <div className="flex flex-col justify-center gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
         <img src={iconSrc} alt="Research Icon" className="h-[40px]" />
         <p className="font-pre text-[14px] font-bold">피드백 검색</p>
       </div>

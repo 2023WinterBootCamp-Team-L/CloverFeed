@@ -110,7 +110,10 @@ function GologinButton() {
 
   return (
     <div>
-      <button className="font-pre text-[14px] underline" onClick={toggleModal}>
+      <button
+        className="font-pre text-[14px] underline transition ease-in-out delay-150 hover:-translate hover:bg-gray-300 duration-300 border-c-green rounded"
+        onClick={toggleModal}
+      >
         로그인하러가기
       </button>
       <LoginModal isOpen={isOpen} toggle={toggleModal}>
@@ -137,7 +140,7 @@ function GologinButton() {
           ))}
           <button
             onClick={handleLogin}
-            className="bg-c-green text-white w-56 h-10 min-h-10 rounded-lg font-pre text-[14px] min-w-56"
+            className="bg-c-green text-white w-56 h-10 min-h-10 rounded-lg font-pre text-[14px] min-w-56 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-emerald-500 duration-300"
           >
             로그인
           </button>
