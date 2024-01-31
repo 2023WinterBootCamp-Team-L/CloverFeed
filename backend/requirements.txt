@@ -20,3 +20,4 @@ drf_yasg
 krwordrank
 openai
 konlpy
+gunicorn==21.2.0

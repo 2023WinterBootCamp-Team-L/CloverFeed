@@ -1,5 +1,8 @@
+# 개발용 docker-compose 파일
+# 실행 방법: sudo docker compose up --build
 version: "3.8"
 services:
+
   db:
     container_name: mysql
     image: mysql:8.0
@@ -29,12 +32,14 @@ services:
       dockerfile: Dockerfile
     environment:
       DJANGO_DEBUG: "True"
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # .env 파일에서 가져옴
-      MYSQL_DATABASE: ${MYSQL_DATABASE}  # .env 파일에서 가져옴
-      MYSQL_USER: ${MYSQL_USER}  # .env 파일에서 가져옴
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}  # .env 파일에서 가져옴
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     ports:
       - "8000:8000"
+    expose:
+      - 8000
     depends_on:
       db:
         condition: service_healthy
@@ -51,11 +56,16 @@ services:
     ports:
       - "5173:5173"
     volumes:
-      - ./frontend:/frontend
-      - /frontend/node_modules
+      # :을 기준으로 왼쪽은 빌드 이전의 로컬 폴더 오른쪽은 컨테이너 내부의 폴더
+      - ./frontend:/app
+      - /app/node_modules
+      - build_folder:/app/dist  # 빌드 디렉토리를 볼륨으로 마운트
 
 volumes:
   mysql_data:
+  build_folder:
+    name: build_folder
+    driver: local
 
 networks:
   django-network:

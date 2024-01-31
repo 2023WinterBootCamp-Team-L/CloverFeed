@@ -1,0 +1,102 @@
+# 배포용 docker compose 파일
+# 실행 방법: sudo docker compose -f docker-compose.prod.yml up -d --build
+version: "3.8"
+services:
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    expose:
+      - 80
+      - 443
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/log:/var/log/nginx
+      - ./backend:/backend
+      - ./backend/static:/backend/static
+      - ./frontend/dist:/var/www/frontend
+    depends_on:
+      - frontend
+      - backend
+      - db
+    networks:
+      - django-network
+
+
+  db:
+    container_name: mysql
+    image: mysql:8.0
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # .env 파일에서 가져옴
+      MYSQL_DATABASE: ${MYSQL_DATABASE}  # .env 파일에서 가져옴
+      MYSQL_USER: ${MYSQL_USER}  # .env 파일에서 가져옴
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}  # .env 파일에서 가져옴
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - django-network
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD']
+      interval: 5s
+      timeout: 2s
+      retries: 100
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DJANGO_DEBUG: "True"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "8000:8000"
+    expose:
+      - 8000
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/backend
+    networks:
+      - django-network
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://backend:8000/ || exit 1"]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    ports:
+      - "5173:5173"
+    volumes:
+      # :을 기준으로 왼쪽은 빌드 이전의 로컬 폴더 오른쪽은 컨테이너 내부의 폴더
+      - ./frontend:/app
+      - /app/node_modules
+      - build_folder:/app/dist  # 빌드 디렉토리를 볼륨으로 마운트
+
+volumes:
+  mysql_data:
+  build_folder:
+    name: build_folder
+    driver: local
+
+networks:
+  django-network:
