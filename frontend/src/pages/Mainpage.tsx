@@ -109,7 +109,7 @@ function Mainpage() {
           </p>
 
           <button
-            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px]"
+            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px]  transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-indigo-900 duration-300"
             onClick={handleMakeQuesttion}
           >
             새 질문 폼 생성하러 가기
