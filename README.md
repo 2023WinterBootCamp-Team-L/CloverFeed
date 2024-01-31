@@ -102,7 +102,7 @@ __
         <th>Pictures</th>
          <td width="100" align="center">
             <a href="https://github.com/AlgeMoya">
-                <img src="https://avatars.githubusercontent.com/u/112528747?v=4" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/491c1509-5be3-41de-b440-e4f745dbc203" width="60" height="80">
             </a>
         </td>
         <td width="100" align="center">
@@ -122,7 +122,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/hyeonsu00">
-                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/9b718eb7-1748-4e3f-b74a-248948867162" width="60" height="80">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/7a90eb99-983d-4cf5-a888-6ea4f11f1dfd" width="60" height="80">
         </td>
         <td width="100" align="center">
              <a href="https://github.com/Hseooo">
