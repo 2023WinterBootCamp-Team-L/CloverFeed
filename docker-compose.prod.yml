@@ -21,9 +21,12 @@ services:
       - ./backend/static:/backend/static
       - ./frontend/dist:/var/www/frontend
     depends_on:
-      - frontend
-      - backend
-      - db
+      frontend:
+        condition: service_started
+      backend:
+        condition: service_healthy
+      db:
+        condition: service_started
     networks:
       - django-network
 
