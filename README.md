@@ -130,7 +130,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/changyeonyes">
-                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/cbdf39cd-c58d-42a3-be26-749a188f941c" width="60" height="80">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/87849e91-a54a-4097-9f9d-659960712d48" width="60" height="80">
             </a>
         </td>
     </tr>
