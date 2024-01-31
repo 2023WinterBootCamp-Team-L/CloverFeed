@@ -90,7 +90,7 @@ __내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, �
 ![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
 <br><br><br><br>
 ## 🖱️서비스 링크
-  
+<br><br><br><br>
 ## 👨‍👩‍👧‍👦 Members
 
 <table width="1000">
