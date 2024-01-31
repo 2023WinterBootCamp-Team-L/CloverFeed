@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 
 # 앱 종속성 설치
-RUN npm ci
+RUN yarn
 
 # 파일 복사
 COPY . .

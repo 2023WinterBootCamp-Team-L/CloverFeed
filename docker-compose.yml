@@ -1,0 +1,61 @@
+version: "3.8"
+services:
+  db:
+    container_name: mysql
+    image: mysql:8.0
+    env_file:
+      - .env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # .env 파일에서 가져옴
+      MYSQL_DATABASE: ${MYSQL_DATABASE}  # .env 파일에서 가져옴
+      MYSQL_USER: ${MYSQL_USER}  # .env 파일에서 가져옴
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}  # .env 파일에서 가져옴
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - django-network
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 -u root --password=$$MYSQL_ROOT_PASSWORD']
+      interval: 5s
+      timeout: 2s
+      retries: 100
+
+  backend:
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DJANGO_DEBUG: "True"
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}  # .env 파일에서 가져옴
+      MYSQL_DATABASE: ${MYSQL_DATABASE}  # .env 파일에서 가져옴
+      MYSQL_USER: ${MYSQL_USER}  # .env 파일에서 가져옴
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}  # .env 파일에서 가져옴
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./backend:/backend
+    networks:
+      - django-network
+
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/frontend
+      - /frontend/node_modules
+
+volumes:
+  mysql_data:
+
+networks:
+  django-network:
