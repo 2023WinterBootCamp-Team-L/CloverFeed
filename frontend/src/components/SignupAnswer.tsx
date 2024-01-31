@@ -1,13 +1,18 @@
 interface SignupAnswerProps {
+  type: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-const SignupAnswer: React.FC<SignupAnswerProps> = ({ value, onChange }) => {
+const SignupAnswer: React.FC<SignupAnswerProps> = ({
+  type,
+  value,
+  onChange,
+}) => {
   return (
     <div className="relative">
       <input
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
         disabled={false}

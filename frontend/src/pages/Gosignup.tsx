@@ -103,6 +103,7 @@ function Gosignup() {
         <div className="flex flex-col items-start mb-4">
           <p className="font-pre text-[14px] font-bold">Email입력</p>
           <SignupAnswer
+            type="text"
             value={emailanswerInputs}
             onChange={onInputChangeemail}
           />
@@ -110,17 +111,26 @@ function Gosignup() {
 
         <div className="flex flex-col items-start mb-4">
           <p className="font-pre text-[14px] font-bold">이름(또는 닉네임)</p>
-          <SignupAnswer value={nameanswerInputs} onChange={onInputChangename} />
+          <SignupAnswer
+            type="text"
+            value={nameanswerInputs}
+            onChange={onInputChangename}
+          />
         </div>
 
         <div className="flex flex-col items-start mb-4">
           <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
-          <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
+          <SignupAnswer
+            type="password"
+            value={pwanswerInputs}
+            onChange={onInputChangepw}
+          />
         </div>
 
         <div className="flex flex-col items-start mb-8">
           <p className="font-pre text-[14px] font-bold">비밀번호 확인</p>
           <SignupAnswer
+            type="password"
             value={pwcheckanswerInputs}
             onChange={onInputChangepwcheck}
           />
