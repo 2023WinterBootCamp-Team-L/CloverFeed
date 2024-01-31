@@ -20,8 +20,6 @@ RUN pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir
 # RUN export MYSQLCLIENT_LDFLAGS=$(pkg-config --libs mysqlclient)
 # RUN export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
 
-# ENV MYSQLCLIENT_LDFLAGS="-L/usr/lib/x86_64-linux-gnu -lmysqlclient -lpthread -lz -lm -ldl"
-# ENV MYSQLCLIENT_CFLAGS="-I/usr/include/mysql"
 ENV MYSQLCLIENT_LDFLAGS="-L/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH) -lmysqlclient -lpthread -lz -lm -ldl"
 ENV MYSQLCLIENT_CFLAGS="-I/usr/include/mysql"
 
