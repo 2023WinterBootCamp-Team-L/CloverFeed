@@ -1,14 +1,14 @@
-import SignupAnswer from '../components/SignupAnswer';
-import { useState, useEffect } from 'react';
-import SuccessButton from '../components/SuccessButton';
-import GologinButton from '../components/GologinButton';
-import axios from 'axios';
+import SignupAnswer from "../components/SignupAnswer";
+import { useState, useEffect } from "react";
+import SuccessButton from "../components/SuccessButton";
+import GologinButton from "../components/GologinButton";
+import axios from "axios";
 
 function Gosignup() {
-  const [emailanswerInputs, setemailAnswerInputs] = useState('');
-  const [nameanswerInputs, setnameAnswerInputs] = useState('');
-  const [pwanswerInputs, setpwAnswerInputs] = useState('');
-  const [pwcheckanswerInputs, setpwcheckAnswerInputs] = useState('');
+  const [emailanswerInputs, setemailAnswerInputs] = useState("");
+  const [nameanswerInputs, setnameAnswerInputs] = useState("");
+  const [pwanswerInputs, setpwAnswerInputs] = useState("");
+  const [pwcheckanswerInputs, setpwcheckAnswerInputs] = useState("");
   const [isPasswordValid, setIsPasswordValid] = useState(false); // Added state for password validation
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isComplete, setIsComplete] = useState(false);
@@ -42,24 +42,24 @@ function Gosignup() {
         !pwcheckanswerInputs
       ) {
         setErrorMessage(
-          '입력되지 않은 항목이 있습니다. 모든 항목을 입력하세요.'
+          "입력되지 않은 항목이 있습니다. 모든 항목을 입력하세요."
         );
         return;
       }
       // 이메일 유효성 검사
       if (!emailValidationRegex.test(emailanswerInputs)) {
-        setErrorMessage('올바른 이메일 형식이 아닙니다.');
+        setErrorMessage("올바른 이메일 형식이 아닙니다.");
         return;
       }
       // 비밀번호 일치여부 확인
       if (pwanswerInputs !== pwcheckanswerInputs) {
-        setErrorMessage('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
+        setErrorMessage("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         return;
       }
 
       // API request
       const response = await axios.post(
-        'http://localhost:8000/api/user/auth/signup/',
+        "http://localhost:8000/api/user/auth/signup/",
         {
           username: nameanswerInputs,
           email: emailanswerInputs,
@@ -67,20 +67,20 @@ function Gosignup() {
         }
       );
       //성공적인 응답처리
-      if (response.data.status === 'success') {
+      if (response.data.status === "success") {
         console.log(
-          '회원가입이 성공적으로 완료되었습니다.',
+          "회원가입이 성공적으로 완료되었습니다.",
           response.data.message
         );
         setIsComplete(true);
       } else {
         // 에러 응답처리
-        setErrorMessage('회원가입에 실패했습니다. ' + response.data.message);
+        setErrorMessage("회원가입에 실패했습니다. " + response.data.message);
       }
     } catch (error) {
       // 기타 에러
-      setErrorMessage('오류가 발생했습니다. 다시 시도해주세요.');
-      console.error('Signup error:', error);
+      setErrorMessage("오류가 발생했습니다. 다시 시도해주세요.");
+      console.error("Signup error:", error);
     }
   };
 
@@ -97,12 +97,13 @@ function Gosignup() {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div
-        className="bg-c-emerald bg-opacity-35 flex flex-col items-center mx-auto min-h-screen gap-10 px-5 py-16 overflow- w-full sm:w-[393px] lg:w-[393px]"
+        className="bg-c-emerald bg-opacity-35 flex flex-col items-center justify-center mx-auto min-h-screen gap-10 px-5 py-16 overflow- w-full sm:w-[393px] lg:w-[393px]"
         // style={{ width: '393px' }}
       >
         <div className="flex flex-col items-start mb-4">
           <p className="font-pre text-[14px] font-bold">Email입력</p>
           <SignupAnswer
+            type="text"
             value={emailanswerInputs}
             onChange={onInputChangeemail}
           />
@@ -110,17 +111,26 @@ function Gosignup() {
 
         <div className="flex flex-col items-start mb-4">
           <p className="font-pre text-[14px] font-bold">이름(또는 닉네임)</p>
-          <SignupAnswer value={nameanswerInputs} onChange={onInputChangename} />
+          <SignupAnswer
+            type="text"
+            value={nameanswerInputs}
+            onChange={onInputChangename}
+          />
         </div>
 
         <div className="flex flex-col items-start mb-4">
           <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
-          <SignupAnswer value={pwanswerInputs} onChange={onInputChangepw} />
+          <SignupAnswer
+            type="password"
+            value={pwanswerInputs}
+            onChange={onInputChangepw}
+          />
         </div>
 
         <div className="flex flex-col items-start mb-8">
           <p className="font-pre text-[14px] font-bold">비밀번호 확인</p>
           <SignupAnswer
+            type="password"
             value={pwcheckanswerInputs}
             onChange={onInputChangepwcheck}
           />
@@ -130,7 +140,7 @@ function Gosignup() {
           <SuccessButton
             onClick={handleSignup}
             disabled={!isPasswordValid}
-            text={isComplete ? '회원가입 완료' : '회원가입'}
+            text={isComplete ? "회원가입 완료" : "회원가입"}
           />
           <p className="overflow-y-auto">
             <GologinButton />
