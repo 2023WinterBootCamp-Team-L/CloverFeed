@@ -122,7 +122,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/dleogh476">
-                <img src="https://avatars.githubusercontent.com/u/67044438?v=4" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/3fb20e6d-f05b-46b6-a955-83afbf5770ef" width="70" height="100">
         </td>
         <td width="100" align="center">
              <a href="https://github.com/leeseoin">
