@@ -72,7 +72,7 @@ services:
       - ./backend:/backend
     networks:
       - django-network
-    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    command: ["/wait-for-it.sh", "db:3306", "--", "sh", "-c", "python manage.py makemigrations && python manage.py migrate && gunicorn config.wsgi:application --bind 0.0.0.0:8000"]
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://backend:8000/ || exit 1"]
       interval: 5s

@@ -17,11 +17,17 @@ COPY requirements.txt .
 RUN pip install --upgrade pip && pip install -r requirements.txt --no-cache-dir
 
 # MySQL 클라이언트 라이브러리 관련 환경 변수 설정
-# RUN export MYSQLCLIENT_LDFLAGS=$(pkg-config --libs mysqlclient)
-# RUN export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
+RUN export MYSQLCLIENT_LDFLAGS=$(pkg-config --libs mysqlclient)
+RUN export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
 
-ENV MYSQLCLIENT_LDFLAGS="-L/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH) -lmysqlclient -lpthread -lz -lm -ldl"
-ENV MYSQLCLIENT_CFLAGS="-I/usr/include/mysql"
+# ENV MYSQLCLIENT_LDFLAGS="-L/usr/lib/$(dpkg-architecture -qDEB_HOST_MULTIARCH) -lmysqlclient -lpthread -lz -lm -ldl"
+# ENV MYSQLCLIENT_CFLAGS="-I/usr/include/mysql"
+# RUN apt-get install -y libmysqlclient-dev
 
 # CMD 설정
-CMD ["sh", "-c", "python3 manage.py makemigrations && python3 manage.py migrate && python3 manage.py runserver 0.0.0.0:8000"]
+COPY wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
+CMD /usr/wait-for-it.sh db:3306 -- python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+# CMD ["sh", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# RUN python manage.py migrate
