@@ -126,7 +126,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/Hseooo">
-                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/bdce8589-86fc-4f84-b4d9-c8c6f488782d" width="60" height="80">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/809875a2-841f-4468-9897-5ef9910c73c8" width="60" height="80">
         </td>
         <td width="100" align="center">
              <a href="https://github.com/changyeonyes">
