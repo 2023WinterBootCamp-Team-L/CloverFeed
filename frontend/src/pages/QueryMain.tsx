@@ -3,8 +3,8 @@ import clover from "../assets/loginclover.svg";
 
 function QueryMain() {
   return (
-    <div className="bg-gradient-to-t from-c-emerald">
-      <div className="justify-center w-full sm:max-w-[393px] lg:max-w-[393px]  flex flex-col mx-auto min-h-screen gap-20 px-5 py-8">
+    <div className="bg-c-emerald bg-opacity-35">
+      <div className="justify-center w-full sm:max-w-[393px] lg:max-w-[393px] flex flex-col mx-auto min-h-screen gap-20 px-5 py-8">
         <ChangePage nextpage="/QueryStart" />
         <div>
           <p className="font-pre text-[22px] font-bold text-center">

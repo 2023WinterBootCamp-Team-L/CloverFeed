@@ -4,8 +4,8 @@ import XButton from "../components/XButton";
 
 function QueryShare() {
   return (
-    <div className="bg-gradient-to-t from-c-emerald">
-      <div className="w-full sm:max-w-[393px] lg:max-w-[393px]  flex flex-col mx-auto min-h-screen gap-10 px-5 py-8">
+    <div className="bg-c-emerald bg-opacity-35">
+      <div className="w-full sm:max-w-[393px] lg:max-w-[393px] flex flex-col justify-center mx-auto min-h-screen gap-10 px-5 py-8">
         <div className="flex flex-row justify-end">
           <XButton nextpage="/MainPage" />
         </div>
