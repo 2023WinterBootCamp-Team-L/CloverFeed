@@ -20,7 +20,7 @@ __내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, �
 
 
 ## 📌 System Architecture
-<img width="728" alt="image" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/96f7402f-62fe-4ce1-a005-1627b84e90f2">
+<img width="774" alt="image" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/23994630-270f-417b-ab65-07dbf6d077ba">
 <br><br><br><br>
 
 
