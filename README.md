@@ -107,7 +107,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/SalguJam">
-                <img src="https://avatars.githubusercontent.com/u/103251717?v=4" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/2ce6f916-5bc0-4cd8-8a35-a00f5963b46f" width="60" height="80">
             </a>
         </td>
         <td width="100" align="center">
