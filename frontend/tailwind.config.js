@@ -2,6 +2,9 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    backgroundImage: {
+      clover: "url(./assets/clovercloud.svg)",
+    },
     extend: {
       colors: {
         'c-green': '#50DA8C',

@@ -1,5 +1,5 @@
 interface SignupAnswerProps {
-  type: string;
+  type?: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
