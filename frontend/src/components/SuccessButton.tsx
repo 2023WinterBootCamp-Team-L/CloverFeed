@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 interface SuccessButtonProps {
   text: string;
   onClick: () => void; // 수정된 부분
@@ -17,8 +17,8 @@ function SuccessButton({ text, onClick }: SuccessButtonProps) {
     <div>
       <button
         id="signupButton"
-        className={`bg-c-green text-white w-[332px] p-3 rounded-lg font-pre text-[14px] ${
-          isClicked ? "cursor-not-allowed opacity-50" : "cursor-pointer"
+        className={`bg-c-green text-white h-12 rounded-lg font-pre text-[14px] min-w-[300px] sm:w-[320px] lg:w-[332px] transition ease-in-out delay-150 hover:-translate-y-1 hover:bg-emerald-500 duration-300${
+          isClicked ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
         } mx-auto`}
         onClick={handleButtonClick}
         disabled={isDisabled || isClicked}

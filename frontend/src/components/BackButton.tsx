@@ -26,7 +26,7 @@ const BackButton = ({ page, back = true, onClick }: BackButtonProps) => {
         back
           ? 'bg-white border-c-indigo border-[0.1rem]'
           : 'bg-c-indigo border-c-indigo border-[0.1rem]'
-      } rounded-full h-9 w-9 min-w-7 min-h-7 flex items-center justify-center`}
+      } rounded-full h-9 w-9 min-w-7 min-h-7 flex items-center justify-center transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300`}
       onClick={handleButtonClick}
     >
       <img

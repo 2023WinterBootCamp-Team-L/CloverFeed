@@ -2,24 +2,23 @@ import React, { useState, useEffect } from "react";
 import axios, { AxiosResponse } from "axios";
 import BackButton from "../components/BackButton";
 import TagAnswer from "../components/TagAnswer";
-import 디자이너 from "../assets/디자이너.svg";
 import { useParams } from "react-router-dom";
+import { workData, attitudeData } from "../components/TagAnswerList";
 
-interface RespondentInfo {
-  respondent_name: string;
-  category: string;
-}
 interface FeedbackResponse {
   status: string;
-  feedback_id?: string;
-  respondent_info: RespondentInfo;
-  tags_work?: string[];
-  tags_attitude?: string[];
+  feedback_id?: number;
+  respondent_name: string;
+  category: string;
+  tag_work: string;
+  tag_attitude: string;
+  tag_work_parsed: string[];
+  tag_attitude_parsed: string[];
   summary?: string;
   answers?: {
     question: string;
     type: string;
-    answer: string;
+    context: string;
   }[];
 }
 
@@ -30,65 +29,47 @@ interface ErrorResponse {
 }
 
 const FeedBackResult: React.FC = () => {
+  const { respondentName } = useParams<{ respondentName: string }>();
+  const { origin } = useParams<{ origin: string }>();
   const [feedbackData, setFeedbackData] = useState<FeedbackResponse | null>(
     null
   );
   const [error, setError] = useState<string | null>(null);
-  const { feedbackId } = useParams<{ feedbackId: string }>();
+
+  const parseTags = (tagsString: string) => {
+    try {
+      return tagsString
+        .replace(/^\[|\]$/g, "") // Remove square brackets
+        .split(", ") // Split by comma and space
+        .map((tag) => tag.replace(/^'|'$/g, "")); // Remove single quotes from the beginning and end
+    } catch (error) {
+      console.error("Error parsing tags:", error);
+      return [];
+    }
+  };
 
   useEffect(() => {
-    //   const userId = 1;
+    axios
+      .get(
+        `http://localhost:8000/api/feedbacks/?respondent_name=%23${respondentName}`
+      )
+      .then((response: AxiosResponse<FeedbackResponse>) => {
+        const data: FeedbackResponse = response.data;
 
-    //   axios
-    //     .get(
-    //       `http://localhost:8000/api/feedbacks/${feedbackId}/?userid=${userId}`
-    //     )
-    //     .then((response: AxiosResponse<FeedbackResponse>) => {
-    //       const data: FeedbackResponse = response.data;
-    //       setFeedbackData(data);
-    //       console.log("피드백 상세");
-    //     })
-    //     .catch((error: ErrorResponse) => {
-    //       console.error("피드백을 찾을 수 없습니다.");
-    //       setError(error.message);
-    //     });
-    // }, [feedbackId]);
+        if (data.tag_work) {
+          data.tag_work_parsed = parseTags(data.tag_work);
+        }
+        if (data.tag_attitude) {
+          data.tag_attitude_parsed = parseTags(data.tag_attitude);
+        }
 
-    const dummyData: FeedbackResponse = {
-      status: "success",
-      feedback_id: "2",
-      respondent_info: {
-        respondent_name: "#2356",
-        category: "디자이너",
-      },
-
-      tags_work: ["효율적인", "박학다식", "리더십"],
-      tags_attitude: ["책임감", "경청하는", "공감 능력"],
-      summary:
-        "홍길동님을 책임감과 리더십이 있고 팀원에게 잘 공감해주는 분이라고 피드백을 보내셨네요!",
-      answers: [
-        {
-          question: "홍길동님과 협업을 한 경험은 어떠셨나요?",
-          type: "주관식",
-          answer:
-            "매사에 책임을 가지며 맡은 업무를 끝까지 해내는 모습이 인상깊었어요. 업무에 관해 알고 있는 지식들도 많고 팀원들의 의견도 하나하나 잘 들어주었습니다.",
-        },
-        {
-          question: "혹시 제가 더 성장해야 할 게 있다면 어떤 게 있을까요?",
-          type: "주관식",
-          answer:
-            "리더십 있는 모습과 팀원을 배려하는 모습만으로도 충분히 좋은 팀원이지만, 아이디어 회의 때 다양한 아이디어를 제시해주는 모습까지 있다면 더 좋을 것 같습니다.",
-        },
-        {
-          question: "저를 1점부터 4점으로 평가해주세요",
-          type: "객관식",
-          answer: "4점",
-        },
-      ],
-    };
-
-    setFeedbackData(dummyData);
-  }, []);
+        setFeedbackData(data);
+      })
+      .catch((error: ErrorResponse) => {
+        console.error("피드백을 찾을 수 없습니다.");
+        setError(error.message);
+      });
+  }, [respondentName]);
 
   if (error) {
     return <div>에러 응답: {error}</div>;
@@ -98,73 +79,116 @@ const FeedBackResult: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  return (
-    <div
-      className="bg-white flex flex-col mx-auto h-screen gap-10 px-5 py-8"
-      style={{ width: "393px" }}
-    >
-      <div>
-        <BackButton
-          back
-          page={`/feedbacks/${feedbackData.respondent_info.category}`}
-        />
-      </div>
-      <div className="flex flex-col gap-8">
-        <p className="font-pre text-[22px] font-bold">
-          {feedbackData.respondent_info.respondent_name}{" "}
-          {feedbackData.respondent_info.category} 피드백
-        </p>
-        {feedbackData.status === "success" && (
-          <div className="flex flex-col gap-6">
-            <div className="h-auto w-full flex flex-col justify-center rounded-lg mb-2">
-              <p className="font-pre text-[18px] font-bold leading-8">
-                {feedbackData.summary}
-              </p>
-            </div>
-            <div className="h-auto w-full flex flex-col">
-              <p className="font-pre text-[14px] font-bold">업무능력강점</p>
-              <p>
-                {feedbackData.tags_work?.map((tag) => (
-                  <TagAnswer key={tag} text={tag} image={디자이너} />
-                ))}
-              </p>
-            </div>
-            <div className="h-auto w-full flex flex-col">
-              <p className="font-pre text-[14px] font-bold">성격 및 태도</p>
-              <p>
-                {feedbackData.tags_attitude?.map((tag) => (
-                  <TagAnswer key={tag} text={tag} image={디자이너} />
-                ))}
-              </p>
-            </div>
+  const shadowStyle: React.CSSProperties = {
+    boxShadow: "4px 4px 3px rgba(200,200,200,0.3)",
+  };
 
-            <ul>
-              {feedbackData.answers?.map((answer, index) => (
-                <li
-                  key={index}
-                  className={`h-auto w-full flex flex-col justify-start ${
-                    index % 2 === 0 ? "bg-c-l-purple" : "bg-c-l-blue"
-                  } rounded-lg p-4 mb-4 shadow-md`}
-                >
-                  <div className="flex flex-col gap-6">
-                    <p className="font-pre text-[14px] font-bold leading-6">
-                      {answer.question}
-                    </p>
-                    {answer.type === "주관식" ? (
-                      <p className="font-pre text-[14px] leading-6">
-                        {answer.answer}
+  return (
+    <div className="flex justify-center items-center min-h-screen">
+      <div
+        className="bg-white flex flex-col mx-auto min-h-screen gap-10 px-5 py-8 overflow-hidden w-full sm:w-[393px] lg:w-[393px]"
+        style={{ width: "393px" }}
+      >
+        <div>
+          {origin === "categorylist" ? (
+            <BackButton back page={`/feedbacks/${feedbackData.category}`} />
+          ) : origin === "search" ? (
+            <BackButton back page={`/search/`} />
+          ) : null}
+        </div>
+        <div className="flex flex-col gap-8">
+          <p className="font-pre text-[22px] font-bold">
+            {feedbackData.respondent_name} {feedbackData.category} 피드백
+          </p>
+          {feedbackData.status === "success" && (
+            <div className="flex flex-col gap-6">
+              <div className="h-auto w-full flex flex-col justify-center rounded-lg mb-2">
+                <p className="font-pre text-[18px] font-bold leading-8">
+                  {feedbackData.summary}
+                </p>
+              </div>
+              <div className="h-auto w-full flex flex-col">
+                <p className="font-pre text-[14px] font-bold">업무능력강점</p>
+                <p>
+                  {feedbackData.tag_work_parsed.map((tag: string, index) => (
+                    <TagAnswer
+                      key={index}
+                      text={tag}
+                      tagnumber={workData.findIndex(
+                        (data) => data.text === tag
+                      )}
+                      color={workData.findIndex((data) => data.text === tag)}
+                      image={
+                        workData.find((data) => data.text === tag)?.image || ""
+                      }
+                    />
+                  ))}
+                </p>
+              </div>
+              <div className="h-auto w-full flex flex-col">
+                <p className="font-pre text-[14px] font-bold">성격 및 태도</p>
+                <p>
+                  {feedbackData.tag_attitude_parsed.map(
+                    (tag: string, index) => (
+                      <TagAnswer
+                        key={index}
+                        text={tag}
+                        tagnumber={
+                          attitudeData.findIndex((data) => data.text === tag) +
+                          1
+                        }
+                        color={
+                          attitudeData.findIndex((data) => data.text === tag) +
+                          1
+                        }
+                        image={
+                          attitudeData.find((data) => data.text === tag)
+                            ?.image || ""
+                        }
+                      />
+                    )
+                  )}
+                </p>
+              </div>
+
+              <ul>
+                {feedbackData.answers?.map((answer, index) => (
+                  <li
+                    key={index}
+                    className={`h-auto w-full flex flex-col justify-start ${
+                      index % 2 === 0 ? "bg-c-l-purple" : "bg-c-l-blue"
+                    } rounded-lg p-4 mb-4 shadow-md`}
+                    style={shadowStyle}
+                  >
+                    <div className="flex flex-col gap-6">
+                      <p className="font-pre text-[14px] font-bold leading-6">
+                        {answer.question}
                       </p>
-                    ) : (
-                      <span className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-1 font-pre text-[12px] text-white">
-                        {answer.answer}
-                      </span>
-                    )}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+                      {answer.type === "주관식" ? (
+                        <p className="font-pre text-[14px] leading-6">
+                          {answer.context}
+                        </p>
+                      ) : (
+                        <div className="flex flex-wrap gap-2">
+                          {answer.context
+                            .split(",")
+                            .map((value, valueIndex) => (
+                              <span
+                                key={valueIndex}
+                                className="flex max-w-fit bg-c-indigo rounded-lg py-1 px-6 mt-1 font-pre text-[12px] text-white"
+                              >
+                                {value.trim()}
+                              </span>
+                            ))}
+                        </div>
+                      )}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

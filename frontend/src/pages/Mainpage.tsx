@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import logouticon from "../assets/logouticon.svg";
 import researchicon from "../assets/researchicon.svg";
 import charticon from "../assets/charticon.svg";
@@ -10,71 +12,110 @@ import ChartButton from "../components/ChartButton.tsx";
 import ShareButton from "../components/ShareButton.tsx";
 import FeedButton from "../components/FeedButton.tsx";
 import SimpleWordcloud from "../components/wordcloud.tsx";
+import Modal from "../components/Modal.tsx";
 
 function Mainpage() {
-  const categories = ["개발자", "디자이너", "기획자", "PMPO", "기타직무"];
-
   const [username, setUsername] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [counts, setCounts] = useState([]);
+
+  const fetchCounts = async () => {
+    const response = await axios.get(
+      `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
+    );
+    const categoriesData = response.data.counts.map(
+      (item: { category: string }) => item.category
+    );
+    const countsData = response.data.counts.map(
+      (item: { count: number }) => item.count
+    );
+
+    setCategories(categoriesData);
+    setCounts(countsData);
+  };
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("user_name");
     if (storedUsername) {
       setUsername(storedUsername);
     }
+    fetchCounts();
   }, []);
 
+  // 모달
+  const [isOpen, setisOpen] = useState(false);
+  const toggle = () => {
+    setisOpen(!isOpen);
+  };
+  const navigate = useNavigate();
+  const handleMakeQuesttion = () => {
+    navigate("/QueryMain");
+  };
+
   return (
-    <div
-      className=" flex flex-col mx-auto h-full gap-10 px-5 py-8"
-      style={{ width: "393px" }}
-    >
-      <div>
-        <p className="text-[24px] font-pre font-bold text-green-500">
-          CloverFeed
-          <span className="float-right">
-            <LogoutButton iconSrc={logouticon} logoutpage="/Signup" />
-          </span>
-        </p>
-        <p className="text-[14px] font-pre font-bold">
-          {username}님의 네잎클로버
-        </p>
-      </div>
+    <div className="bg-white">
+      <div className=" flex flex-col mx-auto gap-10 px-5 py-8 min-h-screen w-full sm:max-w-[393px] lg:max-w-[393px]">
+        <div>
+          <p className="text-[24px] font-pre font-bold text-green-500">
+            CloverFeed
+            <span className="float-right">
+              <LogoutButton iconSrc={logouticon} logoutpage="/" />
+            </span>
+          </p>
+          <p className="text-[14px] font-pre font-bold">
+            {username}님의 네잎클로버
+          </p>
+        </div>
 
-      <div>
-        <SimpleWordcloud />
-      </div>
-      <div>
-        <p className="text-[14px] text-center font-pre font-bold">
-          {username}님은 사용자 관점을 잘 배려하는
-        </p>
-        <p className="text-[14px] text-center font-pre font-bold">
-          프론트엔드 엔지니어로 평가받고 있습니다.
-        </p>
-      </div>
+        <div>
+          <SimpleWordcloud />
+        </div>
 
-      <div className="flex justify-center">
-        <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
-      </div>
-      <div className="flex flex-row justify-center gap-14 mt-1">
-        <ResearchButton iconSrc={researchicon} researchpage="/Search" />
-        <ChartButton iconSrc={charticon} chartpage="/Chart" />
-        <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
-      </div>
-      <div className="flex justify-center">
-        <div className="flex flex-col justify-start gap-4">
-          <p className="font-pre text-[15px] font-bold">Feedback</p>
+        <div className="flex justify-center">
+          <GreenButton text="질문 폼 새로 생성하기" onClick={toggle} />
+        </div>
+        <div className="flex flex-row justify-center gap-14 mt-1">
+          <ResearchButton iconSrc={researchicon} researchpage="/Search" />
+          <ChartButton iconSrc={charticon} chartpage="/Chart" />
+          <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
+        </div>
+        <div className="flex justify-center">
+          <div className="flex flex-col justify-start gap-4">
+            <p className="font-pre text-[15px] font-bold">Feedback</p>
 
-          <div className="flex flex-col justify-center">
-            {categories.map((category, index) => (
-              <FeedButton
-                key={category}
-                category={category}
-                color={index % 2 === 0}
-              />
-            ))}
+            <div className="flex flex-col justify-center">
+              {categories.map((category, index) => (
+                <div key={category}>
+                  <FeedButton
+                    category={category}
+                    count={counts[index]}
+                    color={index % 2 === 0}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
+
+      <Modal isOpen={isOpen} toggle={toggle}>
+        <div className="flex flex-col items-center gap-3">
+          <p className="font-pre text-[16px] font-bold">새 질문 폼을 만들면</p>
+          <p className="font-pre text-[16px] font-bold text-center">
+            기존 질문 폼은 더이상 사용할 수 없습니다.
+          </p>
+          <p className="font-pre text-[14px] font-bold text-gray-400">
+            기존 폼에 대한 피드백은 확인이 가능합니다.
+          </p>
+
+          <button
+            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px]  transition ease-in-out delay-150 hover:-translate-y-1  hover:bg-indigo-900 duration-300"
+            onClick={handleMakeQuesttion}
+          >
+            새 질문 폼 생성하러 가기
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }

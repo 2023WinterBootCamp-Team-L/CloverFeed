@@ -1,21 +1,27 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface GreenButtonProps {
   text: string;
-  nextpage: string;
+  nextpage?: string;
+  onClick?: () => void;
 }
 
-const GreenButton = ({ text, nextpage }: GreenButtonProps) => {
+const GreenButton = ({ text, nextpage, onClick }: GreenButtonProps) => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate(nextpage);
+    if (onClick) {
+      onClick();
+    }
+    if (nextpage) {
+      navigate(nextpage);
+    }
   };
 
   return (
-    <label className="relative inline-flex">
+    <label className="relative inline-flex justify-center">
       <button
-        className="bg-c-green text-white p-3 rounded-lg text-[16px] font-pre min-w-[300px] sm:w-[320px] lg:w-[332px]"
+        className="bg-c-green text-white h-12 rounded-lg text-[16px] font-pre min-w-[300px] sm:w-[320px] lg:w-[332px] transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-110 hover:bg-emerald-500 duration-300"
         onClick={handleButtonClick}
       >
         {text}

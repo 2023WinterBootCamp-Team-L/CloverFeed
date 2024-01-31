@@ -21,3 +21,4 @@ krwordrank
 openai
 konlpy
 django_prometheus
+gunicorn==21.2.0

@@ -18,6 +18,11 @@ export const selectedQuestionState = atom<Question | null>({
   default: null,
 });
 
+export const currentQuestionIndexState = atom<number>({
+  key: "currentQuestionIndexState",
+  default: 0, // 초기값 설정
+});
+
 // QuestionList를 저장하기 위한 Atom
 export const questionListState = atom<QuestionList>({
   key: "questionListState",
@@ -28,9 +33,29 @@ export const questionListState = atom<QuestionList>({
         {
           context: "당신의 포지션을 선택해주세요.",
           type: "객관식",
-          choices: ["개발자", "디자이너", "기획자", "PMPO", "기타직무"],
+          choices: ["개발자", "디자이너", "기획자", "PM/PO", "기타직무"],
         },
-
+        {
+          context: `당신이 생각하는 ${username}님의 업무 능력 강점은 무엇인가요?`,
+          type: "객관식",
+          choices: [
+            "책임감",
+            "공감능력",
+            "경청하는",
+            "성실함",
+            "배려심",
+            "적극적인",
+            "꼼꼼함",
+            "끈기",
+            "분위기메이커",
+            "주도적인",
+            "긍정적인",
+            "사교성이 좋은",
+            "관대한",
+            "도전적인",
+            "센스있는",
+          ],
+        },
         {
           context: `당신이 생각하는 ${username}님의 성격 및 태도는 어떤가요?`,
           type: "객관식",

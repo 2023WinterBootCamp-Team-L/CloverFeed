@@ -8,9 +8,7 @@ import QueryAdd from "./pages/QueryAdd";
 import QueryShare from "./pages/QueryShare";
 import LinkStart from "./pages/LinkStart";
 import LinkPosition from "./pages/LinkPosition";
-import LinkTag1 from "./pages/LinkTag1";
 import Chart from "./pages/Chart";
-import LinkTag2 from "./pages/LinkTag2";
 import LinkFinish from "./pages/LinkFinish";
 import Gosignup from "./pages/Gosignup";
 import Mainpage from "./pages/Mainpage";
@@ -35,7 +33,10 @@ function App() {
         <Route path="/MainPage" element={<Mainpage />} />
         <Route path="/Search" element={<Search />} />
         <Route path="/Feedbacks/:category" element={<FeedbackList />} />
-        <Route path="/FeedbackResult" element={<FeedBackResult />} />
+        <Route
+          path="/FeedbackResult/:origin/:category/:respondentName"
+          element={<FeedBackResult />}
+        />
         <Route path="/QueryMain" element={<QueryMain />} />
         <Route path="/QueryStart" element={<QueryStart />} />
         <Route path="/QueryAdd" element={<QueryAdd />} />
@@ -44,8 +45,6 @@ function App() {
         <Route path="/LinkMain" element={<LinkMain />} />
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
-        <Route path="/LinkTag1" element={<LinkTag1 />} />
-        <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="/LinkAnswer" element={<LinkAnswer />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
         <Route path="/Chart" element={<Chart />} />

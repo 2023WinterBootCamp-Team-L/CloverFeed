@@ -402,6 +402,8 @@ class QuestionListView(APIView):
                 status=404,
             )
 
+        user = AuthUser.objects.filter(id=user_id).first()
+
         # 시리얼라이저를 사용하여 데이터 직렬화
         serializer = QuestionSerializer(questions_data, many=True)
 
@@ -409,6 +411,8 @@ class QuestionListView(APIView):
         return Response(
             {
                 "status": "success",
+                "user_name": user.username,
+                "form_id": subquery[0].get("max_form_id"),
                 "questions": serializer.data,
             },
             status=status.HTTP_200_OK,
@@ -471,13 +475,21 @@ class AnswersView(APIView):
             # print(summary)
 
         try:
-            # FeedbackResult 생성
+            # respondent_name 생성
+            respondent_name = f"#{random.randint(1000, 9999)}"
+
+            # respondent_name이 중복되면 새로운 값을 생성
+            while FeedbackResult.objects.filter(
+                respondent_name=respondent_name
+            ).exists():
+                respondent_name = f"#{random.randint(1000, 9999)}"
+
             feedback_result = FeedbackResult.objects.create(
                 form=form,
                 category=category,
                 tag_work=tags_work,
                 tag_attitude=tags_attitude,
-                respondent_name=f"#{random.randint(1000, 9999)}",
+                respondent_name=respondent_name,
                 summary=summary,
                 created_at=datetime.now(),
             )
@@ -560,7 +572,8 @@ class CategoryCountView(APIView):
             response_data = {
                 "status": "success",
                 "counts": [
-                    {category: count} for category, count in category_counts.items()
+                    {"category": category, "count": count}
+                    for category, count in category_counts.items()
                 ],
             }
 
@@ -673,38 +686,53 @@ class FeedbackResultDetail(APIView):
     @swagger_auto_schema(
         manual_parameters=[
             openapi.Parameter(
-                "user_id",
+                "respondent_name",
                 openapi.IN_QUERY,
-                description="사용자 ID",
+                description="응답자 이름",
                 required=True,
-                type=openapi.TYPE_NUMBER,
+                type=openapi.TYPE_STRING,
             ),
         ]
     )
-    def get_object(self, pk, user_id):
+    def get(self, request, format=None):
+        # respondent_name 라는 쿼리 파라미터를 가져옴
+        respondent_name = request.query_params.get("respondent_name", None)
+
         try:
-            # 요청받은 pk와 user_id로 FeedbackResult를 조회
-            return FeedbackResult.objects.get(pk=pk, id=user_id)
+            # 요청받은 respondent_name으로 FeedbackResult를 조회, 가져온 FeedbackResult를 Serializer를 이용해 JSON 형태로 변환
+            feedbackresult_id = FeedbackResult.objects.get(
+                respondent_name=respondent_name
+            ).id
+            questionanswers = QuestionAnswer.objects.filter(
+                feedback_id=feedbackresult_id
+            )
+
+            answers = []
+
+            for questionanswer in questionanswers:
+                answers.append(
+                    {
+                        "question": Question.objects.get(
+                            id=questionanswer.question_id
+                        ).context,
+                        "type": questionanswer.type,
+                        "context": questionanswer.context,
+                    }
+                )
+
+            serializer = FeedbackResultSerializer(
+                FeedbackResult.objects.get(respondent_name=respondent_name)
+            )  # "id=user_id" 대신 "respondent_name=respondent_name" 사용
+            # 변환된 데이터를 Response 객체에 담아 반환, status 필드를 추가
+            return Response(
+                {"status": "success", **serializer.data, "answers": answers}
+            )
         except FeedbackResult.DoesNotExist:
             # 해당하는 FeedbackResult가 없으면 404 에러를 발생
             return Response(
                 {"status": "error", "error_code": 404, "message": "피드백을 찾을 수 없습니다."},
                 status=status.HTTP_404_NOT_FOUND,
             )
-
-    def get(self, request, pk, format=None):
-        # user_id라는 쿼리 파라미터를 가져옴
-        user_id = request.query_params.get("user_id", None)
-        # get_object 메서드를 이용해 해당 FeedbackResult를 가져옴
-        feedback_result = self.get_object(pk, user_id)
-        # 예외가 발생하면 Response 객체가 반환되므로, 이를 확인
-        if isinstance(feedback_result, Response):
-            return feedback_result
-        # 가져온 FeedbackResult를 Serializer를 이용해 JSON 형태로 변환
-        serializer = FeedbackResultSerializer(feedback_result)
-        # 변환된 데이터를 Response 객체에 담아 반환
-        # status 필드를 추가
-        return Response({"status": "success", **serializer.data})
 
 
 # 피드백 결과의 태그들을 원형차트로 시각화
@@ -994,6 +1022,12 @@ class WordCloudSummaryView(APIView):
 
         print(parsed_keywords)
 
+        # 'keyword'를 'name'으로 변경하는 코드
+        new_parsed_keywords = [
+            {"text": entry["keyword"], "value": entry["value"]}
+            for entry in parsed_keywords
+        ]
+
         # # 피드백 결과 조회
         # feedbacks = QuestionAnswer.objects.filter(
         #     Q(feedback__form__user=user), Q(type="주관식")
@@ -1040,7 +1074,7 @@ class WordCloudSummaryView(APIView):
         # print(wordlist)
 
         return Response(
-            {"status": "success", "summary": user.summary, "words": parsed_keywords}
+            {"status": "success", "summary": user.summary, "words": new_parsed_keywords}
         )
 
 
