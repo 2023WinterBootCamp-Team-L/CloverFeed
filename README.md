@@ -112,7 +112,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/sejongpark">
-                <img src="https://avatars.githubusercontent.com/u/117425885?v=4" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/1f1c7805-9795-468c-aa15-3e4646527154" width="60" height="80">
             </a>
         </td>
         <td width="100" align="center">
@@ -122,11 +122,11 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/dleogh476">
-                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/3fb20e6d-f05b-46b6-a955-83afbf5770ef" width="70" height="100">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/3fb20e6d-f05b-46b6-a955-83afbf5770ef" width="60" height="80">
         </td>
         <td width="100" align="center">
              <a href="https://github.com/leeseoin">
-                <img src="https://avatars.githubusercontent.com/u/46620909?v=4" width="60" height="60">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/bdce8589-86fc-4f84-b4d9-c8c6f488782d" width="60" height="80">
         </td>
         <td width="100" align="center">
              <a href="https://github.com/wjsqudtjs2">
