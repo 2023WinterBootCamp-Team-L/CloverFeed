@@ -101,35 +101,35 @@ __
     <tr>
         <th>Pictures</th>
          <td width="100" align="center">
-            <a href="https://github.com/Mayreeel">
+            <a href="https://github.com/AlgeMoya">
                 <img src="https://avatars.githubusercontent.com/u/112528747?v=4" width="60" height="60">
             </a>
         </td>
         <td width="100" align="center">
-             <a href="https://github.com/raceStarter">
+             <a href="https://github.com/SalguJam">
                 <img src="https://avatars.githubusercontent.com/u/103251717?v=4" width="60" height="60">
             </a>
         </td>
         <td width="100" align="center">
-             <a href="https://github.com/sejongpark">
+             <a href="https://github.com/minjaon">
                 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/1f1c7805-9795-468c-aa15-3e4646527154" width="60" height="80">
             </a>
         </td>
         <td width="100" align="center">
-             <a href="https://github.com/meem3443">
+             <a href="https://github.com/antisdun">
                 <img src="https://avatars.githubusercontent.com/u/101982673?v=4" width="60" height="60">
             </a>
         </td>
         <td width="100" align="center">
-             <a href="https://github.com/dleogh476">
+             <a href="https://github.com/hyeonsu00">
                 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/3fb20e6d-f05b-46b6-a955-83afbf5770ef" width="60" height="80">
         </td>
         <td width="100" align="center">
-             <a href="https://github.com/leeseoin">
+             <a href="https://github.com/Hseooo">
                 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/bdce8589-86fc-4f84-b4d9-c8c6f488782d" width="60" height="80">
         </td>
         <td width="100" align="center">
-             <a href="https://github.com/wjsqudtjs2">
+             <a href="https://github.com/changyeonyes">
                 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/cbdf39cd-c58d-42a3-be26-749a188f941c" width="60" height="60">
             </a>
         </td>
