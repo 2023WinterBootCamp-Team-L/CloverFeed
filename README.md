@@ -112,7 +112,7 @@ __
         </td>
         <td width="100" align="center">
              <a href="https://github.com/minjaon">
-                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/1f1c7805-9795-468c-aa15-3e4646527154" width="60" height="80">
+                <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/183cc13d-3432-492b-bad9-9fda36db283a" width="60" height="80">
             </a>
         </td>
         <td width="100" align="center">
