@@ -7,6 +7,9 @@ interface ShortButtonProps {
 const ShortButton = ({ type = true, text, onClick }: ShortButtonProps) => {
   const handleButtonClick = () => {
     // QR 및 링크 생성
+    if (onClick) {
+      onClick();
+    }
   };
 
   return (

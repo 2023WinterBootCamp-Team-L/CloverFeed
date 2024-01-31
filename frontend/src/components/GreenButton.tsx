@@ -1,15 +1,21 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 interface GreenButtonProps {
   text: string;
-  nextpage: string;
+  nextpage?: string;
+  onClick?: () => void;
 }
 
-const GreenButton = ({ text, nextpage }: GreenButtonProps) => {
+const GreenButton = ({ text, nextpage, onClick }: GreenButtonProps) => {
   const navigate = useNavigate();
 
   const handleButtonClick = () => {
-    navigate(nextpage);
+    if (onClick) {
+      onClick();
+    }
+    if (nextpage) {
+      navigate(nextpage);
+    }
   };
 
   return (

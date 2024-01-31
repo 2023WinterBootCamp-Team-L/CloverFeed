@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import BackButton from '../components/BackButton';
-import Line from '../components/Line';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { Doughnut } from 'react-chartjs-2';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
-import axios, { AxiosResponse } from 'axios';
+import React, { useState, useEffect } from "react";
+import BackButton from "../components/BackButton";
+import Line from "../components/Line";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Doughnut } from "react-chartjs-2";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import axios, { AxiosResponse } from "axios";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
@@ -13,27 +13,19 @@ const SkillChart = ({
 }: {
   data: { tag: string; percentage: number }[];
 }) => {
-  const chartData = {
-    labels: data.map((item) => item.tag),
+  const top5ChartData = {
+    labels: data.slice(0, 5).map((item) => item.tag),
     datasets: [
       {
-        data: data.map((item) => item.percentage),
+        data: data.slice(0, 5).map((item) => item.percentage),
         backgroundColor: [
-          '#D5FBE5',
-          '#F9C7C7',
-          '#F6EED4',
-          '#E2E9FF',
-          '#EDD0F5',
-          '#EEEFF0',
+          "#D5FBE5",
+          "#F9C7C7",
+          "#F6EED4",
+          "#E2E9FF",
+          "#EDD0F5",
         ],
-        borderColor: [
-          '#D5FBE5',
-          '#F9C7C7',
-          '#F6EED4',
-          '#E2E9FF',
-          '#EDD0F5',
-          '#EEEFF0',
-        ],
+        borderColor: ["#D5FBE5", "#F9C7C7", "#F6EED4", "#E2E9FF", "#EDD0F5"],
       },
     ],
   };
@@ -46,20 +38,22 @@ const SkillChart = ({
           fontSize: 10,
           boxWidth: 10,
           boxHeight: 10,
-          color: 'black',
+          color: "black",
           font: {
-            family: 'Pretendard',
+            family: "Pretendard",
           },
         },
       },
       tooltip: {
-        enabled: true,
+        enabled: false,
       },
       datalabels: {
-        color: 'black',
-        textAlign: 'center',
+        color: "black",
+        font: {
+          family: "Pretendard",
+        },
         formatter: function (value: number, context: any) {
-          const dataLabel = chartData.labels[context.dataIndex];
+          const dataLabel = top5ChartData.labels[context.dataIndex];
           return `${dataLabel}\n${value}%`;
         },
       },
@@ -75,7 +69,7 @@ const SkillChart = ({
   // return `${dataLabel}\n${percentage}%`;
 
   const generateSentence = () => {
-    const [first, second, third] = chartData.labels.slice(0, 3);
+    const [first, second, third] = top5ChartData.labels.slice(0, 3);
     const sentence = `당신은 ${first}, ${second}, ${third}있는 사람이네요`;
     return sentence;
   };
@@ -83,17 +77,17 @@ const SkillChart = ({
   return (
     <div className="flex flex-col justify-center w-full gap-4">
       <p className="font-pre text-[16px] font-bold">{generateSentence()}</p>
-      <Doughnut data={chartData} options={options}></Doughnut>{' '}
+      <Doughnut data={top5ChartData} options={options}></Doughnut>{" "}
       {/*오류가 나는데 실행은 또 잘됨...*/}
     </div>
   );
 };
 
 function Chart() {
-  const [userid, setUserid] = useState('');
+  const [userid, setUserid] = useState("");
 
   useEffect(() => {
-    const storedUserid = localStorage.getItem('user_id');
+    const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
       setUserid(storedUserid);
     }
@@ -112,15 +106,15 @@ function Chart() {
     const getChart = async () => {
       try {
         const response = await axios.get(apiUrl);
-        if (response.data.status === 'success') {
+        if (response.data.status === "success") {
           setWorkData(response.data.work);
           setAttitudeData(response.data.attitude);
-          console.log('차트');
+          console.log("차트");
         } else {
-          console.error('에러 응답:', response.data.message);
+          console.error("에러 응답:", response.data.message);
         }
       } catch (error) {
-        console.error('네트워크 오류:', error);
+        console.error("네트워크 오류:", error);
       }
     };
 
@@ -131,19 +125,19 @@ function Chart() {
     axios
       .get(apiUrl)
       .then((response: AxiosResponse) => {
-        if (response.data.status === 'success') {
+        if (response.data.status === "success") {
           const workTags = response.data.work;
           const attitudeTags = response.data.attitude;
           setWorkData(workTags);
           setAttitudeData(attitudeTags);
-          console.log('Work Tags:', workTags);
-          console.log('Attitude Tags:', attitudeTags);
+          console.log("Work Tags:", workTags);
+          console.log("Attitude Tags:", attitudeTags);
         } else {
-          console.error('사용자를 찾을 수 없습니다.', response.data.message);
+          console.error("사용자를 찾을 수 없습니다.", response.data.message);
         }
       })
       .catch((error) => {
-        console.error('에러 응답:', error.message);
+        console.error("에러 응답:", error.message);
       });
   }, [apiUrl]);
 
@@ -151,7 +145,7 @@ function Chart() {
     <div className="flex justify-center items-center min-h-screen">
       <div
         className="bg-white flex flex-col mx-auto min-h-screen gap-10 px-5 py-8 overflow-hidden w-full sm:w-[393px] lg:w-[393px]"
-        style={{ width: '393px' }}
+        style={{ width: "393px" }}
       >
         <div>
           <BackButton back page="/mainpage" />
@@ -170,20 +164,6 @@ function Chart() {
             <Line text="성격 및 태도" />
           </div>
           <SkillChart data={attitudeData} />
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-row justify-start">
-            <Line text="칭찬할 점" />
-          </div>
-          {/* 워드클라우드 */}
-        </div>
-
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-row justify-start">
-            <Line text="개선할 점" />
-          </div>
-          {/* 워드클라우드 */}
         </div>
       </div>
     </div>

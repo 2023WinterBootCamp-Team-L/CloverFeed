@@ -10,7 +10,11 @@ interface FeedButtonProps {
 const FeedButton: React.FC<FeedButtonProps> = ({ category, count, color }) => {
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate(`/feedbacks/${category}`);
+    if (category === "PM/PO") {
+      navigate("/feedbacks/PMPO");
+    } else {
+      navigate(`/feedbacks/${category}`);
+    }
   };
 
   const buttonClassName = `bg-white-400 text-black ${

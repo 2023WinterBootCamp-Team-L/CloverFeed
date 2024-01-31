@@ -25,8 +25,16 @@ function QueryList() {
     }
   }, []);
 
+  const [isOpen, setisOpen] = useState(false);
+  const toggle = () => {
+    setisOpen(!isOpen);
+  };
+
   const handleQuestionComplete = async () => {
     try {
+      // 모달 닫기
+      toggle();
+
       // POST 요청을 보낼 데이터 구성
       const requestData = {
         user_id: userid,
@@ -37,6 +45,7 @@ function QueryList() {
         })),
       };
 
+      // 실제 POST 요청은 한 번만 실행
       const response = await axios.post(
         'http://localhost:8000/api/questions/',
         requestData
@@ -48,12 +57,6 @@ function QueryList() {
     } catch (error) {
       console.error(error);
     }
-  };
-
-  // 모달
-  const [isOpen, setisOpen] = useState(false);
-  const toggle = () => {
-    setisOpen(!isOpen);
   };
 
   return (

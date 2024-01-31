@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logouticon from '../assets/logouticon.svg';
 import researchicon from '../assets/researchicon.svg';
@@ -11,6 +12,7 @@ import ChartButton from '../components/ChartButton.tsx';
 import ShareButton from '../components/ShareButton.tsx';
 import FeedButton from '../components/FeedButton.tsx';
 import SimpleWordcloud from '../components/wordcloud.tsx';
+import Modal from '../components/Modal.tsx';
 
 function Mainpage() {
   const [username, setUsername] = useState('');
@@ -40,6 +42,16 @@ function Mainpage() {
     fetchCounts();
   }, []);
 
+  // 모달
+  const [isOpen, setisOpen] = useState(false);
+  const toggle = () => {
+    setisOpen(!isOpen);
+  };
+  const navigate = useNavigate();
+  const handleMakeQuesttion = () => {
+    navigate('/QueryMain');
+  };
+
   return (
     <div className="bg-white">
       <div className=" flex flex-col mx-auto gap-10 px-5 py-8 min-h-screen w-full sm:max-w-[393px] lg:max-w-[393px]">
@@ -51,21 +63,16 @@ function Mainpage() {
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
-            강지은님의 네잎클로버
+            {username}님의 네잎클로버
           </p>
         </div>
 
         <div>
           <SimpleWordcloud />
         </div>
-        <div>
-          <p className="text-[14px] text-center font-pre font-bold">
-            {username}님은
-          </p>
-        </div>
 
         <div className="flex justify-center">
-          <GreenButton text="질문폼 새로 생성하기" nextpage="/QueryMain" />
+          <GreenButton text="질문 폼 새로 생성하기" onClick={toggle} />
         </div>
         <div className="flex flex-row justify-center gap-14 mt-1">
           <ResearchButton iconSrc={researchicon} researchpage="/Search" />
@@ -90,6 +97,25 @@ function Mainpage() {
           </div>
         </div>
       </div>
+
+      <Modal isOpen={isOpen} toggle={toggle}>
+        <div className="flex flex-col items-center gap-3">
+          <p className="font-pre text-[16px] font-bold">새 질문 폼을 만들면</p>
+          <p className="font-pre text-[16px] font-bold text-center">
+            기존 질문 폼은 더이상 사용할 수 없습니다.
+          </p>
+          <p className="font-pre text-[14px] font-bold text-gray-400">
+            기존 폼에 대한 피드백은 확인이 가능합니다.
+          </p>
+
+          <button
+            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px]"
+            onClick={handleMakeQuesttion}
+          >
+            새 질문 폼 생성하러 가기
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 }
