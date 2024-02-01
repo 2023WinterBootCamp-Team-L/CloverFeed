@@ -1,29 +1,34 @@
 # <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2cd9c0af-b6fc-472f-be7c-0bf2a9d026d9" alt="image" width="25"> CloverFeed
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/49551bb0-c05d-416c-951e-fde0d4d401a0"/>
+
+<div align = "center">
+<h3> 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스! </h3>
+<h3> 내가 만든 피드백 질문 목록을 동료들에게 공유해서 피드백을 받아보세요 👀 </h3>
+</div>
 <br>
 
-<div align = center>
-동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
-</div>
-<br>
-<div align = center>
-내가 만든 피드백 질문 목록을 동료들에게 공유해서 피드백을 받아보세요!
-</div>
+## 🖱️서비스 링크
+### **https://cloverfeed.kr/**
+<br><br><br>
   
 ## ⭐️ Medium
 [🇰🇷 CloverFeed.Kor](https://medium.com/p/782aa6b5ad9c/edit)<br>
 [🇺🇸 CloverFeed.Eng](https://medium.com/p/782aa6b5ad9c/edit)
-<br>
+<br><br><br>
+
 
 ## 📋 Demo
 <br><br><br><br>
-|   	|   	|
-|---	|---	|
-|   	|   	|
-|   	|   	|
-|   	|   	|
-|   	|   	|
-|   	|   	|
+| **피드백 질문 폼 생성하기** | **피드백 질문 폼의 주관식 항목 생성하기** |
+| :---: | :---: |
+| ![쿼리메인](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/448313f7-8626-46e2-8239-f1b56e8fdf32)|![주관식 질문 추가](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/31a15baa-329e-4cb3-93fa-c566572bdabc)| 
+| **피드백 질문 폼의 객관식 항목 생성하기** | **피드백의 익명 평가 페이지(평가 하는 사람 페이지)** |
+|![객관식 질문 추가](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/28183929-9aaa-4392-8cda-ac2b153f6164)|![직무선택,태그선택](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2a346f46-3ca8-4d7f-a4bf-cddc88e7245a)|
+| **피드백의 주관식 답변 페이지(평가 하는 사람 페이지)**| **피드백의 추가 질문 답변 및 피드백 답변 종료 페이지(평가 하는 사람 페이지)**|
+|![주관식 및 추가질문 1](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2ad9f55a-0226-4303-9914-0892ffff49d6)|![추가질문2,답변 마무리](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/467c29f6-0ac0-4f12-b064-0aa4515f2585)|
+
+
+
 
 
 
@@ -91,6 +96,9 @@
 </table>
 <br><br><br><br>
 
+## 🔐 ERD 설계
+![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
+<br><br><br><br>
 
 ## 📈 API(swagger)
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/58c3a9ed-5b61-4567-887d-9affa0ebc816"/>
@@ -197,11 +205,8 @@
 
 
 <br><br><br><br>
-## 🔐 ERD 설계
-![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
-<br><br><br><br>
-## 🖱️서비스 링크
-<br><br><br><br>
+
+
 ## 👨‍👩‍👧‍👦 Members
 
 <table width="1000">
