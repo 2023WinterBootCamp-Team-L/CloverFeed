@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import environ
 from pathlib import Path
 import pymysql
+import os
 
 env = environ.Env()
 environ.Env.read_env()
@@ -31,9 +32,6 @@ SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-# chat gpt 시크릿키
-OPENAI_API_KEY = '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'
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 CSRF_TRUSTED_ORIGINS = ["http://localhost"]
@@ -144,6 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

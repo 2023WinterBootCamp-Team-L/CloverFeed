@@ -18,7 +18,7 @@ function LinkMain() {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <ChangePage nextpage={`/LinkStart?user_id=${1}`} />
+      <ChangePage nextpage={`/LinkStart?user_id=${6}`} />
       <div
         className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-35 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
         // style={{ width: "393px", height: "852px" }}

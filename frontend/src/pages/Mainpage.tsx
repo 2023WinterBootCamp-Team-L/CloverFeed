@@ -1,27 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import logouticon from '../assets/logouticon.svg';
-import researchicon from '../assets/researchicon.svg';
-import charticon from '../assets/charticon.svg';
-import shareicon from '../assets/shareicon.svg';
-import GreenButton from '../components/GreenButton';
-import LogoutButton from '../components/LogoutButton.tsx';
-import ResearchButton from '../components/ResearchButton.tsx';
-import ChartButton from '../components/ChartButton.tsx';
-import ShareButton from '../components/ShareButton.tsx';
-import FeedButton from '../components/FeedButton.tsx';
-import SimpleWordcloud from '../components/wordcloud.tsx';
-import Modal from '../components/Modal.tsx';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import logouticon from "../assets/logouticon.svg";
+import researchicon from "../assets/researchicon.svg";
+import charticon from "../assets/charticon.svg";
+import shareicon from "../assets/shareicon.svg";
+import GreenButton from "../components/GreenButton";
+import LogoutButton from "../components/LogoutButton.tsx";
+import ResearchButton from "../components/ResearchButton.tsx";
+import ChartButton from "../components/ChartButton.tsx";
+import ShareButton from "../components/ShareButton.tsx";
+import FeedButton from "../components/FeedButton.tsx";
+import SimpleWordcloud from "../components/wordcloud.tsx";
+import Modal from "../components/Modal.tsx";
 
 function Mainpage() {
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState("");
   const [categories, setCategories] = useState([]);
   const [counts, setCounts] = useState([]);
 
   const fetchCounts = async () => {
     const response = await axios.get(
-      `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem('user_id')}`
+      `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
     );
     const categoriesData = response.data.counts.map(
       (item: { category: string }) => item.category
@@ -35,7 +35,7 @@ function Mainpage() {
   };
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('user_name');
+    const storedUsername = localStorage.getItem("user_name");
     if (storedUsername) {
       setUsername(storedUsername);
     }
@@ -49,7 +49,7 @@ function Mainpage() {
   };
   const navigate = useNavigate();
   const handleMakeQuesttion = () => {
-    navigate('/QueryMain');
+    navigate("/QueryMain");
   };
 
   return (

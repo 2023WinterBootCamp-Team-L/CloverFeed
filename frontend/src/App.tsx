@@ -8,9 +8,7 @@ import QueryAdd from './pages/QueryAdd';
 import QueryShare from './pages/QueryShare';
 import LinkStart from './pages/LinkStart';
 import LinkPosition from './pages/LinkPosition';
-import LinkTag1 from './pages/LinkTag1';
 import Chart from './pages/Chart';
-import LinkTag2 from './pages/LinkTag2';
 import LinkFinish from './pages/LinkFinish';
 import Gosignup from './pages/Gosignup';
 import Mainpage from './pages/Mainpage';
@@ -22,7 +20,6 @@ import FeedBackResult from './pages/FeedBackResult';
 import LinkAnswer from './pages/LinkAnswer';
 import AnswerCheck from './pages/LinkPage/AnswerCheck';
 import FeedbackList from './pages/FeedBackList';
-// import { AnimatePresence } from 'framer-motion';
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -51,8 +48,6 @@ function App() {
         <Route path="/LinkMain" element={<LinkMain />} />
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
-        <Route path="/LinkTag1" element={<LinkTag1 />} />
-        <Route path="/LinkTag2" element={<LinkTag2 />} />
         <Route path="/LinkAnswer" element={<LinkAnswer />} />
         <Route path="LinkFinish" element={<LinkFinish />} />
         <Route path="/Chart" element={<Chart />} />
