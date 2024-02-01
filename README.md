@@ -18,7 +18,8 @@
 
 
 ## 📋 Demo
-<div width="100">
+<div>
+  
 | **피드백 질문 폼 생성하기** | **피드백 질문 폼의 객관식 항목 생성하기** |
 | :---: | :---: |
 | ![쿼리메인](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/448313f7-8626-46e2-8239-f1b56e8fdf32)|![객관식 질문 추가](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/28183929-9aaa-4392-8cda-ac2b153f6164)| 
