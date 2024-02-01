@@ -23,11 +23,9 @@
 | :---: | :---: |
 | ![쿼리메인](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/448313f7-8626-46e2-8239-f1b56e8fdf32)|![주관식 질문 추가](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/31a15baa-329e-4cb3-93fa-c566572bdabc)| 
 | **피드백 질문 폼의 객관식 항목 생성하기** | **피드백의 익명 평가 페이지(평가 하는 사람 페이지)** |
-|![answer](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/07d3aece-18e7-4b4d-8edc-482a6f6e6498)| ![mypage](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/53093949-1718-4c6e-9dd0-5ae3050eb32d) |
+|![객관식 질문 추가](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/28183929-9aaa-4392-8cda-ac2b153f6164)|![직무선택,태그선택](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2a346f46-3ca8-4d7f-a4bf-cddc88e7245a)|
 | **피드백의 주관식 답변 페이지(평가 하는 사람 페이지)**| **피드백의 추가 질문 답변 및 피드백 답변 종료 페이지(평가 하는 사람 페이지)**|
-|![detail](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/0f8c513f-18fc-427a-817f-50183f3b02a9)|![chart](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/cfcf7af9-b0b6-43d0-9523-f7ad0ebee511)|
-|**중복 캐릭터 생성 & 이미지 다운로드**|
-|![duplicate](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/0b9191ed-1c9b-4b36-b2ed-c48a26ea760c)
+|![주관식 및 추가질문 1](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2ad9f55a-0226-4303-9914-0892ffff49d6)|![추가질문2,답변 마무리](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/467c29f6-0ac0-4f12-b064-0aa4515f2585)|
 
 
 
