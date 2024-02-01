@@ -1,16 +1,18 @@
 # <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2cd9c0af-b6fc-472f-be7c-0bf2a9d026d9" alt="image" width="25"> CloverFeed
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/49551bb0-c05d-416c-951e-fde0d4d401a0"/>
+<br>
 
 <div align = center>
 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 </div>
+<br>
 <div align = center>
 내가 만든 피드백 질문 목록을 동료들에게 공유해서 피드백을 받아보세요!
 </div>
   
 ## ⭐️ Medium
-[🇰🇷 CloverFeed.kor](https://medium.com/p/782aa6b5ad9c/edit)<br>
-[🇺🇸 CloverFeed.eng](https://medium.com/p/782aa6b5ad9c/edit)
+[🇰🇷 CloverFeed.Kor](https://medium.com/p/782aa6b5ad9c/edit)<br>
+[🇺🇸 CloverFeed.Eng](https://medium.com/p/782aa6b5ad9c/edit)
 <br>
 
 ## 📋 Demo
@@ -91,6 +93,103 @@
 
 <br><br><br><br>
 ## 💽디렉토리 구조
+<details>
+<summary>Click</summary>
+<pre>
+<code>
+  📦backend
+   ┣ 📂ainterview
+   ┃ ┣ 📂__pycache__
+   ┃ ┣ 📜__init__.py
+   ┃ ┣ 📜asgi.py
+   ┃ ┣ 📜celery.py
+   ┃ ┣ 📜settings.py
+   ┃ ┣ 📜urls.py
+   ┃ ┗ 📜wsgi.py
+   ┣ 📂forms
+   ┃ ┣ 📂__pycache__
+   ┃ ┣ 📂migrations
+   ┃ ┣ 📜__init__.py
+   ┃ ┣ 📜admin.py
+   ┃ ┣ 📜apps.py
+   ┃ ┣ 📜models.py
+   ┃ ┣ 📜serializers.py
+   ┃ ┣ 📜tests.py
+   ┃ ┣ 📜urls.py
+   ┃ ┗ 📜views.py
+   ┣ 📂speak_to_chat
+   ┃ ┣ 📂__pycache__
+   ┃ ┣ 📂migrations
+   ┃ ┣ 📜__init__.py
+   ┃ ┣ 📜apps.py
+   ┃ ┣ 📜interview_consumer.py
+   ┃ ┣ 📜models.py
+   ┃ ┣ 📜routing.py
+   ┃ ┣ 📜serializers.py
+   ┃ ┣ 📜tasks.py
+   ┃ ┣ 📜urls.py
+   ┃ ┗ 📜views.py
+   ┣ 📂users
+   ┃ ┣ 📂__pycache__
+   ┃ ┣ 📂migrations
+   ┃ ┣ 📜__init__.py
+   ┃ ┣ 📜admin.py
+   ┃ ┣ 📜apps.py
+   ┃ ┣ 📜models.py
+   ┃ ┣ 📜serializers.py
+   ┃ ┣ 📜tests.py
+   ┃ ┣ 📜urls.py
+   ┃ ┗ 📜views.py
+   ┣ 📜.git
+   ┣ 📜.gitignore
+   ┣ 📜Pipfile
+   ┣ 📜Pipfile.lock
+   ┣ 📜dockerfile
+   ┣ 📜manage.py
+   ┣ 📜requirements.txt
+   ┗ 📜storage.py
+  📦frontend
+   ┣ 📂public
+   ┣ 📂src
+   ┃ ┣ 📂assets
+   ┃ ┣ 📂components
+   ┃ ┣ 📂lottie
+   ┃ ┣ 📂pages
+   ┃ ┃ ┣ 📜ApplyFormPickerPage.tsx
+   ┃ ┃ ┣ 📜InterviewProgressPage.tsx
+   ┃ ┃ ┣ 📜InterviewResultPage.tsx
+   ┃ ┃ ┣ 📜LoginPage.tsx
+   ┃ ┃ ┣ 📜MainPage.tsx
+   ┃ ┃ ┣ 📜MyPage.tsx
+   ┃ ┃ ┣ 📜SignupPage.tsx
+   ┃ ┃ ┣ 📜StandBy.tsx
+   ┃ ┃ ┗ 📜WatingPage.tsx
+   ┃ ┣ 📂state
+   ┃ ┃ ┗ 📜Atom.ts
+   ┃ ┣ 📂style
+   ┃ ┃ ┗ 📜GlobalStyle.tsx
+   ┃ ┣ 📂types
+   ┃ ┃ ┗ 📜index.d.ts
+   ┃ ┣ 📜App.tsx
+   ┃ ┣ 📜index.css
+   ┃ ┗ 📜index.tsx
+   ┣ 📜.eslintrc.json
+   ┣ 📜.git
+   ┣ 📜.gitignore
+   ┣ 📜Dockerfile
+   ┣ 📜Dockerfile.prod
+   ┣ 📜README.md
+   ┣ 📜nginx.conf
+   ┣ 📜package-lock.json
+   ┣ 📜package.json
+   ┗ 📜tsconfig.json
+  📦 settings
+   ┗ 📜.env
+</code>
+</pre>
+</details>
+
+
 <br><br><br><br>
 ## 🔐 ERD 설계
 ![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
