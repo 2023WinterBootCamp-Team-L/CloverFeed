@@ -26,7 +26,10 @@ const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
       onClick();
 
       if (typeof color === "number") {
-        setCurrentColor(tagColors[color % tagColors.length]);
+        // 현재 색상 인덱스를 계산
+        const currentIndex = tagColors.findIndex((c) => c === currentColor);
+        // 다음 인덱스의 배경색을 설정 (중복되면 처음 인덱스로)
+        setCurrentColor(tagColors[(currentIndex + 1) % tagColors.length]);
       } else if (color === "bg-white") {
         setCurrentColor(color);
       }
