@@ -28,6 +28,7 @@ RUN export MYSQLCLIENT_CFLAGS=$(pkg-config --cflags mysqlclient)
 COPY wait-for-it.sh /wait-for-it.sh
 RUN chmod +x /wait-for-it.sh
 
-CMD /usr/wait-for-it.sh db:3306 -- python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
-# CMD ["sh", "-c", "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# CMD /usr/wait-for-it.sh db:3306 -- python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000
+CMD ["sh", "-c", "python manage.py makemigrations cloverfeed && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
+# CMD ["sh", "-c", "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]
 # RUN python manage.py migrate
