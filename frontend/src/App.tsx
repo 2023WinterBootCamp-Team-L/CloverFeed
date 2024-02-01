@@ -22,6 +22,7 @@ import FeedBackResult from './pages/FeedBackResult';
 import LinkAnswer from './pages/LinkAnswer';
 import AnswerCheck from './pages/LinkPage/AnswerCheck';
 import FeedbackList from './pages/FeedBackList';
+// import { AnimatePresence } from 'framer-motion';
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -39,11 +40,14 @@ function App() {
           path="/FeedbackResult/:origin/:category/:respondentName"
           element={<FeedBackResult />}
         />
+        {/* <AnimatePresence> */}
         <Route path="/QueryMain" element={<QueryMain />} />
         <Route path="/QueryStart" element={<QueryStart />} />
         <Route path="/QueryAdd" element={<QueryAdd />} />
         <Route path="/QueryList" element={<QueryList />} />
         <Route path="/QueryShare" element={<QueryShare />} />
+        {/* </AnimatePresence> */}
+
         <Route path="/LinkMain" element={<LinkMain />} />
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
