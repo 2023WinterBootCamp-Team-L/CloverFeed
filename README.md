@@ -2,10 +2,8 @@
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/49551bb0-c05d-416c-951e-fde0d4d401a0"/>
 
 <div align = "center">
-  
 <h3> 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스! </h3>
-<h3>내가 만든 피드백 질문 목록을 동료들에게 공유해서 피드백을 받아보세요 👀
-</h3>
+<h3> 내가 만든 피드백 질문 목록을 동료들에게 공유해서 피드백을 받아보세요 👀 </h3>
 </div>
 <br>
 
