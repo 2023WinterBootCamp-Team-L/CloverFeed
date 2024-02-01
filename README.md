@@ -5,7 +5,7 @@
 __내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, 익명으로 피드백 받을 수 있는 웹서비스입니다.__
 <br>
 ## ⭐️ Medium
-🇰🇷 [CloverFeed.kor]([https://medium.com/@chan4im/2023-silicon-valley-summer-bootcamp-chag-p-t-make-your-own-story-8421e5f6c3e9](https://medium.com/p/782aa6b5ad9c/edit))
+[🇰🇷 CloverFeed.kor](https://medium.com/@chan4im/2023-silicon-valley-summer-bootcamp-chag-p-t-make-your-own-story-8421e5f6c3e9)(https://medium.com/p/782aa6b5ad9c/edit))
 <br><br><br><br>
 
 ## 📋 Demo
