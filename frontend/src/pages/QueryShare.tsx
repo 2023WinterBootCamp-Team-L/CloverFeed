@@ -42,7 +42,6 @@ function QueryShare() {
             <img src={queryshare} alt="쿼리공유" />
           </div>
           <div className="flex flex-1 flex-row justify-center space-x-10 items-center ">
-            {/* <ShortButton type={false} text="QR코드" /> */}
             <ShortButton text="링크" onClick={toggle} />
           </div>
         </div>
