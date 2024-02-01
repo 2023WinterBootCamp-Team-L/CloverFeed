@@ -5,17 +5,14 @@
 ### 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 __내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, 익명으로 피드백 받을 수 있는 웹서비스입니다.__
 <br>
+## ⭐️ Medium
+[🇰🇷 CloverFeed.kor]([https://medium.com/@chan4im/2023-silicon-valley-summer-bootcamp-chag-p-t-make-your-own-story-8421e5f6c3e9](https://medium.com/p/782aa6b5ad9c/edit))
+<br><br><br><br>
 
 ## 📋 Demo
 <br><br><br><br>
-## ⭐️ Medium
-<br><br><br><br>
-## 💡 주요 기능 설명(혹은 데모영상) -> Feature
-<br><br><br><br>
-![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2dbd1bb6-26b0-4ec3-9a2f-50b23d2bbc3a)
 
-![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/054f053b-237f-4a02-85c5-f1eaaa45ba2d)
-![image](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2654c9cb-9efa-4e7d-8990-9d0c4052140f)
+
 
 
 
