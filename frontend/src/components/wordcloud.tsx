@@ -78,7 +78,7 @@ const SimpleWordcloud: React.FC = () => {
   console.log(wordCloudData);
 
   return (
-    <div className="flex flex-col gap-8 hover:scale-125 animate-pulse hover:animate-none sm:hover:scale-105 ">
+    <div className="flex flex-col gap-8 ">
       <div
         className="bg-clover"
         style={{

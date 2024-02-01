@@ -1,25 +1,25 @@
-import "./App.css";
-import { Route, Routes } from "react-router-dom";
-import LinkMain from "./pages/LinkMain";
-import QueryMain from "./pages/QueryMain";
-import QueryStart from "./pages/QueryStart";
-import QueryList from "./pages/QueryList";
-import QueryAdd from "./pages/QueryAdd";
-import QueryShare from "./pages/QueryShare";
-import LinkStart from "./pages/LinkStart";
-import LinkPosition from "./pages/LinkPosition";
-import Chart from "./pages/Chart";
-import LinkFinish from "./pages/LinkFinish";
-import Gosignup from "./pages/Gosignup";
-import Mainpage from "./pages/Mainpage";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import WordCloud from "./components/wordcloud";
-import Search from "./pages/Search";
-import FeedBackResult from "./pages/FeedBackResult";
-import LinkAnswer from "./pages/LinkAnswer";
-import AnswerCheck from "./pages/LinkPage/AnswerCheck";
-import FeedbackList from "./pages/FeedBackList";
+import './App.css';
+import { Route, Routes } from 'react-router-dom';
+import LinkMain from './pages/LinkMain';
+import QueryMain from './pages/QueryMain';
+import QueryStart from './pages/QueryStart';
+import QueryList from './pages/QueryList';
+import QueryAdd from './pages/QueryAdd';
+import QueryShare from './pages/QueryShare';
+import LinkStart from './pages/LinkStart';
+import LinkPosition from './pages/LinkPosition';
+import Chart from './pages/Chart';
+import LinkFinish from './pages/LinkFinish';
+import Gosignup from './pages/Gosignup';
+import Mainpage from './pages/Mainpage';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import WordCloud from './components/wordcloud';
+import Search from './pages/Search';
+import FeedBackResult from './pages/FeedBackResult';
+import LinkAnswer from './pages/LinkAnswer';
+import AnswerCheck from './pages/LinkPage/AnswerCheck';
+import FeedbackList from './pages/FeedBackList';
 
 function App() {
   // const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
@@ -37,11 +37,14 @@ function App() {
           path="/FeedbackResult/:origin/:category/:respondentName"
           element={<FeedBackResult />}
         />
+        {/* <AnimatePresence> */}
         <Route path="/QueryMain" element={<QueryMain />} />
         <Route path="/QueryStart" element={<QueryStart />} />
         <Route path="/QueryAdd" element={<QueryAdd />} />
         <Route path="/QueryList" element={<QueryList />} />
         <Route path="/QueryShare" element={<QueryShare />} />
+        {/* </AnimatePresence> */}
+
         <Route path="/LinkMain" element={<LinkMain />} />
         <Route path="/LinkStart" element={<LinkStart />} />
         <Route path="/LinkPosition" element={<LinkPosition />} />
