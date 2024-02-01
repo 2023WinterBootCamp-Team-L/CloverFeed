@@ -28,13 +28,14 @@ function QueryShare() {
           <div className="w-full h-full flex flex-1 flex-col justify-center items-center">
             <img src={queryshare} alt="쿼리공유" />
           </div>
-          <div className="flex flex-row justify-center space-x-10 items-center">
+          <div className="flex flex-1 flex-row justify-center space-x-10 items-center ">
             <ShortButton type={false} text="QR코드" />
             <ShortButton text="링크" />
           </div>
         </div>
       </div>
     </div>
+    
   );
 }
 

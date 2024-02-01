@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactWordcloud from "react-wordcloud";
-import clovercloud from "../assets/clovercloud.svg";
+// import clovercloud from "../assets/clovercloud.svg";
 import axios, { AxiosResponse } from "axios";
 
 interface Word {
@@ -57,16 +57,32 @@ const SimpleWordcloud: React.FC = () => {
   }, []);
 
   if (!wordCloudData) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col gap-8 w-[334px]">
+        <div
+          className="bg-clover font-pre text-[14px]"
+          style={{
+            // backgroundImage: "",
+            backgroundPosition: "center top",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            margin: "auto",
+          }}
+        >
+          받은 피드백이 없습니다.
+        </div>
+      </div>
+    );
   }
 
   console.log(wordCloudData);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 hover:scale-125 animate-pulse hover:animate-none sm:hover:scale-105 ">
       <div
+        className="bg-clover"
         style={{
-          backgroundImage: `url(${clovercloud})`,
+          // backgroundImage: "",
           backgroundPosition: "center top",
           backgroundRepeat: "no-repeat",
           backgroundSize: "contain",

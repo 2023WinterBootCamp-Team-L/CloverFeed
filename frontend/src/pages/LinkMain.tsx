@@ -40,6 +40,14 @@ function LinkMain() {
         </div>
         <div className="flex-1" />
       </div>
+
+      <button className="flex items-center pr-1 bg-white">
+        <img
+          src={clover}
+          alt="추가 버튼"
+          className="w-8 h-8 cursor-pointer bg-white"
+        />
+      </button>
     </div>
   );
 }

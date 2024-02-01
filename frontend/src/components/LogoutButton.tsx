@@ -14,7 +14,11 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ iconSrc, logoutpage }) => {
 
   return (
     <button onClick={handleButtonClick}>
-      <img src={iconSrc} alt="Logout Icon" />
+      <img
+        src={iconSrc}
+        alt="Logout Icon"
+        className="transition ease-in-out delay-150  hover:scale-110 duration-300"
+      />
     </button>
   );
 };

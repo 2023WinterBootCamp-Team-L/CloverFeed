@@ -4,8 +4,8 @@ import AnswerOption from "./AnswerOption";
 interface AnswerOptionListProps {
   inputs: string[];
   setInputs: React.Dispatch<React.SetStateAction<string[]>>;
-  onCompleteChange: (complete: boolean) => void;
-  onUpdateInputs: (inputs: string[]) => void;
+  onCompleteChange?: (complete: boolean) => void;
+  onUpdateInputs?: (inputs: string[]) => void;
 }
 
 const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
@@ -19,18 +19,19 @@ const AnswerOptionList: React.FC<AnswerOptionListProps> = ({
       const newInputs = [...inputs];
       newInputs[index] = e.target.value;
       setInputs(newInputs);
-      onUpdateInputs(newInputs);
+      onUpdateInputs && onUpdateInputs(newInputs);
     };
 
   const onItemDelete = (index: number) => {
     const newInputs = [...inputs];
     newInputs.splice(index, 1);
     setInputs(newInputs);
+    onUpdateInputs && onUpdateInputs(newInputs);
   };
 
   React.useEffect(() => {
     const isComplete = inputs.every((input) => input !== "");
-    onCompleteChange(isComplete);
+    onCompleteChange && onCompleteChange(isComplete);
   }, [inputs, onCompleteChange]);
 
   return (

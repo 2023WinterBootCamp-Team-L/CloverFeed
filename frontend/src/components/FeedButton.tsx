@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface FeedButtonProps {
   category: string;
@@ -18,7 +18,9 @@ const FeedButton: React.FC<FeedButtonProps> = ({ category, count, color }) => {
   };
 
   const buttonClassName = `bg-white-400 text-black ${
-    color ? "bg-c-l-blue border-c-blue" : "bg-c-l-purple border-c-sl-purple"
+    color
+      ? 'bg-c-l-blue border-c-blue transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:border-indigo-500 duration-300'
+      : 'bg-c-l-purple border-c-sl-purple transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:border-purple-500 duration-300'
   }  w-[332px] pl-8 pr-10 py-5 rounded-lg mb-2 border-2 font-pre text-[14px] font-bold text-left`;
 
   return (
