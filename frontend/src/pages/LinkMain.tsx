@@ -18,7 +18,7 @@ function LinkMain() {
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <ChangePage nextpage={`/LinkStart?user_id=${1}`} />
+      <ChangePage nextpage={`/LinkStart?user_id=${6}`} />
       <div
         className="flex h-full flex-col justify-center items-center relative bg-c-emerald bg-opacity-35 min-h-screen w-full sm:w-[393px] lg:w-[393px]"
         // style={{ width: "393px", height: "852px" }}
@@ -40,14 +40,6 @@ function LinkMain() {
         </div>
         <div className="flex-1" />
       </div>
-
-      <button className="flex items-center pr-1 bg-white">
-        <img
-          src={clover}
-          alt="추가 버튼"
-          className="w-8 h-8 cursor-pointer bg-white"
-        />
-      </button>
     </div>
   );
 }
