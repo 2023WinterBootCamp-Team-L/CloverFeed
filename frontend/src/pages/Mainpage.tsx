@@ -21,7 +21,7 @@ function Mainpage() {
 
   const fetchCounts = async () => {
     const response = await axios.get(
-      `http://localhost:8000/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
+      `https://cloverfeed.kr/api/feedbacks/response/count/?user_id=${localStorage.getItem("user_id")}`
     );
     const categoriesData = response.data.counts.map(
       (item: { category: string }) => item.category

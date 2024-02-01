@@ -38,7 +38,7 @@ const SimpleWordcloud: React.FC = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    const apiUrl = `http://localhost:8000/api/feedbacks/wordcloud/?user_id=${localStorage.getItem("user_id")}`;
+    const apiUrl = `https://cloverfeed.kr/api/feedbacks/wordcloud/?user_id=${localStorage.getItem("user_id")}`;
 
     axios
       .get(apiUrl)

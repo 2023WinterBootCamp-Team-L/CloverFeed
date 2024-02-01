@@ -50,8 +50,8 @@ function LinkAnswer() {
       // 로딩 모달 열기
       toggle();
 
-      const feedApiUrl = "http://localhost:8000/api/answers/";
-      const gptApiUrl = "http://localhost:8000/api/feedbacks/summary/";
+      const feedApiUrl = "https://cloverfeed.kr/api/answers/";
+      const gptApiUrl = "https://cloverfeed.kr/api/feedbacks/summary/";
 
       // POST 요청할 데이터
       const postData = {
