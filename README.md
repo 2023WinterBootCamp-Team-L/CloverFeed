@@ -19,9 +19,9 @@
 
 ## 📋 Demo
 
-| **&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;피드백 질문 폼 생성하기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;** | **피드백 질문 폼의 객관식 항목 생성하기** |
+| **&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;피드백 질문 폼 생성하기&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;** | **피드백 질문 폼 생성** |
 | :---: | :---: |
-|<span>&nbsp;&nbsp;&nbsp;<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/448313f7-8626-46e2-8239-f1b56e8fdf32" width="290" height="509"/>&nbsp;</span>| <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/28183929-9aaa-4392-8cda-ac2b153f6164" width="290" height="509"/>| 
+|<span>&nbsp;&nbsp;&nbsp;<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/448313f7-8626-46e2-8239-f1b56e8fdf32" width="260" height="509"/>&nbsp;</span>| <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)" width="260" height="509"/>| 
 | **피드백 질문 폼의 주관식 항목 생성하기** | **피드백의 익명 평가 시작 페이지<br>(평가 하는 사람 페이지)** |
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/31a15baa-329e-4cb3-93fa-c566572bdabc" width="290" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2a346f46-3ca8-4d7f-a4bf-cddc88e7245a" width="290" height="509"/>|
 | **피드백의 주관식 답변 페이지<br>(평가 하는 사람 페이지)**| **피드백의 추가 질문 답변 및 피드백 답변 종료 페이지<br>(평가 하는 사람 페이지)**|
