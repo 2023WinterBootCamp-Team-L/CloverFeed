@@ -15,13 +15,17 @@
 
 ## 📋 Demo
 <br><br><br><br>
-|   	|   	|
-|---	|---	|
-|   	|   	|
-|   	|   	|
-|   	|   	|
-|   	|   	|
-|   	|   	|
+| **피드백 질문 폼 생성하기** | **피드백 질문 폼의 주관식 항목 생성하기** |
+| :---: | :---: |
+| ![main_signup](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/25394474-4278-4ded-9013-ce17bf0423b5)|![question](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/f90b2188-d48d-4f42-af51-ffc6e69d65a5)  | 
+| **피드백 질문 폼의 객관식 항목 생성하기** | **피드백의 익명 평가 페이지(평가 하는 사람 페이지)** |
+|![answer](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/07d3aece-18e7-4b4d-8edc-482a6f6e6498)| ![mypage](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/53093949-1718-4c6e-9dd0-5ae3050eb32d) |
+| **피드백의 주관식 답변 페이지(평가 하는 사람 페이지)**| **피드백의 추가 질문 답변 및 피드백 답변 종료 페이지(평가 하는 사람 페이지)**|
+|![detail](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/0f8c513f-18fc-427a-817f-50183f3b02a9)|![chart](https://github.com/2023-Summer-Bootcamp-Team-G/backend/assets/91904079/cfcf7af9-b0b6-43d0-9523-f7ad0ebee511)|
+
+
+
+
 
 
 
