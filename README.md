@@ -19,7 +19,7 @@
 
 ## 📋 Demo
 
-| **&nbsp;피드백 질문 폼 생성하기&nbsp;** | **피드백 질문 폼의 객관식 항목 생성하기** |
+| **&nbsp;&nbsp;&nbsp;&nbsp;피드백 질문 폼 생성하기&nbsp;&nbsp;&nbsp;&nbsp;** | **피드백 질문 폼의 객관식 항목 생성하기** |
 | :---: | :---: |
 |<span>&nbsp;&nbsp;&nbsp;<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/448313f7-8626-46e2-8239-f1b56e8fdf32" width="290" height="509"/>&nbsp;</span>| <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/28183929-9aaa-4392-8cda-ac2b153f6164" width="290" height="509"/>| 
 | **피드백 질문 폼의 주관식 항목 생성하기** | **피드백의 익명 평가 시작 페이지<br>(평가 하는 사람 페이지)** |
