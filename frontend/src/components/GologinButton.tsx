@@ -50,7 +50,7 @@ function GologinButton() {
       }
 
       const response = await axios.post(
-        "http://localhost:8000/api/user/auth/login/",
+        "https://cloverfeed.kr/api/user/auth/login/",
         {
           email: emailanswerInputs,
           password: pwanswerInputs,
@@ -89,7 +89,7 @@ function GologinButton() {
     if (storedUserid) {
       try {
         const response = await axios.get<ApiResponse>(
-          `http://localhost:8000/api/form/?user_id=${storedUserid}`
+          `https://cloverfeed.kr/api/form/?user_id=${storedUserid}`
         );
 
         if (response.data.status === "success") {
@@ -128,6 +128,7 @@ function GologinButton() {
             <div key={index} className="flex flex-col items-start mb-2">
               <p className="font-pre text-[14px] font-bold">{`${label} 입력`}</p>
               <SignupAnswer
+                type={index === 0 ? "text" : "password"}
                 value={index === 0 ? emailanswerInputs : pwanswerInputs}
                 onChange={(e) =>
                   onInputChange(
@@ -165,7 +166,7 @@ function GologinButton() {
             피드백 결과를 확인할 수 있어요.
           </p>
           <button
-            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px]"
+            className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-900 duration-300"
             onClick={() => {
               navigate("/QueryMain");
               setQueryIsOpen(false);

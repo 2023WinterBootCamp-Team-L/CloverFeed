@@ -38,7 +38,7 @@ const SimpleWordcloud: React.FC = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    const apiUrl = `http://localhost:8000/api/feedbacks/wordcloud/?user_id=${localStorage.getItem("user_id")}`;
+    const apiUrl = `https://cloverfeed.kr/api/feedbacks/wordcloud/?user_id=${localStorage.getItem("user_id")}`;
 
     axios
       .get(apiUrl)
@@ -57,13 +57,28 @@ const SimpleWordcloud: React.FC = () => {
   }, []);
 
   if (!wordCloudData) {
-    return <div>Loading...</div>;
+    return (
+      <div className="flex flex-col gap-8 w-[334px]">
+        <div
+          className="bg-clover font-pre text-[14px]"
+          style={{
+            // backgroundImage: "",
+            backgroundPosition: "center top",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            margin: "auto",
+          }}
+        >
+          받은 피드백이 없습니다.
+        </div>
+      </div>
+    );
   }
 
   console.log(wordCloudData);
 
   return (
-    <div className="flex flex-col gap-8 hover:scale-125 animate-pulse hover:animate-none sm:hover:scale-105 ">
+    <div className="flex flex-col gap-8 ">
       <div
         className="bg-clover"
         style={{

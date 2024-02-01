@@ -51,7 +51,7 @@ const FeedBackResult: React.FC = () => {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:8000/api/feedbacks/?respondent_name=%23${respondentName}`
+        `https://cloverfeed.kr/api/feedbacks/?respondent_name=%23${respondentName}`
       )
       .then((response: AxiosResponse<FeedbackResponse>) => {
         const data: FeedbackResponse = response.data;
