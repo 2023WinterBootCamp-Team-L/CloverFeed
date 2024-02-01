@@ -1,6 +1,6 @@
 FROM nginx:latest 
 
-RUN [ -e /etc/nginx/conf.d/default.conf ] && rm /etc/nginx/conf.d/default.conf || true
+RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/conf.d
 
 CMD [ "nginx", "-g", "daemon off;" ]
