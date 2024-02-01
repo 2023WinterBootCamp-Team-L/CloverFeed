@@ -26,7 +26,6 @@
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/31a15baa-329e-4cb3-93fa-c566572bdabc" width="290" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2a346f46-3ca8-4d7f-a4bf-cddc88e7245a" width="290" height="509"/>|
 | **피드백의 주관식 답변 페이지<br>(평가 하는 사람 페이지)**| **피드백의 추가 질문 답변 및 피드백 답변 종료 페이지<br>(평가 하는 사람 페이지)**|
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2ad9f55a-0226-4303-9914-0892ffff49d6" width="290" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/467c29f6-0ac0-4f12-b064-0aa4515f2585" width="290" height="509"/>|
-
 <br><br><br><br>
 
 ## 📌 System Architecture
@@ -55,8 +54,8 @@
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/58c3a9ed-5b61-4567-887d-9affa0ebc816"/>
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/dbd818bd-8f59-4f4e-9a66-86c5bb74a7aa"/>
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/aae1824b-0558-4319-9bcf-cafc89d5d58b"/>
-
 <br><br><br><br>
+
 ## 💽디렉토리 구조
 <details>
 <summary>Click</summary>
@@ -155,7 +154,7 @@
 </details>
 
 
-<br><br><br><br>
+<br><br><br>
 
 
 ## 👨‍👩‍👧‍👦 Members
