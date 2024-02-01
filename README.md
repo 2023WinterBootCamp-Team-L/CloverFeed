@@ -1,5 +1,7 @@
 
-#   <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2cd9c0af-b6fc-472f-be7c-0bf2a9d026d9" alt="image" width="25"> CloverFeed 익명 피드백 서비스
+#   <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2cd9c0af-b6fc-472f-be7c-0bf2a9d026d9" alt="image" width="25"> CloverFeed
+<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/49551bb0-c05d-416c-951e-fde0d4d401a0"/>
+
 ### 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스
 __내가 만든 피드백 질문 목록을 동료들에게 공유함으로써, 익명으로 피드백 받을 수 있는 웹서비스입니다.__
 <br>
