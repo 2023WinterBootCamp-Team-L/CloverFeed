@@ -98,6 +98,9 @@
 </table>
 <br><br><br><br>
 
+## 🔐 ERD 설계
+![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
+<br><br><br><br>
 
 ## 📈 API(swagger)
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/58c3a9ed-5b61-4567-887d-9affa0ebc816"/>
@@ -204,9 +207,7 @@
 
 
 <br><br><br><br>
-## 🔐 ERD 설계
-![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
-<br><br><br><br>
+
 
 ## 👨‍👩‍👧‍👦 Members
 
