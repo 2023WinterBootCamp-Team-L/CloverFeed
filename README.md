@@ -20,11 +20,11 @@
 ## 📋 Demo
 
 **회원가입 및 로그인**|**피드백 주관식, 객관식 질문 폼 생성**|
--------------|-------------|
+|-------------|-------------|
 <img width="250" alt="회원가입 및 로그인" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/8d79f683-147e-4b64-9198-46b5314c53ed">|<img width="250" alt="피드백 질문 폼 생성" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)">|
 
 **피드백 답변 작성, 제출 및 공유**|**사용자가 받은 피드백 답변 확인**|
--------------|-------------|
+|-------------|-------------|
 <img width="250" alt="회원가입 및 로그인" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/3a116515-f769-4dbe-b08c-29371b3c6963">|<img width="250" alt="피드백 질문 폼 생성" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/5409add2-6a37-4adc-abcb-38d7409b71ce">|
 
 
