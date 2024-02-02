@@ -21,11 +21,11 @@
 
 |**회원가입 및 로그인**| **피드백 질문 폼 생성** |
 | :----: | :---: |
-|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/8d79f683-147e-4b64-9198-46b5314c53ed" width="240" height="509"/>| <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)" width="240" height="509"/>|
+|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/8d79f683-147e-4b64-9198-46b5314c53ed" width="250" height="509"/>| <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)" width="250" height="509"/>|
 
 |**피드백 답변 제출**| **피드백 답변 확인** |
 | :----: | :---: |
-|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/eb5ebf3e-8947-4a0a-b0da-23cd311bb6cf" width="240" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/5a93796c-be59-4edf-8098-a7ae2d94b710" width="240" height="509"/>|
+|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/eb5ebf3e-8947-4a0a-b0da-23cd311bb6cf" width="250" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/5a93796c-be59-4edf-8098-a7ae2d94b710" width="250" height="509"/>|
 
 
 
