@@ -55,6 +55,7 @@
 React를 사용한 SPA(Single Page Application)로 페이지를 작성하였으며, React를 사용함으로서 가독성이 높은 코드 작성, 컴포넌트 기반 구조를 통한 모듈화, 가상 DOM을 활용한 성능 최적화 등을 통한 효율적인 사용자 인터페이스 개발이 가능했습니다.<br/><br/>
 프론트엔드 개발 언어로 TypeScript를 사용했습니다. TypeScript는 JavaScript의 동적 언어라는 특성으로 인한 단점을 해결하기 위해 만들어진 정적 타입 언어로, 정적 타입 검사를 통한 코드 안정성 강화, 유지보수성 향상 등의 이점이 있으며 이를 통해 협업을 더욱 원활하게 할 수 있었습니다.<br/><br/>
 Vite를 번들러로 채택하였습니다. Vite는 ESModule 기반의 번들러로 기존의 Webpack 대비 빠른 빌드와 테스팅이 가능하며, 이를 통해 개발 생산성을 높였습니다.<br/><br/>
+Tailwind CSS를 CSS 프레임워크로 사용하였습니다. Tailwind CSS는 클래스 기반의 유틸리티 퍼스트 프레임워크로, 이를 사용하여 빠르고 효율적인 스타일링은 물론, 개발 컨벤션 통일 효과를 얻었습니다.<br/><br/>
 
 ## 시각화
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/a7d7c42a-6fe8-4f71-a9d3-84c59c8728a6"/>
