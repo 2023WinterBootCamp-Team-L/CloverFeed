@@ -93,7 +93,7 @@ const SimpleWordcloud: React.FC = () => {
       </div>
       <div>
         <p className="text-[14px] text-center font-pre font-bold">
-          {username}님은 {wordCloudData.summary}
+          {wordCloudData.summary}
         </p>
       </div>
     </div>
