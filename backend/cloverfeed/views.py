@@ -260,7 +260,10 @@ class SubmitFormView(APIView):
         # questions_data가 제공되었고 비어있지 않은지 확인
         if not questions_data or not isinstance(questions_data, list):
             return Response(
-                {"status": "error", "message": "questions가 필요하며 비어 있지 않아야 합니다."},
+                {
+                    "status": "error",
+                    "message": "questions가 필요하며 비어 있지 않아야 합니다.",
+                },
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
@@ -270,7 +273,10 @@ class SubmitFormView(APIView):
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
-                {"status": "error", "message": "인증 실패. 유저 ID가 올바르지 않습니다."},
+                {
+                    "status": "error",
+                    "message": "인증 실패. 유저 ID가 올바르지 않습니다.",
+                },
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -347,7 +353,11 @@ class CheckFormExistenceView(APIView):
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
-                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "사용자가 존재하지 않습니다.",
+                },
                 status=404,
             )
 
@@ -374,7 +384,8 @@ class QuestionListView(APIView):
         # 필요한 유효성 검사를 수행하고, 예를 들어, 사용자가 필수 매개변수를 제공했는지 확인
         if user_id is None:
             return Response(
-                {"error": "user_id를 제공해야 합니다."}, status=status.HTTP_400_BAD_REQUEST
+                {"error": "user_id를 제공해야 합니다."},
+                status=status.HTTP_400_BAD_REQUEST,
             )
 
         # 사용자 ID를 사용하여 데이터를 조회하거나 다른 로직 수행
@@ -582,7 +593,11 @@ class CategoryCountView(APIView):
         except AuthUser.DoesNotExist:
             # user_id가 존재하지 않는 경우에 대한 응답
             return Response(
-                {"status": "error", "error_code": 404, "message": "사용자가 존재하지 않습니다."},
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "사용자가 존재하지 않습니다.",
+                },
                 status=404,
             )
 
@@ -618,7 +633,11 @@ class FeedbackListByCategory(APIView):
             user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
-                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "사용자를 찾을 수 없습니다.",
+                },
                 status=401,
             )
 
@@ -662,7 +681,11 @@ class FeedbackSearchView(APIView):
         keyword = request.query_params.get("keyword", None)
         if not user_id:
             return Response(
-                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."}
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "사용자를 찾을 수 없습니다.",
+                }
             )
         user = AuthUser.objects.get(pk=user_id)
         if keyword:
@@ -730,7 +753,11 @@ class FeedbackResultDetail(APIView):
         except FeedbackResult.DoesNotExist:
             # 해당하는 FeedbackResult가 없으면 404 에러를 발생
             return Response(
-                {"status": "error", "error_code": 404, "message": "피드백을 찾을 수 없습니다."},
+                {
+                    "status": "error",
+                    "error_code": 404,
+                    "message": "피드백을 찾을 수 없습니다.",
+                },
                 status=status.HTTP_404_NOT_FOUND,
             )
 
@@ -849,7 +876,11 @@ class SummaryView(APIView):
             user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
-                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "사용자를 찾을 수 없습니다.",
+                },
                 status=401,
             )
 
@@ -874,8 +905,6 @@ class SummaryView(APIView):
                 status=404,
             )
 
-        # print(contexts)
-
         # 정규 표현식을 통한 불필요한 특수문자 제거
         for i in range(len(contexts)):
             contexts[i] = re.sub(r"[^\uAC00-\uD7A30-9a-zA-Z\s]", " ", contexts[i])
@@ -890,10 +919,8 @@ class SummaryView(APIView):
             for word, tag in contexts[i]:
                 if tag in ["Noun"] or tag in ["Adjective"]:
                     keywords.append(word)
-                # if tag in ["Adjective"]:
-                #     keywords.append(word)
 
-        print(keywords)
+        # print(keywords)
 
         # 각 원소의 갯수를 세기
         element_counts = Counter(keywords)
@@ -901,7 +928,7 @@ class SummaryView(APIView):
             {"keyword": word, "value": count} for word, count in element_counts.items()
         ]
 
-        print(keywords_withcounts)
+        # print(keywords_withcounts)
 
         # 'value' 키 값을 기준으로 내림차순으로 정렬
         keywords_sorted = sorted(
@@ -909,82 +936,26 @@ class SummaryView(APIView):
         )
 
         # 결과 출력
-        print(keywords_sorted)
-
-        # print(contexts)
-
-        # stopwords = {
-        #     "주셔서",
-        #     "거두고",
-        #     "정말",
-        #     "특히",
-        #     "팀에",
-        #     "앞으로",
-        #     "다른",
-        #     "전체",
-        #     "되고",
-        #     "우리팀",
-        # }  # 불용어
-        # keywords = summarize_with_keywords(
-        #     contexts,
-        #     min_count=3,
-        #     max_length=10,
-        #     beta=0.85,
-        #     max_iter=10,
-        #     stopwords=stopwords,
-        #     verbose=True,
-        # )
-
-        keywords = summarize_with_keywords(
-            keywords,
-            min_count=1,
-            max_length=10,
-            beta=0.85,
-            max_iter=10,
-            verbose=True,
-        )
-
-        # print(keywords)
-
-        wordlist = []
-        count = 0
-        for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
-            temp = {"keyword": key, "value": int(val * 100)}
-            wordlist.append(temp)
-            count += 1
-            if count >= 30:  # 출력 수 제한
-                break
-
-        print(wordlist)
-
-        keywords_to_summary = []
-
-        key_to_print = "keyword"
-        for word in wordlist:
-            if key_to_print in word:
-                keywords_to_summary.append(word[key_to_print])
-                # print(f"{word[key_to_print]}")
+        # print(keywords_sorted)
 
         response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-3.5-turbo-0125",
             messages=[
                 {
                     "role": "user",
-                    "content": str(keywords_to_summary)
-                    + "make a summary of these keywords from anonymous peer reviews in one sentences in polite korean as briefly and concisely as possible like this example '사용자님께서는 사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.' The length of the your answer must be 90~110 characters. but the subject and negative comment must not be included.",
-                    # 이 배열은 사용자에 대해 다른 동료들이 익명으로 평가한 문장이야. 이 문장을 한 문장 이내로 요약해서 이러한 평가를 받고 있다고 사용자에게 안내하는 말투로 한국어로 정리해줘. 단, 주어는 생략해야 하고, 부정적인 평가가 포함되어서는 안 돼.",
+                    "content": str(contexts)
+                    + "These sentences are anonymous assessments from your colleagues. Please summarize these assessments in a sentence without mentioning the subject and ensure the tone is positive without including any negative feedback. you must summarize in polite korean as briefly and concisely as possible like this example '사용자님께서는 사용자 관점을 잘 배려하는 프론트엔드 엔지니어라는 평가를 받고 있습니다.'. '입니다.', '습니다' 등으로 끝나는 한국어 존댓말로 대답해. The length of the your answer must be 90~110 characters. and do not include the word 'sentences'.'",
                 }
             ],
         )
         summary = response.choices[0].message.content.strip()
-        print(summary)
+        # print(summary)
 
         # 사용자 모델의 keywords, summary 필드에 값을 할당하고 저장
         user.keywords = keywords_sorted
         user.summary = summary
         user.save()
 
-        # return Response({"status": "success", "words": wordlist})
         return Response({"status": "success", "summary": summary})
 
 
@@ -1011,7 +982,11 @@ class WordCloudSummaryView(APIView):
             user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
-                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "사용자를 찾을 수 없습니다.",
+                },
                 status=401,
             )
 
@@ -1027,51 +1002,6 @@ class WordCloudSummaryView(APIView):
             {"text": entry["keyword"], "value": entry["value"]}
             for entry in parsed_keywords
         ]
-
-        # # 피드백 결과 조회
-        # feedbacks = QuestionAnswer.objects.filter(
-        #     Q(feedback__form__user=user), Q(type="주관식")
-        # )
-
-        # contexts = []
-
-        # for i in range(len(feedbacks)):
-        #     # print(feedbacks[i].context)
-        #     contexts.append(feedbacks[i].context)
-
-        # if len(contexts) == 0:
-        #     return Response(
-        #         {
-        #             "status": "error",
-        #             "error_code": 404,
-        #             "message": "피드백이 없습니다.",
-        #         },
-        #         status=404,
-        #     )
-
-        # stopwords = {'영화', '관람객', '너무', '정말', '보고', '일부', '완전히'} # 불용어
-        # keywords = summarize_with_keywords(contexts, min_count=3, max_length=10, beta=0.85, max_iter=10, stopwords=stopwords, verbose=True)
-        # keywords = summarize_with_keywords(
-        #     contexts,
-        #     min_count=1,
-        #     max_length=10,
-        #     beta=0.85,
-        #     max_iter=10,
-        #     verbose=True,
-        # )
-
-        # print(keywords)
-
-        # wordlist = []
-        # count = 0
-        # for key, val in keywords.items():  # 다음 라이브러리를 위한 후처리
-        #     temp = {"name": key, "value": int(val * 100)}
-        #     wordlist.append(temp)
-        #     count += 1
-        #     if count >= 30:  # 출력 수 제한
-        #         break
-
-        # print(wordlist)
 
         return Response(
             {"status": "success", "summary": user.summary, "words": new_parsed_keywords}
@@ -1101,7 +1031,11 @@ class WordCloudKeywordView(APIView):
             user = AuthUser.objects.get(pk=user_id)
         except AuthUser.DoesNotExist:
             return Response(
-                {"status": "error", "error_code": 401, "message": "사용자를 찾을 수 없습니다."},
+                {
+                    "status": "error",
+                    "error_code": 401,
+                    "message": "사용자를 찾을 수 없습니다.",
+                },
                 status=401,
             )
 
