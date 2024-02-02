@@ -1,5 +1,6 @@
 # 배포용 docker compose 파일
 # 실행 방법: sudo docker-compose -f docker-compose.prod.yml up -d --build
+# 실행 방법(빌드 없이): sudo docker-compose -f docker-compose.prod.yml up -d --build
 # 오류 발생 시 컨테이너 초기화: sudo docker-compose -f docker-compose.prod.yml down -v
 # 이미지까지 전부 삭제: sudo docker rmi -f $(sudo docker images -q)
 # NGINX 이미지 삭제: sudo docker rmi -f nginx
