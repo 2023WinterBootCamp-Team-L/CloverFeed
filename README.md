@@ -45,7 +45,7 @@
 | :----: | :---: |
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/eb5ebf3e-8947-4a0a-b0da-23cd311bb6cf" width="260" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2a346f46-3ca8-4d7f-a4bf-cddc88e7245a" width="290" height="509"/>|
 
-| **피드백의 주관식 답변 페이지<br>(평가 하는 사람 페이지)**| **피드백의 추가 질문 답변 및 피드백 답변 종료 페이지<br>(평가 하는 사람 페이지)**|
+| **피드백의 주관식 답변 페이지<br>(평가 하는 사람 페이지)**| **피드백의 추가 질문 답변 및<br>피드백 답변 종료 페이지<br>(평가 하는 사람 페이지)**|
 | :----: | :---: |
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2ad9f55a-0226-4303-9914-0892ffff49d6" width="290" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/467c29f6-0ac0-4f12-b064-0aa4515f2585" width="290" height="509"/>|
 
