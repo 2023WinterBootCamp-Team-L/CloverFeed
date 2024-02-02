@@ -13,7 +13,7 @@
   
 ## ⭐️ Medium
 [🇰🇷 CloverFeed.Kor](https://medium.com/@hanhs3925/40a53cbf1c17)<br>
-[🇺🇸 CloverFeed.Eng](https://medium.com/p/782aa6b5ad9c/edit)
+[🇺🇸 CloverFeed.Eng](https://medium.com/@hanhs3925/cloverfeed-8a835e298fda)
 <br><br><br>
 
 
