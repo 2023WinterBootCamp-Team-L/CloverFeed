@@ -3,6 +3,7 @@
 # 오류 발생 시 컨테이너 초기화: sudo docker-compose -f docker-compose.prod.yml down -v
 # 이미지까지 전부 삭제: sudo docker rmi -f $(sudo docker images -q)
 # NGINX 이미지 삭제: sudo docker rmi -f nginx
+# Docker 강제종료: sudo docker stop $(sudo docker ps -a -q)
 version: "3.8"
 services:
 
