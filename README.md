@@ -29,7 +29,7 @@
 <br><br><br><br>
 
 ## 📌 System Architecture
-<img width="774" alt="image" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/23994630-270f-417b-ab65-07dbf6d077ba">
+<img width="774" alt="image" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/91292a22-07e2-4f73-b6fe-3ca992a87cf7">
 <br><br><br><br>
 
 
