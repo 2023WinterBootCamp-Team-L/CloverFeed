@@ -21,7 +21,7 @@
 
 
 |&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**회원가입 및 로그인**&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;| **피드백 질문 폼 생성** |
-| ---- | --- |
+| :----: | :---: |
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/8d79f683-147e-4b64-9198-46b5314c53ed" width="260" height="509"/>| <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)" width="260" height="509"/>| 
 | **피드백 답변 제출** | **피드백의 익명 평가 시작 페이지<br>(평가 하는 사람 페이지)** |
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/b2f24893-a861-489d-bee3-c7f2b02eec20" width="260" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/2a346f46-3ca8-4d7f-a4bf-cddc88e7245a" width="290" height="509"/>|
