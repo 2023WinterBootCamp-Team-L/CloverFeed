@@ -25,11 +25,15 @@
 
 피드백 답변 제출|피드백 질문 폼 생성|
 -------------|-------------|
-<img width="250" alt="피드백 답변 제출" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/e21d636d-6112-4853-8a26-bbe1c9e2421e">|<img width="250" alt="피드백 질문 폼 생성" src="">|
+<img width="250" alt="피드백 답변 제출" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/3a116515-f769-4dbe-b08c-29371b3c6963">|<img width="250" alt="피드백 질문 폼 생성" src="">|
 
 회원가입 및 로그인|피드백 질문 폼 생성|
 -------------|-------------|
-<img width="250" alt="회원가입 및 로그인" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/8d79f683-147e-4b64-9198-46b5314c53ed">|<img width="250" alt="피드백 질문 폼 생성" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)">|
+<img width="250" alt="회원가입 및 로그인" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/3a116515-f769-4dbe-b08c-29371b3c6963">|<img width="250" alt="피드백 질문 폼 생성" src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)">|
+
+
+
+
 
 
 
