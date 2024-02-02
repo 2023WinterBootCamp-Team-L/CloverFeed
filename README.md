@@ -25,7 +25,7 @@
 
 |**피드백 답변 제출**| **피드백 답변 확인** |
 | :----: | :---: |
-|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/eb5ebf3e-8947-4a0a-b0da-23cd311bb6cf" width="260" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/92118ee5-5838-41a1-9994-770c0cccf87c" width="260" height="509"/>|
+|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/eb5ebf3e-8947-4a0a-b0da-23cd311bb6cf" width="260" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/5a93796c-be59-4edf-8098-a7ae2d94b710" width="260" height="509"/>|
 
 
 
