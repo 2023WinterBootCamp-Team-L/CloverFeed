@@ -1,5 +1,5 @@
 # 개발용 docker-compose 파일
-# 실행 방법: sudo docker compose up --build
+# 실행 방법: sudo docker compose up -d --build
 version: "3.8"
 services:
 
@@ -48,18 +48,18 @@ services:
     networks:
       - django-network
 
-  frontend:
-    container_name: frontend
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "5173:5173"
-    volumes:
-      # :을 기준으로 왼쪽은 빌드 이전의 로컬 폴더 오른쪽은 컨테이너 내부의 폴더
-      - ./frontend:/app
-      - /app/node_modules
-      - build_folder:/app/dist  # 빌드 디렉토리를 볼륨으로 마운트
+  # frontend:
+  #   container_name: frontend
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5173:5173"
+  #   volumes:
+  #     # :을 기준으로 왼쪽은 빌드 이전의 로컬 폴더 오른쪽은 컨테이너 내부의 폴더
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #     - build_folder:/app/dist  # 빌드 디렉토리를 볼륨으로 마운트
 
 volumes:
   mysql_data:
