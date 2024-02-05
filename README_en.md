@@ -221,13 +221,13 @@ $ yarn dev
     </tr>
     <tr>
         <th>Name</th>
-        <td width="100" align="center">강석규</td>
-        <td width="100" align="center">조상아</td>
-        <td width="100" align="center">석민정</td>
-        <td width="100" align="center">강지은</td>
-        <td width="100" align="center">정현수</td>
-        <td width="100" align="center">한현서</td>
-        <td width="100" align="center">이창연</td>
+        <td width="100" align="center">Seokkyoo<br>Kang</td>
+        <td width="100" align="center">Sanga<br>Cho</td>
+        <td width="100" align="center">Minjeong<br>Seok</td>
+        <td width="100" align="center">Jieun<br>Kang</td>
+        <td width="100" align="center">Hyeonsu<br>Jung</td>
+        <td width="100" align="center">Hyeonseo<br>Han</td>
+        <td width="100" align="center">Changyeon<br>Lee</td>
     </tr>
     <tr>
         <th>Position</th>
