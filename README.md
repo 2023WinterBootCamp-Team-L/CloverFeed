@@ -110,8 +110,71 @@ SSL 인증서를 발급받아 HTTPS를 적용하여 웹사이트의 무결성을
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/58c3a9ed-5b61-4567-887d-9affa0ebc816"/>
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/dbd818bd-8f59-4f4e-9a66-86c5bb74a7aa"/>
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/aae1824b-0558-4319-9bcf-cafc89d5d58b"/>
-<br><br><br><br>
+<br>
 
+## 🛠 Installation
+
+### 사용설명서
+준비물
+- OpenAI secret key ([발급받으러 가기(비용이 발생할 수 있음)](https://platform.openai.com/))
+
+1. Docker를 시스템에 설치합니다.
+2. 아래의 shell 명령문을 똑같이 따라 칩니다.
+```shell
+$ git clone https://github.com/2023WinterBootCamp-Team-L/CloverFeed.git
+```
+3.  .env 파일을 알맞은 위치에 작성합니다.
+- /.env (docker-compose.yml 파일과 같은 디렉토리)
+```
+MYSQL_ROOT_PASSWORD=(여기에 원하는 MySQL 루트 비밀번호 입력)
+MYSQL_DATABASE=cloverfeed
+MYSQL_USER=user
+MYSQL_PASSWORD=(여기에 원하는 MySQL 루트 비밀번호 입력)
+```
+- /backend/config/.env
+```
+DB_NAME=cloverfeed
+DB_USER=root
+DB_PASSWORD=(여기에 상단 .env파일에서 설정한 MySQL 루트 비밀번호 입력)
+DB_HOST=mysql
+DB_PORT=3306
+CORS_ORIGIN_WHITELIST=http://127.0.0.1:5173,http://frontend:5173,http://localhost:5173,http://127.0.0.1:5174,http://frontend:5174,http://localhost:5174,http://127.0.0.1:80,http://frontend:80,http://localhost:80,http://127.0.0.1,http://frontend,http://localhost,http://localhost:8000
+ALLOWED_HOSTS=backend,localhost,127.0.0.1
+OPENAI_KEY=(여기에 OpenAI secret key 입력)
+```
+4. 아래의 shell 명령문을 똑같이 따라 칩니다.
+```shell
+$ cd project
+$ docker compose up -d --build
+```
+5. Docker Desktop에서 Docker Container들이 잘 실행되고 있는지 확인합니다.
+6. Docker Desktop에서 backend container를 선택한 다음, django secret key를 확인합니다. ([확인 방법](https://github.com/2023SVBootcamp-Team-A/project/assets/8746067/5c0e98cb-fad9-46c4-b0f3-95363cbb4dd6))
+7. 확인한 django secret key를 .env 파일에 추가합니다.
+- /backend/config/.env
+```
+DB_NAME=cloverfeed
+DB_USER=root
+DB_PASSWORD=(여기에 상단 .env파일에서 설정한 MySQL 루트 비밀번호 입력)
+DB_HOST=mysql
+DB_PORT=3306
+SECRET_KEY=django-insecure-(여기에 django secret key 입력)
+CORS_ORIGIN_WHITELIST=http://127.0.0.1:5173,http://frontend:5173,http://localhost:5173,http://127.0.0.1:5174,http://frontend:5174,http://localhost:5174,http://127.0.0.1:80,http://frontend:80,http://localhost:80,http://127.0.0.1,http://frontend,http://localhost,http://localhost:8000
+ALLOWED_HOSTS=backend,localhost,127.0.0.1
+OPENAI_KEY=(여기에 OpenAI secret key 입력)
+```
+8. 아래의 shell 명령문을 똑같이 따라 칩니다.
+```shell
+$ docker compose up -d --build
+```
+9. Docker Desktop에서 Docker Container들이 잘 실행되고 있는지 한 번 더 확인합니다.
+10. 아래의 shell 명령문을 똑같이 따라 칩니다.
+```shell
+$ cd frontend
+$ yarn
+$ yarn dev
+```
+11. 그 상태에서 'localhost:5173'에 접속하면 사용할 수 있습니다.
+- - - 
 
 
 ## 👨‍👩‍👧‍👦 Members
