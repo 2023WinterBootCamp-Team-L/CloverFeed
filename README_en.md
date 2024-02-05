@@ -294,5 +294,5 @@ $ yarn dev
      </tr>
     </tbody>
 </table>
-Development Period :
-26. 12. 2023. ~ 03. 02. 2024.
+<br>
+Development Period : 26. 12. 2023. ~ 03. 02. 2024.
