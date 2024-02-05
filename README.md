@@ -6,6 +6,8 @@
 <h3> 내가 만든 피드백 질문 목록을 동료들에게 공유해서 피드백을 받아보세요 👀 </h3>
 </div>
 
+### [English Version](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/blob/main/README_en.md)
+
 ## 🖱️Production
 ### **https://cloverfeed.kr/**
 <br>
@@ -294,5 +296,5 @@ $ yarn dev
      </tr>
     </tbody>
 </table>
-개발 기간 :
-2023년 12월26일 ~ 2024년 2월3일
+<br>
+개발 기간 : 2023년 12월26일 ~ 2024년 2월3일
