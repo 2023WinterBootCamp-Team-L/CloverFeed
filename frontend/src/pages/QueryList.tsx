@@ -1,25 +1,25 @@
-import { useState, useEffect } from 'react';
-import AddButton from '../components/AddButton';
-import BackButton from '../components/BackButton';
-import BaseQuest from '../components/BaseQuest';
-import { useNavigate } from 'react-router-dom';
-import Modal from '../components/Modal';
-import { questionListState } from '../../atoms/QuestionStore';
-import { useRecoilValue } from 'recoil';
-import axios from 'axios';
+import { useState, useEffect } from "react";
+import AddButton from "../components/AddButton";
+import BackButton from "../components/BackButton";
+import BaseQuest from "../components/BaseQuest";
+import { useNavigate } from "react-router-dom";
+import Modal from "../components/Modal";
+import { questionListState } from "../../atoms/QuestionStore";
+import { useRecoilValue } from "recoil";
+import axios from "axios";
 
 function QueryList() {
   const questionList = useRecoilValue(questionListState);
   const navigate = useNavigate();
 
   const handleAddButtonClick = () => {
-    navigate('/QueryAdd');
+    navigate("/QueryAdd");
   };
 
-  const [userid, setUserid] = useState('');
+  const [userid, setUserid] = useState("");
 
   useEffect(() => {
-    const storedUserid = localStorage.getItem('user_id');
+    const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
       setUserid(storedUserid);
     }
@@ -47,13 +47,13 @@ function QueryList() {
 
       // 실제 POST 요청은 한 번만 실행
       const response = await axios.post(
-        'http://localhost:8000/api/questions/',
+        "https://cloverfeed.kr/api/questions/",
         requestData
       );
 
       console.log(response.data);
 
-      navigate('/QueryShare');
+      navigate("/QueryShare");
     } catch (error) {
       console.error(error);
     }
