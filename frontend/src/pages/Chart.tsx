@@ -93,7 +93,7 @@ function Chart() {
     }
   }, []);
 
-  const apiUrl = `http://localhost:8000/api/feedbacks/tags/chart/?user_id=${userid}`;
+  const apiUrl = `https://cloverfeed.kr/api/feedbacks/tags/chart/?user_id=${userid}`;
 
   const [workData, setWorkData] = React.useState<
     { tag: string; percentage: number }[]

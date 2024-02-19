@@ -23,7 +23,7 @@ const Search: React.FC = () => {
   const fetchFeedbacks = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/feedbacks/response/?user_id=${userid}&keyword=${searchValue}`
+        `https://cloverfeed.kr/api/feedbacks/response/?user_id=${userid}&keyword=${searchValue}`
       );
 
       if (response.data.status === "success") {

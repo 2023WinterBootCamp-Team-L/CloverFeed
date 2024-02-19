@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import React from 'react';
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import React from "react";
+import axios from "axios";
 
 interface ApiResponse {
   status: string;
@@ -18,10 +18,10 @@ interface ShareButtonProps {
 const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
   const navigate = useNavigate();
 
-  const [userid, setUserid] = useState('');
+  const [userid, setUserid] = useState("");
 
   useEffect(() => {
-    const storedUserid = localStorage.getItem('user_id');
+    const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
       setUserid(storedUserid);
     }
@@ -31,23 +31,23 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
     try {
       // 사용자 ID를 하드코딩하거나, 동적으로 설정할 수 있습니다.
       const response = await axios.get<ApiResponse>(
-        `http://localhost:8000/api/form/?user_id=${userid}`
+        `https://cloverfeed.kr/api/form/?user_id=${userid}`
       );
 
-      if (response.data.status === 'success') {
-        if (response.data.feedbackform === 'true') {
+      if (response.data.status === "success") {
+        if (response.data.feedbackform === "true") {
           // feedbackform이 true이면 sharepage로 이동
-          navigate('/QueryShare');
+          navigate("/QueryShare");
         } else {
           // feedbackform이 false이면 QueryMain 페이지로 이동
-          navigate('/QueryMain');
+          navigate("/QueryMain");
         }
       } else {
         // API 응답이 success가 아닌 경우에 대한 처리
-        console.log('API 응답:', response.data);
+        console.log("API 응답:", response.data);
       }
     } catch (error) {
-      console.error('API 호출 에러:', error);
+      console.error("API 호출 에러:", error);
     }
   };
 
