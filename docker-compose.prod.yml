@@ -22,12 +22,25 @@ services:
       - ./backend:/backend
       - ./backend/static:/backend/static
       - build_folder:/var/www/frontend
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     depends_on:
       - frontend
       - backend
       - db
     networks:
       - django-network
+
+  certbot:
+    image: certbot/certbot
+    restart: unless-stopped
+    container_name: certbot
+    volumes: 
+      - ./certbot/conf:/etc/letsencrypt  
+      - ./certbot/www:/var/www/certbot
+    depends_on:
+      - nginx
+    entrypoint: "/bin/sh -c 'trap exit TERM; while :; do certbot renew; sleep 12h & wait $${!}; done;'"
 
   db:
     container_name: mysql
@@ -95,6 +108,21 @@ services:
       interval: 5s
       timeout: 2s
       retries: 10
+
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.47.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - django-network
+    depends_on:
+      - backend
 
   frontend:
     container_name: frontend

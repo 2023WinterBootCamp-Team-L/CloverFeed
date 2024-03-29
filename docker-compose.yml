@@ -47,6 +47,30 @@ services:
       - ./backend:/backend
     networks:
       - django-network
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl --fail http://backend:8000/ || exit 1"
+        ]
+      interval: 5s
+      timeout: 2s
+      retries: 10
+
+  cadvisor:
+    container_name: cadvisor
+    image: gcr.io/cadvisor/cadvisor:v0.47.1
+    ports:
+      - "8080:8080"
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:ro
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    networks:
+      - django-network
+    depends_on:
+      - backend
 
   frontend:
     container_name: frontend
