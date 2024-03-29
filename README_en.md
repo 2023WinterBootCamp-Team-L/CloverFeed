@@ -2,29 +2,29 @@
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/49551bb0-c05d-416c-951e-fde0d4d401a0"/>
 
 <div align = "center">
-<h3> 동료의 익명 피드백을 통해 내 직무상 강점을 알 수 있는 서비스! </h3>
-<h3> 내가 만든 피드백 질문 목록을 동료들에게 공유해서 피드백을 받아보세요 👀 </h3>
+<h3> The service that allows to find your business strengths through anonymous feedback from colleagues! </h3>
+<h3> Make and share your own feedback form to your colleagues and get honest feedbacks! 👀 </h3>
 </div>
 
-### [English Version](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/blob/main/README_en.md)
+### [한국어 버전](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/blob/main/README.md)
 
 ## 🖱️Production
 ### **https://cloverfeed.kr/**
 <br>
   
 ## ⭐️ Medium
-[🇰🇷 CloverFeed.Kor](https://medium.com/@hanhs3925/40a53cbf1c17)<br>
-[🇺🇸 CloverFeed.Eng](https://medium.com/@hanhs3925/cloverfeed-8a835e298fda)
+[🇺🇸 CloverFeed.Eng](https://medium.com/@hanhs3925/cloverfeed-8a835e298fda)<br>
+[🇰🇷 CloverFeed.Kor](https://medium.com/@hanhs3925/40a53cbf1c17)
 <br>
 
 
 ## 📋 Features
 
-|**회원가입 및 로그인**| **피드백 질문 폼 생성** |
+|**Sign up and login**| **Create question form** |
 | :----: | :---: |
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/8d79f683-147e-4b64-9198-46b5314c53ed" width="250" height="509"/>| <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/a91ac798-99b3-46a4-9853-c7e0522e7a51)" width="250" height="509"/>|
 
-|**피드백 답변 제출**| **피드백 답변 확인** |
+|**Submit feedback answer**| **Read feedback result** |
 | :----: | :---: |
 |<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/eb5ebf3e-8947-4a0a-b0da-23cd311bb6cf" width="250" height="509"/>|<img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/117559366/5a93796c-be59-4edf-8098-a7ae2d94b710" width="250" height="509"/>|
 
@@ -40,7 +40,7 @@
 ## 📚 Tech Stack
 <div align =center>
 
-분야| 사용 기술|
+Area| Tech Stack|
 :--------:|:------------------------------:|
 **Fronted** | <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"> <img src="https://img.shields.io/badge/TypeScript-3178C6.svg?style=for-the-badge&logo=TypeScript&logoColor=white"> <img src="https://img.shields.io/badge/React Router-CA4245.svg?&style=for-the-badge&logo=reactrouter&logoColor=white"> <img src="https://img.shields.io/badge/Vite-646CFF.svg?&style=for-the-badge&logo=vite&logoColor=white"> <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?&style=for-the-badge&logo=TailwindCSS&logoColor=white"> <img src="https://img.shields.io/badge/Recoil-3578E5?&style=for-the-badge&logo=Recoil&logoColor=white"> <img src="https://img.shields.io/badge/Framer Motion-0055FF?&style=for-the-badge&logo=framer&logoColor=white"> <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white"/> <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white"/>
 **Backend** | <img src="https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=Django&logoColor=white">  <img src="https://img.shields.io/badge/DJANGO_REST-ff1709?style=for-the-badge&logo=django&logoColor=white&color=ff1709&labelColor=gray"> <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white"> 
@@ -54,22 +54,22 @@
 ## React Vite TypeScript
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/0a94069d-7a7d-4154-8ba2-7691e97b2751"/>
 <br/><br/>
-React를 사용한 SPA(Single Page Application)로 페이지를 작성하였으며, React를 사용함으로서 가독성이 높은 코드 작성, 컴포넌트 기반 구조를 통한 모듈화, 가상 DOM을 활용한 성능 최적화 등을 통한 효율적인 사용자 인터페이스 개발이 가능했습니다.<br/><br/>
-프론트엔드 개발 언어로 TypeScript를 사용했습니다. TypeScript는 JavaScript의 동적 언어라는 특성으로 인한 단점을 해결하기 위해 만들어진 정적 타입 언어로, 정적 타입 검사를 통한 코드 안정성 강화, 유지보수성 향상 등의 이점이 있으며 이를 통해 협업을 더욱 원활하게 할 수 있었습니다.<br/><br/>
-Vite를 번들러로 채택하였습니다. Vite는 ESModule 기반의 번들러로 기존의 Webpack 대비 빠른 빌드와 테스팅이 가능하며, 이를 통해 개발 생산성을 높였습니다.<br/><br/>
-Tailwind CSS를 CSS 프레임워크로 사용하였습니다. Tailwind CSS는 클래스 기반의 유틸리티 퍼스트 프레임워크로, 이를 사용하여 빠르고 효율적인 스타일링은 물론, 개발 컨벤션 통일 효과를 얻었습니다.<br/><br/>
+We developed the pages as a Single Page Application (SPA) using React. React lets us to allow the creation of highly readable code, modularization through a component-based structure, and efficient user interface development with performance optimization using virtual DOM.<br/><br/>
+We utilized TypeScript as the frontend development language. TypeScript is a statically typed language that was developed to solve problems caused by JavaScript being a dynamic language. It brings advantages such as enhanced code stability through static type checking and improved maintainability. This has facilitated smoother collaboration among team members.<br/><br/>
+We chose Vite as the bundler. Vite is an ESModule-based bundler that allows for faster builds and testing compared to traditional Webpack. This has increased development productivity significantly.<br/><br/>
+We used Tailwind CSS as the CSS framework. Tailwind CSS is a utility-first framework based on classes, allowing for quick and efficient styling. By using it, we achieved not only fast and effective styling but also a unified development convention.<br/><br/>
 
-## 시각화
+## Visualization
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/a7d7c42a-6fe8-4f71-a9d3-84c59c8728a6"/>
 <br/>
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/df2ddb7e-f320-4bcd-97aa-0faf4f484f08"/>
 <br/>
-익명의 동료에게 받은 피드백들을 한 눈에 파악하기 쉽게 차트와 워드클라우드로 시각화를 진행하였습니다. 강점과 성격 및 태도를 나타내는 태그는 Chart.js를 사용하여 도넛 형태의 차트로 표현하였으며, 주관식 답변에서 나타난 키워드의 빈도를 추출하여 react-wordcloud라는 라이브러리를 사용하여 메인 페이지에 워드클라우드로 표현하였습니다.
+We visualized anonymous feedback received from colleagues for quick comprehension using charts and word clouds. Tags representing strengths, personality, and attitudes were illustrated in a donut-shaped chart using Chart.js. Additionally, we utilized the react-wordcloud library to visualize word cloud on the main page based on extracted keyword and their frequency in feedbacks.<br/><br/>
 
 ## Recoil
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/8833ecb1-1db6-4d12-bc80-b218c06e1a81"/>
 <br />
-질문 목록과 피드백 답변을 작성할 때, 질문과 답변을 추가할 때마다 API 요청을 한다면 API 응답 시간 지연으로 인한 성능 저하가 발생할 수 있습니다. 이를 해결하기 위해 질문 목록 작성, 답변 목록 작성 기능에 Recoil을 사용한 전역 상태 관리를 적용했습니다. Recoil은 상태를 컴포넌트 외부에 저장하고 관리하는 라이브러리로, 이를 통해 여러 컴포넌트가 하나의 상태를 전역적으로 공유할 수 있게 됩니다. 각각의 질문 혹은 답변이 추가될 때마다 Recoil Atom에 정의된 질문 리스트, 답변 리스트로 업데이트 되며, 이러한 구조 덕분에 질문 폼 혹은 피드백 답변을 최종적으로 확정할 때 한 번에 모아서 백엔드와 통신하는 방식을 적용하여 질문과 답변 작성 페이지에서의 사용성 향상을 더욱 용이하게 할 수 있었습니다.
+To mitigate the potential performance degradation caused by delays in API responses when adding questions and feedback answers, we implemented global state management using Recoil for question and answer list creation features. Recoil is a library that allows storing and managing state outside of components, enabling multiple components to globally share a single state. Each addition of a question or answer updates the question list and answer list defined in the Recoil Atom. Thanks to this structure, we improved usability on the question and answer writing pages by adopting a method that collects and communicates with the backend once when finalizing the question form or feedback answer.
 </details>
 
 <details>
@@ -78,12 +78,12 @@ Tailwind CSS를 CSS 프레임워크로 사용하였습니다. Tailwind CSS는 �
 ## Django REST Framework
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/6c472da0-829f-4ad5-940f-915c8ec80223"/>
 <br/><br/>
-강력한 ORM, 보안 기능, 풍부한 기능 등으로 안정적이고 생산성이 높으며, 인공지능을 활용한 NLP 기능 추가와 ChatGPT 연동에 용이한 파이썬 기반의 웹 프레임워크인 Django를 사용하였습니다.<br/><br/>
+We opted for Django, a Python-based web framework known for high productivity and stability due to its powerful ORM, security features, and rich functionality. also Its lets us seamless integration with ChatGPT and the addition of NLP features Because it is written in Python, which is widely used in AI.<br/><br/>
 
 ## Database
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/152496fb-0850-4f97-8518-8b9b3ee7cb2b"/>
 <br/><br/>
-데이터 관리를 위해 표준 SQL을 지원하며, 이미 높은 안정성과 확장성을 검증받은 오픈 소스 관계형 데이터베이스 관리 시스템(RDBMS)인 MySQL을 DBMS로 사용하였습니다.
+For data management, we utilized MySQL as the Database Management System (DBMS), an open-source relational database management system (RDBMS) with proven high stability and scalability that supports standard SQL.
 <br/><br/>
 </details>
 
@@ -93,18 +93,18 @@ Tailwind CSS를 CSS 프레임워크로 사용하였습니다. Tailwind CSS는 �
 ## Docker
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/9560026b-35c0-450f-9304-77a15b3a5619"/>
 <br/><br/>
-Docker를 사용하여 애플리케이션을 컨테이너화함으로써 개발 환경의 일관성을 유지하고, 환경 구성의 간소화로 빠른 배포 및 관리와 이식성 향상을 실현했습니다.<br/><br/>
+By containerizing the application using Docker, we achieved consistency in the development environment. This not only simplified environment configuration but also facilitated rapid deployment, management, and enhanced portability.<br/><br/>
 
 ## HTTPS
 <img src="https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/8746067/a9bfcc0c-c601-44c0-bda3-3df87d86f905"/>
 <br/><br/>
-SSL 인증서를 발급받아 HTTPS를 적용하여 웹사이트의 무결성을 보호하도록 하였습니다.
+We obtained an SSL certificate and applied HTTPS to ensure the integrity of the website.
 <br/><br/>
 </details>
 
 <br>
 
-## 🔐 ERD 설계
+## 🔐 ERD Design
 ![스크린샷 2024-01-05 오후 2 22 29](https://github.com/2023WinterBootCamp-Team-L/CloverFeed/assets/113092405/14793083-2564-4693-8844-423dc2649814)
 <br><br><br><br>
 
@@ -116,66 +116,66 @@ SSL 인증서를 발급받아 HTTPS를 적용하여 웹사이트의 무결성을
 
 ## 🛠 Installation
 
-### 사용설명서
-준비물
-- OpenAI secret key ([발급받으러 가기(비용이 발생할 수 있음)](https://platform.openai.com/))
+### How to start the server
+Prerequisites
+- OpenAI secret key ([Go to get it issued (cost may apply)](https://platform.openai.com/))
 
-1. Docker를 시스템에 설치합니다.
-2. 아래의 shell 명령문을 똑같이 따라 칩니다.
+1. Install Docker to your system
+2. Run the shell command as shown below
 ```shell
 $ git clone https://github.com/2023WinterBootCamp-Team-L/CloverFeed.git
 ```
-3.  .env 파일을 알맞은 위치에 작성합니다.
-- /.env (docker-compose.yml 파일과 같은 디렉토리)
+3. Make and write .env file in right directory
+- /.env (same as the directory of docker-compose.yml)
 ```
-MYSQL_ROOT_PASSWORD=(여기에 원하는 MySQL 루트 비밀번호 입력)
+MYSQL_ROOT_PASSWORD=(write the MySQL root password you want)
 MYSQL_DATABASE=cloverfeed
 MYSQL_USER=user
-MYSQL_PASSWORD=(여기에 원하는 MySQL 루트 비밀번호 입력)
+MYSQL_PASSWORD=(write the MySQL root password you want)
 ```
 - /backend/config/.env
 ```
 DB_NAME=cloverfeed
 DB_USER=root
-DB_PASSWORD=(여기에 상단 .env파일에서 설정한 MySQL 루트 비밀번호 입력)
+DB_PASSWORD=(write the MySQL root password same as in .env file above)
 DB_HOST=mysql
 DB_PORT=3306
 CORS_ORIGIN_WHITELIST=http://127.0.0.1:5173,http://frontend:5173,http://localhost:5173,http://127.0.0.1:5174,http://frontend:5174,http://localhost:5174,http://127.0.0.1:80,http://frontend:80,http://localhost:80,http://127.0.0.1,http://frontend,http://localhost,http://localhost:8000
 ALLOWED_HOSTS=backend,localhost,127.0.0.1
-OPENAI_KEY=(여기에 OpenAI secret key 입력)
+OPENAI_KEY=(write your OpenAI secret key here)
 ```
-4. 아래의 shell 명령문을 똑같이 따라 칩니다.
+4. Run the shell command as shown below
 ```shell
 $ cd project
 $ docker compose up -d --build
 ```
-5. Docker Desktop에서 Docker Container들이 잘 실행되고 있는지 확인합니다.
-6. Docker Desktop에서 backend container를 선택한 다음, django secret key를 확인합니다. ([확인 방법](https://github.com/2023SVBootcamp-Team-A/project/assets/8746067/5c0e98cb-fad9-46c4-b0f3-95363cbb4dd6))
-7. 확인한 django secret key를 .env 파일에 추가합니다.
+5. Check to Docker Container running well from Docker Desktop.
+6. Select the backend container in Docker Desktop, then check your django secret key. ([how to check](https://github.com/2023SVBootcamp-Team-A/project/assets/8746067/5c0e98cb-fad9-46c4-b0f3-95363cbb4dd6))
+7. add your django secret key in .env file.
 - /backend/config/.env
 ```
 DB_NAME=cloverfeed
 DB_USER=root
-DB_PASSWORD=(여기에 상단 .env파일에서 설정한 MySQL 루트 비밀번호 입력)
+DB_PASSWORD=(write the MySQL root password same as in .env file above)
 DB_HOST=mysql
 DB_PORT=3306
-SECRET_KEY=django-insecure-(여기에 django secret key 입력)
+SECRET_KEY=django-insecure-(write your django secret key here)
 CORS_ORIGIN_WHITELIST=http://127.0.0.1:5173,http://frontend:5173,http://localhost:5173,http://127.0.0.1:5174,http://frontend:5174,http://localhost:5174,http://127.0.0.1:80,http://frontend:80,http://localhost:80,http://127.0.0.1,http://frontend,http://localhost,http://localhost:8000
 ALLOWED_HOSTS=backend,localhost,127.0.0.1
-OPENAI_KEY=(여기에 OpenAI secret key 입력)
+OPENAI_KEY=(write your OpenAI secret key here)
 ```
-8. 아래의 shell 명령문을 똑같이 따라 칩니다.
+8. Run the shell command as shown below
 ```shell
 $ docker compose up -d --build
 ```
-9. Docker Desktop에서 Docker Container들이 잘 실행되고 있는지 한 번 더 확인합니다.
-10. 아래의 shell 명령문을 똑같이 따라 칩니다.
+9. Check to Docker Container running well from Docker Desktop once again.
+10. Run the shell command as shown below
 ```shell
 $ cd frontend
 $ yarn
 $ yarn dev
 ```
-11. 그 상태에서 'localhost:5173'에 접속하면 사용할 수 있습니다.
+11. go to 'localhost:5173' in your web browser. then enjoy!
 - - - 
 
 
@@ -223,13 +223,13 @@ $ yarn dev
     </tr>
     <tr>
         <th>Name</th>
-        <td width="100" align="center">강석규</td>
-        <td width="100" align="center">조상아</td>
-        <td width="100" align="center">석민정</td>
-        <td width="100" align="center">강지은</td>
-        <td width="100" align="center">정현수</td>
-        <td width="100" align="center">한현서</td>
-        <td width="100" align="center">이창연</td>
+        <td width="100" align="center">Seokkyoo<br>Kang</td>
+        <td width="100" align="center">Sanga<br>Cho</td>
+        <td width="100" align="center">Minjeong<br>Seok</td>
+        <td width="100" align="center">Jieun<br>Kang</td>
+        <td width="100" align="center">Hyeonsu<br>Jung</td>
+        <td width="100" align="center">Hyeonseo<br>Han</td>
+        <td width="100" align="center">Changyeon<br>Lee</td>
     </tr>
     <tr>
         <th>Position</th>
@@ -297,4 +297,4 @@ $ yarn dev
     </tbody>
 </table>
 <br>
-개발 기간 : 2023년 12월26일 ~ 2024년 2월3일
+Development Period : 26. 12. 2023. ~ 03. 02. 2024.
