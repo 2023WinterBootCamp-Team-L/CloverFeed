@@ -8,6 +8,7 @@ import Tag from "../Tag";
 import ExceedPopup from "../ExceedPopup";
 import { answerListState } from "../../../atoms/AnswerStore";
 import { feedbackQuestionListState } from "../../../atoms/QuestionStore";
+import { tagColors } from "../Tag";
 
 interface TagPartProps {
   questionIndex: number;
@@ -17,7 +18,7 @@ const TagPart: React.FC<TagPartProps> = ({ questionIndex }) => {
   const tagsData =
     questionIndex === 1 ? tagsWorkDataState : tagsAttitudeDataState;
   const currentQuestionTags = useRecoilValue(tagsData);
-  const [selectedTags, setSelectedTags] = useState<number[]>([]);
+  const [selectedTagIndexes, setSelectedTagIndexes] = useState<number[]>([]);
   const [showExceedPopup, setShowExceedPopup] = useState(false);
   const [tagTexts, setTagTexts] = useState<string[]>([]);
   const [questionList] = useRecoilState(feedbackQuestionListState);
@@ -25,35 +26,44 @@ const TagPart: React.FC<TagPartProps> = ({ questionIndex }) => {
   // Add useRecoilState for answerList
   const [answerList, setAnswerList] = useRecoilState(answerListState);
 
-  const handleTagClick = (tagnumber: number) => {
-    setSelectedTags((prevSelectedTags) => {
-      const isSelected = prevSelectedTags.includes(tagnumber);
+  const handleTagClick = (tagIndex: number) => {
+    setSelectedTagIndexes((prevSelectedIndexes) => {
+      const isSelected = prevSelectedIndexes.includes(tagIndex);
+      let updatedSelectedIndexes: number[];
 
-      // 선택을 토글
-      let updatedSelectedTags = isSelected
-        ? prevSelectedTags.filter((selectedTag) => selectedTag !== tagnumber)
-        : [...prevSelectedTags, tagnumber];
+      if (!isSelected && prevSelectedIndexes.length < 5) {
+        // 선택된 태그의 수가 5개 미만이면 해당 인덱스를 추가
+        updatedSelectedIndexes = [...prevSelectedIndexes, tagIndex];
+      } else if (isSelected) {
+        // 선택된 태그가 해제되면 해당 인덱스를 제거
+        updatedSelectedIndexes = prevSelectedIndexes.filter(
+          (index) => index !== tagIndex
+        );
+      } else {
+        // 선택된 태그의 수가 5개 이상이거나 이미 선택된 태그가 클릭되었을 때는 이전 상태 그대로 유지
+        updatedSelectedIndexes = prevSelectedIndexes;
+      }
 
       // 선택된 태그 수가 제한을 초과하는지 확인
-      if (updatedSelectedTags.length > 5) {
+      if (updatedSelectedIndexes.length > 5) {
         setShowExceedPopup(true);
-        // selectedTags가 5개를 초과하면 마지막으로 추가된 태그를 제거
-        updatedSelectedTags = updatedSelectedTags.slice(0, -1);
+        // 선택된 태그가 5개를 초과하면 마지막으로 추가된 태그를 제거
+        updatedSelectedIndexes = updatedSelectedIndexes.slice(0, -1);
       } else {
         setShowExceedPopup(false);
       }
 
       // Update tagTexts state
       setTagTexts(
-        updatedSelectedTags.map((tagNumber) => {
-          return (
-            currentQuestionTags.find((tag) => tag.tagnumber === tagNumber)
-              ?.text || ""
+        updatedSelectedIndexes.map((index) => {
+          const tag = currentQuestionTags.find(
+            (tag) => tag.tagnumber === index
           );
+          return tag ? tag.text : "";
         })
       );
 
-      return updatedSelectedTags;
+      return updatedSelectedIndexes;
     });
   };
 
@@ -82,23 +92,18 @@ const TagPart: React.FC<TagPartProps> = ({ questionIndex }) => {
         // style={{ width: '393px', height: '852px' }}
       >
         <div className="flex-1 text-center">
-          {/* 15개의 태그 렌더링 */}
+          {/* 선택된 태그들만 렌더링 */}
           {currentQuestionTags.map((tag, index) => (
             <Tag
-              key={index}
+              key={tag.tagnumber}
               text={tag.text}
-              tagnumber={tag.tagnumber}
               color={
-                selectedTags.length < 5 ||
-                (selectedTags.length === 5 &&
-                  selectedTags.includes(tag.tagnumber))
-                  ? selectedTags.includes(tag.tagnumber)
-                    ? "bg-white"
-                    : tag.tagnumber
-                  : null
+                selectedTagIndexes.includes(index)
+                  ? tagColors[index % tagColors.length]
+                  : "bg-white"
               }
               image={tag.image}
-              onClick={() => handleTagClick(tag.tagnumber)}
+              onClick={() => handleTagClick(index)}
             />
           ))}
         </div>

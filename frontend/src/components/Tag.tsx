@@ -6,11 +6,10 @@ export interface TagProps {
   text: string;
   color: string | number | null;
   image: string;
-  tagnumber: number;
   onClick?: () => void;
 }
 
-const tagColors = [
+export const tagColors = [
   "bg-[#E2E9FF]",
   "bg-[#F6EED4]",
   "bg-[#EDD0F5]",
@@ -19,22 +18,17 @@ const tagColors = [
 ];
 
 const Tag: React.FC<TagProps> = ({ text, color, image, onClick }) => {
-  const [currentColor, setCurrentColor] = useState("bg-white");
+  const [nextTagNumber, setNextTagNumber] = useState<number>(0);
 
   const handleButtonClick = () => {
     if (onClick) {
       onClick();
-
-      if (typeof color === "number") {
-        setCurrentColor(tagColors[color % tagColors.length]);
-      } else if (color === "bg-white") {
-        setCurrentColor(color);
-      }
+      setNextTagNumber(nextTagNumber + 1); // 다음 번호 업데이트
     }
   };
 
   const tagClasses = classNames(
-    currentColor, // 기본 배경색
+    color, // 기본 배경색
     "py-2 px-5",
     "rounded-3xl",
     "text-xs",

@@ -3,11 +3,7 @@
     "baseUrl": "cloverfeed.kr",
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -18,20 +14,29 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     /* Linting */
     "strict": false,
     "noUnusedLocals": false,
     "noImplicitAny": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "plugins": [
+      {
+        "name": "next",
+      },
+    ],
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "strictNullChecks": true,
   },
   "include": [
-    "src"
+    "src",
+    "./dist/types/**/*.d.ts",
+    "./next-env.d.ts",
+    "./dist/types/**/*.ts",
+    "public/app",
   ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  "exclude": ["./node_modules"],
 }
