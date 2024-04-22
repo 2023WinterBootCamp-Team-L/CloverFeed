@@ -27,6 +27,7 @@ node_modules/
 # React 프로젝트와 관련된 파일 및 디렉토리를 무시합니다.
 /build/
 /.next/
+dist
 
 # Vite
 # Vite 프로젝트와 관련된 파일 및 디렉토리를 무시합니다.

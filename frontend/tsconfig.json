@@ -18,20 +18,32 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "preserve",
     /* Linting */
     "strict": false,
     "noUnusedLocals": false,
     "noImplicitAny": false,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "allowJs": true,
+    "forceConsistentCasingInFileNames": true,
+    "incremental": true,
+    "strictNullChecks": true
   },
   "include": [
-    "src"
+    "src",
+    "./dist/types/**/*.d.ts",
+    "./next-env.d.ts",
+    "./dist/types/**/*.ts",
+    "public/app",
+    ".next/types/**/*.ts"
   ],
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
+  "exclude": [
+    "./node_modules"
   ]
 }
