@@ -1,8 +1,8 @@
-import loginclover from "../assets/loginclover.svg";
-import GreenButton from "../components/GreenButton";
+import loginclover from '../assets/loginclover.svg';
+import GreenButton from '../../components/GreenButton';
 
 function Signup() {
-  const nextpage = "/GoSignup";
+  const nextpage = '/GoSignup';
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div
