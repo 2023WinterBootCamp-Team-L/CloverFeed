@@ -1,9 +1,9 @@
-import image from "../public/next-js.svg";
+import Image from "next/image";
 
 export default function App() {
   return (
     <div>
-      <img src={image} />
+      <Image src="/favicon.ico" alt="기본 로고" />
       NextJS Migration
     </div>
   );

@@ -3,7 +3,11 @@
     "baseUrl": "cloverfeed.kr",
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -23,13 +27,13 @@
     "noFallthroughCasesInSwitch": true,
     "plugins": [
       {
-        "name": "next",
-      },
+        "name": "next"
+      }
     ],
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-    "strictNullChecks": true,
+    "strictNullChecks": true
   },
   "include": [
     "src",
@@ -37,6 +41,9 @@
     "./next-env.d.ts",
     "./dist/types/**/*.ts",
     "public/app",
+    ".next/types/**/*.ts"
   ],
-  "exclude": ["./node_modules"],
+  "exclude": [
+    "./node_modules"
+  ]
 }
