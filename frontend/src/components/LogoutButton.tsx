@@ -1,21 +1,25 @@
-import { useNavigate } from 'react-router-dom';
+"use client";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface LogoutButtonProps {
-  iconSrc: string; // 이미지 소스는 문자열로 표현
   logoutpage: string;
 }
 
-const LogoutButton: React.FC<LogoutButtonProps> = ({ iconSrc, logoutpage }) => {
-  const navigate = useNavigate();
+const LogoutButton: React.FC<LogoutButtonProps> = ({ logoutpage }) => {
+  const router = useRouter();
 
   const handleButtonClick = () => {
-    navigate(logoutpage);
+    router.push(logoutpage);
   };
 
   return (
     <button onClick={handleButtonClick}>
-      <img
-        src={iconSrc}
+      <Image
+        src="/common/logouticon.svg"
+        width={20}
+        height={20}
         alt="Logout Icon"
         className="transition ease-in-out delay-150  hover:scale-110 duration-300"
       />

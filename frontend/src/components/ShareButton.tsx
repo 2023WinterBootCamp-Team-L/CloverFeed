@@ -1,7 +1,10 @@
-import { useNavigate } from "react-router-dom";
+"use client";
+
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import React from "react";
 import axios from "axios";
+import Image from "next/image";
 
 interface ApiResponse {
   status: string;
@@ -11,12 +14,11 @@ interface ApiResponse {
 }
 
 interface ShareButtonProps {
-  iconSrc: string; // 이미지 소스는 문자열로 표현
   sharepage: string;
 }
 
-const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
-  const navigate = useNavigate();
+const ShareButton: React.FC<ShareButtonProps> = () => {
+  const router = useRouter();
 
   const [userid, setUserid] = useState("");
 
@@ -37,10 +39,10 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
       if (response.data.status === "success") {
         if (response.data.feedbackform === "true") {
           // feedbackform이 true이면 sharepage로 이동
-          navigate("/QueryShare");
+          router.push("/QueryShare");
         } else {
           // feedbackform이 false이면 QueryMain 페이지로 이동
-          navigate("/QueryMain");
+          router.push("/QueryMain");
         }
       } else {
         // API 응답이 success가 아닌 경우에 대한 처리
@@ -54,7 +56,13 @@ const ShareButton: React.FC<ShareButtonProps> = ({ iconSrc }) => {
   return (
     <button onClick={handleButtonClick}>
       <div className="flex flex-col justify-center gap-2 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
-        <img src={iconSrc} alt="Share Icon" className="h-[40px]" />
+        <Image
+          src="/common/shareicon.svg"
+          width={50}
+          height={50}
+          alt="Share Icon"
+          className="h-[40px] ml-1"
+        />
         <p className="font-pre text-[14px] font-bold">질문폼 공유</p>
       </div>
     </button>

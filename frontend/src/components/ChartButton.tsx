@@ -1,21 +1,27 @@
-import { useNavigate } from 'react-router-dom';
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface ChartButtonProps {
-  iconSrc: string; // 이미지 소스는 문자열로 표현
   chartpage: string;
 }
 
-const ChartButton: React.FC<ChartButtonProps> = ({ iconSrc, chartpage }) => {
-  const navigate = useNavigate();
+const ChartButton: React.FC<ChartButtonProps> = ({ chartpage }) => {
+  const router = useRouter();
 
   const handleButtonClick = () => {
-    navigate(chartpage);
+    router.push(chartpage);
   };
 
   return (
     <button onClick={handleButtonClick}>
       <div className="flex flex-col justify-center gap-3.5 transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 duration-300">
-        <img src={iconSrc} alt="Chart Icon" className="h-[30px] mt-1" />
+        <Image
+          src="/common/charticon.svg"
+          width={50}
+          height={50}
+          alt="Chart Icon"
+          className="h-[30px] mt-1 ml-1.5"
+        />
         <p className="font-pre text-[14px] font-bold">피드백 차트</p>
       </div>
     </button>

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import ReactWordcloud from "react-wordcloud";
-// import clovercloud from "../assets/clovercloud.svg";
 import axios, { AxiosResponse } from "axios";
 
 interface Word {
@@ -60,7 +59,7 @@ const SimpleWordcloud: React.FC = () => {
     return (
       <div className="flex flex-col gap-8 w-[334px]">
         <div
-          className="bg-clover font-pre text-[14px]"
+          className="bg-clover bg-custom-size font-pre text-[14px]"
           style={{
             // backgroundImage: "",
             backgroundPosition: "center top",
