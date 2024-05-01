@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useEffect } from "react";
-import BackButton from "../components/BackButton";
-import Searchbutton from "../components/Searchbutton";
-import FeedbackBox from "../components/FeedbackBox";
+import BackButton from "../../components/BackButton";
+import Searchbutton from "../../components/Searchbutton";
+import FeedbackBox from "../../components/FeedbackBox";
 import axios from "axios";
 
 interface Feedback {
@@ -99,7 +101,7 @@ const Search: React.FC = () => {
       style={{ width: "393px" }}
     >
       <div className="flex justify-between">
-        <BackButton back page="/MainPage" />
+        <BackButton back page="/Main" />
       </div>
 
       <div>

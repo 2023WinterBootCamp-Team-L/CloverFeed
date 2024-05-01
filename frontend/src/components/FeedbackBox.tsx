@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import TagAnswer from "../components/TagAnswer";
 import { workData, attitudeData } from "../components/TagAnswerList";
 
@@ -20,7 +20,7 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
   text,
   index,
 }) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const hasText = !!text;
   const isOddIndex = index % 2 === 0; // index가 홀수인지 짝수인지 확인
@@ -41,7 +41,7 @@ const FeedbackBox: React.FC<FeedbackBoxProps> = ({
           onClick={() => {
             const cleanedName = respondent_name.replace("#", "");
             const modifiedCategory = category === "PM/PO" ? "PMPO" : category;
-            navigate(
+            router.push(
               `/feedbackresult/search/${modifiedCategory}/${cleanedName}`
             );
           }}

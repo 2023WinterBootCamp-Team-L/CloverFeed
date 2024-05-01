@@ -1,10 +1,11 @@
+"use client";
+
 import axios from "axios";
-import BackButton from "../components/BackButton";
+import BackButton from "../../../components/BackButton";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import TagAnswer from "../components/TagAnswer";
-import { useNavigate } from "react-router-dom";
-import { workData, attitudeData } from "../components/TagAnswerList";
+import TagAnswer from "../../../components/TagAnswer";
+import { workData, attitudeData } from "../../../components/TagAnswerList";
+import { useParams, useRouter } from "next/navigation";
 
 interface Feedback {
   id: string;
@@ -16,14 +17,14 @@ interface Feedback {
 }
 
 const FeedbackList: React.FC = () => {
-  const { category } = useParams<{ category?: string }>();
+  const category = useParams<{ category: string }>();
   const [apiUrl, setApiUrl] = useState("");
 
   useEffect(() => {
     const storedUserid = localStorage.getItem("user_id");
     if (storedUserid) {
       setApiUrl(
-        `https://cloverfeed.kr/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category.replace("PMPO", "PM/PO")}`
+        `https://cloverfeed.kr/api/feedbacks/response/list/?user_id=${storedUserid}&category=${category?.category.replace("PMPO", "PM/PO")}`
       );
     }
   }, [category]);
@@ -56,7 +57,6 @@ const FeedbackList: React.FC = () => {
         );
 
         setFeedbacks(parsedFeedbacks);
-        // console.log(response.data);
       }
     } catch (error) {
       console.error("네트워크 오류:", error);
@@ -67,7 +67,7 @@ const FeedbackList: React.FC = () => {
     getFeedbacks();
   }, [apiUrl]);
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <div className="flex justify-center items-center min-h-screen">
@@ -80,7 +80,7 @@ const FeedbackList: React.FC = () => {
         </div>
         <div className="flex flex-col gap-4">
           <div className="font-pre text-[22px] font-bold">
-            {category}의 피드백
+            {category?.category}의 피드백
           </div>
           {feedbacks.length === 0 ? (
             <p className="font-pre text-[14px] text-gray-400">
@@ -106,13 +106,13 @@ const FeedbackList: React.FC = () => {
                             "#",
                             ""
                           );
-                          navigate(
+                          router.push(
                             `/feedbackresult/categorylist/${category}/${cleanedName}`
                           );
                         }
                       }}
                     >
-                      {feedback.respondent_name} {category}님의 피드백{" "}
+                      {feedback.respondent_name} {category?.category}님의 피드백{" "}
                     </button>
                     <div className="flex flex-wrap">
                       {feedback.tags_work_parsed.map((tag: string) => (
