@@ -1,21 +1,26 @@
-import { useNavigate } from 'react-router-dom';
-import XMark from '../assets/XMark.svg';
+"use client";
+
+import { useRouter } from "next/navigation";
+import Image from "next/image";
+import XMark from "../assets/XMark.svg";
 
 interface XButtonProps {
   nextpage: string;
 }
 
 const XButton = ({ nextpage }: XButtonProps) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
+  const router = useRouter();
 
   const handleButtonClick = () => {
-    navigate(nextpage);
+    router.push(nextpage);
   };
 
   return (
     <button onClick={handleButtonClick}>
-      <img
+      <Image
         src={XMark}
+        alt="가위표 버튼"
         className="transition ease-in-out delay-100 hover:scale-125 duration-300"
       />
     </button>

@@ -1,6 +1,7 @@
-import querystart from "../assets/querystart.svg";
-import GreenButton from "../components/GreenButton";
-import XButton from "../components/XButton";
+import Image from "next/image";
+import querystart from "../../../assets/querystart.svg";
+import GreenButton from "../../../components/GreenButton";
+import XButton from "../../../components/XButton";
 
 function QueryStart() {
   return (
@@ -26,7 +27,7 @@ function QueryStart() {
             </div>
           </div>
           <div className=" w-full h-full flex flex-1 flex-col justify-center items-center">
-            <img src={querystart} alt="쿼리시작" />
+            <Image src={querystart} alt="쿼리 시작" />
           </div>
           <div className=" w-full h-full flex flex-1 flex-col justify-center items-center">
             <GreenButton text="질문 폼 생성하기" nextpage="/QueryList" />
