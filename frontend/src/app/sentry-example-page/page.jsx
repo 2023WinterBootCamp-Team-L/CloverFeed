@@ -1,13 +1,7 @@
 "use client";
 
-import dynamic from "next/dynamic";
-import "../index.css";
 import Head from "next/head";
 import * as Sentry from "@sentry/nextjs";
-
-const App = dynamic(() => import("../App"), { ssr: false });
-
-<App />;
 
 export default function Page() {
   return (
