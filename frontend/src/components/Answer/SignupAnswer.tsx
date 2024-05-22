@@ -1,11 +1,13 @@
 interface SignupAnswerProps {
   type?: string;
+  name?: string;
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 const SignupAnswer: React.FC<SignupAnswerProps> = ({
-  type,
+  type = 'text',
+  name,
   value,
   onChange,
 }) => {
@@ -13,6 +15,7 @@ const SignupAnswer: React.FC<SignupAnswerProps> = ({
     <div className="relative">
       <input
         type={type}
+        name={name}
         value={value}
         onChange={onChange}
         disabled={false}

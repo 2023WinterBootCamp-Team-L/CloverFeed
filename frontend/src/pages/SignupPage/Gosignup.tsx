@@ -1,4 +1,4 @@
-import SignupAnswer from '../../components/Signup/SignupAnswer';
+import SignupAnswer from '../../components/Answer/SignupAnswer';
 import { useState, useEffect } from 'react';
 import SuccessButton from '../../components/SuccessButton';
 import GologinButton from '../../components/Login/Button/GologinButton';
