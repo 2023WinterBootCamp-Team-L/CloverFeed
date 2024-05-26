@@ -1,31 +1,23 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+"use client";
+
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface ChangePageProps {
   nextpage: string;
 }
 
 function ChangePage({ nextpage }: ChangePageProps) {
-  const [page, setPage] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      // 3초 후에 페이지를 변경
-      setPage(true);
-    }, 2000);
+      router.push(nextpage);
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [router, nextpage]);
 
-  useEffect(() => {
-    // 페이지가 변경될 때 실제 URL 또는 경로를 문자열로 전달
-    if (page) {
-      navigate(nextpage);
-    }
-  }, [page, navigate, nextpage]);
-
-  // JSX를 반환합니다.
   return <></>;
 }
 

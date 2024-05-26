@@ -1,20 +1,18 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import logouticon from "../assets/logouticon.svg";
-import researchicon from "../assets/researchicon.svg";
-import charticon from "../assets/charticon.svg";
-import shareicon from "../assets/shareicon.svg";
-import GreenButton from "../components/GreenButton";
-import LogoutButton from "../components/LogoutButton.tsx";
-import ResearchButton from "../components/ResearchButton.tsx";
-import ChartButton from "../components/ChartButton.tsx";
-import ShareButton from "../components/ShareButton.tsx";
-import FeedButton from "../components/FeedButton.tsx";
-import SimpleWordcloud from "../components/wordcloud.tsx";
-import Modal from "../components/Modal.tsx";
+"use client";
 
-function Mainpage() {
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import GreenButton from "../../components/GreenButton.tsx";
+import LogoutButton from "../../components/LogoutButton.tsx";
+import ResearchButton from "../../components/ResearchButton.tsx";
+import ChartButton from "../../components/ChartButton.tsx";
+import ShareButton from "../../components/ShareButton.tsx";
+import FeedButton from "../../components/FeedButton.tsx";
+import SimpleWordcloud from "../../components/wordcloud.tsx";
+import Modal from "../../components/Modal.tsx";
+
+function Main() {
   const [username, setUsername] = useState("");
   const [categories, setCategories] = useState([]);
   const [counts, setCounts] = useState([]);
@@ -47,9 +45,9 @@ function Mainpage() {
   const toggle = () => {
     setisOpen(!isOpen);
   };
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleMakeQuesttion = () => {
-    navigate("/QueryMain");
+    router.push("/QueryMain");
   };
 
   return (
@@ -59,7 +57,7 @@ function Mainpage() {
           <p className="text-[24px] font-pre font-bold text-green-500">
             CloverFeed
             <span className="float-right">
-              <LogoutButton iconSrc={logouticon} logoutpage="/" />
+              <LogoutButton logoutpage="/" />
             </span>
           </p>
           <p className="text-[14px] font-pre font-bold">
@@ -75,9 +73,9 @@ function Mainpage() {
           <GreenButton text="질문 폼 새로 생성하기" onClick={toggle} />
         </div>
         <div className="flex flex-row justify-center gap-14 mt-1">
-          <ResearchButton iconSrc={researchicon} researchpage="/Search" />
-          <ChartButton iconSrc={charticon} chartpage="/Chart" />
-          <ShareButton iconSrc={shareicon} sharepage="/QueryShare" />
+          <ResearchButton researchpage="/Search" />
+          <ChartButton chartpage="/Chart" />
+          <ShareButton sharepage="/QueryShare" />
         </div>
         <div className="flex justify-center">
           <div className="flex flex-col justify-start gap-4">
@@ -119,4 +117,5 @@ function Mainpage() {
     </div>
   );
 }
-export default Mainpage;
+
+export default Main;

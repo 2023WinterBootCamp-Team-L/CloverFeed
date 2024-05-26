@@ -1,5 +1,5 @@
-import 돋보기 from '../assets/돋보기.svg';
-import React, { useState } from 'react';
+import Image from "next/image";
+import React, { useState } from "react";
 
 interface SearchbuttonProps {
   value: string;
@@ -12,7 +12,7 @@ const Searchbutton: React.FC<SearchbuttonProps> = ({
   value,
   onChange,
   onEnter, // 추가: 엔터키를 누를 때 실행할 함수
-  placeholder = '검색어를 입력해주세요',
+  placeholder = "검색어를 입력해주세요",
 }) => {
   const [is돋보기Visible, set돋보기Visible] = useState(true);
 
@@ -25,7 +25,7 @@ const Searchbutton: React.FC<SearchbuttonProps> = ({
   };
 
   const handleKeyPress: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       onEnter(); // 추가: 엔터키를 눌렀을 때 실행할 함수 호출
     }
   };
@@ -44,8 +44,10 @@ const Searchbutton: React.FC<SearchbuttonProps> = ({
       />
       {is돋보기Visible && (
         <button onClick={onEnter}>
-          <img
-            src={돋보기}
+          <Image
+            src="/common/돋보기.svg"
+            width={50}
+            height={50}
             alt="돋보기"
             className="absolute right-0 top-3 w-7 pr-3 cursor-pointer"
           />

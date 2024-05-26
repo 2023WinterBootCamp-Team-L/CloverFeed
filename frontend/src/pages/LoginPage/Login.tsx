@@ -1,5 +1,5 @@
-import loginclover from "../assets/loginclover.svg";
-import GreenButton from "../components/GreenButton";
+import loginclover from '../assets/loginclover.svg';
+import GreenButton from '../../components/GreenButton';
 
 function Login() {
   return (
