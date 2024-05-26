@@ -1,5 +1,7 @@
 const { withSentryConfig } = require("@sentry/nextjs");
 
+const { withSentryConfig } = require("@sentry/nextjs");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export", // HTML, CSS, JS만 빌드해 Single-Page Application으로 만듭니다.
