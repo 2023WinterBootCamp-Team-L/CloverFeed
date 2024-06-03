@@ -4,137 +4,96 @@ import SuccessButton from '../../components/SuccessButton';
 import GologinButton from '../../components/Login/Button/GologinButton';
 import axios from 'axios';
 
-function Gosignup() {
-  const [emailanswerInputs, setemailAnswerInputs] = useState('');
-  const [nameanswerInputs, setnameAnswerInputs] = useState('');
-  const [pwanswerInputs, setpwAnswerInputs] = useState('');
-  const [pwcheckanswerInputs, setpwcheckAnswerInputs] = useState('');
-  const [isPasswordValid, setIsPasswordValid] = useState(false); // Added state for password validation
+const EMAIL_VALIDATION_REGEX =
+  /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+
+function SignupGo() {
+  const [inputs, setInputs] = useState({
+    email: '',
+    name: '',
+    password: '',
+    passwordCheck: '',
+  });
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isComplete, setIsComplete] = useState(false);
 
-  const onInputChangeemail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setemailAnswerInputs(e.target.value);
-    // You might want to add email validation logic here
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputs((prev) => ({ ...prev, [name]: value }));
     setErrorMessage(null);
   };
-  const onInputChangename = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setnameAnswerInputs(e.target.value);
+
+  const validateInputs = () => {
+    const { email, name, password, passwordCheck } = inputs;
+    if (!email || !name || !password || !passwordCheck) {
+      return '입력되지 않은 항목이 있습니다. 모든 항목을 입력하세요.';
+    }
+    if (!EMAIL_VALIDATION_REGEX.test(email)) {
+      return '올바른 이메일 형식이 아닙니다.';
+    }
+    if (password !== passwordCheck) {
+      return '비밀번호와 비밀번호 확인이 일치하지 않습니다.';
+    }
+    return null;
   };
-  const onInputChangepw = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setpwAnswerInputs(e.target.value);
-    setIsPasswordValid(false);
-  };
-  const onInputChangepwcheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setpwcheckAnswerInputs(e.target.value);
-    setIsPasswordValid(false);
-  };
-  const emailValidationRegex =
-    /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
   const handleSignup = async () => {
-    try {
-      //필수 입력값 확인
-      if (
-        !emailanswerInputs ||
-        !nameanswerInputs ||
-        !pwanswerInputs ||
-        !pwcheckanswerInputs
-      ) {
-        setErrorMessage(
-          '입력되지 않은 항목이 있습니다. 모든 항목을 입력하세요.'
-        );
-        return;
-      }
-      // 이메일 유효성 검사
-      if (!emailValidationRegex.test(emailanswerInputs)) {
-        setErrorMessage('올바른 이메일 형식이 아닙니다.');
-        return;
-      }
-      // 비밀번호 일치여부 확인
-      if (pwanswerInputs !== pwcheckanswerInputs) {
-        setErrorMessage('비밀번호와 비밀번호 확인이 일치하지 않습니다.');
-        return;
-      }
+    const error = validateInputs();
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
 
-      // API request
+    try {
       const response = await axios.post(
         'https://cloverfeed.kr/api/user/auth/signup/',
         {
-          username: nameanswerInputs,
-          email: emailanswerInputs,
-          password: pwanswerInputs,
+          username: inputs.name,
+          email: inputs.email,
+          password: inputs.password,
         }
       );
-      //성공적인 응답처리
       if (response.data.status === 'success') {
-        console.log(
-          '회원가입이 성공적으로 완료되었습니다.',
-          response.data.message
-        );
         setIsComplete(true);
       } else {
-        // 에러 응답처리
         setErrorMessage('회원가입에 실패했습니다. ' + response.data.message);
       }
     } catch (error) {
-      // 기타 에러
       setErrorMessage('오류가 발생했습니다. 다시 시도해주세요.');
       console.error('Signup error:', error);
     }
   };
 
   useEffect(() => {
-    // errorMessage가 변경되면 3초 후에 null로 설정하여 사라지게 함
     const timeoutId = setTimeout(() => {
       setErrorMessage(null);
     }, 3000);
-
-    // useEffect 클린업 함수에서 타이머 제거
     return () => clearTimeout(timeoutId);
   }, [errorMessage]);
 
   return (
     <div className="flex justify-center items-center min-h-screen">
-      <div
-        className="bg-c-emerald bg-opacity-35 flex flex-col items-center justify-center mx-auto min-h-screen gap-10 px-5 py-16 overflow- w-full sm:w-[393px] lg:w-[393px]"
-        // style={{ width: '393px' }}
-      >
-        <div className="flex flex-col items-start mb-4">
-          <p className="font-pre text-[14px] font-bold">Email입력</p>
-          <SignupAnswer
-            type="text"
-            value={emailanswerInputs}
-            onChange={onInputChangeemail}
-          />
-        </div>
-
-        <div className="flex flex-col items-start mb-4">
-          <p className="font-pre text-[14px] font-bold">이름(또는 닉네임)</p>
-          <SignupAnswer
-            type="text"
-            value={nameanswerInputs}
-            onChange={onInputChangename}
-          />
-        </div>
-
-        <div className="flex flex-col items-start mb-4">
-          <p className="font-pre text-[14px] font-bold">비밀번호 입력</p>
-          <SignupAnswer
-            type="password"
-            value={pwanswerInputs}
-            onChange={onInputChangepw}
-          />
-        </div>
-
-        <div className="flex flex-col items-start mb-8">
-          <p className="font-pre text-[14px] font-bold">비밀번호 확인</p>
-          <SignupAnswer
-            type="password"
-            value={pwcheckanswerInputs}
-            onChange={onInputChangepwcheck}
-          />
-        </div>
+      <div className="bg-c-emerald bg-opacity-35 flex flex-col items-center justify-center mx-auto min-h-screen gap-10 px-5 py-16 w-full sm:w-[393px] lg:w-[393px]">
+        {['email', 'name', 'password', 'passwordCheck'].map((field) => (
+          <div className="flex flex-col items-start mb-4" key={field}>
+            <p className="font-pre text-[14px] font-bold">
+              {field === 'email'
+                ? 'Email입력'
+                : field === 'name'
+                  ? '이름(또는 닉네임)'
+                  : field === 'password'
+                    ? '비밀번호 입력'
+                    : '비밀번호 확인'}
+            </p>
+            <SignupAnswer
+              type={field === 'email' ? 'text' : 'password'}
+              name={field}
+              value={inputs[field]}
+              onChange={handleChange}
+            />
+          </div>
+        ))}
 
         <div className="flex items-center flex-col gap-3">
           <SuccessButton
@@ -156,4 +115,5 @@ function Gosignup() {
     </div>
   );
 }
-export default Gosignup;
+
+export default SignupGo;

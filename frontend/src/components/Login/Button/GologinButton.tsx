@@ -1,6 +1,8 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import LoginModal from '../Modal/LoginModal';
 import SignupAnswer from '../../Answer/SignupAnswer';
 import Modal from '../../Modal';
@@ -16,7 +18,7 @@ function GologinButton() {
   const [isOpen, setIsOpen] = useState(false);
   const [queryIsOpen, setQueryIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const toggleModal = () => setIsOpen(!isOpen);
   const queyryToggleModal = () => setQueryIsOpen(!queryIsOpen);
@@ -94,7 +96,7 @@ function GologinButton() {
 
         if (response.data.status === 'success') {
           if (response.data.feedbackform === 'true') {
-            navigate('/login');
+            router.push('/login');
           } else {
             // 질문폼이 없을 경우 모달을 열고 메시지를 표시
             setQueryIsOpen(true);
@@ -168,7 +170,7 @@ function GologinButton() {
           <button
             className="bg-c-indigo text-white w-full p-2 rounded-lg mt-4 font-pre text-[16px] transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-900 duration-300"
             onClick={() => {
-              navigate('/QueryMain');
+              router.push('/QueryMain');
               setQueryIsOpen(false);
             }}
           >
