@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import "../index.css";
 import Head from "next/head";
 import * as Sentry from "@sentry/nextjs";
+import apiClient from "./api/apiClient";
 
 const App = dynamic(() => import("../App"), { ssr: false });
 
@@ -54,15 +55,15 @@ export default function Page() {
             fontSize: "14px",
             margin: "18px",
           }}
-          onClick={() => {
-            Sentry.startSpan(
+          onClick={async () => {
+            await Sentry.startSpan(
               {
                 name: "Example Frontend Span",
                 op: "test",
               },
               async () => {
-                const res = await fetch("/api/sentry-example-api");
-                if (!res.ok) {
+                const res = await apiClient.get("/api/sentry-example-api");
+                if (!res.status || res.status !== 200) {
                   throw new Error("Sentry Example Frontend Error");
                 }
               }
@@ -74,7 +75,7 @@ export default function Page() {
 
         <p>
           Next, look for the error on the{" "}
-          <a href="https://jieunk.sentry.io/issues/?project=4507298267070464">
+          <a href="https://jieunk.sentry.io/issues/?project=4507323501707264">
             Issues Page
           </a>
           .

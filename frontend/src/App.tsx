@@ -2,6 +2,7 @@
 
 import Head from "next/head";
 import * as Sentry from "@sentry/nextjs";
+import apiClient from "./app/api/apiClient";
 
 export default function Page() {
   return (
@@ -55,8 +56,8 @@ export default function Page() {
                 op: "test",
               },
               async () => {
-                const res = await fetch("/api/sentry-example-api");
-                if (!res.ok) {
+                const res = await apiClient.get("/sentry-example-api");
+                if (!res.status || res.status !== 200) {
                   throw new Error("Sentry Example Frontend Error");
                 }
               }
