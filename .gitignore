@@ -69,3 +69,5 @@ backend/config/.env
 # 파이참 임시파일 제외
 /.idea/
 .env
+
+/certbot/
